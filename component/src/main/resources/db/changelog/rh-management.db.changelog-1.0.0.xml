@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+  <!-- Managing both DB that use sequences and db that use auto increment -->
+  <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
+  <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
+
+  <!-- Managing auto generation of timestamp by Database -->
+  <property name="now" value="now()" dbms="mysql,hsqldb,postgresql,h2"/>
+  <property name="now" value="sysdate" dbms="oracle"/>
+  <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
+
+  <changeSet author="rh-management" id="1.0.0-1">
+    <createTable tableName="VACATION_REQUEST">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="USER_ID" type="NVARCHAR(50)"></column>
+      <column name="USER_FULL_NAME" type="NVARCHAR(100)"></column>
+      <column name="DAYS_NUMBER" type="INT"></column>
+      <column name="FROM_DATE" type="DATE"></column>
+      <column name="TO_DATE" type="DATE"></column>
+      <column name="REASON" type="NVARCHAR(550)"></column>
+      <column name="ANNUAL" type="BOOLEAN"></column>
+      <column name="SUBSTITUTE" type="NVARCHAR(100)"></column>
+      <column name="STATUS" type="NVARCHAR(100)" defaultValue="pending"></column>
+      <column name="TYPE" type="NVARCHAR(100)"></column>
+
+    </createTable>
+
+    <createTable tableName="COMMENT" >
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="POSTER_ID" type="NVARCHAR(50)"></column>
+      <column name="REQUEST_ID" type="BIGINT"></column>
+      <column name="POSTED_TIME" type="DATE"></column>
+      <column name="COMMENT_TEXT" type="NVARCHAR(1000)"></column>
+    </createTable>
+
+    <createTable tableName="VALIDATOR">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="REQUEST_ID" type="BIGINT"></column>
+      <column name="USER_ID" type="NVARCHAR(50)"></column>
+      <column name="VALIDATOR_USER_ID" type="NVARCHAR(50)"></column>
+      <column name="VALIDATOR_EMAIL" type="NVARCHAR(50)"></column>
+      <column name="REPLY" type="NVARCHAR(50)" defaultValue="pending"></column>
+    </createTable>
+
+    <modifySql dbms="mysql">
+      <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+    </modifySql>
+  </changeSet>
+
+
+
+
+</databaseChangeLog>

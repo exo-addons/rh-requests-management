@@ -1,0 +1,208 @@
+<div id="rhLoadingBar" class="rhLoadingBar"></div>
+<div id="rhAddon" class="rhAddon" style="visibility: hidden;">
+    <div ng-controller="rhCtrl" id="rhCtrl">
+        <div id="wrap">
+            <!--Start Left column-->
+            <div id="left_col" class="uiBox">
+                <div id="resultMessage" ng-show="(resultMessage.length > 0)" class="result-message alert {{resultMessageClass}}"><i class="{{resultMessageClassExt}}"></i>{{resultMessage}}</div>
+                <div>
+                    <a class="btn btn-primary" data-placement="right" data-original-title="Add" rel="tooltip" ng-click="showForm = true"><i class="uiIconSimplePlusMini"></i> {{i18n.newVacationRequest}}</a>
+                    <div id="vacationRequestForm" ng-show="!myVacationRequests.length || myVacationRequests.length == 0 || !vacationRequestsToValidate.length || vacationRequestsToValidate.length == 0 || showForm">
+                        <a class="actionIcon" style="float: right;" ng-click="showForm = false"><i class="uiIconClose"></i></a>
+                        <!--Start Request creation Form-->
+                        <form name="newvacationRequestForm" class="form-horizontal" novalidate>
+                            <div class="control-group {{usernameClass}}">
+                                <label class="control-label" for="daysNumber">Type</label>
+<div class="controls">
+<select name="inputUsername" id="type" placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
+<option value="holiday">Holiday</option>
+                                        <option value="sick">Sick</option>
+<option value="leave">Leave</option>
+                                    </select>
+</div>
+                            </div>
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="daysNumber">daysNumber</label>
+                                <div class="controls">
+                                    <input type="text" name="inputUsername" id="daysNumber" placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.daysNumber">
+                                </div>
+</div>
+                            <div class="control-group {{usernameClass}}">
+                                <label class="control-label" for="inputName">fromDate</label>
+<div class="controls">
+<input type="date" name="inputUsername" id="fromDate" placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
+</div>
+                            </div>
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="toDate">toDate</label>
+                                <div class="controls">
+                                    <input type="date" name="inputUsername" id="toDate" placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
+                                </div>
+</div>
+                            <div class="control-group {{usernameClass}}">
+                                <label class="control-label" for="reason">reason</label>
+<div class="controls">
+<input type="text" name="reason" id="reason" placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.reason">
+</div>
+                            </div>
+
+<div>
+<div class="control-group">
+<label class="control-label" for="substitutes">Substitutes</label>
+                                    <div class="controls {{usernameClass}}">
+                                        <form action="#" method="POST">
+                                            <input type="text" name="substitutes" id="substitutes" required>
+                                        </form>
+</div>
+                                </div>
+</div>
+
+                            <div>
+                                <div class="control-group">
+                                    <label class="control-label" for="managers">Managers</label>
+<div class="controls {{usernameClass}}">
+<form action="#" method="POST">
+<input type="text" name="managers" id="managers" required>
+</form>
+                                    </div>
+</div>
+                            </div>
+
+<div id="vacationRequestSaveAs" class="control-group {{vacationRequestNameClass}}">
+<button type="button" class="btn btn-primary" ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}</button>
+                                <button type="button" class="btn" ng-click="showForm = false">{{i18n.cancel}}</button>
+</div>
+                        </form>
+<!--End Request creation Form-->
+</div>
+                </div>
+<!--My Requests-->
+<div ng-show="myVacationRequests.length && myVacationRequests.length > 0">
+<h4 class="titleWithBorder">My requests</h4>
+                    <ul class="table-project" ng-repeat="vacationRequest in myVacationRequests">
+                        <li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{vacationRequest.id}}">
+                            <div class="column-item column-checkbox" ng-switch="vacationRequest.status">
+                                <span ng-switch-when="approved" class="uiIconColorValidate"></span>
+<span ng-switch-when="declined" class="uiIconColorError"></span>
+                                <span ng-switch-when="pending" class="uiIconClock"></span>
+<span ng-switch-default class="uiIconInformation"></span>
+                                </span>
+</div>
+                            <a class="column-item column-title" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}} from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDate | date:'yyyy-MM-dd'}}</a>
+<div class="column-item column-time">
+<span class="text-time inline-block-show"></span>
+                                <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
+                                    <i class="uiIconDeleteUser uiIconLightGray"></i>
+</a>
+                            </div>
+</li>
+                    </ul>
+</div>
+                <!--Requests to validate-->
+                <div ng-show="vacationRequestsToValidate.length && vacationRequestsToValidate.length > 0">
+                    <h4 class="titleWithBorder">Requests to validate</h4>
+<ul class="table-project" ng-repeat="vacationRequest in vacationRequestsToValidate">
+<li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{vacationRequest.id}}">
+<div class="column-item column-checkbox" ng-switch="vacationRequest.status">
+<span ng-switch-when="approved" class="uiIconColorValidate"></span>
+                                <span ng-switch-when="declined" class="uiIconColorError"></span>
+<span ng-switch-when="pending" class="uiIconClock"></span>
+                                <span ng-switch-default class="uiIconInformation"></span>
+</span>
+                            </div>
+<a class="column-item column-title" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}} from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDate | date:'yyyy-MM-dd'}}</a>
+                            <div class="column-item column-time">
+                                <span class="text-time inline-block-show"></span>
+<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Validate" rel="tooltip" ng-click="approveRequest(vacationRequest)">
+<i class="uiIconRemove uiIconLightGray"></i>
+                                </a>
+<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Decline" rel="tooltip" ng-click="declineRequest(vacationRequest)">
+<i class="uiIconError uiIconLightGray"></i>
+                                </a>
+</div>
+                        </li>
+</ul>
+                </div>
+</div>
+            <!--End Left column-->
+            <div id="right_col" class="uiBox" ng-show="showDetails">
+                <div class="uiContentBox">
+                    <div><b>Full name:</b> {{vacationRequesttoShow.userFullName}}</div>
+                    <div><b>Type:</b> {{vacationRequesttoShow.type}}</div>
+                    <div><b>Number of days:</b> {{vacationRequesttoShow.daysNumber}}</div>
+                    <div><b>From date:</b> {{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</div>
+                    <div><b>To date:</b> {{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</div>
+                    <div><b>Reason:</b> {{vacationRequesttoShow.reason}}</div>
+                    <div><b>Substitute:</b><a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}</a> </div>
+<div><b>Status:</b> {{vacationRequesttoShow.status}}</div>
+<div>
+<b>Managers: </b>
+                        <table id="managersTable" class="table uiGrid table-hover table-striped">
+                            <tbody>
+                                <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+                                    <td>
+                                        <a class="column-item column-title">{{vrmanager.validatorUserId}} {{vrmanager.validatorMail}}</a>
+</td>
+                                    <td ng-if="i18n.currentUser == vrmanager.validatorUserId" class="td-right-align">
+                                        <button ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'">Approve</button>
+<button ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'">Decline</button>
+                                    </td>
+<td ng-if="i18n.currentUser != vrmanager.validatorUserId" class="td-right-align">
+<b>{{vrmanager.reply}}</b>
+                                    </td>
+</tr>
+                            </tbody>
+</table>
+                        <div id="tab-comments" class="tab-pane fade in active ">
+                            <div class="commentList">
+                                <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+                                    <div class="commmentLeft pull-left">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
+</a>
+                                    </div>
+<!--end commentLeft-->
+<div class="commentRight">
+<div class="author">
+<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
+                                            <span class="date">
+                        {{comment.postedTime | date:'yyyy-MM-dd HH:mm:ss'}}}
+                        </span>
+</div>
+                                        <p class="contentComment">
+                                            {{comment.commentText}}
+                                        </p>
+</div>
+                                    <!--end commentRight-->
+                                </div>
+</div>
+                            <div class="commentList inputContainer">
+                                <div class="commentItem commentFormBox">
+                                    <div class="clearfix">
+                                        <div class="commmentLeft pull-left">
+                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="Root Root">
+</a>
+                                        </div>
+<!--end commentLeft-->
+<div class="commentRight">
+<div class="commentInputBox ">
+<div class="commentInput">
+<textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea" ng-model="newComment.commentText"></textarea>
+                                                </div>
+</div>
+                                        </div>
+<!--end commentRight-->
+</div>
+                                    <div class="clearfix">
+                                        <div class="pull-right">
+                                            <button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="saveComment()">Comment</button>
+</div>
+                                    </div>
+</div>
+                                <!--end commentItem-->
+                            </div>
+</div>
+                    </div>
+</div>
+            </div>
