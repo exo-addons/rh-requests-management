@@ -33,7 +33,9 @@
   <name>rh-requests-management</name>
   <description>Simplify human resource requests (Holidays, sick and leave requests) management</description>
   <modules>
-    <module>war</module>
+    <module>component</module>
+    <module>portlet</module>
+    <module>extension</module>
     <module>packaging</module>
   </modules>
   <scm>
@@ -57,4 +59,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
 </project>

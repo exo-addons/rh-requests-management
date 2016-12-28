@@ -35,6 +35,10 @@
     <type>org.exoplatform.rhmanagement.services.CommentService</type>
   </component>
 
+  <component>
+    <type>org.exoplatform.rhmanagement.services.ValidatorService</type>
+  </component>
+
 
   <!-- Data Initialization -->
   <external-component-plugins>
@@ -52,5 +56,7 @@
       </init-params>
     </component-plugin>
   </external-component-plugins>
+
+  <import>jar:/conf/portal/request-notification-plugin.xml</import>
 
 </configuration>

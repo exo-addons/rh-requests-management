@@ -15,9 +15,15 @@ import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 
+import org.exoplatform.commons.api.notification.NotificationContext;
+import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
+import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.rhmanagement.dto.*;
+import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin;
+import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
+import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.CommentService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.portal.application.PortalRequestContext;
@@ -127,9 +133,9 @@ public class RHRequestManagementController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public VacationRequestDTO getVacationRequest (@Jackson VacationRequestDTO obj) {
+  public VacationRequestDTO getVacationRequest (Long id) {
     try {
-      return vacationRequestService.getVacationRequest(obj.getId());
+      return vacationRequestService.getVacationRequest(id);
     } catch (Throwable e) {
       log.error(e);
       return null;
@@ -207,6 +213,8 @@ public class RHRequestManagementController {
       val_.setReply(PENDING);
      validatorService.save(val_);
     }
+    NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestCreatedPlugin.REQUEST, obj);
+    ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestCreatedPlugin.ID))).execute(ctx);
     return getVacationRequestsOfCurrentUser();
   }
 
@@ -254,9 +262,13 @@ public class RHRequestManagementController {
     for(ValidatorDTO validator :validatorService.getValidatorsByValidatorUserIdandRequestId(currentUser,obj.getId())){
       validator.setReply(DECLINED);
       validatorService.save(validator);
+      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestRepliedPlugin.VALIDATOR, validator);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestRepliedPlugin.ID))).execute(ctx);
     }
     obj.setStatus(DECLINED);
     vacationRequestService.save(obj);
+    NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
+    ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     return obj;
   }
 
@@ -272,6 +284,8 @@ public class RHRequestManagementController {
       if(validator.getValidatorUserId().equals(currentUser)){
         validator.setReply(APPROVED);
         validatorService.save(validator);
+        NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestRepliedPlugin.VALIDATOR, validator);
+        ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestRepliedPlugin.ID))).execute(ctx);
       }else{
         if (validator.getReply().equals(DECLINED)) declined=true;
         if (validator.getReply().equals(PENDING)) validated=false;
@@ -281,9 +295,13 @@ public class RHRequestManagementController {
    if(declined) {
       obj.setStatus(DECLINED);
       vacationRequestService.save(obj);
+     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
+     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }else if(validated){
      obj.setStatus(APPROVED);
      vacationRequestService.save(obj);
+     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
+     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }
    return obj;
   }
