@@ -38,6 +38,39 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 $scope.setResultMessage(data, "error");
             });
         }
+
+         $scope.getUrlParameterByName = function(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+        $scope.showRequestfromUrl = function() {
+            var requestId = $scope.getUrlParameterByName('rid');
+            if (typeof requestId !== 'undefined' && requestId !==null) {
+                $http({
+                   method : 'GET',
+                   url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +requestId
+                }).then(function successCallback(data) {
+                    $scope.setResultMessage(data, "success");
+                    $scope.showVacationRequest(data.data);
+                    $timeout(function() {
+                        $scope.setResultMessage("", "info")
+                    }, 3000);
+                }, function errorCallback(data) {
+                    $scope.setResultMessage(data, "error");
+                });
+            }
+        }
+
+
         $scope.loadVacationRequestsToValidate= function() {
             $http({
                 method : 'GET',
@@ -180,7 +213,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
 
         $scope.loadComments = function(vacationRequest) {
             $http({
-                data : $scope.vacationRequest ,
+                data : vacationRequest,
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
@@ -213,7 +246,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 url : rhContainer.jzURL('RHRequestManagementController.saveComment')
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
-                $scope.comments.push(data);
+                $scope.comments.push($scope.newComment);
 
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
@@ -235,12 +268,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 $scope.setResultMessage(data, "success");
                 $scope.loadVacationRequestsToValidate();
                 $http({
-                    data :$scope.vacationRequesttoShow,
-                    method : 'POST',
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    },
-                    url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')
+                    method : 'GET',
+                    url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +$scope.vacationRequesttoShow.id
                 }).then(function successCallback(data) {
                     $scope.setResultMessage(data, "success");
                     $scope.showVacationRequest(data.data);
@@ -270,12 +299,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 $scope.setResultMessage(data, "success");
                 $scope.loadVacationRequestsToValidate();
                 $http({
-                    data : $scope.vacationRequesttoShow,
-                    method : 'POST',
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    },
-                    url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')
+                    method : 'GET',
+                    url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +$scope.vacationRequesttoShow.id
                 }).then(function successCallback(data) {
                     $scope.setResultMessage(data, "success");
                     $scope.showVacationRequest(data.data);
@@ -376,6 +401,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
         $scope.loadVacationRequestsToValidate();
         $scope.loadMyVacationRequests();
         $scope.loadBundles();
+        $scope.showRequestfromUrl();
         $scope.refreshController = function() {
             try {
                 $scope.$digest()

@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Data
 public class ValidatorDTO {
-  private long              Id;
+  private long                Id;
   private long                requestId;
   private String              userId;
   private String              validatorUserId;

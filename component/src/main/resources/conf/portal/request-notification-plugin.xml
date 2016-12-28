@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
+  xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
+  
+  <external-component-plugins>
+    <target-component>org.exoplatform.commons.api.notification.service.setting.PluginSettingService</target-component>
+    <component-plugin profiles="all">
+      <name>notification.groups</name>
+      <set-method>registerGroupConfig</set-method>
+      <type>org.exoplatform.commons.api.notification.plugin.GroupProviderPlugin</type>
+      <description>Initial the default groups.</description>
+      <init-params>
+        <object-param>
+          <name>group.request</name>
+          <description>The information of group request</description>
+          <object type="org.exoplatform.commons.api.notification.plugin.config.GroupConfig">
+            <field name="id">
+              <string>request</string>
+            </field>
+            <field name="resourceBundleKey">
+              <string>UINotification.label.group.Request</string>
+            </field>
+            <field name="order">
+              <string>100</string>
+            </field>
+          </object>
+        </object-param>       
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+
+  <external-component-plugins>
+    <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
+    <component-plugin>
+      <name>notification.plugins</name>
+      <set-method>addPlugin</set-method>
+      <type>org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin</type>
+      <description>Initial information for plugin.</description>
+      <init-params>
+        <object-param>
+          <name>template.RequestValidationPlugin</name>
+          <description>The template of RequestCreatedPlugin</description>
+          <object
+            type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
+            <field name="pluginId">
+              <string>RequestCreatedPlugin</string>
+            </field>
+            <field name="resourceBundleKey">
+              <string>UINotification.label.RequestCreatedPlugin</string>
+            </field>
+            <field name="order">
+              <string>1</string>
+            </field>
+            <field name="defaultConfig">
+              <collection type="java.util.ArrayList">
+                <value>
+                  <string>daily</string>
+                </value>
+                <value>
+                  <string>Instantly</string>
+                </value>
+              </collection>
+            </field>
+            <field name="groupId">
+              <string>request</string>
+            </field>
+            <field name="bundlePath">
+              <string>locale.notification.RequestNotification</string>
+            </field>
+          </object>
+        </object-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+  
+<external-component-plugins>
+    <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
+    <component-plugin>
+      <name>notification.plugins</name>
+      <set-method>addPlugin</set-method>
+      <type>org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin</type>
+      <description>Initial information for plugin.</description>
+      <init-params>
+        <object-param>
+          <name>template.RequestStatusChangedPlugin</name>
+          <description>The template of RequestStatusChangedPlugin</description>
+          <object
+            type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
+            <field name="pluginId">
+              <string>RequestStatusChangedPlugin</string>
+            </field>
+            <field name="resourceBundleKey">
+              <string>UINotification.label.RequestStatusChangedPlugin</string>
+            </field>
+            <field name="order">
+              <string>2</string>
+            </field>
+            <field name="defaultConfig">
+              <collection type="java.util.ArrayList">
+                <value>
+                  <string>daily</string>
+                </value>
+                <value>
+                  <string>Instantly</string>
+                </value>
+              </collection>
+            </field>
+            <field name="groupId">
+              <string>request</string>
+            </field>
+            <field name="bundlePath">
+              <string>locale.notification.RequestNotification</string>
+            </field>
+          </object>
+        </object-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+  
+  <external-component-plugins>
+    <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
+    <component-plugin>
+      <name>notification.plugins</name>
+      <set-method>addPlugin</set-method>
+      <type>org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin</type>
+      <description>Initial information for plugin.</description>
+      <init-params>
+        <object-param>
+          <name>template.RequestRepliedPlugin</name>
+          <description>The template of RequestRepliedPlugin</description>
+          <object
+            type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
+            <field name="pluginId">
+              <string>RequestRepliedPlugin</string>
+            </field>
+            <field name="resourceBundleKey">
+              <string>UINotification.label.RequestRepliedPlugin</string>
+            </field>
+            <field name="order">
+              <string>3</string>
+            </field>
+            <field name="defaultConfig">
+              <collection type="java.util.ArrayList">
+                <value>
+                  <string>daily</string>
+                </value>
+                <value>
+                  <string>Instantly</string>
+                </value>
+              </collection>
+            </field>
+            <field name="groupId">
+              <string>request</string>
+            </field>
+            <field name="bundlePath">
+              <string>locale.notification.RequestNotification</string>
+            </field>
+          </object>
+        </object-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+
+  <!-- <external-component-plugins>
+     <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
+     <component-plugin>
+       <name>notification.plugins</name>
+       <set-method>addPlugin</set-method>
+       <type>org.exoplatform.rhmanagement.integration.notification.RequestCommentedPlugin</type>
+       <description>Initial information for plugin.</description>
+       <init-params>
+         <object-param>
+           <name>template.RequestCommentedPlugin</name>
+           <description>The template of RequestCommentedPlugin</description>
+           <object
+             type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
+             <field name="pluginId">
+               <string>RequestCommentedPlugin</string>
+             </field>
+             <field name="resourceBundleKey">
+               <string>UINotification.label.RequestCommentedPlugin</string>
+             </field>
+             <field name="order">
+               <string>4</string>
+             </field>
+             <field name="defaultConfig">
+               <collection type="java.util.ArrayList">
+                 <value>
+                   <string>weekly</string>
+                 </value>
+               </collection>
+             </field>
+             <field name="groupId">
+               <string>request</string>
+             </field>
+             <field name="bundlePath">
+               <string>locale.notification.RequestNotification</string>
+             </field>
+           </object>
+         </object-param>
+       </init-params>
+     </component-plugin>
+   </external-component-plugins>-->
+  <!-- template channel register -->
+<!--  <external-component-plugins>
+    <target-component>org.exoplatform.commons.api.notification.channel.ChannelManager</target-component>
+    <component-plugin>
+      <name>mail.channel.request.template</name>
+      <set-method>registerTemplateProvider</set-method>
+      <type>org.exoplatform.rhmanagement.integration.notification.MailTemplateProvider</type>
+      <init-params>
+        <value-param>
+          <name>channel-id</name>
+          <value>MAIL_CHANNEL</value>
+        </value-param>
+      </init-params>
+    </component-plugin>
+    <component-plugin>
+      <name>web.channel.request.template</name>
+      <set-method>registerTemplateProvider</set-method>
+      <type>org.exoplatform.rhmanagement.integration.notification.WebTemplateProvider</type>
+      <init-params>
+        <value-param>
+          <name>channel-id</name>
+          <value>WEB_CHANNEL</value>
+        </value-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>-->
+</configuration>

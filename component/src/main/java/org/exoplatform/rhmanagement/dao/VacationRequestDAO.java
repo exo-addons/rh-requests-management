@@ -68,7 +68,9 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
                         .setParameter("userId", userId)
                         .getResultList();
             } else {
-                return findAll();
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByUserId", VacationRequestEntity.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
             }
         } catch (Exception e) {
             LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
