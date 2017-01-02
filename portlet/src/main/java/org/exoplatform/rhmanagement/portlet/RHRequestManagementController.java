@@ -203,11 +203,11 @@ public class RHRequestManagementController {
       substitutes=substitutes.concat(substitute.computeId()+",");
     }
     vr.setSubstitute(substitutes);
-    vacationRequestService.save(vr).getId();
-    long vrId=vacationRequestService.getVacationRequests(0,1).get(0).getId();
+    vr=vacationRequestService.save(vr,true);
+    obj.setVacationRequestDTO(vr);
     for (EmployeesDTO manager : obj.getManagers()){
       ValidatorDTO val_=new ValidatorDTO();
-      val_.setRequestId(vrId);
+      val_.setRequestId(vr.getId());
       val_.setValidatorUserId(manager.computeId());
       val_.setUserId(currentUser);
       val_.setReply(PENDING);
@@ -227,7 +227,7 @@ public class RHRequestManagementController {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
     commentService.save(obj);
-    }
+  }
 
 
   @Ajax
@@ -266,7 +266,7 @@ public class RHRequestManagementController {
       ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestRepliedPlugin.ID))).execute(ctx);
     }
     obj.setStatus(DECLINED);
-    vacationRequestService.save(obj);
+    vacationRequestService.save(obj,false);
     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     return obj;
@@ -280,6 +280,7 @@ public class RHRequestManagementController {
   public VacationRequestDTO approveRequest(@Jackson VacationRequestDTO obj) {
     Boolean validated=true;
     Boolean declined=false;
+    Set<String> managers = new HashSet<String>();
     for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
       if(validator.getValidatorUserId().equals(currentUser)){
         validator.setReply(APPROVED);
@@ -290,17 +291,17 @@ public class RHRequestManagementController {
         if (validator.getReply().equals(DECLINED)) declined=true;
         if (validator.getReply().equals(PENDING)) validated=false;
       }
-
+      managers.add(validator.getUserId());
     }
    if(declined) {
       obj.setStatus(DECLINED);
-      vacationRequestService.save(obj);
-     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
+      vacationRequestService.save(obj,false);
+     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }else if(validated){
      obj.setStatus(APPROVED);
-     vacationRequestService.save(obj);
-     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
+     vacationRequestService.save(obj,false);
+     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }
    return obj;

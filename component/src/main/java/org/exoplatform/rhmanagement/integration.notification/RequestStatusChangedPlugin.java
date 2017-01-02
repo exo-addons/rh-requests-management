@@ -22,6 +22,7 @@ import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
+import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
@@ -31,26 +32,32 @@ import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.webui.utils.TimeConvertUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<VacationRequestDTO> REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "request");
 
+  public static final ArgumentLiteral<Set> MANAGERS = new ArgumentLiteral<Set>(Set.class, "managers");
+
   private static final Log LOG = ExoLogger.getLogger(RequestStatusChangedPlugin.class);
 
   public final static String ID = "RequestStatusChangedPlugin";
 
   private ValidatorService        validatorService;
+  IdentityManager identityManager;
 
 
-  public RequestStatusChangedPlugin(InitParams initParams, ValidatorService validatorService) {
+  public RequestStatusChangedPlugin(InitParams initParams, ValidatorService validatorService,IdentityManager identityManager) {
     super(initParams);
     this.validatorService = validatorService;
+    this.identityManager = identityManager;
   }
 
 
@@ -81,28 +88,33 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
     VacationRequestDTO obj = ctx.value(REQUEST);
 
-    Set<String> receivers = new HashSet<String>();
+    Set<String> receivers = ctx.value(MANAGERS);
 
 
-    try {
+    String userId=obj.getUserId();
+    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
 
-      for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
-        receivers.add(validator.getValidatorUserId());
-      }
-      receivers.add(obj.getUserId());
-    } catch (Exception ex) {
-
-      LOG.error(ex.getMessage(), ex);
-
-    }
-
+    Calendar lastModified = Calendar.getInstance();
+    String lastModifiedDate= TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(NotificationPluginUtils.getLanguage(userId)), TimeConvertUtils.YEAR);
+    String content="<li class='unread clearfix'>\n" +
+            "  <div class='media'>\n" +
+            "    <div class='media-body'>\n" +
+            "      \n" +
+            "      <div class='contentSmall' data-link='/portal/intranet/rh-management?rid="+obj.getId()+"'>\n" +
+            "        <div class='status'> The Vacation request of "+userProfile.getFullName()+" has been "+obj.getStatus()+"</div>\n" +
+            "        <div class='lastUpdatedTime'>"+lastModifiedDate+"</div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "  </div>\n" +
+            "  <span class='remove-item' data-rest=''><i class='uiIconClose uiIconLightGray'></i></span>\n" +
+            "</li>";
     return NotificationInfo.instance()
 
-            .setFrom(obj.getUserId())
+            .setFrom(userId)
 
             .to(new ArrayList<String>(receivers))
 
-            .setTitle("The <a href='/portal/intranet/rh-management?rid="+obj.getId()+"'>Vacation request</a> of "+obj.getUserFullName()+" has been "+obj.getStatus()+".<br/>")
+            .setTitle(content)
 
             .key(getId());
 

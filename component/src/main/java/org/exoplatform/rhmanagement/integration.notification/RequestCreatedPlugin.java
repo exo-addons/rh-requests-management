@@ -21,14 +21,19 @@ import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
+import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import org.exoplatform.social.core.identity.model.Identity;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.webui.utils.TimeConvertUtils;
+
+import java.util.*;
 
 
 public class RequestCreatedPlugin extends BaseNotificationPlugin {
@@ -39,11 +44,12 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
   public final static String ID = "RequestCreatedPlugin";
 
+  IdentityManager identityManager;
 
-
-  public RequestCreatedPlugin(InitParams initParams) {
+  public RequestCreatedPlugin(InitParams initParams,IdentityManager identityManager) {
 
     super(initParams);
+    this.identityManager = identityManager;
 
   }
 
@@ -90,13 +96,35 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
     }
 
+    String userId=obj.getVacationRequestDTO().getUserId();
+    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
+
+    Calendar lastModified = Calendar.getInstance();
+    String lastModifiedDate=TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(NotificationPluginUtils.getLanguage(userId)), TimeConvertUtils.YEAR);
+    String avatarUrl=userProfile.getAvatarUrl();
+    if(avatarUrl==null)avatarUrl="/eXoSkin/skin/images/system/UserAvtDefault.png";
+    String content="<li class='unread clearfix'>\n" +
+            "  <div class='media'>\n" +
+            "    <div class='avatarXSmall pull-left'>\n" +
+            "      <img src='"+avatarUrl+"' alt='"+userProfile.getFullName()+"'>\n" +
+            "    </div>\n" +
+            "    <div class='media-body'>\n" +
+            "      \n" +
+            "      <div class='contentSmall' data-link='/portal/intranet/rh-management?rid="+obj.getVacationRequestDTO().getId()+"'>\n" +
+            "        <div class='status'><a class='user-name text-bold' href='javascript:void(0)'>"+userProfile.getFullName()+"</a> has created a new Request</div>\n" +
+            "        <div class='lastUpdatedTime'>"+lastModifiedDate+"</div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "  </div>\n" +
+            "  <span class='remove-item' data-rest=''><i class='uiIconClose uiIconLightGray'></i></span>\n" +
+            "</li>";
     return NotificationInfo.instance()
 
-            .setFrom(obj.getVacationRequestDTO().getUserId())
+            .setFrom(userId)
 
             .to(new ArrayList<String>(receivers))
 
-            .setTitle(obj.getVacationRequestDTO().getUserFullName() + " Created new <a href='/portal/intranet/rh-management?rid="+obj.getVacationRequestDTO().getId()+"'>Vacation request</a>.<br/>")
+            .setTitle(content)
 
             .key(getId());
 

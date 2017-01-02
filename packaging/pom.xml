@@ -46,7 +46,7 @@
               <finalName>rh-management</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <descriptors>
-                <descriptor>src/main/assemblies/rh-management.xml</descriptor>
+                <descriptor>src/main/assemblies/packaging.xml</descriptor>
               </descriptors>
             </configuration>
           </execution>

@@ -21,16 +21,19 @@ import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
+import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.webui.utils.TimeConvertUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class RequestRepliedPlugin extends BaseNotificationPlugin {
@@ -41,11 +44,12 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
   public final static String ID = "RequestRepliedPlugin";
 
+  IdentityManager identityManager;
 
-
-  public RequestRepliedPlugin(InitParams initParams) {
+  public RequestRepliedPlugin(InitParams initParams,IdentityManager identityManager) {
 
     super(initParams);
+    this.identityManager = identityManager;
 
   }
 
@@ -89,13 +93,35 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
     }
 
+    String userId=obj.getValidatorUserId();
+    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
+
+    Calendar lastModified = Calendar.getInstance();
+    String lastModifiedDate= TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(NotificationPluginUtils.getLanguage(userId)), TimeConvertUtils.YEAR);
+    String avatarUrl=userProfile.getAvatarUrl();
+    if(avatarUrl==null)avatarUrl="/eXoSkin/skin/images/system/UserAvtDefault.png";
+    String content="<li class='unread clearfix'>\n" +
+            "  <div class='media'>\n" +
+            "    <div class='avatarXSmall pull-left'>\n" +
+            "      <img src='"+avatarUrl+"' alt='"+userProfile.getFullName()+"'>\n" +
+            "    </div>\n" +
+            "    <div class='media-body'>\n" +
+            "      \n" +
+            "      <div class='contentSmall' data-link='/portal/intranet/rh-management?rid="+obj.getRequestId()+"'>\n" +
+            "        <div class='status'><a class='user-name text-bold' href='javascript:void(0)'>"+userProfile.getFullName()+"</a> has replied to your Request</div>\n" +
+            "        <div class='lastUpdatedTime'>"+lastModifiedDate+"</div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "  </div>\n" +
+            "  <span class='remove-item' data-rest=''><i class='uiIconClose uiIconLightGray'></i></span>\n" +
+            "</li>";
     return NotificationInfo.instance()
 
-            .setFrom(obj.getValidatorUserId())
+            .setFrom(userId)
 
             .to(new ArrayList<String>(receivers))
 
-            .setTitle(obj.getValidatorUserId() + " replied to your <a href='/portal/intranet/rh-management?rid="+obj.getRequestId()+"'>Vacation request</a>.<br/>")
+            .setTitle(content)
 
             .key(getId());
 

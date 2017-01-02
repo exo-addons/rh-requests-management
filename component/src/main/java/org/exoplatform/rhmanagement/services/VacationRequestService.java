@@ -48,13 +48,13 @@ public class VacationRequestService {
     this.vacationRequestDAO = new VacationRequestDAO();
   }
 
-  public VacationRequestDTO save(VacationRequestDTO entity) {
+  public VacationRequestDTO save(VacationRequestDTO entity, boolean newRequest) {
     if (entity == null) {
       throw new IllegalStateException("Parameter 'entity' is null");
     }
 
     VacationRequestEntity  vacationRequestEntity = null;
-   if (entity == null) {
+   if (newRequest) {
       vacationRequestEntity = vacationRequestDAO.create(convert(entity));
     } else {
       vacationRequestEntity = vacationRequestDAO.update(convert(entity));
