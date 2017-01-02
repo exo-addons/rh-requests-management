@@ -25,7 +25,7 @@
 				<include>org.juzu:juzu-plugins-jackson:jar</include>
 			</includes>
 			<scope>provided</scope>
-			<outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
 		</dependencySet>
 	</dependencySets>
 </assembly>
