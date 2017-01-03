@@ -102,9 +102,14 @@ public class RHRequestManagementController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getVacationRequestsOfCurrentUser() {
+  public List<VacationRequestDTO> getVacationRequestsOfCurrentUser(String status) {
     try {
-      return vacationRequestService.getVacationRequestsByUserId(currentUser,0,100);
+      if (status != null) {
+        return vacationRequestService.getVacationRequestsByUserIdAndStatus(currentUser,status,0,100);
+       }else{
+        return vacationRequestService.getVacationRequestsByUserId(currentUser,0,100);
+      }
+
     } catch (Throwable e) {
       log.error(e);
       return null;
@@ -115,12 +120,15 @@ public class RHRequestManagementController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getVacationRequestsForCurrentValidator() {
+  public List<VacationRequestDTO> getVacationRequestsForCurrentValidator(String status) {
     List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
     try {
       for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
         VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
-       if(requestDTO!=null) dtos.add(requestDTO);
+       if(requestDTO!=null) {
+         if(status!=null&&requestDTO.getStatus()!=status) continue;
+         dtos.add(requestDTO);
+       }
       }
     } catch (Throwable e) {
       log.error(e);
@@ -215,7 +223,7 @@ public class RHRequestManagementController {
     }
     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestCreatedPlugin.REQUEST, obj);
     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestCreatedPlugin.ID))).execute(ctx);
-    return getVacationRequestsOfCurrentUser();
+    return getVacationRequestsOfCurrentUser(null);
   }
 
 
@@ -251,7 +259,7 @@ public class RHRequestManagementController {
       commentService.remove(comment);
     }
     vacationRequestService.remove(obj);
-    return getVacationRequestsOfCurrentUser();
+    return getVacationRequestsOfCurrentUser(null);
   }
 
   @Ajax

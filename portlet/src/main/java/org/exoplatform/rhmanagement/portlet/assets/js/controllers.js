@@ -71,10 +71,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
         }
 
 
-        $scope.loadVacationRequestsToValidate= function() {
+        $scope.loadVacationRequestsToValidate= function(status) {
+            var url="";
+            if(status!=null){
+               url=url+ "&status="+status;
+            }
             $http({
                 method : 'GET',
-                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsForCurrentValidator')
+                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsForCurrentValidator')+url
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.vacationRequestsToValidate = data.data;
@@ -87,10 +91,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
             });
         };
 
-        $scope.loadMyVacationRequests = function() {
+        $scope.loadMyVacationRequests = function(status) {
+            var url="";
+            if(status!=null){
+                url=url+ "&status="+status;
+            }
             $http({
                 method : 'GET',
-                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsOfCurrentUser')
+                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsOfCurrentUser')+url
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.myVacationRequests = data.data;
@@ -398,8 +406,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
             return true;
         };
 
-        $scope.loadVacationRequestsToValidate();
-        $scope.loadMyVacationRequests();
+        $scope.loadVacationRequestsToValidate(null);
+        $scope.loadMyVacationRequests(null);
         $scope.loadBundles();
         $scope.showRequestfromUrl();
         $scope.refreshController = function() {

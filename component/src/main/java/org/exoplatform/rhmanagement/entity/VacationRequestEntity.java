@@ -35,6 +35,7 @@ import java.util.Date;
         @NamedQuery(name = "vacatioRequestEntity.findAllOrderBy", query = "SELECT a FROM HRVacatioRequestEntity a order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.count", query = "SELECT count(a.id) FROM HRVacatioRequestEntity a"),
         @NamedQuery(name = "vacatioRequestEntity.findByUserId", query = "SELECT a FROM HRVacatioRequestEntity a where a.userId = :userId order by a.id desc"),
+        @NamedQuery(name = "vacatioRequestEntity.findByUserIdAndStatus", query = "SELECT a FROM HRVacatioRequestEntity a where a.userId = :userId and a.status = :status  order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.findById", query = "SELECT a FROM HRVacatioRequestEntity a where a.id = :id") })
 @Data
 public class VacationRequestEntity {

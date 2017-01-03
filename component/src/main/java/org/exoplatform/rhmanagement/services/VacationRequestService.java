@@ -102,6 +102,19 @@ public class VacationRequestService {
     return dtos;
   }
 
+
+  public List<VacationRequestDTO> getVacationRequestsByUserIdAndStatus(String userId,String status, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getVacationRequests - Parameter 'offset' must be positive");
+    }
+    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequestsByUserIdAndStatus(userId,status,offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
   public long getVacationRequestesCount() {
     return vacationRequestDAO.getVacationRequestesCount();
   }
