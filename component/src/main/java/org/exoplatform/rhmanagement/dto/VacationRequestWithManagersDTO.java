@@ -33,25 +33,25 @@ public class VacationRequestWithManagersDTO {
     this.vacationRequestDTO = vacationRequestDTO;
   }
 
-  public ArrayList<EmployeesDTO> getManagers() {
+  public ArrayList<String> getManagers() {
     return managers;
   }
 
-  public void setManagers(ArrayList<EmployeesDTO> managers) {
+  public void setManagers(ArrayList<String> managers) {
     this.managers = managers;
   }
 
-  public ArrayList<EmployeesDTO> getSubstitutes() {
+  public ArrayList<String> getSubstitutes() {
     return substitutes;
   }
 
-  public void setSubstitutes(ArrayList<EmployeesDTO> substitutes) {
+  public void setSubstitutes(ArrayList<String> substitutes) {
     this.substitutes = substitutes;
   }
 
   private VacationRequestDTO              vacationRequestDTO  ;
-  private ArrayList<EmployeesDTO>         managers;
-  private ArrayList<EmployeesDTO>         substitutes;
+  private ArrayList<String>         managers;
+  private ArrayList<String>         substitutes;
 
 
 

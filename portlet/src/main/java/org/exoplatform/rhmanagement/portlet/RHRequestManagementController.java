@@ -207,16 +207,16 @@ public class RHRequestManagementController {
     vr.setStatus(PENDING);
     String substitutes="";
 
-    for (EmployeesDTO substitute : obj.getSubstitutes()){
-      substitutes=substitutes.concat(substitute.computeId()+",");
+    for (String substitute : obj.getSubstitutes()){
+      substitutes=substitutes.concat(substitute+",");
     }
     vr.setSubstitute(substitutes);
     vr=vacationRequestService.save(vr,true);
     obj.setVacationRequestDTO(vr);
-    for (EmployeesDTO manager : obj.getManagers()){
+    for (String manager : obj.getManagers()){
       ValidatorDTO val_=new ValidatorDTO();
       val_.setRequestId(vr.getId());
-      val_.setValidatorUserId(manager.computeId());
+      val_.setValidatorUserId(manager);
       val_.setUserId(currentUser);
       val_.setReply(PENDING);
      validatorService.save(val_);

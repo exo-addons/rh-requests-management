@@ -1,4 +1,4 @@
-define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/mentionsPlugin"  ], function($, jz, mentionsPlugin)  {
+define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation"], function($, jz,invite)  {
     var rhCtrl = function($scope, $q, $timeout, $http, $filter) {
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
@@ -33,13 +33,12 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 $scope.currentUser=data.data.currentUser;
                 console.log($scope.i18n);
                 deferred.resolve(data);
-                $scope.initMentions();
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
         }
 
-         $scope.getUrlParameterByName = function(name, url) {
+        $scope.getUrlParameterByName = function(name, url) {
             if (!url) {
                 url = window.location.href;
             }
@@ -56,8 +55,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
             var requestId = $scope.getUrlParameterByName('rid');
             if (typeof requestId !== 'undefined' && requestId !==null) {
                 $http({
-                   method : 'GET',
-                   url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +requestId
+                    method : 'GET',
+                    url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +requestId
                 }).then(function successCallback(data) {
                     $scope.setResultMessage(data, "success");
                     $scope.showVacationRequest(data.data);
@@ -74,7 +73,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
         $scope.loadVacationRequestsToValidate= function(status) {
             var url="";
             if(status!=null){
-               url=url+ "&status="+status;
+                url=url+ "&status="+status;
             }
             $http({
                 method : 'GET',
@@ -115,8 +114,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
             if (!$scope.validateVacationRequestForm($scope.newVacationRequest)) {
                 return;
             }
-            var managers= $scope.getMentions("managers");
-            var substitutes= $scope.getMentions("substitutes");
+            var managers= $scope.getUsers("managers");
+            var substitutes= $scope.getUsers("substitutes");
             $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
 
             $scope.newVacationRequestWithManagers  = {
@@ -138,7 +137,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 $scope.myVacationRequests = data.data;
                 $scope.showForm = false;
                 $scope.newVacationRequest = {id : null };
-                $scope.initMentions();
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
@@ -326,72 +324,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
             });
         }
 
-        $scope.initMentions = function() {
 
-            rhContainer.find('#substitutes').exoMentions({
-                onDataRequest : function(mode, query, callback) {
-                    var _this = this;
-                    rhContainer.jzAjax('RHRequestManagementController.findUsers()', {
-                        data : {
-                            query : query
-                        },
-                        success : function(data) {
-                            callback.call(_this, data);
-                        }
-                    });
-                },
-                elastic : {
-                    maxHeight : '52px',
-                    minHeight : '22px',
-                    marginButton : '4px',
-                    enableMargin : false
-                },
-                messages : {
-                    helpSearch: $scope.i18n.mentionsTypeToSearchUsers,
-                    searching: $scope.i18n.mentionsSearchingFor,
-                    foundNoMatch : $scope.i18n.mentionsNoMatchingForUsers
-                },
-                minChars : 3,
-                cacheResult : true,
-            });
-
-            rhContainer.find('#managers').exoMentions({
-                onDataRequest : function(mode, query, callback) {
-                    var _this = this;
-                    rhContainer.jzAjax('RHRequestManagementController.findUsers()', {
-                        data : {
-                            query : query
-                        },
-                        success : function(data) {
-                            callback.call(_this, data);
-                        }
-                    });
-                },
-                elastic : {
-                    maxHeight : '52px',
-                    minHeight : '22px',
-                    marginButton : '4px',
-                    enableMargin : false
-                },
-                messages : {
-                    helpSearch: $scope.i18n.mentionsTypeToSearchUsers,
-                    searching: $scope.i18n.mentionsSearchingFor,
-                    foundNoMatch : $scope.i18n.mentionsNoMatchingForUsers
-                },
-                minChars : 3,
-                cacheResult : true,
-            });
-
-        }
-
-
-        $scope.getMentions = function(id) {
-            var data = $("#"+id).parents('form:first')
-                .parent().data(id);
-            if(data && data.mentions && data.mentions.length > 0) {
-                return data.mentions;
-            }
-            return null;
+        $scope.getUsers = function(id) {
+            var data = $("#"+id).val().split(",");
+            return data;
         }
 
         // function which set the result message with the given style
@@ -410,6 +346,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
         $scope.loadMyVacationRequests(null);
         $scope.loadBundles();
         $scope.showRequestfromUrl();
+
+
+
         $scope.refreshController = function() {
             try {
                 $scope.$digest()
@@ -417,6 +356,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax", "SHARED/ment
                 // No need to display errors in console
             }
         };
+        var rsetUrl="/rest/rhrequest/uers/find";
+        invite.build('managers', rsetUrl,'choose user');
+        invite.build('substitutes', rsetUrl,'choose user');
         $('#rhAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();
     };

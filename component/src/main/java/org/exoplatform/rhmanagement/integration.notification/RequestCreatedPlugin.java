@@ -86,8 +86,8 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
     try {
 
-      for (EmployeesDTO manager : obj.getManagers()){
-        receivers.add(manager.computeId());
+      for (String manager : obj.getManagers()){
+        receivers.add(manager);
       }
 
     } catch (Exception ex) {
