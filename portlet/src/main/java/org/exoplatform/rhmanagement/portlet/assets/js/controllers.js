@@ -1,4 +1,4 @@
-define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation"], function($, jz,invite)  {
+define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","SHARED/calendar"], function($, jz,invite,calendar)  {
     var rhCtrl = function($scope, $q, $timeout, $http, $filter) {
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
@@ -8,8 +8,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.comments = [];
         $scope.vrmanagers = [];
         $scope.vrsubs = [];
-        $scope.showForm = false;
+        $scope.calEvents = [];
+        $scope.showForm = true;
         $scope.showDetails = false;
+        $scope.showList = false;
+        $scope.showCal = false;
         $scope.newVacationRequest = {
             id : null
         };
@@ -23,6 +26,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             validatorUserId : null
         };
 
+        $scope.toggleView = function(){
+            $scope.showCal = !$scope.showCal;
+        }
 
         $scope.loadBundles = function() {
             $http({
@@ -81,7 +87,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.vacationRequestsToValidate = data.data;
-
+                if($scope.vacationRequestsToValidate.length>0){
+                    $scope.showList=true;
+                    $scope.showForm=false;
+                }
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
@@ -101,7 +110,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.myVacationRequests = data.data;
-
+                if($scope.myVacationRequests.length>0){
+                    $scope.showList=true;
+                    $scope.showForm=false;
+                }
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
@@ -177,6 +189,24 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.loadComments(vacationRequest);
             $scope.showDetails = true;
         };
+
+
+        $scope.showVacationRequestById = function(id) {
+
+            $http({
+                method : 'GET',
+                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +id
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.showVacationRequest(data.data);
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
 
         $scope.loadSubstitues = function(vacationRequest) {
             $http({
@@ -359,6 +389,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         var rsetUrl="/rest/rhrequest/uers/find";
         invite.build('managers', rsetUrl,'choose user');
         invite.build('substitutes', rsetUrl,'choose user');
+        calendar.build('myCalendar');
         $('#rhAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();
     };

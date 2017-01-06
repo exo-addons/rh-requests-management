@@ -3,7 +3,69 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_3 http://www.gatein.org/xml/ns/gatein_resources_1_3"
     xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_3">
+    <module>
+        <name>moment</name>
+        <script>
+            <adapter>
+                (function() {
+                var oldJQuery = this.jQuery;
+                this.jQuery = jquery;
 
+                <include>/javascript/moment.js</include>
+
+                this.jQuery = oldJQuery;
+                return this.moment;
+                })();
+            </adapter>
+        </script>
+        <depends>
+            <module>jquery</module>
+            <as>jquery</as>
+        </depends>
+    </module>
+
+
+
+    <module>
+        <name>fullcalendar</name>
+        <script>
+            <adapter>
+                (function() {
+                var oldJQuery = this.jQuery;
+                this.jQuery = jquery;
+
+                <include>/javascript/fullcalendar.js</include>
+
+                this.jQuery = oldJQuery;
+                return this.fullcalendar;
+                })();
+            </adapter>
+        </script>
+        <depends>
+            <module>jquery</module>
+            <as>jquery</as>
+        </depends>
+        <depends>
+            <module>moment</module>
+            <as>moment</as>
+        </depends>
+
+    </module>
+
+    <module>
+        <name>calendar</name>
+        <script>
+            <path>/javascript/calendar.js</path>
+        </script>
+        <depends>
+            <module>jquery</module>
+            <as>$</as>
+        </depends>
+        <depends>
+            <module>fullcalendar</module>
+            <as>fullcalendar</as>
+        </depends>
+    </module>
 
 </gatein-resources>
 

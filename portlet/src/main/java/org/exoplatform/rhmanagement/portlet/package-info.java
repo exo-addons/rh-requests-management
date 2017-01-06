@@ -19,7 +19,7 @@
 @Less("style/sample-addon.less")
 @Stylesheets({
         @Stylesheet(id = "jQueryUISkin", value = "style/jquery-ui.css") ,
-        @Stylesheet(id = "angularMaterial", value = "style/angular-material.min.css") ,
+        @Stylesheet(id = "fullcalendarSkin", value = "style/fullcalendar.css") ,
         @Stylesheet(id = "sample-addonSkin", value = "style/sample-addon.css") })
 @Assets("*")
 package org.exoplatform.rhmanagement.portlet;

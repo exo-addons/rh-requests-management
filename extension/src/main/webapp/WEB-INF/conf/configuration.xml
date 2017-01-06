@@ -3,4 +3,5 @@
 	xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
 	xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 	<import>war:/conf/rh-management/portal/portal-configuration.xml</import>
+
 </configuration>
