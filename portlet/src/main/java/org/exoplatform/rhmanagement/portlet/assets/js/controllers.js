@@ -28,6 +28,13 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.toggleView = function(){
             $scope.showCal = !$scope.showCal;
+            $text = $(".show-calender").text();
+            if($text.indexOf("Show Calendar") >= 0){
+                $text = "Hide Calendar";
+            }else{
+                $text = "Show Calendar";
+            }
+            $text = $(".show-calender").text($text);
         }
 
         $scope.loadBundles = function() {
@@ -126,6 +133,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             if (!$scope.validateVacationRequestForm($scope.newVacationRequest)) {
                 return;
             }
+
+            console.log("New vacation");
+            console.log($scope.newVacationRequest);
+
             var managers= $scope.getUsers("managers");
             var substitutes= $scope.getUsers("substitutes");
             $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
@@ -208,6 +219,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         }
 
 
+
         $scope.loadSubstitues = function(vacationRequest) {
             $http({
                 data : vacationRequest,
@@ -258,7 +270,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.comments = data.data;
-
+                console.log(data);
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
@@ -271,7 +283,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.saveComment = function() {
 
             $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
+
+
             $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
+            $scope.newComment.postedTime= new Date();
+            $scope.newComment.posterId=$scope.vacationRequesttoShow.userFullName;
 
             $http({
                 data : $scope.newComment,
@@ -281,9 +297,12 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 },
                 url : rhContainer.jzURL('RHRequestManagementController.saveComment')
             }).then(function successCallback(data) {
+
                 $scope.setResultMessage(data, "success");
                 $scope.comments.push($scope.newComment);
-
+				$scope.newComment = {
+                    id : null
+                };
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);

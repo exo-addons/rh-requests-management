@@ -845,7 +845,8 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: #eeeeee url("/rh-management-portlet/skin/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x;
+	/*background: #eeeeee url("/rh-management-portlet/skin/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x;*/
+	background: #eeeeee;
 	color: #333333;
 }
 .ui-widget-content a {
@@ -920,7 +921,8 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
 	border: 1px solid #fed22f;
-	background: #ffe45c url("/rh-management-portlet/skin/images/ui-bg_highlight-soft_75_ffe45c_1x100.png") 50% top repeat-x;
+	/*background: #ffe45c url("/rh-management-portlet/skin/images/ui-bg_highlight-soft_75_ffe45c_1x100.png") 50% top repeat-x;*/
+	background: #ffe45c;
 	color: #363636;
 }
 .ui-state-highlight a,

@@ -27,5 +27,9 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         } catch(e) {
             console.log(e);
         }
+
     });
+
+    $( "#fromDate, #toDate" ).datepicker();
+    $( "#fromDate, #toDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 });

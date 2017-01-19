@@ -25,16 +25,107 @@
 }
 
 body {
-	margin: 40px 10px;
+	/*margin: 40px 10px;*/
 	padding: 0;
 	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 	font-size: 14px;
 }
+input, select{width : 100%}
 #myCalendar {
 	max-width: 900px;
 	margin: 0 auto;
 	padding: 10px;
+	background: #FFF;
 }
 
+.manage-view {
+    padding: 15px;
+    text-align: center;
+}
+.form-horizontal{
+    padding: 20px;
+}
+td.RightBodyTDContainer{
+    position : relative;
+}
+.vacationRequest-container{
+    /*position: absolute;
+    top: 0;
+    left: -1px;
+    background: rgba(81, 81, 81, 0.58);
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    -ms-transition-duration: .5s;
+    transition-duration: .5s;*/
+}
+div#vacationRequestForm {
+    position: relative;
+    background: #FFF;
+    z-index: 1;
+    margin: auto;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.close-vacationRequest{
+    float: right;
+    line-height: 15px;
+    padding: 0;
+    height: 22px;
+    width: 22px;
+}
+.table-project .row-item {
+    height: 35px;
+}
+.uiIconExt-rh-managements:before{
+    content: "\e6e1";
+}
+.elementDetail{
 
+}
+.elementDetail .ligne{
+    padding: 5px 15px;
+}
+.elementDetail .ligne > b{ margin-left: 0}
+.elementDetail .ligne:nth-child(even){
+    background : #f8f8f8;
+}
+.manager{margin-top: 20px;}
+.manager > b{margin-bottom: 10px;}
+.commmentLeft {
+    float: left;
+}
+.commentRight {
+    margin-left: 45px;
+}
+.commentRight textarea{width: 100%}
+a.actionIcon.validate:hover i{color: #39c522}
+a.actionIcon.deny:hover i{color: #cc543c}
 
+/* */
+/*  -- Date Pick --  */
+/* */
+
+.ui-widget-header{
+    background: #36669b;
+    border-color: #36669b;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,
+ .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
+ .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus,
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+    background : rgb(149, 172, 197);
+    border-color : rgb(149, 172, 197);
+    color: #333;
+}
+.uiBox.elementResume {
+    position: absolute;
+    top: 196px;
+    background: #FFF;
+    z-index: 5;
+    width: 30%;
+    right: 0;
+}
