@@ -134,6 +134,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 return;
             }
 
+            $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();
+            $scope.newVacationRequest.toDate = new Date($("#toDate").val()).getTime();
+
             console.log("New vacation");
             console.log($scope.newVacationRequest);
 
