@@ -6,7 +6,7 @@
 	<portlet>
 		<portlet-name>RHRequestManagementControllerPortlet</portlet-name>
 		<display-name xml:lang="EN">RH Request Management Controller Portlet</display-name>
-		<portlet-class>org.exoplatform.rhmanagement.portlet.RHRequestManagementControllerPortlet</portlet-class>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhManagement.RHRequestManagementControllerPortlet</portlet-class>
 		<init-param>
 			<name>juzu.run_mode</name>
 			<value>${juzu.run_mode:prod}</value>

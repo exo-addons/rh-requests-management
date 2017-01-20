@@ -22,7 +22,7 @@
         @Stylesheet(id = "fullcalendarSkin", value = "style/fullcalendar.css") ,
         @Stylesheet(id = "sample-addonSkin", value = "style/sample-addon.css") })
 @Assets("*")
-package org.exoplatform.rhmanagement.portlet;
+package org.exoplatform.rhmanagement.portlet.rhManagement;
 
 import juzu.Application;
 import juzu.plugin.asset.Assets;

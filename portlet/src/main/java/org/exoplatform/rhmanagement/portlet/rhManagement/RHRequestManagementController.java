@@ -1,4 +1,4 @@
-package org.exoplatform.rhmanagement.portlet;
+package org.exoplatform.rhmanagement.portlet.rhManagement;
 
 import java.util.*;
 

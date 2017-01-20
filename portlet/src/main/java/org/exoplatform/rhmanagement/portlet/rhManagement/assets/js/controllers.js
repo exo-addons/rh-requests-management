@@ -303,7 +303,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
                 $scope.setResultMessage(data, "success");
                 $scope.comments.push($scope.newComment);
-				$scope.newComment = {
+                $scope.newComment = {
                     id : null
                 };
                 $timeout(function() {
