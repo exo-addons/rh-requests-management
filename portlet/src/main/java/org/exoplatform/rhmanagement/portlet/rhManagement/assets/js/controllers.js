@@ -2,7 +2,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
     var rhCtrl = function($scope, $q, $timeout, $http, $filter) {
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
+
+
         $scope.currentUser="";
+        $scope.sickBalance="";
+        $scope.holidaysBalance="";
         $scope.vacationRequestsToValidate = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
@@ -13,6 +17,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showDetails = false;
         $scope.showList = false;
         $scope.showCal = false;
+        $scope.showSick = false;
+        $scope.showHollidays = false;
         $scope.newVacationRequest = {
             id : null
         };
@@ -25,6 +31,19 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vacationRequesttoShow = {
             validatorUserId : null
         };
+
+        $scope.showBalance= function(){
+           if( $scope.newVacationRequest.type == 'holiday'){
+               $scope.showSick=false;
+               $scope.showHollidays=true;
+           } else if( $scope.newVacationRequest.type == 'sick'){
+               $scope.showSick=true;
+               $scope.showHollidays=false;
+           } else{
+               $scope.showSick=false;
+               $scope.showHollidays=false;
+           }
+        }
 
         $scope.toggleView = function(){
             $scope.showCal = !$scope.showCal;
@@ -44,6 +63,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
                 $scope.currentUser=data.data.currentUser;
+                $scope.sickBalance=data.data.sickBalance;
+                $scope.holidaysBalance=data.data.holidaysBalance;
                 console.log($scope.i18n);
                 deferred.resolve(data);
             }, function errorCallback(data) {

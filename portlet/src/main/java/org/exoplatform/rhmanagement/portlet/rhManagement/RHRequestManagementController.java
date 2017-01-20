@@ -25,6 +25,7 @@ import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugi
 import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.CommentService;
+import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.services.ValidatorService;
@@ -64,6 +65,9 @@ public class RHRequestManagementController {
 
   @Inject
   SpaceService spaceService;
+
+  @Inject
+  UserDataService userDataService;
 
 
   @Inject
@@ -341,11 +345,15 @@ public class RHRequestManagementController {
           // Nothing to do, this happens sometimes
         }
       }
+
       data.set("currentUser",currentUser);
+      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
+      data.set("sickBalance",userRHDataDTO.getNbrSickdays());
+      data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
       bundleString = data.toString();
       return Response.ok(bundleString);
     } catch (Throwable e) {
-      log.error("error while getting categories", e);
+      log.error("error while getting bundele", e);
       return Response.status(500);
     }
   }
