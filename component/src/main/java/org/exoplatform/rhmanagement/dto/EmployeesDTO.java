@@ -21,32 +21,106 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-  @AllArgsConstructor
-  @NoArgsConstructor
+
   public class EmployeesDTO {
 
-    public EmployeesDTO(String id, String value) {
-      this.id = id;
-      this.value = value;
-    }
+  private  long id;
 
-    String id;
+  private  String userId;
 
-    String name;
+  private  String name;
 
-    String avatar;
+  private  String avatar;
 
-    String type;
+  private  String type;
 
-    String value;
+  private  String value;
 
-    public String computeId() {
-      if (!StringUtils.isBlank(id)) {
-        id = id.replace("@", "");
-      }
+  private long cin;
+
+  private float nbrHolidays;
+
+  private float nbrSickdays;
+
+  private long socialSecNumber;
+
+    public long getId() {
       return id;
     }
 
+    public void setId(long id) {
+      this.id = id;
+    }
 
-}
+    public String getUserId() {
+      return userId;
+    }
+
+    public void setUserId(String userId) {
+      this.userId = userId;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public String getAvatar() {
+      return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+      this.avatar = avatar;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    public void setType(String type) {
+      this.type = type;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    public void setValue(String value) {
+      this.value = value;
+    }
+
+    public long getCin() {
+      return cin;
+    }
+
+    public void setCin(long cin) {
+      this.cin = cin;
+    }
+
+    public float getNbrHolidays() {
+      return nbrHolidays;
+    }
+
+    public void setNbrHolidays(float nbrHolidays) {
+      this.nbrHolidays = nbrHolidays;
+    }
+
+    public float getNbrSickdays() {
+      return nbrSickdays;
+    }
+
+    public void setNbrSickdays(float nbrSickdays) {
+      this.nbrSickdays = nbrSickdays;
+    }
+
+    public long getSocialSecNumber() {
+      return socialSecNumber;
+    }
+
+    public void setSocialSecNumber(long socialSecNumber) {
+      this.socialSecNumber = socialSecNumber;
+    }
+  }

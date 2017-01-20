@@ -53,6 +53,18 @@
       <column name="REPLY" type="NVARCHAR(50)" defaultValue="pending"></column>
     </createTable>
 
+    <createTable tableName="RH_USER_DATA" >
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="USER_ID" type="NVARCHAR(50)"></column>
+      <column name="CIN" type="BIGINT"></column>
+      <column name="NB_HOLIDAYS" type="FLOAT"></column>
+      <column name="NB_SICK_DAYS" type="FLOAT"></column>
+      <column name="SOC_NUMBER" type="BIGINT"></column>
+    </createTable>
+
+
     <modifySql dbms="mysql">
       <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
