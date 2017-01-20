@@ -183,9 +183,15 @@ public class RHRequestManagementController {
   public List<EmployeesDTO>  getSubstitutesByRequestID(@Jackson VacationRequestDTO obj) {
     try {
       List<EmployeesDTO> userDTOs = new ArrayList<EmployeesDTO>();
+      EmployeesDTO employeesDTO=new EmployeesDTO();
       for(String userId : obj.getSubstitute().split(",")){
         Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
-        if(id!=null)userDTOs.add(new EmployeesDTO(userId, id .getProfile().getFullName(), null, "contact", userId));
+
+        if(id!=null){
+          employeesDTO.setUserId(userId);
+          employeesDTO.setValue(id .getProfile().getFullName());
+          userDTOs.add(employeesDTO);
+        }
       }
       return userDTOs;
     } catch (Throwable e) {
@@ -343,29 +349,6 @@ public class RHRequestManagementController {
       return Response.status(500);
     }
   }
-
-
-
-  @Resource
-  @Ajax
-  @MimeType.JSON
-  @Jackson
-  public List<EmployeesDTO> findUsers(String query) throws Exception {
-
-    ProfileFilter identityFilter = new ProfileFilter();
-    identityFilter.setName(query);
-    List<EmployeesDTO> userDTOs = new ArrayList<EmployeesDTO>();
-    List<Identity> identities = Arrays.asList(identityManager.getIdentitiesByProfileFilter(OrganizationIdentityProvider.NAME, identityFilter, false).load(0, 10));
-    if (identities != null && identities.size() > 0) {
-      for (Identity id : identities) {
-        Profile profile=id.getProfile();
-        userDTOs.add(new EmployeesDTO("@" + id.getRemoteId(), profile.getFullName(), null, "contact", id.getRemoteId()));
-
-      }
-  }
-    return userDTOs;
-  }
-
 
 
   private ResourceBundle getResourceBundle(Locale locale) {
