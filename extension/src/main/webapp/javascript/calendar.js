@@ -11,6 +11,7 @@
                 editable: true,
                 eventClick: function(calEvent, jsEvent, view) {
                     angular.element(rhCtrl).scope().showVacationRequestById(calEvent.id);
+                    angular.element(rhCtrl).scope().showVacationResume(calEvent.id);
                 },
                 navLinks: true,
                 eventLimit: true,
