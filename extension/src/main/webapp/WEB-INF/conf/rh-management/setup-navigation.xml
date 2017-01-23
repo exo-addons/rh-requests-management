@@ -4,12 +4,6 @@
     <priority>1</priority>
     <page-nodes>
         <node>
-            <uri>rh-management</uri>
-            <name>rh-management</name>
-            <label>HR request Management</label>
-            <page-reference>portal::intranet::rh-management</page-reference>
-        </node>
-        <node>
             <uri>rh-administration</uri>
             <name>rh-administration</name>
             <label>HR Admin</label>
