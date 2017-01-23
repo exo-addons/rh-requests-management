@@ -83,5 +83,8 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
       } catch(e) {
     	  console.log(e);
       }
+
 	});
+
+
 });

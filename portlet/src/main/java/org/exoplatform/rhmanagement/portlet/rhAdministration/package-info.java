@@ -7,9 +7,11 @@
     @Script(id = "ngSanitize", value = "js/lib/angular-sanitize.js", depends = "angularjs"),
     // services and controllers js are AMD modules, required by controllers.js
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" }),
-    @Script(id = "rhAdminAddon", value = "js/cs-ticket.js", depends = { "controllers" }) })
-@Less("style/cs-ticket.less")
-@Stylesheets({@Stylesheet(id = "TicketSkin", value = "style/cs-ticket-parent.css")})
+    @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers" }) })
+
+@Stylesheets({
+        @Stylesheet(id = "sample-addonSkin", value = "style/rh-admin.css") })
+
 @Assets("*")
 package org.exoplatform.rhmanagement.portlet.rhAdministration;
 

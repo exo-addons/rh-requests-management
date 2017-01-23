@@ -4,14 +4,21 @@
         <div id="resultMessage" ng-show="(resultMessage.length > 0)" class="result-message alert {{resultMessageClass}}">
             <i class="{{resultMessageClassExt}}"></i> {{resultMessage}}
 </div>
-        <div id="hrAdminApplication">
-		
-		<div id="employeesList" ng-show="showEmployees">
-            <h4 class="titleWithBorder">Employees List</h4>
-<!-- <div class="controls"> -->
-<!-- <input ng-model="def" id="search" class="form-control" placeholder="Filter text" ng-change="vm.setPage(vm.pager.currentPage)"> -->
-<!-- </div> -->
-            <br/>
+        <div id="hrAdminApplication" style="padding: 5px;">
+
+<ul class="tab">
+  <li><a href="javascript:void(0)" class="tablinks" ng-click="openTab(event, 'employees')">Employees List</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" ng-click="openTab(event, 'requests')">Requests List</a></li>
+</ul>
+
+<div id="employees" class="tabcontent" style="display: block;">
+
+<div id="employeesList" ng-show="showEmployees">
+<h4 class="titleWithBorder">Employees List</h4>
+                <!-- <div class="controls"> -->
+                <!-- <input ng-model="def" id="search" class="form-control" placeholder="Filter text" ng-change="vm.setPage(vm.pager.currentPage)"> -->
+                <!-- </div> -->
+<br/>
 <table id="employeesTable" class="table uiGrid table-hover table-striped">
 <thead>
 <tr>
@@ -19,132 +26,133 @@
 <img ng-show="orderByField == 'title' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'title' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
-                        </th>
+                            </th>
 <th> <a href="#" ng-click="orderByField='type'; reverseSort = !reverseSort">ID Number
 <img ng-show="orderByField == 'type' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'type' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
-                        </th>
+                            </th>
 <th> <a href="#" ng-click="orderByField='severity'; reverseSort = !reverseSort">Security Number
 <img ng-show="orderByField == 'severity' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'severity' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
-                        </th>
+                            </th>
 <th> <a href="#" ng-click="orderByField='startDate'; reverseSort = !reverseSort">Holidays Balance
 <img ng-show="orderByField == 'startDate' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'startDate' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
-                        </th>
+                            </th>
 <th> <a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">Sick days balance
 <img ng-show="orderByField == 'assignee' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'assignee' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
-                        </th>
+                            </th>
 <th>Actions</th>
-                    </tr>
+                        </tr>
 </thead>
-                <tbody>
-                    <tr ng-repeat="userRhData in vm.items | orderBy:orderByField:reverseSort">
-                        <td><a href="" data-ng-click="loadVacationRequests(userRhData.userId)">{{userRhData.name}}</a>
+                    <tbody>
+                        <tr ng-repeat="userRhData in vm.items | orderBy:orderByField:reverseSort">
+                            <td><a href="" data-ng-click="loadVacationRequests(userRhData.userId)">{{userRhData.name}}</a>
 </td>
-                        <td>
-                            <span data-ng-hide="editMode">{{userRhData.cin}}</span>
+                            <td>
+                                <span data-ng-hide="editMode">{{userRhData.cin}}</span>
 <input data-ng-show="editMode" ng-model="userRhData.cin" id="cin" class="form-control" placeholder="">
 </td>
-                        <td>
-                            <span data-ng-hide="editMode">{{userRhData.socialSecNumber}}</span>
+                            <td>
+                                <span data-ng-hide="editMode">{{userRhData.socialSecNumber}}</span>
 <input data-ng-show="editMode" ng-model="userRhData.socialSecNumber" id="socialSecNumber" class="form-control" placeholder="">
 </td>
-                        <td>
-                            <span data-ng-hide="editMode">{{userRhData.nbrHolidays}}</span>
+                            <td>
+                                <span data-ng-hide="editMode">{{userRhData.nbrHolidays}}</span>
 <input data-ng-show="editMode" ng-model="userRhData.nbrHolidays" id="nbrHolidays" class="form-control" placeholder="">
 </td>
-                        <td>
-                            <span data-ng-hide="editMode">{{userRhData.nbrSickdays}}</span>
+                            <td>
+                                <span data-ng-hide="editMode">{{userRhData.nbrSickdays}}</span>
 <input data-ng-show="editMode" ng-model="userRhData.nbrSickdays" id="nbrSickdays" class="form-control" placeholder="">
 </td>
 
-                        <td>
-							<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Edit" rel="tooltip" data-ng-hide="editMode" ng-click="editMode = true; editUserRhData(userRhData)">
-<i class="uiIconEdit uiIconLightGray"></i>
+                            <td>
+                                <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Edit" rel="tooltip" data-ng-hide="editMode" ng-click="editMode = true; editUserRhData(userRhData)">
+                                    <i class="uiIconEdit uiIconLightGray"></i>
 </a>
-<button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; saveUserHRData(userRhData)" class="btn btn-primary">Save</button>
+                                <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; saveUserHRData(userRhData)" class="btn btn-primary">Save</button>
 <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
-</td>
+                            </td>
 </tr>
-</tbody>
+                    </tbody>
 </table>
-			
-			  <div id="wrapper">
-    <div id="leftcolumn" class="pagination uiPageIterator">
-        <!-- pager -->
-        <ul ng-if="vm.pager.pages.length" class="pagination">
-            <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                <a ng-click="vm.setPage(1)">First</a>
-</li>
-            <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
-</li>
-            <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
-                <a ng-click="vm.setPage(page)">{{page}}</a>
-</li>
-            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
-</li>
-            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
-</li>
-        </ul>
-</div>
-    </div>
-</div>
-<!-- User's requests -->
-<div id="requestsList" ng-hide="showEmployees"">
 
-<a class="actionIcon" style="float: right;" ng-click="showEmployees = true">
-<i class="uiIconClose"></i>
+                <div id="wrapper">
+                    <div id="leftcolumn" class="pagination uiPageIterator">
+                        <!-- pager -->
+                        <ul ng-if="vm.pager.pages.length" class="pagination">
+                            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                                <a ng-click="vm.setPage(1)">First</a>
+</li>
+                            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+</li>
+                            <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
+                                <a ng-click="vm.setPage(page)">{{page}}</a>
+</li>
+                            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+</li>
+                            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                                <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+</li>
+                        </ul>
+</div>
+                </div>
+</div>
+			
+			            <!-- User's requests -->
+            <div id="requestsList" ng-hide="showEmployees">
+
+<a class="actionIcon " style="float: right; " ng-click="showEmployees=true ">
+<i class="uiIconClose "></i>
 </a>
 
             <br/>
-<table id="requestsTable" class="table uiGrid table-hover table-striped">
+<table id="requestsTable " class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
-<th> <a href="#" ng-click="orderByField='title'; reverseSort = !reverseSort">User Name
-<img ng-show="orderByField == 'title' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'title' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">User Name
+<img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th> <a href="#" ng-click="orderByField='title'; reverseSort = !reverseSort">Type
-<img ng-show="orderByField == 'title' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'title' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Type
+<img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th> <a href="#" ng-click="orderByField='type'; reverseSort = !reverseSort">Number of days
-<img ng-show="orderByField == 'type' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'type' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">Number of days
+<img ng-show="orderByField=='type' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='type' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th> <a href="#" ng-click="orderByField='severity'; reverseSort = !reverseSort">From
-<img ng-show="orderByField == 'severity' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'severity' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">From
+<img ng-show="orderByField=='severity' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='severity' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th> <a href="#" ng-click="orderByField='startDate'; reverseSort = !reverseSort">To
-<img ng-show="orderByField == 'startDate' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'startDate' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">To
+<img ng-show="orderByField=='startDate' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='startDate' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th> <a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">Status
-<img ng-show="orderByField == 'assignee' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
-<img ng-show="orderByField == 'assignee' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+<th> <a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">Status
+<img ng-show="orderByField=='assignee' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='assignee' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
 
 </tr>
 </thead>
 <tbody>
-<tr ng-repeat="vacationRequest in vacationRequests | orderBy:orderByField:reverseSort">
-<td><a href="/portal/intranet/profile/{{vacationRequest.userId}}">{{vacationRequest.userFullName}}</a>
+<tr ng-repeat="vacationRequest in vacationRequests | orderBy:orderByField:reverseSort ">
+<td><a href="/portal/intranet/profile/{{vacationRequest.userId}} ">{{vacationRequest.userFullName}}</a>
 </td>
 <td>
 <span>{{vacationRequest.type }}</span>
@@ -168,7 +176,72 @@
 			
 
 </div>
+</div>
 
+<div id="requests" class="tabcontent">
+<h4 class="titleWithBorder">Requests List</h4>
+
+<table id="requestsTable " class="table uiGrid table-hover table-striped ">
+<thead>
+<tr>
+<th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">User Name
+<img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+<th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Type
+<img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+<th> <a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">Number of days
+<img ng-show="orderByField=='type' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='type' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+<th> <a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">From
+<img ng-show="orderByField=='severity' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='severity' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+<th> <a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">To
+<img ng-show="orderByField=='startDate' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='startDate' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+<th> <a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">Status
+<img ng-show="orderByField=='assignee' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField=='assignee' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                        </th>
+
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="vacationRequest in allVacationRequests | orderBy:orderByField:reverseSort ">
+<td><a href="/portal/intranet/profile/{{vacationRequest.userId}} ">{{vacationRequest.userFullName}}</a>
+</td>
+<td>
+<span>{{vacationRequest.type }}</span>
+</td>
+<td>
+<span>{{vacationRequest.daysNumber}}</span>
+</td>
+<td>
+<span>{{vacationRequest.fromDate | date:'yyyy-MM-dd'}}</span>
+</td>
+<td>
+<span>{{vacationRequest.toDate | date:'yyyy-MM-dd'}}</span>
+</td>
+<td>
+<span>{{vacationRequest.status}}</span>
+</td>
+
+</tr>
+</tbody>
+</table>
+
+</div>
 
 </div>
 </div>

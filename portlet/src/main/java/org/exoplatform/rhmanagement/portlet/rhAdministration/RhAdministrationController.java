@@ -116,6 +116,22 @@ public class RhAdministrationController {
     }
   }
 
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<VacationRequestDTO> getAllVacationRequests() {
+    try {
+
+      return vacationRequestService.getVacationRequests(0,100);
+
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
   @Ajax
   @juzu.Resource
   @MimeType.JSON
