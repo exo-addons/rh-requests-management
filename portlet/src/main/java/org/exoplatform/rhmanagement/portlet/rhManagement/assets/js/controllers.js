@@ -15,6 +15,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.calEvents = [];
         $scope.showForm = true;
         $scope.showDetails = false;
+        $scope.showResume = false;
         $scope.showList = false;
         $scope.showCal = false;
         $scope.showSick = false;
@@ -52,6 +53,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $text = "Hide Calendar";
             }else{
                 $text = "Show Calendar";
+                $scope.showResume = false;
             }
             $text = $(".show-calender").text($text);
         }
@@ -158,8 +160,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();
             $scope.newVacationRequest.toDate = new Date($("#toDate").val()).getTime();
 
-            console.log("New vacation");
-            console.log($scope.newVacationRequest);
 
             var managers= $scope.getUsers("managers");
             var substitutes= $scope.getUsers("substitutes");
@@ -243,6 +243,33 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         }
 
 
+        $scope.showVacationResume = function(id) {
+
+            $http({
+                method : 'GET',
+                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +id
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.showVacationRequest(data.data);
+
+                /*POPUP HERE*/
+
+                $scope.loadManagers(data.data);
+                $scope.loadSubstitues(data.data);
+                $scope.loadComments(data.data);
+
+                $scope.showResume = true;
+
+                /*POPUP HERE*/
+
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
 
         $scope.loadSubstitues = function(vacationRequest) {
             $http({
@@ -294,7 +321,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.comments = data.data;
-                console.log(data);
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
