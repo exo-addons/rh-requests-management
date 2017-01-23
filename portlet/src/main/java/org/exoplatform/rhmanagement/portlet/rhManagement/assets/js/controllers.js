@@ -1,4 +1,4 @@
-define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","SHARED/calendar"], function($, jz,invite,calendar)  {
+define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar"], function($, jz,invite,calendar)  {
     var rhCtrl = function($scope, $q, $timeout, $http, $filter) {
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();

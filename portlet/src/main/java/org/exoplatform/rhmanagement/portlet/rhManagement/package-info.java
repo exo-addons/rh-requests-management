@@ -15,7 +15,10 @@
         @Script(id = "animate", value = "js/lib/angular-animate.js", depends = "angularjs"),
         @Script(id = "material", value = "js/lib/angular-material.min.js", depends = "angularjs"),
     // services and controllers js are AMD modules, required by controllers.js
-    @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" }),
+        @Script(id = "moment", value = "js/lib/moment.js"),
+        @Script(id = "fullCalendar", value = "js/lib/fullCalendar.js", depends = "moment"),
+        @Script(id = "calendar", value = "js/lib/calendar.js", depends = "moment"),
+    @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" , "calendar" }),
     @Script(id = "rhAddon", value = "js/rh-management-addon.js", depends = { "controllers" }) })
 @Less("style/sample-addon.less")
 @Stylesheets({
