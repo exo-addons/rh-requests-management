@@ -8,9 +8,17 @@
     <node>
 	  <uri>rh-management</uri>
 	  <name>rh-management</name>
-	  <label>RH Management</label>
+	  <label>HR Management</label>
       <visibility>DISPLAYED</visibility>
 	  <page-reference>portal::intranet::rh-management</page-reference>
     </node>
+
+      <node>
+          <uri>rh-administration</uri>
+          <name>rh-administration</name>
+          <label>HR Admin</label>
+          <visibility>DISPLAYED</visibility>
+          <page-reference>portal::intranet::rh-administration</page-reference>
+      </node>
   </page-nodes>
 </node-navigation>
