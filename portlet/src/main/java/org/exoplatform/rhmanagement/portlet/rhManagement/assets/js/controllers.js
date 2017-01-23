@@ -67,6 +67,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.currentUser=data.data.currentUser;
                 $scope.sickBalance=data.data.sickBalance;
                 $scope.holidaysBalance=data.data.holidaysBalance;
+                var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
+                invite.build('managers', rsetUrl,'choose user');
+                invite.build('substitutes', rsetUrl,'choose user');
                 console.log($scope.i18n);
                 deferred.resolve(data);
             }, function errorCallback(data) {
@@ -455,9 +458,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 // No need to display errors in console
             }
         };
-        var rsetUrl="/rest/rhrequest/uers/find";
-        invite.build('managers', rsetUrl,'choose user');
-        invite.build('substitutes', rsetUrl,'choose user');
         calendar.build('myCalendar');
         $('#rhAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();

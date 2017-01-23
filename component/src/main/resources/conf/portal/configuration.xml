@@ -43,9 +43,6 @@
     <type>org.exoplatform.rhmanagement.services.UserDataService</type>
   </component>
 
-  <component>
-    <type>org.exoplatform.rhmanagement.services.rest.RequestRestService</type>
-  </component>
 
 
   <!-- Data Initialization -->
