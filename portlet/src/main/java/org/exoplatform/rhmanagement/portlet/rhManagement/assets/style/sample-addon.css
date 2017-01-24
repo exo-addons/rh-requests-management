@@ -19,6 +19,7 @@
 	float:left;
 	width:50%;
 }
+#left_col.no-border{border : 0!important}
 #right_col {
 	float:right;
 	width:48%;
@@ -172,4 +173,42 @@ a.actionIcon.deny:hover i{color: #cc543c}
 }
 
 /* ITEMS WIDTH */
-.table-project .row-item .column-title{width: 75%}
+.table-project .row-item .column-title{width: 80%}
+
+/* */
+/*  -- New REQUEST FIXED --  */
+/* */
+.vacationRequest-container.fixed{
+        position: fixed;
+           top: 14%;
+           left:43%;
+           bottom: 0%;
+           height: 465px;
+           overflow: auto;
+           border: solid 1px #ccc;
+           background: #FFF;
+           z-index:20;
+           background-color: white;
+           padding-top: 20px;
+           padding-right: 23px;
+           border-radius: 5px;
+}
+
+/* ITEMS WIDTH */
+.table-project .row-item .column-title{width: 80%}
+
+.bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.62);
+    z-index: 15;
+    display : none;
+}
+.bg.display{display: block}
+
+@media screen and (max-width: 767px) {
+    #right_col, #left_col{width : 100%}
+}

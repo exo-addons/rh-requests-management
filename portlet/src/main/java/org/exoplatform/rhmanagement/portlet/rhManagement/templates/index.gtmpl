@@ -2,6 +2,7 @@
 <div id="rhAddon" class="rhAddon" style="visibility: hidden;">
     <div ng-controller="rhCtrl" id="rhCtrl">
         <div id="wrap">
+            <div class="bg" ng-class="{ 'display': (showCal && showForm) }"></div>
             <div class="manage-view">
                 <a class="btn btn-primary" data-placement="right" data-original-title="Add" rel="tooltip"
                    ng-show="!showForm" ng-click="showForm = true">
@@ -107,7 +108,7 @@
 
 
             <!--Start Left column-->
-            <div id="left_col" class="uiBox">
+            <div id="left_col" class="uiBox"  ng-class="{ 'no-border': showCal }">
                 <!--<div id="myCalendar" ng-show="showCal"></div>-->
                 <div id="resultMessage" ng-show="(resultMessage.length > 0)"
                      class="result-message alert {{resultMessageClass}}">

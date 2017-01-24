@@ -258,13 +258,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +id
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
-                $scope.showVacationRequest(data.data);
+
 
                 /*POPUP HERE*/
 
+                $scope.vacationRequesttoShow=data.data;
                 $scope.loadManagers(data.data);
                 $scope.loadSubstitues(data.data);
                 $scope.loadComments(data.data);
+
 
                 $scope.showResume = true;
 
