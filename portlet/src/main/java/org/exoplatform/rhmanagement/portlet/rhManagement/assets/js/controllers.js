@@ -51,9 +51,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $text = $(".show-calender").text();
             if($text.indexOf("Show Calendar") >= 0){
                 $text = "Hide Calendar";
+                $scope.showForm = false;
+                $scope.showList = false;
+                $scope.showDetails = false;
             }else{
                 $text = "Show Calendar";
                 $scope.showResume = false;
+                $scope.showList = true;
+                $scope.showDetails = true;
             }
             $text = $(".show-calender").text($text);
         }
