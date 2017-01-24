@@ -147,7 +147,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
             // Show the current tab, and add an "active" class to the link that opened the tab
             document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            document.getElementById(evt).className += " active";
         }
 
         $scope.loadEmployees();
