@@ -73,7 +73,9 @@ div#vacationRequestForm {
     padding: 10px 20px;
 }
 .close-vacationRequest{
+    position: relative;
     float: right;
+    z-index: 5;
     line-height: 15px;
     padding: 0;
     height: 22px;
@@ -150,3 +152,24 @@ a.actionIcon.deny:hover i{color: #cc543c}
     background: #fff;
     min-width: 320px;
 }
+
+/* */
+/*  -- New REQUEST FIXED --  */
+/* */
+.vacationRequest-container.fixed{
+        position: fixed;
+        top: 14%;
+        bottom: 0%;
+        height: 465px;
+        overflow: auto;
+        border: solid 1px #ccc;
+        background: #FFF;
+        z-index: 5;
+        background-color: white;
+        padding-top: 20px;
+        padding-right: 23px;
+        border-radius: 5px;
+}
+
+/* ITEMS WIDTH */
+.table-project .row-item .column-title{width: 80%}
