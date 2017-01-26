@@ -10,6 +10,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vacationRequestsToValidate = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
+        $scope.userCalendars = [];
+        $scope.userCalendarId = "";
         $scope.vrmanagers = [];
         $scope.vrsubs = [];
         $scope.calEvents = [];
@@ -69,18 +71,31 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.getBundle')
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
-                $scope.currentUser=data.data.currentUser;
-                $scope.sickBalance=data.data.sickBalance;
-                $scope.holidaysBalance=data.data.holidaysBalance;
-                var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
-                invite.build('managers', rsetUrl,'choose user');
-                invite.build('substitutes', rsetUrl,'choose user');
                 console.log($scope.i18n);
                 deferred.resolve(data);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
         }
+
+
+        $scope.loadContext = function() {
+            $http({
+                method : 'GET',
+                url : rhContainer.jzURL('RHRequestManagementController.getContext')
+            }).then(function successCallback(data) {
+                $scope.currentUser=data.data.currentUser;
+                $scope.sickBalance=data.data.sickBalance;
+                $scope.holidaysBalance=data.data.holidaysBalance;
+                var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
+                invite.build('managers', rsetUrl,'choose user');
+                invite.build('substitutes', rsetUrl,'choose user');
+                deferred.resolve(data);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
 
         $scope.getUrlParameterByName = function(name, url) {
             if (!url) {
@@ -176,7 +191,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.newVacationRequestWithManagers  = {
                 vacationRequestDTO : $scope.newVacationRequest,
                 managers : managers,
-                substitutes : substitutes
+                substitutes : substitutes,
+                exoCalendarId: $scope.userCalendarId
             };
 
 
@@ -192,6 +208,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.myVacationRequests = data.data;
                 $scope.showForm = false;
                 $scope.newVacationRequest = {id : null };
+                $("#managers").val("");
+                $("#substitutes").val("");
+                $("#userCalendar").val("");
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
@@ -279,6 +298,20 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage(data, "error");
             });
         }
+
+        $scope.loadUserCalendars = function() {
+            $http({
+                url : rhContainer.jzURL('RHRequestManagementController.getUserCalendars')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.userCalendars = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
 
 
         $scope.loadSubstitues = function(vacationRequest) {
@@ -454,7 +487,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.loadVacationRequestsToValidate(null);
         $scope.loadMyVacationRequests(null);
         $scope.loadBundles();
+        $scope.loadContext();
         $scope.showRequestfromUrl();
+        $scope.loadUserCalendars();
 
 
 

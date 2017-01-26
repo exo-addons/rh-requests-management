@@ -25,6 +25,12 @@ import java.util.Date;
 
 public class VacationRequestWithManagersDTO {
 
+  private VacationRequestDTO        vacationRequestDTO  ;
+  private ArrayList<String>         managers;
+  private ArrayList<String>         substitutes;
+  private String                    exoCalendarId;
+
+
   public VacationRequestDTO getVacationRequestDTO() {
     return vacationRequestDTO;
   }
@@ -49,10 +55,11 @@ public class VacationRequestWithManagersDTO {
     this.substitutes = substitutes;
   }
 
-  private VacationRequestDTO              vacationRequestDTO  ;
-  private ArrayList<String>         managers;
-  private ArrayList<String>         substitutes;
+  public String getEXoCalendarId() {
+    return exoCalendarId;
+  }
 
-
-
+  public void setEXoCalendarId(String eXoCalendarId) {
+    this.exoCalendarId = eXoCalendarId;
+  }
 }

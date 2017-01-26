@@ -4,6 +4,7 @@
         @Binding(value = SpaceService.class),
         @Binding(value = IdentityManager.class),
         @Binding(value = UserDataService.class),
+        @Binding(value = CalendarService.class),
         @Binding(value = ActivityManager.class)
 })
 @Scripts({
@@ -39,6 +40,7 @@ import juzu.plugin.binding.Bindings;
 import juzu.plugin.less.Less;
 import juzu.plugin.portlet.Portlet;
 
+import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.social.core.manager.ActivityManager;

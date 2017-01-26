@@ -9,12 +9,18 @@ import juzu.View;
 import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
+import org.exoplatform.commons.api.notification.NotificationContext;
+import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
+import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
+import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
+import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.log.ExoLogger;
@@ -33,6 +39,9 @@ public class RhAdministrationController {
   private static Log  LOG = ExoLogger.getLogger(RhAdministrationController.class);
   private String     bundleString;
   ResourceBundle     bundle;
+  private final String APPROVED="approved";
+  private final String VALIDATED="validated";
+  private final String CANCELED="canceled";
 
   @Inject
   UserDataService userDataService;
@@ -131,6 +140,64 @@ public class RhAdministrationController {
       return null;
     }
   }
+
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public VacationRequestDTO validateRequest(@Jackson VacationRequestDTO obj) {
+    if(obj.getStatus().equals(APPROVED)) {
+      obj.setStatus(VALIDATED);
+      obj=vacationRequestService.save(obj,false);
+      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+      if(obj.getType().equals("holiday")){
+        float holidays=userRHDataDTO.getNbrHolidays();
+        int nbDays=obj.getDaysNumber();
+        userRHDataDTO.setNbrHolidays(holidays-nbDays);
+        userDataService.save(userRHDataDTO);
+      }if(obj.getType().equals("sick")){
+        float sickdays=userRHDataDTO.getNbrSickdays();
+        int nbDays=obj.getDaysNumber();
+        userRHDataDTO.setNbrSickdays(sickdays-nbDays);
+        userDataService.save(userRHDataDTO);
+      }
+/*      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);*/
+    }else {
+
+    }
+    return obj;
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public VacationRequestDTO cancelRequest(@Jackson VacationRequestDTO obj) {
+    if(obj.getStatus().equals(VALIDATED)) {
+      obj.setStatus(CANCELED);
+      obj=vacationRequestService.save(obj,false);
+      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+      if(obj.getType().equals("holiday")){
+        float holidays=userRHDataDTO.getNbrHolidays();
+        int nbDays=obj.getDaysNumber();
+        userRHDataDTO.setNbrHolidays(holidays+nbDays);
+        userDataService.save(userRHDataDTO);
+      }if(obj.getType().equals("sick")){
+        userRHDataDTO.setNbrSickdays(userRHDataDTO.getNbrSickdays()+obj.getDaysNumber());
+        userDataService.save(userRHDataDTO);
+      }
+/*      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);*/
+    }else {
+      obj.setStatus(CANCELED);
+      obj=vacationRequestService.save(obj,false);
+    }
+    return obj;
+  }
+
 
   @Ajax
   @juzu.Resource

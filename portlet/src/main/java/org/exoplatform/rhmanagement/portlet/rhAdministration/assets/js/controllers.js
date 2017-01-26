@@ -129,6 +129,38 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         }
 
 
+
+        $scope.validateRequest = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.validateRequest')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
+        $scope.cancelRequest = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.cancelRequest')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
+
         $scope.openTab = function (evt, tabName) {
             // Declare all variables
             var i, tabcontent, tablinks;

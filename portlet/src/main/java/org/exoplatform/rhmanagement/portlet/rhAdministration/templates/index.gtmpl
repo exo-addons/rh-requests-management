@@ -147,7 +147,7 @@
 <img ng-show="orderByField=='assignee' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-
+<th>Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -169,7 +169,10 @@
 <td>
 <span>{{vacationRequest.status}}</span>
 </td>
-
+ <td>
+ <button type="submit"  data-ng-click="validateRequest(vacationRequest)" class="btn btn-primary">Validate</button>
+<button type="submit"  data-ng-click="cancelRequest(vacationRequest)" class="btn btn-default">Cancel</button>
+                            </td>
 </tr>
 </tbody>
 </table>
@@ -214,7 +217,7 @@
 <img ng-show="orderByField=='assignee' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-
+<th>Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -236,7 +239,10 @@
 <td>
 <span>{{vacationRequest.status}}</span>
 </td>
-
+ <td>
+ <button type="submit"  data-ng-click="validateRequest(vacationRequest)" class="btn btn-primary">Validate</button>
+<button type="submit"  data-ng-click="cancelRequest(vacationRequest)" class="btn btn-default">Cancel</button>
+                            </td>
 </tr>
 </tbody>
 </table>

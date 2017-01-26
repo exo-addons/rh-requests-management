@@ -15,6 +15,7 @@ import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 
+import org.exoplatform.calendar.service.*;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
@@ -39,6 +40,8 @@ import org.exoplatform.social.core.manager.ActivityManager;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.social.core.profile.ProfileFilter;
 import org.exoplatform.social.core.space.spi.SpaceService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @SessionScoped
 public class RHRequestManagementController {
@@ -68,6 +71,9 @@ public class RHRequestManagementController {
 
   @Inject
   UserDataService userDataService;
+
+  @Inject
+  CalendarService calendarService;
 
 
   @Inject
@@ -101,6 +107,27 @@ public class RHRequestManagementController {
     }
   }
 
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public Response getUserCalendars() {
+    JSONArray cals=new JSONArray();
+    try {
+      for (org.exoplatform.calendar.service.Calendar cal: calendarService.getUserCalendars(currentUser,true)){
+        JSONObject data = new JSONObject();
+        data.put("calId",cal.getId());
+        data.put("calName",cal.getName());
+        cals.put(data);
+      }
+
+      return Response.ok(cals.toString());
+    } catch (Throwable e) {
+      log.error("error while getting cals", e);
+      return Response.status(500);
+    }
+  }
 
   @Ajax
   @juzu.Resource
@@ -231,6 +258,20 @@ public class RHRequestManagementController {
       val_.setReply(PENDING);
      validatorService.save(val_);
     }
+/*    if (obj.getEXoCalendarId()!=""){
+      try {
+        CalendarEvent calendarEvent = new CalendarEvent();
+        calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
+        calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
+        calendarEvent.setSummary(currentUser+" Off");
+        calendarEvent.setFromDateTime(vr.getFromDate());
+        calendarEvent.setToDateTime(vr.getToDate());
+        calendarEvent.setPrivate(true);
+        calendarService.saveUserEvent(currentUser, obj.getEXoCalendarId(), calendarEvent, true);
+      } catch (Exception e) {
+        log.error("Exception while create user event", e);
+      }
+    }*/
     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestCreatedPlugin.REQUEST, obj);
     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestCreatedPlugin.ID))).execute(ctx);
     return getVacationRequestsOfCurrentUser(null);
@@ -358,6 +399,24 @@ public class RHRequestManagementController {
     }
   }
 
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public Response getContext() {
+    try {
+      JSON data = new JSON();
+      data.set("currentUser",currentUser);
+      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
+      data.set("sickBalance",userRHDataDTO.getNbrSickdays());
+      data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
+      return Response.ok(data.toString());
+    } catch (Throwable e) {
+      log.error("error while getting bundele", e);
+      return Response.status(500);
+    }
+  }
 
   private ResourceBundle getResourceBundle(Locale locale) {
     return bundle = ResourceBundle.getBundle("locale.portlet.rh-management", locale, this.getClass().getClassLoader());
