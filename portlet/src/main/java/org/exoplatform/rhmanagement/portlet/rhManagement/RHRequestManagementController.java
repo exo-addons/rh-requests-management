@@ -220,7 +220,7 @@ public class RHRequestManagementController {
 
         if(id!=null){
           employeesDTO.setUserId(userId);
-          employeesDTO.setValue(id .getProfile().getFullName());
+          employeesDTO.setName(id .getProfile().getFullName());
           userDTOs.add(employeesDTO);
         }
       }

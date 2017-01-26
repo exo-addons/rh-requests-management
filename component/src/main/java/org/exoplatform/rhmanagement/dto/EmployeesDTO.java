@@ -32,17 +32,15 @@ import lombok.NoArgsConstructor;
 
   private  String avatar;
 
-  private  String type;
+  private  String email;
 
-  private  String value;
+  private  String jobTitle;
 
-  private long cin;
+  private  String gender;
 
-  private float nbrHolidays;
+  private  String phone;
 
-  private float nbrSickdays;
-
-  private long socialSecNumber;
+  private UserRHDataDTO hrData;
 
     public long getId() {
       return id;
@@ -76,51 +74,43 @@ import lombok.NoArgsConstructor;
       this.avatar = avatar;
     }
 
-    public String getType() {
-      return type;
+    public String getEmail() {
+      return email;
     }
 
-    public void setType(String type) {
-      this.type = type;
+    public void setEmail(String email) {
+      this.email = email;
     }
 
-    public String getValue() {
-      return value;
+    public String getJobTitle() {
+      return jobTitle;
     }
 
-    public void setValue(String value) {
-      this.value = value;
+    public void setJobTitle(String jobTitle) {
+      this.jobTitle = jobTitle;
     }
 
-    public long getCin() {
-      return cin;
+    public String getGender() {
+      return gender;
     }
 
-    public void setCin(long cin) {
-      this.cin = cin;
+    public void setGender(String gender) {
+      this.gender = gender;
     }
 
-    public float getNbrHolidays() {
-      return nbrHolidays;
+    public String getPhone() {
+      return phone;
     }
 
-    public void setNbrHolidays(float nbrHolidays) {
-      this.nbrHolidays = nbrHolidays;
+    public void setPhone(String phone) {
+      this.phone = phone;
     }
 
-    public float getNbrSickdays() {
-      return nbrSickdays;
+    public UserRHDataDTO getHrData() {
+      return hrData;
     }
 
-    public void setNbrSickdays(float nbrSickdays) {
-      this.nbrSickdays = nbrSickdays;
-    }
-
-    public long getSocialSecNumber() {
-      return socialSecNumber;
-    }
-
-    public void setSocialSecNumber(long socialSecNumber) {
-      this.socialSecNumber = socialSecNumber;
+    public void setHrData(UserRHDataDTO hrData) {
+      this.hrData = hrData;
     }
   }

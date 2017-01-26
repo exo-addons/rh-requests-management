@@ -47,37 +47,38 @@
 <img ng-show="orderByField == 'assignee' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th>Actions</th>
-                        </tr>
+<th> <a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">phone
+<img ng-show="orderByField == 'assignee' && !reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
+<img ng-show="orderByField == 'assignee' && reverseSort" src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+</a>
+                            </th>
+</tr>
 </thead>
-                    <tbody>
-                        <tr ng-repeat="userRhData in vm.items | orderBy:orderByField:reverseSort">
-                            <td><a href="" data-ng-click="loadVacationRequests(userRhData.userId)">{{userRhData.name}}</a>
+<tbody>
+<tr ng-repeat="userRhData in vm.items | orderBy:orderByField:reverseSort">
+<td><a href="" data-ng-click="loadUserHRData(userRhData)">{{userRhData.name}}</a>
 </td>
-                            <td>
-                                <span data-ng-hide="editMode">{{userRhData.cin}}</span>
-<input data-ng-show="editMode" ng-model="userRhData.cin" id="cin" class="form-control" placeholder="">
+<td>
+<span data-ng-hide="editMode">{{userRhData.hrData.cin}}</span>
+<input data-ng-show="editMode" ng-model="userRhData.hrData.cin" id="cin" class="form-control" placeholder="">
 </td>
-                            <td>
-                                <span data-ng-hide="editMode">{{userRhData.socialSecNumber}}</span>
-<input data-ng-show="editMode" ng-model="userRhData.socialSecNumber" id="socialSecNumber" class="form-control" placeholder="">
+<td>
+<span data-ng-hide="editMode">{{userRhData.hrData.socialSecNumber}}</span>
+<input data-ng-show="editMode" ng-model="userRhData.hrData.socialSecNumber" id="socialSecNumber" class="form-control" placeholder="">
 </td>
-                            <td>
-                                <span data-ng-hide="editMode">{{userRhData.nbrHolidays}}</span>
-<input data-ng-show="editMode" ng-model="userRhData.nbrHolidays" id="nbrHolidays" class="form-control" placeholder="">
+<td>
+<span data-ng-hide="editMode">{{userRhData.hrData.nbrHolidays}}</span>
+<input data-ng-show="editMode" ng-model="userRhData.hrData.nbrHolidays" id="nbrHolidays" class="form-control" placeholder="">
 </td>
-                            <td>
-                                <span data-ng-hide="editMode">{{userRhData.nbrSickdays}}</span>
-<input data-ng-show="editMode" ng-model="userRhData.nbrSickdays" id="nbrSickdays" class="form-control" placeholder="">
+<td>
+<span data-ng-hide="editMode">{{userRhData.hrData.nbrSickdays}}</span>
+<input data-ng-show="editMode" ng-model="userRhData.hrData.nbrSickdays" id="nbrSickdays" class="form-control" placeholder="">
 </td>
 
-                            <td>
-                                <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Edit" rel="tooltip" data-ng-hide="editMode" ng-click="editMode = true; editUserRhData(userRhData)">
-                                    <i class="uiIconEdit uiIconLightGray"></i>
-</a>
-                                <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; saveUserHRData(userRhData)" class="btn btn-primary">Save</button>
-<button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
-                            </td>
+<td>
+<span data-ng-hide="editMode">{{userRhData.phone}}</span>
+<input data-ng-show="editMode" ng-model="userRhData.hrData.nbrSickdays" id="nbrSickdays" class="form-control" placeholder="">
+</td>
 </tr>
                     </tbody>
 </table>
@@ -112,16 +113,82 @@
 <a class="actionIcon " style="float: right; " ng-click="showEmployees=true ">
 <i class="uiIconClose "></i>
 </a>
+<div class="uiBox elementDetail">
+    <div class="uiContentBox">
+        <div class="ligne">
+            <b>Full name:</b> <span>{{userDetails.name}}</span>
+        </div>
+<div class="ligne">
+<b>email:</b> <span>{{userDetails.email}}</span>
+</div>
+        <div class="ligne">
+            <b>jobTitle:</b> <span>{{userDetails.jobTitle}}</span>
+        </div>
+<div class="ligne">
+<b>gender:</b> <span>{{userDetails.gender}}</span>
+</div>
+        <div class="ligne">
+            <b>phone:</b> <span>{{userDetails.phone}}</span>
+        </div>
 
+<div class="ligne">
+<b>cin:</b> <span>{{userDetails.hrData.cin}}</span>
+</div>
+        <div class="ligne">
+            <b>nbrHolidays:</b> <span>{{userDetails.hrData.nbrHolidays}}</span>
+        </div>
+<div class="ligne">
+<b>nbrSickdays:</b> <span>{{userDetails.hrData.nbrSickdays}}</span>
+</div>
+        <div class="ligne">
+            <b>socialSecNumber:</b> <span>{{userDetails.hrData.socialSecNumber}}</span>
+        </div>
+<div class="ligne">
+<b>hrId:</b> <span>{{userDetails.hrData.hrId}}</span>
+</div>
+        <div class="ligne">
+            <b>bDay:</b> <span>{{userDetails.hrData.bDay | date:'yyyy-MM-dd'}}</span>
+        </div>
+<div class="ligne">
+<b>situation:</b> <span>{{userDetails.hrData.situation}}</span>
+</div>
+		<div class="ligne">
+            <b>nbChildren:</b> <span>{{userDetails.hrData.nbChildren}}</span>
+        </div>
+<div class="ligne">
+<b>team:</b> <span>{{userDetails.hrData.team}}</span>
+</div>
+		<div class="ligne">
+            <b>address:</b> <span>{{userDetails.hrData.address}}</span>
+        </div>
+<div class="ligne">
+<b>bankId:</b> <span>{{userDetails.hrData.bankId}}</span>
+</div>
+        <div class="ligne">
+            <b>startDate:</b> <span>{{userDetails.hrData.startDate | date:'yyyy-MM-dd'}}</span>
+        </div>
+<div class="ligne">
+<b>leaveDate:</b> <span>{{userDetails.hrData.leaveDate | date:'yyyy-MM-dd'}}</span>
+</div>
+        <div class="ligne">
+            <b>contract:</b> <span>{{userDetails.hrData.contract}}</span>
+        </div>
+<div class="ligne">
+<b>contractStartDate:</b> <span>{{userDetails.hrData.contractStartDate | date:'yyyy-MM-dd'}}</span>
+</div>
+        <div class="ligne">
+            <b>contractEndDate:</b> <span>{{userDetails.hrData.contractEndDate | date:'yyyy-MM-dd'}}</span>
+        </div>
+<div class="ligne">
+<b>others:</b> <span>{{userDetails.hrData.others}}</span>
+</div>
+    </div>
+</div>
             <br/>
 <table id="requestsTable " class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
-<th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">User Name
-<img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
-<img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
-</a>
-                        </th>
+
 <th> <a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Type
 <img ng-show="orderByField=='title' && !reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='title' && reverseSort " src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
@@ -152,8 +219,6 @@
 </thead>
 <tbody>
 <tr ng-repeat="vacationRequest in vacationRequests | orderBy:orderByField:reverseSort ">
-<td><a href="/portal/intranet/profile/{{vacationRequest.userId}} ">{{vacationRequest.userFullName}}</a>
-</td>
 <td>
 <span>{{vacationRequest.type }}</span>
 </td>
@@ -182,6 +247,10 @@
 </div>
 
 <div id="requests" class="tabcontent">
+
+
+
+
 <h4 class="titleWithBorder">Requests List</h4>
 
 <table id="requestsTable " class="table uiGrid table-hover table-striped ">

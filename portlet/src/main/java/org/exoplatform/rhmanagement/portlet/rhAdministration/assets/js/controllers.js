@@ -10,7 +10,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         $scope.currentPage = 0;
         $scope.pageSize = 10;
         $scope.def = '';
-
+        $scope.userDetails=null;
         $scope.allVacationRequests = [];
 
         $scope.orderByField = 'title';
@@ -76,10 +76,11 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             return $filter('filter')($scope.rhEmployees, $scope.def)
         };
 
-        $scope.loadVacationRequests = function(userId) {
+        $scope.loadUserHRData = function(userRhData) {
+            $scope.userDetails = userRhData;
             $http({
                 method : 'GET',
-                url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId')+ "&userId=" +userId
+                url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId')+ "&userId=" +userRhData.userId
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.vacationRequests = data.data;

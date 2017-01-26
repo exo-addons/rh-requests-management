@@ -42,7 +42,7 @@
 </div>
                     <div class="ligne">
                         <b>Substitute:</b>
-<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}, </a>
+<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.name}}, </a>
                     </div>
 <div class="ligne">
 <b>Status:</b> <span>{{vacationRequesttoShow.status}}</span>

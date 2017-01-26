@@ -73,21 +73,6 @@ public class RhAdministrationController {
       return null;
     }
   }
-/*
-  @Ajax
-  @Resource
-  @MimeType.JSON
-  @Jackson
-  public List<TicketDTO> getTicketsByAssignee(String assignee) {
-    try {
-      List<TicketDTO> tickets = ticketService.getAssignedTickets(assignee);
-      return tickets;
-    } catch (Throwable e) {
-      LOG.error("Exception when retrieving tickets" + e);
-      return null;
-    }
-  }
-*/
 
   @Ajax
   @Resource(method = HttpMethod.POST)
@@ -97,10 +82,10 @@ public class RhAdministrationController {
     try {
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(user.getUserId());
       if(userRHDataDTO!=null){
-        userRHDataDTO.setCin(user.getCin());
-        userRHDataDTO.setNbrHolidays(user.getNbrHolidays());
-        userRHDataDTO.setNbrSickdays(user.getNbrSickdays());
-        userRHDataDTO.setSocialSecNumber(user.getSocialSecNumber());
+        userRHDataDTO.setCin(user.getHrData().getCin());
+        userRHDataDTO.setNbrHolidays(user.getHrData().getNbrHolidays());
+        userRHDataDTO.setNbrSickdays(user.getHrData().getNbrSickdays());
+        userRHDataDTO.setSocialSecNumber(user.getHrData().getSocialSecNumber());
         return userDataService.save(userRHDataDTO);
       }
       return null;
@@ -154,12 +139,12 @@ public class RhAdministrationController {
       UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
       if(obj.getType().equals("holiday")){
         float holidays=userRHDataDTO.getNbrHolidays();
-        int nbDays=obj.getDaysNumber();
+        float nbDays=obj.getDaysNumber();
         userRHDataDTO.setNbrHolidays(holidays-nbDays);
         userDataService.save(userRHDataDTO);
       }if(obj.getType().equals("sick")){
         float sickdays=userRHDataDTO.getNbrSickdays();
-        int nbDays=obj.getDaysNumber();
+        float nbDays=obj.getDaysNumber();
         userRHDataDTO.setNbrSickdays(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
       }
@@ -182,7 +167,7 @@ public class RhAdministrationController {
       UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
       if(obj.getType().equals("holiday")){
         float holidays=userRHDataDTO.getNbrHolidays();
-        int nbDays=obj.getDaysNumber();
+        float nbDays=obj.getDaysNumber();
         userRHDataDTO.setNbrHolidays(holidays+nbDays);
         userDataService.save(userRHDataDTO);
       }if(obj.getType().equals("sick")){

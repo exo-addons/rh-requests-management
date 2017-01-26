@@ -20,6 +20,7 @@ import lombok.Data;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by The eXo Platform SAS
@@ -49,11 +50,49 @@ public class UserRHDataEntity {
   @Column(name = "NB_HOLIDAYS")
   private float   nbrHolidays;
 
-
   @Column(name = "NB_SICK_DAYS")
   private float   nbrSickdays;
 
   @Column(name = "SOC_NUMBER")
   private long   socialSecNumber;
+
+  @Column(name = "HR_ID")
+  private String hrId;
+
+  @Column(name = "B_DAY")
+  private Date bDay;
+
+  @Column(name = "SITUATION")
+  private String situation;
+
+  @Column(name = "NB_CHILDREN")
+  private int nbChildren;
+
+  @Column(name = "TEAM")
+  private String team;
+
+  @Column(name = "ADDRESS")
+  private String address;;
+
+  @Column(name = "BANK_ID")
+  private String bankId;
+
+  @Column(name = "START_DATE")
+  private Date startDate;
+
+  @Column(name = "LEAVE_DATE")
+  private Date leaveDate;
+
+  @Column(name = "CONTRACT")
+  private String contract;
+
+  @Column(name = "CONTRACT_START_DATE")
+  private Date contractStartDate;
+
+  @Column(name = "CONTRACT_END_DATE")
+  private Date contractEndDate;
+
+  @Column(name = "OTHERS")
+  private String others;
 
 }

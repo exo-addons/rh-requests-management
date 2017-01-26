@@ -29,7 +29,7 @@ public class VacationRequestDTO {
 
   private String              userFullName;
 
-  private int                 daysNumber;
+  private float                 daysNumber;
 
   private Date                fromDate;
 

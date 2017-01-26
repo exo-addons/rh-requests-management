@@ -50,7 +50,7 @@ public class VacationRequestEntity {
   private String userFullName;
 
   @Column(name = "DAYS_NUMBER")
-  private int   daysNumber;
+  private float   daysNumber;
 
   @Column(name = "FROM_DATE")
   private Date fromDate;

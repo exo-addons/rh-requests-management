@@ -17,6 +17,8 @@
 package org.exoplatform.rhmanagement.dto;
 import lombok.Data;
 
+import java.util.Date;
+
 
 @Data
 
@@ -34,5 +36,31 @@ import lombok.Data;
     private float nbrSickdays;
 
     private long socialSecNumber;
+
+    private String hrId;
+
+    private Date bDay;
+
+    private String situation;
+
+    private int nbChildren;
+
+    private String team;
+
+    private String address;
+
+    private String bankId;
+
+    private Date startDate;
+
+    private Date leaveDate;
+
+    private String contract;
+
+    private Date contractStartDate;
+
+    private Date contractEndDate;
+
+    private String others;
 
 }

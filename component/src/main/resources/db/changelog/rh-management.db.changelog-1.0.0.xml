@@ -21,7 +21,7 @@
       </column>
       <column name="USER_ID" type="NVARCHAR(50)"></column>
       <column name="USER_FULL_NAME" type="NVARCHAR(100)"></column>
-      <column name="DAYS_NUMBER" type="INT"></column>
+      <column name="DAYS_NUMBER" type="FLOAT"></column>
       <column name="FROM_DATE" type="DATE"></column>
       <column name="TO_DATE" type="DATE"></column>
       <column name="REASON" type="NVARCHAR(550)"></column>
@@ -62,6 +62,19 @@
       <column name="NB_HOLIDAYS" type="FLOAT"></column>
       <column name="NB_SICK_DAYS" type="FLOAT"></column>
       <column name="SOC_NUMBER" type="BIGINT"></column>
+      <column name="HR_ID" type="NVARCHAR(50)"></column>
+      <column name="B_DAY" type="DATE"></column>
+      <column name="SITUATION" type="NVARCHAR(50)"></column>
+      <column name="NB_CHILDREN" type="INT"></column>
+      <column name="TEAM" type="NVARCHAR(50)"></column>
+      <column name="ADDRESS" type="NVARCHAR(200)"></column>
+      <column name="BANK_ID" type="NVARCHAR(50)"></column>
+      <column name="START_DATE" type="DATE"></column>
+      <column name="LEAVE_DATE" type="DATE"></column>
+      <column name="CONTRACT" type="NVARCHAR(50)"></column>
+      <column name="CONTRACT_START_DATE" type="DATE"></column>
+      <column name="CONTRACT_END_DATE" type="DATE"></column>
+      <column name="OTHERS" type="NVARCHAR(1000)"></column>
     </createTable>
 
 
