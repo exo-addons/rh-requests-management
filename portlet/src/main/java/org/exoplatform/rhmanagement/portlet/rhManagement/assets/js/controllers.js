@@ -12,6 +12,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.comments = [];
         $scope.userCalendars = [];
         $scope.userCalendarId = "";
+        $scope.managerCalendarId = "";
         $scope.vrmanagers = [];
         $scope.vrsubs = [];
         $scope.calEvents = [];
@@ -211,6 +212,29 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $("#managers").val("");
                 $("#substitutes").val("");
                 $("#userCalendar").val("");
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
+
+        $scope.shareCalendar = function(vacationRequest) {
+           var vr = {
+               vacationRequestDTO : vacationRequest ,
+               exoCalendarId: $scope.managerCalendarId
+            };
+            $http({
+                data : vr,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhContainer.jzURL('RHRequestManagementController.shareCalendar')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);

@@ -15,6 +15,7 @@ import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 
+import org.exoplatform.calendar.model.Calendar;
 import org.exoplatform.calendar.service.*;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
@@ -42,6 +43,7 @@ import org.exoplatform.social.core.profile.ProfileFilter;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 @SessionScoped
 public class RHRequestManagementController {
@@ -258,20 +260,9 @@ public class RHRequestManagementController {
       val_.setReply(PENDING);
      validatorService.save(val_);
     }
-/*    if (obj.getEXoCalendarId()!=""){
-      try {
-        CalendarEvent calendarEvent = new CalendarEvent();
-        calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
-        calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
-        calendarEvent.setSummary(currentUser+" Off");
-        calendarEvent.setFromDateTime(vr.getFromDate());
-        calendarEvent.setToDateTime(vr.getToDate());
-        calendarEvent.setPrivate(true);
-        calendarService.saveUserEvent(currentUser, obj.getEXoCalendarId(), calendarEvent, true);
-      } catch (Exception e) {
-        log.error("Exception while create user event", e);
-      }
-    }*/
+    if (obj.getEXoCalendarId()!=""){
+      shareCalendar_(vr,obj.getEXoCalendarId());
+    }
     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestCreatedPlugin.REQUEST, obj);
     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestCreatedPlugin.ID))).execute(ctx);
     return getVacationRequestsOfCurrentUser(null);
@@ -297,6 +288,13 @@ public class RHRequestManagementController {
     validatorService.save(obj);
   }
 
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void shareCalendar(@Jackson VacationRequestWithManagersDTO obj) {
+    shareCalendar_(obj.getVacationRequestDTO(),obj.getEXoCalendarId());
+  }
 
   @Ajax
   @Resource(method = HttpMethod.POST)
@@ -429,5 +427,23 @@ public class RHRequestManagementController {
     return bundle;
   }
 
-
+private void shareCalendar_(VacationRequestDTO obj, String calId){
+  try {
+    Calendar cal=calendarService.getCalendarById(calId);
+    if(cal!=null){
+      CalendarEvent calendarEvent = new CalendarEvent();
+      calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
+      calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
+      calendarEvent.setSummary(currentUser+" Off");
+      calendarEvent.setFromDateTime(obj.getFromDate());
+      calendarEvent.setToDateTime(obj.getToDate());
+      calendarEvent.setEventType(CalendarEvent.TYPE_EVENT) ;
+      calendarEvent.setParticipant(new String[]{currentUser}) ;
+      calendarEvent.setParticipantStatus(new String[] {currentUser + ":"});
+      calendarService.saveUserEvent(currentUser, calId, calendarEvent, true) ;
+    }
+  } catch (Exception e) {
+    log.error("Exception while create user event", e);
+  }
+}
 }

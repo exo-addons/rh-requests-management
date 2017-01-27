@@ -87,8 +87,8 @@ public class UserDataService {
     List<EmployeesDTO> dtos = new ArrayList<EmployeesDTO>();
     for (UserRHDataEntity entity : entities) {
       Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false);
-      Profile profile=id.getProfile();
       if(id!=null){
+        Profile profile=id.getProfile();
         EmployeesDTO employeesDTO=new EmployeesDTO();
         employeesDTO.setId(entity.getId());
         employeesDTO.setUserId(entity.getUserId());

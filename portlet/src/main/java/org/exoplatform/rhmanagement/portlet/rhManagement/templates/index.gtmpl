@@ -243,10 +243,10 @@
 <div class="column-item column-time">
 <div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
 <span class="text-time inline-block-show"></span>
-                                    <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
-                                        <i class="uiIconDeleteUser uiIconLightGray"></i>
+                                        <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
+                                            <i class="uiIconDeleteUser uiIconLightGray"></i>
 </a>
-                                </div>
+                                    </div>
 </div>
                             </li>
 </ul>
@@ -291,14 +291,14 @@
 from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDate |
         date:'yyyy-MM-dd'}}</a>
                                 <div class="column-item column-time">
-								<div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
-                                    <span class="text-time inline-block-show"></span>
+                                    <div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
+                                        <span class="text-time inline-block-show"></span>
 <a class="actionIcon validate inline-block-hide" data-placement="left" data-original-title="Validate" rel="tooltip" ng-click="approveRequest(vacationRequest)">
 <i class="uiIconValidate uiIconLightGray"></i>
-                                    </a>
+                                        </a>
 <a class="actionIcon deny inline-block-hide" data-placement="left" data-original-title="Decline" rel="tooltip" ng-click="declineRequest(vacationRequest)">
 <i class="uiIconEcmsRemove uiIconLightGray"></i>
-                                    </a>
+                                        </a>
 </div>
                                 </div>
 </li>
@@ -352,14 +352,26 @@ from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDat
                                     <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'" class="td-right-align">
                                         <b>{{vrmanager.reply}}</b>
 </td>
-                                </tr>
-</tbody>
-                        </table>
-<div id="tab-comments" class="tab-pane fade in active ">
-<div class="commentList">
-<div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
-<div class="commmentLeft">
-<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+									                           
+                                    <td class="td-right-align">
+
+                                    <select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId" placeholder="{{i18n.serverUsername}}">
+                                        <option value=""></option>
+<option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}</option>
+
+                                    </select>
+<button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="shareCalendar(vacationRequesttoShow)">Share</button>
+                                                                   </td>
+
+
+</tr>
+                            </tbody>
+</table>
+                        <div id="tab-comments" class="tab-pane fade in active ">
+                            <div class="commentList">
+                                <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+                                    <div class="commmentLeft">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
 <img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
 </a>
                                     </div>
