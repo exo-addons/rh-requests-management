@@ -35,3 +35,68 @@ ul.tab li a:focus, .active {background-color: #ccc;}
     border: 1px solid #ccc;
     border-top: none;
 }
+.tabcontent .ligne {
+    position : relative;
+    padding: 2px 0;
+    margin-bottom: 8px;
+        min-height: 20px;
+}
+.tabcontent .ligne i.uiIconEdit{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+img.avatar {
+    height: 112px;
+    margin-bottom: 18px;
+}
+
+.tabcontent .ligne > b{
+    color :#2f5e92;
+    width: 45%;
+    margin-right: 4px;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+}
+.tabcontent .span3 .ligne > b{
+    width: 40%;
+    margin-right: 4px;
+}
+.tabcontent .ligne > span{
+      overflow: hidden;
+      display: inline-block;
+}
+.tabcontent .span3,.tabcontent .span4{overflow: hidden}
+
+/* Style of requests Table */
+#requestsTable tr > td:nth-last-child(1){
+    text-align: center;
+}
+
+/**/
+
+input.requestEdit{
+    display: inline-block;
+    width: 50%;
+    background: #FFF;
+    float: left;
+    height: 20px;
+    margin-bottom: 0
+}
+.span3 input.requestEdit{width: 54%}
+input.requestEdit[readonly]{
+    display: inline-block;
+        width: 50%;
+        background: #FFF;
+        border: 0;
+        box-shadow: none;
+        color: #333;
+        padding: 0;
+        cursor: pointer;
+}
+#submit {
+    float: right;
+    margin: 20px 20px 0 20px;
+    display: none;
+}

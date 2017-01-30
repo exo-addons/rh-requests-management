@@ -77,6 +77,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
               };
           }
       }
+
       try {
           rhAdminApp.controller('rhAdminCtrl', rhAdminControllers);
 		  angular.bootstrap(rhAdminAppRoot, ['rhAdminApp']);
@@ -85,6 +86,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
       }
 
 	});
+
 
 
 });

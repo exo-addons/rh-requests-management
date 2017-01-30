@@ -78,6 +78,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
         $scope.loadUserHRData = function(userRhData) {
             $scope.userDetails = userRhData;
+            if(!userRhData.avatar){
+                $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
+            }
             $http({
                 method : 'GET',
                 url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId')+ "&userId=" +userRhData.userId
@@ -183,10 +186,19 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             document.getElementById(evt).className += " active";
         }
 
+        $scope.enableInput = function (id) {
+
+            $(id).removeAttr("readonly");
+            $("#submit").css("display", "block");
+
+        }
+
         $scope.loadEmployees();
         $scope.loadAllVacationRequests();
         $('#rhAdminAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();
     };
     return rhAdminCtrl;
+
+
 });
