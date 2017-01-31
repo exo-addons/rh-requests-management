@@ -65,7 +65,7 @@ td.RightBodyTDContainer{
     -ms-transition-duration: .5s;
     transition-duration: .5s;*/
 }
-div#vacationRequestForm {
+#vacationRequestForm {
     position: relative;
     background: #FFF;
     z-index: 1;
@@ -113,6 +113,12 @@ a.actionIcon.deny:hover i{color: #cc543c}
 .form-horizontal .control-label{width: 100px}
 .form-horizontal .controls {margin-left: 120px;}
 
+select[name=inputUsername] {
+    width: 70%;
+    margin-bottom: 0;
+}
+#calSaveButton{width: 25%}
+
 /* */
 /*  -- Date Pick --  */
 /* */
@@ -147,13 +153,16 @@ a.actionIcon.deny:hover i{color: #cc543c}
 
 #requestResume{
     position: fixed;
-    top: 20%;
+    top: 8%;
     left: 45%;
     z-index: 10;
     background: #fff;
     min-width: 320px;
 }
-
+#requestResume .commentList{
+    max-height : 75px;
+    overflow-y: auto;
+}
 /* */
 /*  -- New REQUEST FIXED --  */
 /* */

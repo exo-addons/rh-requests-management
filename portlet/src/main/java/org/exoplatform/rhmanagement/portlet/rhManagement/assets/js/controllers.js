@@ -72,7 +72,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.getBundle')
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
-                console.log($scope.i18n);
+
                 deferred.resolve(data);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
@@ -85,6 +85,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 method : 'GET',
                 url : rhContainer.jzURL('RHRequestManagementController.getContext')
             }).then(function successCallback(data) {
+
+                $scope.completeCurrentUser = data.data;
                 $scope.currentUser=data.data.currentUser;
                 $scope.sickBalance=data.data.sickBalance;
                 $scope.holidaysBalance=data.data.holidaysBalance;
