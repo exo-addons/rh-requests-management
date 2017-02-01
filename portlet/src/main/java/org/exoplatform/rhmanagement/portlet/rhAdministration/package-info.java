@@ -1,6 +1,10 @@
 @Portlet
 @Application(name = "RhAdministrationController")
-@Bindings({ @Binding(value = UserDataService.class), @Binding(value = VacationRequestService.class)})
+@Bindings({
+        @Binding(value = UserDataService.class),
+        @Binding(value = IdentityManager.class),
+        @Binding(value = OrganizationService.class),
+        @Binding(value = VacationRequestService.class)})
 @Scripts({
     // AngularJS is still global, should be AMDified
     @Script(id = "angularjs", value = "js/lib/angular.min.js"),
@@ -28,5 +32,7 @@ import juzu.plugin.portlet.Portlet;
 
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 

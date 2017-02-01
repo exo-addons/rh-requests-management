@@ -25,6 +25,12 @@ import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.UserHandler;
+import org.exoplatform.social.core.identity.model.Identity;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 
 import javax.inject.Inject;
@@ -49,7 +55,12 @@ public class RhAdministrationController {
   @Inject
   VacationRequestService vacationRequestService;
 
+  @Inject
+  IdentityManager identityManager;
 
+
+  @Inject
+  OrganizationService orgService;
 
   @Inject
   @Path("index.gtmpl")
@@ -80,17 +91,11 @@ public class RhAdministrationController {
   @Jackson
   public UserRHDataDTO saveUserRHData(@Jackson EmployeesDTO user) throws Exception {
     try {
-      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(user.getUserId());
-      if(userRHDataDTO!=null){
-        userRHDataDTO.setCin(user.getHrData().getCin());
-        userRHDataDTO.setNbrHolidays(user.getHrData().getNbrHolidays());
-        userRHDataDTO.setNbrSickdays(user.getHrData().getNbrSickdays());
-        userRHDataDTO.setSocialSecNumber(user.getHrData().getSocialSecNumber());
-        return userDataService.save(userRHDataDTO);
-      }
-      return null;
+
+        return userDataService.save(user.getHrData());
+
     } catch (Exception e) {
-      LOG.error("Error when updating ticket", e);
+      LOG.error("Error when updating userData", e);
       throw e;
     }
   }
@@ -110,6 +115,39 @@ public class RhAdministrationController {
     }
   }
 
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public EmployeesDTO getUser(String userId) {
+    try {
+      UserHandler uh = orgService.getUserHandler();
+      if(uh.findUserByName(userId)==null){
+        return null;
+      } else {
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
+        EmployeesDTO employee = new EmployeesDTO();
+        employee.setName(profile.getFullName());
+        employee.setUserId(userId);
+        employee.setEmail(profile.getEmail());
+        employee.setGender(profile.getGender());
+        employee.setJobTitle(profile.getPosition());
+        employee.setAvatar(profile.getAvatarUrl());
+
+        UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(userId);
+        if (userRHDataDTO == null) {
+          userRHDataDTO=new UserRHDataDTO();
+          userRHDataDTO.setUserId(userId);
+        }
+        employee.setHrData(userRHDataDTO);
+        return employee;
+      }
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
 
   @Ajax
   @juzu.Resource

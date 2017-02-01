@@ -57,13 +57,20 @@ public class UserDataService {
     }
 
     UserRHDataEntity userRHDataEntity = null;
-    if (entity == null) {
-      userRHDataEntity = userRHDataDAO.create(convert(entity));
-    } else {
-      userRHDataEntity = userRHDataDAO.update(convert(entity));
-    }
+      try {
+        UserRHDataDTO userRHDataDTO =getUserRHDataByUserId(entity.getUserId());
+        if(userRHDataDTO!=null){
+          userRHDataEntity = userRHDataDAO.update(convert(entity));
+        }else{
+          userRHDataEntity = userRHDataDAO.create(convert(entity));
+        }
+      } catch (Exception e) {
+        userRHDataEntity = userRHDataDAO.create(convert(entity));
+      }
+
     return convert(userRHDataEntity);
   }
+
 
   public void remove(UserRHDataDTO entity) {
     if (entity == null) {
@@ -72,10 +79,12 @@ public class UserDataService {
     userRHDataDAO.delete(convert(entity));
   }
 
-  public UserRHDataDTO getUserRHDataByUserId(String id) {
-
-
-    return convert(userRHDataDAO.getUserRHDataDAOByUserId(id));
+  public UserRHDataDTO getUserRHDataByUserId(String id){
+    try {
+      return convert(userRHDataDAO.getUserRHDataDAOByUserId(id));
+    } catch (Exception e) {
+      return null;
+    }
   }
 
 

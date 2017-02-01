@@ -17,6 +17,11 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         $scope.reverseSort = false;
         $scope.rhEmployee = {};
 
+        $scope.newUserId = "";
+        $scope.newUserDetails={
+            id : null
+        };
+
         $scope.vm = this;
         $scope.vm.pager = {};
         $scope.vm.setPage = setPage;
@@ -97,6 +102,23 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         };
 
 
+        $scope.getUser = function(newUserId) {
+
+            $http({
+                method : 'GET',
+                url : rhAdminContainer.jzURL('RhAdministrationController.getUser')+ "&userId=" +newUserId
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.newUserDetails = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+
         $scope.loadAllVacationRequests = function() {
             $http({
                 method : 'GET',
@@ -127,6 +149,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 url : rhAdminContainer.jzURL('RhAdministrationController.saveUserRHData')
             }).then(function successCallback(data) {
                 employee.id = data.data.id;
+                $scope.loadEmployees();
             }, function errorCallback(data) {
                 $scope.setResultMessage("", "error");
             });

@@ -21,6 +21,7 @@ import org.exoplatform.rhmanagement.entity.UserRHDataEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -32,12 +33,14 @@ import java.util.List;
 public class UserRHDataDAO extends GenericDAOJPAImpl<UserRHDataEntity, String> {
     private static final Logger LOG = LoggerFactory.getLogger(UserRHDataDAO.class);
 
-    public UserRHDataEntity getUserRHDataDAOByUserId(String userId) {
+    public UserRHDataEntity getUserRHDataDAOByUserId(String userId) throws Exception {
         try {
                 return getEntityManager().createNamedQuery("userRHDataEntity.findByUserId", UserRHDataEntity.class)
                         .setParameter("userId", userId)
                         .getSingleResult();
 
+        } catch (NoResultException e) {
+            return null;
         } catch (Exception e) {
             LOG.warn("Exception while attempting to get user data ", e);
             throw e;
