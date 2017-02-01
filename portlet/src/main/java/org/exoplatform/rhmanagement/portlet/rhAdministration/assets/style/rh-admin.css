@@ -35,6 +35,11 @@ ul.tab li a:focus, .active {background-color: #ccc;}
     border: 1px solid #ccc;
     border-top: none;
 }
+
+.uiBox.elementDetail {
+    padding-right: 15px;
+}
+
 .tabcontent .ligne {
     position : relative;
     padding: 2px 0;
@@ -45,7 +50,13 @@ ul.tab li a:focus, .active {background-color: #ccc;}
     position: absolute;
     top: 5px;
     right: 15px;
+    opacity : 0;
+    cursor: pointer;
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    transition-duration: .5s;
 }
+.tabcontent .ligne:hover i.uiIconEdit{opacity : 1;}
 img.avatar {
     height: 112px;
     margin-bottom: 18px;
@@ -68,6 +79,15 @@ img.avatar {
       display: inline-block;
 }
 .tabcontent .span3,.tabcontent .span4{overflow: hidden}
+
+.tabcontent .getUserLigne > b{
+    width: auto;
+    height: 28px;
+    line-height: 28px;
+}
+.tabcontent input{ margin-bottom :0}
+
+.formContainer{padding-top: 30px}
 
 /* Style of requests Table */
 #requestsTable tr > td:nth-last-child(1){
@@ -95,8 +115,8 @@ input.requestEdit[readonly]{
         padding: 0;
         cursor: pointer;
 }
-#submit {
+.Submitbtn {
     float: right;
     margin: 20px 20px 0 20px;
-    display: none;
 }
+#submit {display: none}

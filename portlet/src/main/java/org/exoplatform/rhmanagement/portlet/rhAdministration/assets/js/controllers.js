@@ -5,6 +5,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
 
         $scope.showEmployees=true;
+        $scope.showElementDetail=false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
         $scope.currentPage = 0;
@@ -110,6 +111,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.newUserDetails = data.data;
+                if(!data.data.avatar){
+                    $scope.newUserDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
+                }
+                $scope.showElementDetail =true;
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);
