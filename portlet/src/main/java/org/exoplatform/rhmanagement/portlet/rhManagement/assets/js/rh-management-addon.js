@@ -2,7 +2,7 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
 {
     $( document ).ready(function() {
         var rhAppRoot = $('#rhAddon');
-        var rhApp = angular.module('rhApp', []);
+        var rhApp = angular.module('rhApp', ['ngFileUpload']);
         rhApp.directive('onlyDigits', function () {
 
             return {

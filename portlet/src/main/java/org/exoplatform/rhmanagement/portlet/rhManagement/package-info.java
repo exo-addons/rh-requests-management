@@ -5,6 +5,7 @@
         @Binding(value = IdentityManager.class),
         @Binding(value = UserDataService.class),
         @Binding(value = CalendarService.class),
+        @Binding(value = RepositoryService.class),
         @Binding(value = ActivityManager.class)
 })
 @Scripts({
@@ -19,6 +20,8 @@
         @Script(id = "moment", value = "js/lib/moment.js"),
         @Script(id = "fullCalendar", value = "js/lib/fullCalendar.js", depends = "moment"),
         @Script(id = "calendar", value = "js/lib/calendar.js", depends = "moment"),
+        @Script(id = "ng-file-upload", value = "js/lib/ng-file-upload.js", depends = "angularjs"),
+        @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" , "calendar" }),
     @Script(id = "rhAddon", value = "js/rh-management-addon.js", depends = { "controllers" }) })
 @Less("style/sample-addon.less")
@@ -43,6 +46,7 @@ import juzu.plugin.portlet.Portlet;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.social.core.manager.ActivityManager;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.social.core.space.spi.SpaceService;

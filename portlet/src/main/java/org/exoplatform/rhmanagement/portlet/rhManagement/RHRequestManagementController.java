@@ -1,8 +1,14 @@
 package org.exoplatform.rhmanagement.portlet.rhManagement;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 import javax.inject.Inject;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Session;
 
 import juzu.HttpMethod;
 import juzu.MimeType;
@@ -12,9 +18,12 @@ import juzu.Response;
 import juzu.SessionScoped;
 import juzu.View;
 import juzu.impl.common.JSON;
+import juzu.io.Stream;
 import juzu.plugin.jackson.Jackson;
+import juzu.request.HttpContext;
 import juzu.template.Template;
 
+import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
 import org.exoplatform.calendar.service.*;
 import org.exoplatform.commons.api.notification.NotificationContext;
@@ -22,6 +31,7 @@ import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
+import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.rhmanagement.dto.*;
 import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
@@ -31,6 +41,8 @@ import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.services.ValidatorService;
+import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.security.ConversationState;
@@ -76,6 +88,9 @@ public class RHRequestManagementController {
 
   @Inject
   CalendarService calendarService;
+
+  @Inject
+  RepositoryService repositoryService;
 
 
   @Inject
@@ -446,4 +461,114 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     log.error("Exception while create user event", e);
   }
 }
+
+
+  /**
+   * method uploadFile() records an image in AddMembersStorage
+   *
+   * @param httpContext
+   * @param file
+   * @return Response.Content
+   * @throws java.io.IOException
+   */
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+
+  public Response uploadFile(Long requestId, FileItem file) throws IOException {
+
+      if (file != null) {
+        saveRequestAttachement(file, requestId);
+        return Response.ok();
+
+
+
+    } else {
+      return Response.notFound();
+    }
+  }
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+
+  public Response  getRequestAttachements(@Jackson VacationRequestDTO obj) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    List<JSON> atts = new ArrayList<JSON>();
+    try {
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      long requestId=obj.getId();
+      if (rootNode.hasNode("hrmanagement/requests/req_"+requestId)) {
+        Node requestsFolder= rootNode.getNode("hrmanagement/requests/req_"+requestId);
+                NodeIterator iter = requestsFolder.getNodes();
+        while (iter.hasNext()) {
+          Node node = (Node) iter.next();
+          JSON attachment=new JSON();
+          attachment.set("name",node.getName());
+          attachment.set("url","/rest/jcr/repository/collaboration/hrmanagement/requests/req_"+requestId+"/"+node.getName());
+          atts.add(attachment);
+        }
+        return Response.ok(atts.toString());
+      }else{
+        return Response.ok();
+      }
+
+    } catch (Exception e) {
+
+      log.error("Error while getting attachements: ", e.getMessage());
+      return null;
+    } finally {
+      sessionProvider.close();
+    }
+  }
+
+  /**
+   * Save  file in the jcr
+   *
+   * @param item, item file
+   */
+
+  public void saveRequestAttachement(FileItem item , long requestId) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    try {
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      if (!rootNode.hasNode("hrmanagement")) {
+        rootNode.addNode("hrmanagement", "nt:folder");
+        session.save();
+      }
+      Node applicationDataNode = rootNode.getNode("hrmanagement");
+      if (!applicationDataNode.hasNode("requests")) {
+        applicationDataNode.addNode("requests", "nt:folder");
+        session.save();
+      }
+      Node requestsFolder= applicationDataNode.getNode("requests");
+
+      Node reqFolder = null;
+      if (!requestsFolder.hasNode("req_"+requestId )) {
+        requestsFolder.addNode("req_"+requestId, "nt:folder");
+        session.save();
+      }
+      reqFolder = requestsFolder.getNode("req_"+requestId);
+
+      Node fileNode = reqFolder.addNode(item.getName(), "nt:file");
+      Node jcrContent = fileNode.addNode("jcr:content", "nt:resource");
+      jcrContent.setProperty("jcr:data", item.getInputStream());
+      jcrContent.setProperty("jcr:lastModified", java.util.Calendar.getInstance());
+      jcrContent.setProperty("jcr:encoding", "UTF-8");
+      jcrContent.setProperty("jcr:mimeType", item.getContentType());
+      reqFolder.save();
+      session.save();
+    } catch (Exception e) {
+      log.error("Error while saving the file: ", e.getMessage());
+    } finally {
+      sessionProvider.close();
+    }
+  }
 }

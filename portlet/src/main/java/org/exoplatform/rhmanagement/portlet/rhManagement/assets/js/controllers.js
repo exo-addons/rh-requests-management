@@ -1,5 +1,5 @@
 define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar"], function($, jz,invite,calendar)  {
-    var rhCtrl = function($scope, $q, $timeout, $http, $filter) {
+    var rhCtrl = function($scope, $q, $timeout, $http, $filter, Upload) {
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
 
@@ -16,6 +16,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vrmanagers = [];
         $scope.vrsubs = [];
         $scope.calEvents = [];
+        $scope.attachements = [];
         $scope.showForm = true;
         $scope.showDetails = false;
         $scope.showResume = false;
@@ -274,6 +275,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.vacationRequesttoShow=vacationRequest;
             $scope.loadManagers(vacationRequest);
             $scope.loadSubstitues(vacationRequest);
+            $scope.loadAttachments(vacationRequest);
             $scope.loadComments(vacationRequest);
             $scope.showDetails = true;
         };
@@ -508,6 +510,50 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.validateVacationRequestForm = function(vacationRequest) {
             return true;
+        };
+
+
+        $scope.uploadFiles = function(file, errFiles) {
+            $scope.f = file;
+            $scope.errFile = errFiles && errFiles[0];
+            if (file) {
+                file.upload = Upload.upload({
+                    url: rhContainer.jzURL('RHRequestManagementController.uploadFile'),
+                    data: {requestId: $scope.vacationRequesttoShow.id,
+                           file: file}
+                });
+
+                file.upload.then(function (response) {
+                    $timeout(function () {
+                        file.result = response.data;
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 *
+                        evt.loaded / evt.total));
+                });
+            }
+        }
+
+        $scope.loadAttachments = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhContainer.jzURL('RHRequestManagementController.getRequestAttachements')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.attachements = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
         };
 
         $scope.loadVacationRequestsToValidate(null);
