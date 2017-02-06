@@ -6,6 +6,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
         $scope.showEmployees=true;
         $scope.showElementDetail=false;
+        $scope.getUserLigne=false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
         $scope.currentPage = 0;
@@ -105,22 +106,27 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
         $scope.getUser = function(newUserId) {
 
-            $http({
-                method : 'GET',
-                url : rhAdminContainer.jzURL('RhAdministrationController.getUser')+ "&userId=" +newUserId
-            }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
-                $scope.newUserDetails = data.data;
-                if(!data.data.avatar){
-                    $scope.newUserDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
-                }
-                $scope.showElementDetail =true;
-                $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
-            }, function errorCallback(data) {
-                $scope.setResultMessage(data, "error");
-            });
+            if(newUserId){
+                $("#getUser").removeClass("invalid");
+                $http({
+                    method : 'GET',
+                    url : rhAdminContainer.jzURL('RhAdministrationController.getUser')+ "&userId=" +newUserId
+                }).then(function successCallback(data) {
+                    $scope.setResultMessage(data, "success");
+                    $scope.newUserDetails = data.data;
+                    if(!data.data.avatar){
+                        $scope.newUserDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
+                    }
+                    $scope.showElementDetail =true;
+                    $timeout(function() {
+                        $scope.setResultMessage("", "info")
+                    }, 3000);
+                }, function errorCallback(data) {
+                    $scope.setResultMessage(data, "error");
+                });
+            }else{
+                $("#getUser").addClass("invalid").focus();
+            }
         };
 
 
@@ -193,9 +199,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         }
 
 
-        $scope.openTab = function (evt, tabName) {
+        $scope.openTab = function (tabName, tabHide) {
             // Declare all variables
-            var i, tabcontent, tablinks;
+          /*  var i, tabcontent, tablinks;
 
             // Get all elements with class="tabcontent" and hide them
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -208,10 +214,19 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-
+*/
             // Show the current tab, and add an "active" class to the link that opened the tab
-            document.getElementById(tabName).style.display = "block";
-            document.getElementById(evt).className += " active";
+//            document.getElementById(tabName).style.display = "block";
+//            document.getElementById(tabHide).style.display = "none";
+//            document.getElementById(tabName + "Tab").className += " active";
+//            document.getElementById(tabHide + "Tab").className += " active";
+
+            $("#"+tabName).css("display", "block");
+            $("#"+tabHide).css("display", "none");
+            $("#"+tabName + "Tab").addClass("active");
+            $("#"+tabHide + "Tab").removeClass("active");
+
+            //document.getElementById(evt).className += " active";
         }
 
         $scope.enableInput = function (id) {

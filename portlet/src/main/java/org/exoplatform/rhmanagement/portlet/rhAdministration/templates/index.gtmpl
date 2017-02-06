@@ -8,21 +8,27 @@
         <div id="hrAdminApplication" style="padding: 5px;">
 
             <ul class="tab">
-                <li><a href="javascript:void(0)" class="tablinks active" id="employeeTab"
-                       ng-click="openTab('employeeTab', 'employees')">Employees List</a></li>
+                <li><a href="javascript:void(0)" class="tablinks active" id="addEmployeeTab"
+                       ng-click="openTab('addEmployee', 'requests')">Employees List</a></li>
                 <li><a href="javascript:void(0)" class="tablinks" id="requestsTab"
-                       ng-click="openTab('requestsTab', 'requests')">Requests List</a></li>
+                       ng-click="openTab('requests', 'addEmployee')">Requests List</a></li>
             </ul>
 
             <div id="addEmployee" class="tabcontent" style="display: block;">
                 <div class="ligne getUserLigne">
-                    <b>User:</b> <input type="text" ng-model="newUserId"/>
-                    <input type="submit" id="" class="btn btn-primary" value="Get User"
+                    <input type="submit" class="btn btn-primary addRequest" value="Add Request" ng-click="getUserLigne= true"/>
+                </div>
+
+                <div class="ligne getUserLigne" ng-show="getUserLigne">
+                    <b>User:</b> <input type="text" id="getUser" ng-model="newUserId" required/>
+                    <input type="submit"  class="btn btn-primary" value="Get User"
                            data-ng-click="getUser(newUserId)"/>
                 </div>
 
+
+
                 <div class="uiBox elementDetail" ng-show="showElementDetail">
-                    <a class="actionIcon " style="float: right;margin-right: -10px;" ng-click="showElementDetail=false">
+                    <a class="actionIcon " style="float: right;margin-right: -10px;" ng-click="getUserLigne=false;showElementDetail=false">
                         <i class="uiIconClose "></i>
                     </a>
 
@@ -479,12 +485,29 @@
                                 <span>{{vacationRequest.status}}</span>
                             </td>
                             <td>
-                                <button type="submit" data-ng-click="validateRequest(vacationRequest)"
-                                        class="btn btn-primary">Validate
-                                </button>
-                                <button type="submit" data-ng-click="cancelRequest(vacationRequest)"
-                                        class="btn btn-default">Cancel
-                                </button>
+
+                                <div ng-app init="vacationRequest = {status: 'validated'}">
+                                    <div ng-if="vacationRequest.status">
+                                        <button type="submit" data-ng-click="validateRequest(vacationRequest)"
+                                                class="btn btn-primary">Validate
+                                        </button>
+                                        <button type="submit" data-ng-click="cancelRequest(vacationRequest)"
+                                                class="btn btn-default">Cancel
+                                        </button>
+                                    </div>
+                                    <div ng-if="!vacationRequest.status">
+                                        <button type="submit" data-ng-click="validateRequest(vacationRequest)"
+                                                class="btn btn-primary" disabled>Validate
+                                        </button>
+                                        <button type="submit" data-ng-click="cancelRequest(vacationRequest)"
+                                                class="btn btn-default" disabled>Cancel
+                                        </button>
+                                    </div>
+
+                                    <input type=text ng-model="vacationRequest.photo" placeholder="photo" />
+                                </div
+
+
                             </td>
                         </tr>
                         </tbody>
@@ -499,7 +522,7 @@
 
                 <h4 class="titleWithBorder">Requests List</h4>
 
-                <table id="requestsTable " class="table uiGrid table-hover table-striped ">
+                <table id="requestsTable" class="table uiGrid table-hover table-striped ">
                     <thead>
                     <tr>
                         <th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">User Name

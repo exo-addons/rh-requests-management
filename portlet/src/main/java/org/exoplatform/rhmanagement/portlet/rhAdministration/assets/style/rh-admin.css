@@ -87,7 +87,10 @@ img.avatar {
 }
 .tabcontent input{ margin-bottom :0}
 
-.formContainer{padding-top: 30px}
+.uiBox .uiContentBox.formContainer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
 
 /* Style of requests Table */
 #requestsTable tr > td:nth-last-child(1){
@@ -120,3 +123,30 @@ input.requestEdit[readonly]{
     margin: 20px 20px 0 20px;
 }
 #submit {display: none}
+.addRequest{
+        float: right;
+        margin-top: -45px;
+}
+/* */
+/*  -- Date Pick --  */
+/* */
+
+.ui-widget-header{
+    background: #36669b;
+    border-color: #36669b;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #626262;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,
+ .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
+ .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus,
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+        background: rgb(54, 102, 155);
+        border-color: rgb(54, 102, 155);
+        color: #f8f8f8;
+}
+
+.ui-widget.ui-widget-content{background: #FFF}
+
+/**/

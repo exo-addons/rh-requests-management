@@ -6,14 +6,17 @@
         @Binding(value = OrganizationService.class),
         @Binding(value = VacationRequestService.class)})
 @Scripts({
+    @Script(id = "jQueryUI", value = "js/lib/jquery-ui.js"),
     // AngularJS is still global, should be AMDified
     @Script(id = "angularjs", value = "js/lib/angular.min.js"),
     @Script(id = "ngSanitize", value = "js/lib/angular-sanitize.js", depends = "angularjs"),
     // services and controllers js are AMD modules, required by controllers.js
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" }),
-    @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers" }) })
+    @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }) })
 
 @Stylesheets({
+        @Stylesheet(id = "jQueryUISkin", value = "style/jquery-ui.css") ,
+        @Stylesheet(id = "fullcalendarSkin", value = "style/fullcalendar.css") ,
         @Stylesheet(id = "sample-addonSkin", value = "style/rh-admin.css") })
 
 @Assets("*")
