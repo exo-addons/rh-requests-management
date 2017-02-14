@@ -8,10 +8,10 @@
         <div id="hrAdminApplication" style="padding: 5px;">
 
             <ul class="tab">
-                <li><a href="javascript:void(0)" class="tablinks active" id="employeeTab"
-                       ng-click="openTab('employeeTab', 'employees')">Employees List</a></li>
+                <li><a href="javascript:void(0)" class="tablinks active" id="employeesTab"
+                       ng-click="openTab('employees', 'requests')">{{i18n.employeesList}}</a></li>
                 <li><a href="javascript:void(0)" class="tablinks" id="requestsTab"
-                       ng-click="openTab('requestsTab', 'requests')">Requests List</a></li>
+                       ng-click="openTab('requests', 'employees'); loadAllVacationRequests()">{{i18n.requestsList}}</a></li>
             </ul>
 
 <div id="employees" class="tabcontent" style="display: block;">
@@ -32,94 +32,95 @@ data-ng-click="getUser(newUserId)"/>
                                 <img src="{{newUserDetails.avatar}}" class="avatar" alt=""/>
 </div>
                             <div class="ligne">
-                                <b>Full name:</b> <input type="text" name="name" class="requestEdit" value="{{newUserDetails.name}}" readonly/>
+                                <b>{{i18n.userFullName}}:</b> <input type="text" name="name" class="requestEdit" value="{{newUserDetails.name}}" readonly/>
 </div>
                             <div class="ligne">
-                                <b>email:</b> <input type="text" name="email" class="requestEdit" value="{{newUserDetails.email}}" readonly/>
+                                <b>{{i18n.email}}:</b> <input type="text" name="email" class="requestEdit" value="{{newUserDetails.email}}" readonly/>
 </div>
                             <div class="ligne">
-                                <b>jobTitle:</b> <input type="text" name="jobTitle"
+                                <b>{{i18n.jobTitle}}:</b> <input type="text" name="jobTitle"
 class="requestEdit"  value="{{newUserDetails.jobTitle}}" readonly/>
 </div>
                             <div class="ligne">
-                                <b>gender:</b> <input type="text" name="gende" class="requestEdit" value="{{newUserDetails.gender}}" readonly/>
+                                <b>{{i18n.gender}}:</b> <input type="text" name="gende" class="requestEdit" value="{{newUserDetails.gender}}" readonly/>
 </div>
 
                         </div>
 <div class="span4">
 <div class="ligne">
-<b>phone:</b> <input type="text" name="phone" class="requestEdit" value="{{newUserDetails.phone}}"/>
+<b>{{i18n.phone}}:</b> <input type="text" name="phone" class="requestEdit" value="{{newUserDetails.phone}}"/>
 </div>
 
                             <div class="ligne">
-                                <b>cin:</b> <input type="text" name="cin" class="requestEdit" ng-model="newUserDetails.hrData.cin"/>
+                                <b>{{i18n.cin}}:</b> <input type="text" name="cin" class="requestEdit" ng-model="newUserDetails.hrData.cin"/>
 </div>
                             <div class="ligne">
-                                <b>nbrHolidays:</b> <input type="text" name="holiday"
+                                <b>{{i18n.holidaysBalance}}:</b> <input type="text" name="holiday"
 class="requestEdit" ng-model="newUserDetails.hrData.nbrHolidays"/>
 </div>
                             <div class="ligne">
-                                <b>nbrSickdays:</b> <input type="text" name="nbrSickdays"
+                                <b>{{i18n.sickBalance}}:</b> <input type="text" name="nbrSickdays"
 class="requestEdit" ng-model="newUserDetails.hrData.nbrSickdays"/>
 </div>
                             <div class="ligne">
-                                <b>socialSecNumber:</b> <input type="text" name="socialSecNumber"
+                                <b>{{i18n.socialSecNumber}}:</b> <input type="text" name="socialSecNumber"
 class="requestEdit" ng-model="newUserDetails.hrData.socialSecNumber"/>
 </div>
                             <div class="ligne">
-                                <b>hrId:</b> <input type="text" name="hrId" class="requestEdit" ng-model="newUserDetails.hrData.hrId"/>
+                                <b>{{i18n.hrId}}:</b> <input type="text" name="hrId" class="requestEdit" ng-model="newUserDetails.hrData.hrId"/>
 </div>
                             <div class="ligne">
-                                <b>bDay:</b> <input type="text" name="bDay" class="requestEdit" ng-model="newUserDetails.hrData.bDay"/>
+                                <b>{{i18n.bDay}}:</b> <input type="text" name="bDay" class="requestEdit" ng-model="newUserDetails.hrData.bDay"/>
 </div>
                             <div class="ligne">
-                                <b>situation:</b> <input type="text" name="situation"
+                                <b>{{i18n.situation}}:</b> <input type="text" name="situation"
 class="requestEdit" ng-model="newUserDetails.hrData.situation"/>
 </div>
                             <div class="ligne">
-                                <b>nbChildren:</b> <input type="text" name="nbChildren"
+                                <b>{{i18n.nbChildren}}:</b> <input type="text" name="nbChildren"
 class="requestEdit" ng-model="newUserDetails.hrData.nbChildren"/>
 </div>
 
                         </div>
 <div class="span4">
 <div class="ligne">
-<b>team:</b> <input type="text" name="team" class="requestEdit" ng-model="newUserDetails.hrData.team"/>
+<b>{{i18n.team}}:</b> <input type="text" name="team" class="requestEdit" ng-model="newUserDetails.hrData.team"/>
 </div>
                             <div class="ligne">
-                                <b>address:</b> <input type="text" name="address"
+                                <b>{{i18n.address}}:</b> <input type="text" name="address"
 class="requestEdit" ng-model="newUserDetails.hrData.address"/>
 </div>
                             <div class="ligne">
-                                <b>bankId:</b> <input type="text" name="bankId"
+                                <b>{{i18n.bankId}}:</b> <input type="text" name="bankId"
 class="requestEdit"  ng-model="newUserDetails.hrData.bankId"/>
 </div>
                             <div class="ligne">
-                                <b>startDate:</b> <input type="text" name="startDate"
+                                <b>{{i18n.startDate}}:</b> <input type="text" name="startDate"
 class="requestEdit" ng-model="newUserDetails.hrData.startDate"/>
 </div>
                             <div class="ligne">
-                                <b>leaveDate:</b> <input type="text" name="leaveDate"
+                                <b>{{i18n.leaveDate}}:</b> <input type="text" name="leaveDate"
 class="requestEdit" ng-model="newUserDetails.hrData.leaveDate"/>
 </div>
                             <div class="ligne">
-                                <b>contract:</b> <input type="text" name="contract"
+                                <b>{{i18n.contract}}:</b> <input type="text" name="contract"
 class="requestEdit" ng-model="newUserDetails.hrData.contract"/>
 </div>
                             <div class="ligne">
-                                <b>contractStartDate:</b> <input type="text" name="contractStartDate"
+                                <b>{{i18n.contractStartDate}}:</b> <input type="text" name="contractStartDate"
 class="requestEdit"  ng-click="enableInput('#contractStartDate')"
 ng-model="newUserDetails.hrData.contractStartDate"/>
 </div>
                             <div class="ligne">
-                                <b>contractEndDate:</b>
+                                <b>{{i18n.contractEndDate}}:</b>
 <input type="text" name="contractEndDate"
 class="requestEdit"  ng-model="newUserDetails.hrData.contractEndDate"/>
 </div>
                             <div class="ligne">
-                                <b>others:</b> <input type="text" name="others"
+                                <b>{{i18n.others}}:</b> <input type="text" name="others"
 class="requestEdit" ng-model="newUserDetails.hrData.others"/>
 </div>
+
                         </div>
 <input type="submit" class="btn btn-primary Submitbtn" value="Submit"
 data-ng-click="saveUserHRData(newUserDetails)"/>
@@ -130,7 +131,7 @@ data-ng-click="saveUserHRData(newUserDetails)"/>
 
 
 <div id="employeesList" ng-show="showEmployees">
-<h4 class="titleWithBorder">Employees List</h4>
+<h4 class="titleWithBorder">{{i18n.employeesList}}</h4>
                     <!-- <div class="controls"> -->
                     <!-- <input ng-model="def" id="search" class="form-control" placeholder="Filter text" ng-change="vm.setPage(vm.pager.currentPage)"> -->
                     <!-- </div> -->
@@ -138,37 +139,35 @@ data-ng-click="saveUserHRData(newUserDetails)"/>
 <table id="employeesTable" class="table uiGrid table-hover table-striped">
 <thead>
 <tr>
-<th><a href="#" ng-click="orderByField='title'; reverseSort = !reverseSort">User Name
+<th><a href="#" ng-click="orderByField='title'; reverseSort = !reverseSort">{{i18n.userFullName}}
 <img ng-show="orderByField == 'title' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'title' && reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th><a href="#" ng-click="orderByField='type'; reverseSort = !reverseSort">ID Number
+<th><a href="#" ng-click="orderByField='type'; reverseSort = !reverseSort">{{i18n.cin}}
 <img ng-show="orderByField == 'type' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'type' && reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th><a href="#" ng-click="orderByField='severity'; reverseSort = !reverseSort">Security
-Number
+<th><a href="#" ng-click="orderByField='severity'; reverseSort = !reverseSort">{{i18n.socialSecNumber}}
 <img ng-show="orderByField == 'severity' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'severity' && reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th><a href="#" ng-click="orderByField='startDate'; reverseSort = !reverseSort">Holidays
-Balance
+<th><a href="#" ng-click="orderByField='startDate'; reverseSort = !reverseSort">{{i18n.holidaysBalance}}
 <img ng-show="orderByField == 'startDate' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'startDate' && reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th><a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">Sick days
+<th><a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">{{i18n.sickBalance}}
 balance
 <img ng-show="orderByField == 'assignee' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
@@ -176,7 +175,7 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </a>
                             </th>
-<th><a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">phone
+<th><a href="#" ng-click="orderByField='assignee'; reverseSort = !reverseSort">{{i18n.phone}}
 <img ng-show="orderByField == 'assignee' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
 <img ng-show="orderByField == 'assignee' && reverseSort"
@@ -224,20 +223,20 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                             <!-- pager -->
                             <ul ng-if="vm.pager.pages.length" class="pagination">
                                 <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                                    <a ng-click="vm.setPage(1)">First</a>
+                                    <a ng-click="vm.setPage(1)">{{i18n.first}}</a>
 </li>
                                 <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                                    <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+                                    <a ng-click="vm.setPage(vm.pager.currentPage - 1)">{{i18n.previous}}</a>
 </li>
                                 <li ng-repeat="page in vm.pager.pages"
                                     ng-class="{active:vm.pager.currentPage === page}">
                                     <a ng-click="vm.setPage(page)">{{page}}</a>
 </li>
                                 <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                                    <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+                                    <a ng-click="vm.setPage(vm.pager.currentPage + 1)">{{i18n.next}}</a>
 </li>
                                 <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                                    <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+                                    <a ng-click="vm.setPage(vm.pager.totalPages)">{{i18n.last}}</a>
 </li>
                             </ul>
 </div>
@@ -258,20 +257,20 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                                     <img src="{{userDetails.avatar}}" class="avatar" alt=""/>
 </div>
                                 <div class="ligne">
-                                    <b>Full name:</b> <input type="text" name="name" class="requestEdit" id="nameEdit"
+                                    <b>{{i18n.userFullName}}:</b> <input type="text" name="name" class="requestEdit" id="nameEdit"
 value="{{userDetails.name}}" readonly/>
 </div>
                                 <div class="ligne">
-                                    <b>email:</b> <input type="text" name="email" class="requestEdit" id="emailEdit"
+                                    <b>{{i18n.email}}:</b> <input type="text" name="email" class="requestEdit" id="emailEdit"
 value="{{userDetails.email}}" readonly/>
 </div>
                                 <div class="ligne">
-                                    <b>jobTitle:</b> <input type="text" name="jobTitle" class="requestEdit"
+                                    <b>{{i18n.jobTitle}}:</b> <input type="text" name="jobTitle" class="requestEdit"
 id="jobTitleEdit" value="{{userDetails.jobTitle}}"
 readonly/>
 </div>
                                 <div class="ligne">
-                                    <b>gender:</b> <input type="text" name="gende" class="requestEdit" id="genderEdit"
+                                    <b>{{i18n.gender}}:</b> <input type="text" name="gende" class="requestEdit" id="genderEdit"
 value="{{userDetails.gender}}" readonly/>
 </div>
 
@@ -283,21 +282,21 @@ value="{{userDetails.gender}}" readonly/>
 </div>
 
                                 <div class="ligne">
-                                    <b>cin:</b> <input type="text" name="cin" class="requestEdit" id="cinEdit"
+                                    <b>{{i18n.cin}}:</b> <input type="text" name="cin" class="requestEdit" id="cinEdit"
 ng-click="enableInput('#cinEdit')"
 ng-model="userDetails.hrData.cin"
 value="{{userDetails.hrData.cin}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#cinEdit')"></i>
                                 </div>
 <div class="ligne">
-<b>nbrHolidays:</b> <input type="text" name="holiday" class="requestEdit"
+<b>{{i18n.holidaysBalance}}:</b> <input type="text" name="holiday" class="requestEdit"
                                                                id="holidayEdit" ng-click="enableInput('#holidayEdit')"
                                                                ng-model="userDetails.hrData.nbrHolidays"
                                                                value="{{userDetails.hrData.nbrHolidays}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#holidayEdit')"></i>
                                 </div>
 <div class="ligne">
-<b>nbrSickdays:</b> <input type="text" name="nbrSickdays" class="requestEdit"
+<b>{{i18n.sickBalance}}:</b> <input type="text" name="nbrSickdays" class="requestEdit"
                                                                id="nbrSickdaysEdit"
                                                                ng-click="enableInput('#nbrSickdaysEdit')"
                                                                ng-model="userDetails.hrData.nbrSickdays"
@@ -305,7 +304,7 @@ class="uiIconEdit" ng-click="enableInput('#holidayEdit')"></i>
 class="uiIconEdit" ng-click="enableInput('#nbrSickdaysEdit')"></i>
                                 </div>
 <div class="ligne">
-<b>socialSecNumber:</b> <input type="text" name="socialSecNumber"
+<b>{{i18n.socialSecNumber}}:</b> <input type="text" name="socialSecNumber"
                                                                    class="requestEdit" id="socialSecNumberEdit"
                                                                    ng-click="enableInput('#socialSecNumberEdit')"
                                                                    ng-model="userDetails.hrData.socialSecNumber"
@@ -314,14 +313,14 @@ class="uiIconEdit" ng-click="enableInput('#nbrSickdaysEdit')"></i>
 ng-click="enableInput('#socialSecNumberEdit')"></i>
                                 </div>
 <div class="ligne">
-<b>hrId:</b> <input type="text" name="hrId" class="requestEdit" id="hrIdEdit"
+<b>{{i18n.hrId}}:</b> <input type="text" name="hrId" class="requestEdit" id="hrIdEdit"
                                                         ng-click="enableInput('#hrIdEdit')"
                                                         ng-model="userDetails.hrData.hrId"
                                                         value="{{userDetails.hrData.hrId}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#hrIdEdit')"></i>
                                 </div>
 <div class="ligne">
-<b>bDay:</b> <input type="text" name="bDay" class="requestEdit" id="bDay"
+<b>{{i18n.bDay}}:</b> <input type="text" name="bDay" class="requestEdit" id="bDay"
                                                         ng-click="enableInput('#bDay')"
                                                         ng-model="userDetails.hrData.bDay"
                                                         value="{{userDetails.hrData.bDay | date:'yyyy-MM-dd'}}"
@@ -329,14 +328,14 @@ class="uiIconEdit" ng-click="enableInput('#hrIdEdit')"></i>
 ng-click="enableInput('#bDay')"></i>
                                 </div>
 <div class="ligne">
-<b>situation:</b> <input type="text" name="situation" class="requestEdit"
+<b>{{i18n.situation}}:</b> <input type="text" name="situation" class="requestEdit"
                                                              id="situation" ng-click="enableInput('#situation')"
                                                              ng-model="userDetails.hrData.situation"
                                                              value="{{userDetails.hrData.situation}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#situation')"></i>
                                 </div>
 <div class="ligne">
-<b>nbChildren:</b> <input type="text" name="nbChildren" class="requestEdit"
+<b>{{i18n.nbChildren}}:</b> <input type="text" name="nbChildren" class="requestEdit"
                                                               id="nbChildren" ng-click="enableInput('#nbChildren')"
                                                               ng-model="userDetails.hrData.nbChildren"
                                                               value="{{userDetails.hrData.nbChildren}}" readonly/><i
@@ -346,28 +345,28 @@ class="uiIconEdit" ng-click="enableInput('#nbChildren')"></i>
 </div>
                             <div class="span4">
                                 <div class="ligne">
-                                    <b>team:</b> <input type="text" name="team" class="requestEdit" id="team"
+                                    <b>{{i18n.team}}:</b> <input type="text" name="team" class="requestEdit" id="team"
 ng-click="enableInput('#team')"
 ng-model="userDetails.hrData.team"
 value="{{userDetails.hrData.team}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#team')"></i>
                                 </div>
 <div class="ligne">
-<b>address:</b> <input type="text" name="address" class="requestEdit" id="address"
+<b>{{i18n.address}}:</b> <input type="text" name="address" class="requestEdit" id="address"
                                                            ng-click="enableInput('#address')"
                                                            ng-model="userDetails.hrData.address"
                                                            value="{{userDetails.hrData.address}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#address')"></i>
                                 </div>
 <div class="ligne">
-<b>bankId:</b> <input type="text" name="bankId" class="requestEdit" id="bankId"
+<b>{{i18n.bankId}}:</b> <input type="text" name="bankId" class="requestEdit" id="bankId"
                                                           ng-click="enableInput('#bankId')"
                                                           ng-model="userDetails.hrData.bankId"
                                                           value="{{userDetails.hrData.bankId}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#bankId')"></i>
                                 </div>
 <div class="ligne">
-<b>startDate:</b> <input type="text" name="startDate" class="requestEdit"
+<b>{{i18n.startDate}}:</b> <input type="text" name="startDate" class="requestEdit"
                                                              id="startDate" ng-click="enableInput('#startDate')"
                                                              ng-model="userDetails.hrData.startDate"
                                                              value="{{userDetails.hrData.startDate | date:'yyyy-MM-dd'}}"
@@ -375,7 +374,7 @@ class="uiIconEdit" ng-click="enableInput('#bankId')"></i>
 ng-click="enableInput('#startDate')"></i>
                                 </div>
 <div class="ligne">
-<b>leaveDate:</b> <input type="text" name="leaveDate" class="requestEdit"
+<b>{{i18n.leaveDate}}:</b> <input type="text" name="leaveDate" class="requestEdit"
                                                              id="leaveDate" ng-click="enableInput('#leaveDate')"
                                                              ng-model="userDetails.hrData.leaveDate"
                                                              value="{{userDetails.hrData.leaveDate | date:'yyyy-MM-dd'}}"
@@ -383,14 +382,14 @@ ng-click="enableInput('#startDate')"></i>
 ng-click="enableInput('#leaveDate')"></i>
                                 </div>
 <div class="ligne">
-<b>contract:</b> <input type="text" name="contract" class="requestEdit"
+<b>{{i18n.contract}}:</b> <input type="text" name="contract" class="requestEdit"
                                                             id="contract" ng-click="enableInput('#contract')"
                                                             ng-model="userDetails.hrData.contract"
                                                             value="{{userDetails.hrData.contract}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#contract')"></i>
                                 </div>
 <div class="ligne">
-<b>contractStartDate:</b> <input type="text" name="contractStartDate"
+<b>{{i18n.contractStartDate}}:</b> <input type="text" name="contractStartDate"
                                                                      class="requestEdit" id="contractStartDate"
                                                                      ng-click="enableInput('#contractStartDate')"
                                                                      ng-model="userDetails.hrData.contractStartDate"
@@ -399,7 +398,7 @@ class="uiIconEdit" ng-click="enableInput('#contract')"></i>
 ng-click="enableInput('#contractStartDate')"></i>
                                 </div>
 <div class="ligne">
-<b>contractEndDate:</b>
+<b>{{i18n.contractEndDate}}:</b>
                                     <input type="text" name="contractEndDate" class="requestEdit" id="contractEndDate"
                                            ng-click="enableInput('#contractEndDate')"
                                            ng-model="userDetails.hrData.contractEndDate"
@@ -407,15 +406,46 @@ ng-click="enableInput('#contractStartDate')"></i>
 class="uiIconEdit" ng-click="enableInput('#contractEndDate')"></i>
                                 </div>
 <div class="ligne">
-<b>others:</b> <input type="text" name="others" class="requestEdit" id="others"
+<b>{{i18n.others}}:</b> <input type="text" name="others" class="requestEdit" id="others"
                                                           ng-click="enableInput('#others')"
                                                           ng-model="userDetails.hrData.others"
                                                           value="{{userDetails.hrData.others}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#others')"></i>
                                 </div>
+
+
+<div class="ligne">
+<b>{{i18n.attacements}}:</b>
+
+                        <table id="attachementssTable" ">
+<tbody>
+<tr ng-repeat="attachement in attachements " class="hover-action ">
+<td>
+<a class='column-item column-title' href='{{attachement.url}}'>{{attachement.name}}</a>
+</td>
+<td class="td-right-align ">
+<button class="btn btn-primary " ng-click="deleteAttachement(attachement.name) ">Delete</button>
+
+</td>
+                               
+</tr>
+
+<tr>
+<td> </td>
+<td class="td-right-align ">
+<button type="file " ngf-select="uploadFiles($file, $invalidFiles) "  ngf-max-height="1000 " ngf-max-size="25MB ">
+        Select File</button>
+
+</td>
+
+                    </tr>
+</tbody>
+                    </table>
+</div>						
+								
 </div>
-                            <input type="submit" id="submit" class="btn btn-primary Submitbtn" value="Submit"
-                                   data-ng-click="saveUserHRData(userDetails)"/>
+<input type="submit" id="submit" class="btn btn-primary Submitbtn" value="Submit"
+data-ng-click="saveUserHRData(userDetails)"/>
 </div>
                     </div>
 <br/>
@@ -423,42 +453,40 @@ class="uiIconEdit" ng-click="enableInput('#others')"></i>
 <thead>
 <tr>
 
-<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Type
+<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">{{i18n.type}}
 <img ng-show="orderByField=='title' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='title' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th><a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">Number of days
+<th><a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">{{i18n.numberDays}}
 <img ng-show="orderByField=='type' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='type' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th><a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">From
-<img ng-show="orderByField=='severity' && !reverseSort "
+<th><a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">{{i18n.fromDate}}<img ng-show="orderByField=='severity' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='severity' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th><a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">To
-<img ng-show="orderByField=='startDate' && !reverseSort "
+<th><a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">{{i18n.toDate}}<img ng-show="orderByField=='startDate' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='startDate' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th><a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">Status
+<th><a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">{{i18n.status}}
 <img ng-show="orderByField=='assignee' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='assignee' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th>Actions</th>
+<th>{{i18n.actions}}</th>
                         </tr>
 </thead>
                         <tbody>
@@ -480,10 +508,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </td>
                             <td>
                                 <button type="submit" data-ng-click="validateRequest(vacationRequest)"
-                                        class="btn btn-primary">Validate
+                                        class="btn btn-primary">{{i18n.validate}}
                                 </button>
 <button type="submit" data-ng-click="cancelRequest(vacationRequest)"
-class="btn btn-default">Cancel
+class="btn btn-default">{{i18n.cancel}}
 </button>
                             </td>
 </tr>
@@ -497,58 +525,57 @@ class="btn btn-default">Cancel
             <div id="requests" class="tabcontent">
 
 
-                <h4 class="titleWithBorder">Requests List</h4>
+                <h4 class="titleWithBorder">{{i18n.requestsList}}</h4>
 
 <table id="requestsTable " class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
-<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">User Name
+<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">{{i18n.userFullName}}
 <img ng-show="orderByField=='title' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='title' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Type
+<th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">{{i18n.type}}
 <img ng-show="orderByField=='title' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='title' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th><a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">Number of days
+<th><a href="# " ng-click="orderByField='type' ; reverseSort=! reverseSort ">{{i18n.numberDays}}
 <img ng-show="orderByField=='type' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='type' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th><a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">From
-<img ng-show="orderByField=='severity' && !reverseSort "
+<th><a href="# " ng-click="orderByField='severity' ; reverseSort=! reverseSort ">{{i18n.fromDate}}<img ng-show="orderByField=='severity' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='severity' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th><a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">To
+<th><a href="# " ng-click="orderByField='startDate' ; reverseSort=! reverseSort ">{{i18n.toDate}}
 <img ng-show="orderByField=='startDate' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='startDate' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th><a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">Status
+<th><a href="# " ng-click="orderByField='assignee' ; reverseSort=! reverseSort ">{{i18n.status}}
 <img ng-show="orderByField=='assignee' && !reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField=='assignee' && reverseSort "
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                         </th>
-<th>Actions</th>
+<th>{{i18n.actions}}</th>
                     </tr>
 </thead>
                     <tbody>
-                    <tr ng-repeat="vRequest in allVacationRequests | orderBy:orderByField:reverseSort ">
+                    <tr ng-repeat="vRequest in allVacationRequests | orderBy:orderByField:reverseSort">
                         <td><a href="/portal/intranet/profile/{{vRequest.userId}} ">{{vRequest.userFullName}}</a>
 </td>
                         <td>
@@ -568,10 +595,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </td>
                         <td>
                             <button type="submit" data-ng-click="validateRequest(vRequest)"
-                                    class="btn btn-primary">Validate
+                                    class="btn btn-primary">{{i18n.validate}}
                             </button>
 <button type="submit" data-ng-click="cancelRequest(vRequest)"
-class="btn btn-default">Cancel
+class="btn btn-default">{{i18n.cancel}}
 </button>
                         </td>
 </tr>

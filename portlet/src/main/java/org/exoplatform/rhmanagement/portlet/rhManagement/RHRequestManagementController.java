@@ -489,6 +489,22 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     }
   }
 
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+
+  public Response deleteFile(String requestId, String fileName) throws IOException {
+
+
+    if(deleteAttachement(fileName, requestId)){
+      return Response.ok();
+    } else {
+      return Response.notFound();
+    }
+  }
+
+
 
   @Ajax
   @Resource(method = HttpMethod.POST)
@@ -503,8 +519,8 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
               repositoryService.getCurrentRepository());
       Node rootNode = session.getRootNode();
       long requestId=obj.getId();
-      if (rootNode.hasNode("hrmanagement/requests/req_"+requestId)) {
-        Node requestsFolder= rootNode.getNode("hrmanagement/requests/req_"+requestId);
+      if (rootNode.hasNode("Application Data/hrmanagement/requests/req_"+requestId)) {
+        Node requestsFolder= rootNode.getNode("Application Data/hrmanagement/requests/req_"+requestId);
                 NodeIterator iter = requestsFolder.getNodes();
         while (iter.hasNext()) {
           Node node = (Node) iter.next();
@@ -539,10 +555,19 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       Session session = sessionProvider.getSession("collaboration",
               repositoryService.getCurrentRepository());
       Node rootNode = session.getRootNode();
+
+      if (!rootNode.hasNode("Application Data")) {
+        rootNode.addNode("Application Data", "nt:folder");
+        session.save();
+      }
+
+      rootNode = rootNode.getNode("Application Data");
+
       if (!rootNode.hasNode("hrmanagement")) {
         rootNode.addNode("hrmanagement", "nt:folder");
         session.save();
       }
+
       Node applicationDataNode = rootNode.getNode("hrmanagement");
       if (!applicationDataNode.hasNode("requests")) {
         applicationDataNode.addNode("requests", "nt:folder");
@@ -570,5 +595,27 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     } finally {
       sessionProvider.close();
     }
+  }
+
+
+  public Boolean deleteAttachement(String fileName  , String requestId) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    try {
+
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      if (rootNode.hasNode("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName)) {
+        Node att= rootNode.getNode("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName);
+        att.remove();
+        session.save();
+        return true;
+      }else return false;
+    } catch (Exception e) {
+      log.error("Error while deleting the file: ", e.getMessage());
+    } finally {
+      sessionProvider.close();
+    }
+    return null;
   }
 }

@@ -4,6 +4,7 @@
         @Binding(value = UserDataService.class),
         @Binding(value = IdentityManager.class),
         @Binding(value = OrganizationService.class),
+        @Binding(value = RepositoryService.class),
         @Binding(value = VacationRequestService.class)})
 @Scripts({
     @Script(id = "jQueryUI", value = "js/lib/jquery-ui.js"),
@@ -11,6 +12,8 @@
     @Script(id = "angularjs", value = "js/lib/angular.min.js"),
     @Script(id = "ngSanitize", value = "js/lib/angular-sanitize.js", depends = "angularjs"),
     // services and controllers js are AMD modules, required by controllers.js
+        @Script(id = "ng-file-upload", value = "js/lib/ng-file-upload.js", depends = "angularjs"),
+        @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" }),
     @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }) })
 
@@ -35,6 +38,7 @@ import juzu.plugin.portlet.Portlet;
 
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.social.core.manager.IdentityManager;
 

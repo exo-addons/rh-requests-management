@@ -6,7 +6,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 {
 	$( document ).ready(function() {
 	  var rhAdminAppRoot = $('#rhAdminAddon');
-      var rhAdminApp = angular.module('rhAdminApp', [])
+      var rhAdminApp = angular.module('rhAdminApp', ['ngFileUpload'])
       .factory('PagerService', PagerService);
         rhAdminApp.filter('startFrom', function() {
           return function(input, start) {

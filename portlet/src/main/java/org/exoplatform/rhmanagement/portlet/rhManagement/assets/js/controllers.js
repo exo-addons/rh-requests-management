@@ -53,13 +53,13 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.toggleView = function(){
             $scope.showCal = !$scope.showCal;
             $text = $(".show-calender").text();
-            if($text.indexOf("Show Calendar") >= 0){
-                $text = "Hide Calendar";
+            if($text.indexOf($scope.i18n.showCalendar) >= 0){
+                $text = $scope.i18n.hideCalendar;
                 $scope.showForm = false;
                 $scope.showList = false;
                 $scope.showDetails = false;
             }else{
-                $text = "Show Calendar";
+                $text = $scope.i18n.showCalendar;
                 $scope.showResume = false;
                 $scope.showList = true;
                 $scope.showDetails = true;
@@ -526,6 +526,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;
+                        $scope.attachements = $scope.loadAttachments($scope.vacationRequesttoShow);
                     });
                 }, function (response) {
                     if (response.status > 0)
@@ -548,6 +549,22 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.setResultMessage(data, "success");
                 $scope.attachements = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+
+
+        $scope.deleteAttachement = function(fileName) {
+            $http({
+                url : rhContainer.jzURL('RHRequestManagementController.deleteFile')+"&requestId="+$scope.vacationRequesttoShow.id+"&fileName="+fileName
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.attachements = $scope.loadAttachments($scope.vacationRequesttoShow);
                 $timeout(function() {
                     $scope.setResultMessage("", "info")
                 }, 3000);

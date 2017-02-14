@@ -1,5 +1,5 @@
 define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], function($) {
-    var rhAdminCtrl = function($scope, $q, $timeout, $http, $filter, PagerService) {
+    var rhAdminCtrl = function($scope, $q, $timeout, $http, $filter, PagerService , Upload) {
         var rhAdminContainer = $('#rhAdminAddon');
         var deferred = $q.defer();
 
@@ -14,7 +14,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         $scope.def = '';
         $scope.userDetails=null;
         $scope.allVacationRequests = [];
-
+        $scope.attachements = [];
         $scope.orderByField = 'title';
         $scope.reverseSort = false;
         $scope.rhEmployee = {};
@@ -92,6 +92,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 method : 'GET',
                 url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId')+ "&userId=" +userRhData.userId
             }).then(function successCallback(data) {
+                $scope.loadAttachments(userRhData);
                 $scope.setResultMessage(data, "success");
                 $scope.vacationRequests = data.data;
                 $scope.showEmployees=false;
@@ -236,8 +237,67 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
         }
 
+
+        $scope.uploadFiles = function(file, errFiles) {
+            $scope.f = file;
+            $scope.errFile = errFiles && errFiles[0];
+            if (file) {
+                file.upload = Upload.upload({
+                    url: rhAdminContainer.jzURL('RhAdministrationController.uploadFile'),
+                    data: {userId: $scope.userDetails.userId,
+                        file: file}
+                });
+
+                file.upload.then(function (response) {
+                    $timeout(function () {
+                        file.result = response.data;
+                        $scope.attachements = $scope.loadAttachments($scope.userDetails);
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 *
+                        evt.loaded / evt.total));
+                });
+            }
+        }
+
+        $scope.loadAttachments = function(userDetails) {
+            $http({
+                data : userDetails,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getEmployeeAttachements')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.attachements = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+        $scope.deleteAttachement = function(fileName) {
+            $http({
+                url : rhAdminContainer.jzURL('RhAdministrationController.deleteFile')+"&userId="+$scope.userDetails.userId+"&fileName="+fileName
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.attachements = $scope.loadAttachments($scope.userDetails);
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+        $scope.loadBundles();
         $scope.loadEmployees();
-        $scope.loadAllVacationRequests();
+
         $('#rhAdminAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();
     };

@@ -9,6 +9,7 @@ import juzu.View;
 import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
+import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
@@ -23,6 +24,8 @@ import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugi
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
@@ -34,6 +37,10 @@ import org.exoplatform.social.core.manager.IdentityManager;
 
 
 import javax.inject.Inject;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Session;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -61,6 +68,9 @@ public class RhAdministrationController {
 
   @Inject
   OrganizationService orgService;
+
+  @Inject
+  RepositoryService repositoryService;
 
   @Inject
   @Path("index.gtmpl")
@@ -265,70 +275,159 @@ public class RhAdministrationController {
   }
 
 
-
-/*  *//**
-   * This service will return the names of all support team members
-   * @param ticketDTO
-   * @return
-   *//*
+  /**
+   * method uploadFile() records an image in AddMembersStorage
+   *
+   * @param httpContext
+   * @param file
+   * @return Response.Content
+   * @throws java.io.IOException
+   */
   @Ajax
-  @Resource(method = HttpMethod.POST)
+  @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<User> getSupportUsernames(@Jackson TicketDTO ticketDTO) {
-    try {
-      String groupId = PropertyManager.getProperty(SUPPORT_GROUP_NAME_CONFIGURATION);
-      if(groupId == null || groupId.isEmpty()){
-        groupId = SUPPORT_TEAM_NAME_DEFAULT;
-      }
-      ListAccess<User> EngSupportList = organizationService.getUserHandler().findUsersByGroupId(groupId);
-      User[] users = EngSupportList.load(0, EngSupportList.getSize() < 30 ? EngSupportList.getSize() : 30);
-      List<User> engSupport = new ArrayList<>();
-      for (User user : users) {
-        engSupport.add(user);
-      }
-      return engSupport;
-    } catch (Throwable e) {
-      LOG.error("Can't retrieve the list of support engineers " + e);
-      return null;
+
+  public Response uploadFile(String userId, FileItem file) throws IOException {
+
+    if (file != null) {
+      saveEmployeeAttachement(file, userId);
+      return Response.ok();
+
+
+
+    } else {
+      return Response.notFound();
     }
   }
 
-  *//**
-   * this method will return the list of severities
-   * @return List of ticket severity
-   *//*
+
   @Ajax
-  @Resource(method = HttpMethod.POST)
+  @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<String> getSeverities(@Jackson TicketDTO ticketDTO) {
-      List<String> severities = new ArrayList<>();
-      if(ticketDTO.getType().equals(IssueType.INCIDENT)){
-        severities.add(IssueSeverity.SEVERITY_1.name());
-        severities.add(IssueSeverity.SEVERITY_2.name());
-        severities.add(IssueSeverity.SEVERITY_3.name());
-      } else if(ticketDTO.getType().equals(IssueType.INFORMATION)) {
-        severities.add(IssueSeverity.SEVERITY_4.name());
-      }
-      return severities;
+
+  public Response deleteFile(String userId, String fileName) throws IOException {
+
+
+    if(deleteAttachement(fileName, userId)){
+      return Response.ok();
+    } else {
+      return Response.notFound();
+    }
   }
 
-  *//**
-   * this method returns the static list of ticket types
-   * @param ticketDTO
-   * @return
-   *//*
+
   @Ajax
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
-  public List<String> getTicketTypes(@Jackson TicketDTO ticketDTO) {
-      List<String> ticketTypes = new ArrayList<>();
-      ticketTypes.add(IssueType.INCIDENT.name());
-      ticketTypes.add(IssueType.INFORMATION.name());
-      return ticketTypes;
-  }*/
 
+  public Response  getEmployeeAttachements(@Jackson EmployeesDTO obj) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    List<JSON> atts = new ArrayList<JSON>();
+    try {
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      String userId=obj.getUserId();
+      if (rootNode.hasNode("Application Data/hrmanagement/employees/emp_"+userId)) {
+        Node requestsFolder= rootNode.getNode("Application Data/hrmanagement/employees/emp_"+userId);
+        NodeIterator iter = requestsFolder.getNodes();
+        while (iter.hasNext()) {
+          Node node = (Node) iter.next();
+          JSON attachment=new JSON();
+          attachment.set("name",node.getName());
+          attachment.set("url","/rest/jcr/repository/collaboration/hrmanagement/employees/emp_"+userId+"/"+node.getName());
+          atts.add(attachment);
+        }
+        return Response.ok(atts.toString());
+      }else{
+        return Response.ok();
+      }
+
+    } catch (Exception e) {
+
+      LOG.error("Error while getting attachements: ", e.getMessage());
+      return null;
+    } finally {
+      sessionProvider.close();
+    }
+  }
+
+  /**
+   * Save  file in the jcr
+   *
+   * @param item, item file
+   */
+
+  public void saveEmployeeAttachement(FileItem item , String userId) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    try {
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+
+      if (!rootNode.hasNode("Application Data")) {
+        rootNode.addNode("Application Data", "nt:folder");
+        session.save();
+      }
+
+     rootNode = rootNode.getNode("Application Data");
+
+      if (!rootNode.hasNode("hrmanagement")) {
+        rootNode.addNode("hrmanagement", "nt:folder");
+        session.save();
+      }
+      Node applicationDataNode = rootNode.getNode("hrmanagement");
+      if (!applicationDataNode.hasNode("employees")) {
+        applicationDataNode.addNode("employees", "nt:folder");
+        session.save();
+      }
+      Node usersFolder= applicationDataNode.getNode("employees");
+
+      Node userFolder = null;
+      if (!usersFolder.hasNode("emp_"+userId )) {
+        usersFolder.addNode("emp_"+userId, "nt:folder");
+        session.save();
+      }
+      userFolder = usersFolder.getNode("emp_"+userId);
+
+      Node fileNode = userFolder.addNode(item.getName(), "nt:file");
+      Node jcrContent = fileNode.addNode("jcr:content", "nt:resource");
+      jcrContent.setProperty("jcr:data", item.getInputStream());
+      jcrContent.setProperty("jcr:lastModified", java.util.Calendar.getInstance());
+      jcrContent.setProperty("jcr:encoding", "UTF-8");
+      jcrContent.setProperty("jcr:mimeType", item.getContentType());
+      userFolder.save();
+      session.save();
+    } catch (Exception e) {
+      LOG.error("Error while saving the file: ", e.getMessage());
+    } finally {
+      sessionProvider.close();
+    }
+  }
+
+
+  public Boolean deleteAttachement(String filename  , String userId) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    try {
+
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      if (rootNode.hasNode("Application Data/hrmanagement/employees/emp_"+userId+"/"+filename)) {
+        Node att= rootNode.getNode("Application Data/hrmanagement/employees/emp_"+userId+"/"+filename);
+        att.remove();
+        session.save();
+        return true;
+      }else return false;
+    } catch (Exception e) {
+      LOG.error("Error while saving the file: ", e.getMessage());
+    } finally {
+      sessionProvider.close();
+    }
+    return null;
+  }
 
 }
