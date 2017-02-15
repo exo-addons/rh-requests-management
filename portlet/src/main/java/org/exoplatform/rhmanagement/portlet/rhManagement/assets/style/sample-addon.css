@@ -228,12 +228,14 @@ select[name=inputUsername] {
 }
 
 .attachementName {
+    background: none repeat scroll 0 0 #e2eafa;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    border: 1px solid #215ab2;
     display: inline-block;
     font-size: 11px;
-    padding: 0 10px;
+    padding: 0 5px;
     margin: 0 5px 5px 0;
     max-width: 92%;
     overflow: hidden;

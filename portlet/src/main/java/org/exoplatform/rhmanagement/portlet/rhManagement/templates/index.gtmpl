@@ -381,50 +381,52 @@
 <b>{{i18n.attacements}}:</b>
 
 
-<span ng-repeat="attachement in attachements" class="uiMention">
+<span ng-repeat="attachement in attachements" class="attachementName">
                             <a class="column-item column-title" data-placement="bottom" rel="tooltip" href='{{attachement.url}}'>{{attachement.name}}</a>
-<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteAttachement(attachement.name)">
+<a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconClose uiIconLightGray"></i>
                                 </a>
 </span>
 
-                    <button type="file " ngf-select="uploadFiles($file, $invalidFiles) " ngf-max-height="1000 " ngf-max-size="25MB ">Select File</button>
+                   
+					         <a class="actionIcon inline-block-hide" ngf-select="uploadFiles($file, $invalidFiles) " ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
+                                    <i class="uiIconUpload uiIconLightGray"></i>
+</a>
+                </div>
 
-</div>
 
 
-
-                <div class="ligne manager">
-                    <b>{{i18n.managers}}: </b>
-<table id="managersTable" class="table uiGrid table-hover table-striped">
-<tbody>
-<tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
-<td>
-<a class="column-item column-title">{{vrmanager.validatorName}}</a>
+<div class="ligne manager">
+<b>{{i18n.managers}}: </b>
+                    <table id="managersTable" class="table uiGrid table-hover table-striped">
+                        <tbody>
+                            <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+                                <td>
+                                    <a class="column-item column-title">{{vrmanager.validatorName}}</a>
+</td>
+                                <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'" class="td-right-align">
+                                    <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+</button>
+                                    <button class="btn" ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'"><i class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+</button>
                                 </td>
-<td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'" class="td-right-align">
-<button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-                                    </button>
-<button class="btn" ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'"><i class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-                                    </button>
-</td>
-                                <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'" class="td-right-align">
-                                    <b>{{geti18n(vrmanager.reply)}}</b>
-</td>
+<td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'" class="td-right-align">
+<b>{{geti18n(vrmanager.reply)}}</b>
+                                </td>
 
 
-                            </tr>
-</tbody>
-                    </table>
-</div>
-                <div class="ligne">
+</tr>
+                        </tbody>
+</table>
+                </div>
+<div class="ligne">
 
 
-                    <div id="tab-comments" class="tab-pane fade in active ">
-                        <div class="commentList">
-                            <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
-                                <div class="commmentLeft">
-                                    <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+<div id="tab-comments" class="tab-pane fade in active ">
+<div class="commentList">
+<div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+<div class="commmentLeft">
+<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
 <img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
 </a>
                                 </div>

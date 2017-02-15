@@ -172,7 +172,7 @@ public class RHRequestManagementController {
       for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
         VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
        if(requestDTO!=null) {
-         if(status!=null&&requestDTO.getStatus()!=status) continue;
+         if(status!=null&&!status.equals(requestDTO.getStatus())) continue;
          dtos.add(requestDTO);
        }
       }
