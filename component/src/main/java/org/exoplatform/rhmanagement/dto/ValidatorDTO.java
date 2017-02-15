@@ -26,5 +26,6 @@ public class ValidatorDTO {
   private String              validatorUserId;
   private String              validatorMail;
   private String              reply;
+  private String              validatorName;
 
 }

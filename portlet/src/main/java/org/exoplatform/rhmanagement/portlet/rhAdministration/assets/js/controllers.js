@@ -18,7 +18,6 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         $scope.orderByField = 'title';
         $scope.reverseSort = false;
         $scope.rhEmployee = {};
-
         $scope.newUserId = "";
         $scope.newUserDetails={
             id : null
@@ -80,7 +79,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 $scope.setResultMessage(data, "error");
             });
 
-            return $filter('filter')($scope.rhEmployees, $scope.def)
+            //return $filter('filter')($scope.rhEmployees, $scope.def)
         };
 
         $scope.loadUserHRData = function(userRhData) {
@@ -201,40 +200,15 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
 
         $scope.openTab = function (tabName, tabHide) {
-            // Declare all variables
-          /*  var i, tabcontent, tablinks;
-
-            // Get all elements with class="tabcontent" and hide them
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-
-            // Get all elements with class="tablinks" and remove the class "active"
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-*/
-            // Show the current tab, and add an "active" class to the link that opened the tab
-//            document.getElementById(tabName).style.display = "block";
-//            document.getElementById(tabHide).style.display = "none";
-//            document.getElementById(tabName + "Tab").className += " active";
-//            document.getElementById(tabHide + "Tab").className += " active";
-
             $("#"+tabName).css("display", "block");
             $("#"+tabHide).css("display", "none");
             $("#"+tabName + "Tab").addClass("active");
             $("#"+tabHide + "Tab").removeClass("active");
-
-            //document.getElementById(evt).className += " active";
         }
 
         $scope.enableInput = function (id) {
-
             $(id).removeAttr("readonly");
             $("#submit").css("display", "block");
-
         }
 
 
@@ -247,7 +221,6 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                     data: {userId: $scope.userDetails.userId,
                         file: file}
                 });
-
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;

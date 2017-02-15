@@ -25,7 +25,8 @@ import juzu.template.Template;
 
 import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
-import org.exoplatform.calendar.service.*;
+import org.exoplatform.calendar.service.CalendarEvent;
+import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
@@ -36,11 +37,8 @@ import org.exoplatform.rhmanagement.dto.*;
 import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
-import org.exoplatform.rhmanagement.services.CommentService;
-import org.exoplatform.rhmanagement.services.UserDataService;
-import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
@@ -216,8 +214,13 @@ public class RHRequestManagementController {
   @MimeType.JSON
   @Jackson
   public List<ValidatorDTO> getValidatorsByRequestID (@Jackson VacationRequestDTO obj) {
+    List<ValidatorDTO> validators=new ArrayList<ValidatorDTO>() ;
     try {
-      return validatorService.getValidatorsByRequestId(obj.getId(),0,0);
+      for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
+        validator.setValidatorName(identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, validator.getValidatorUserId(), false).getProfile().getFullName());
+        validators.add(validator);
+      }
+      return validators;
     } catch (Throwable e) {
       log.error(e);
       return null;
@@ -402,8 +405,6 @@ public class RHRequestManagementController {
 
       data.set("currentUser",currentUser);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
-      data.set("sickBalance",userRHDataDTO.getNbrSickdays());
-      data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
       bundleString = data.toString();
       return Response.ok(bundleString);
     } catch (Throwable e) {
@@ -447,9 +448,10 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     Calendar cal=calendarService.getCalendarById(calId);
     if(cal!=null){
       CalendarEvent calendarEvent = new CalendarEvent();
+      calendarEvent.setId(calId+"_"+currentUser+"_"+obj.getId());
       calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
       calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
-      calendarEvent.setSummary(currentUser+" Off");
+      calendarEvent.setSummary(obj.getUserFullName()+" Off");
       calendarEvent.setFromDateTime(obj.getFromDate());
       calendarEvent.setToDateTime(obj.getToDate());
       calendarEvent.setEventType(CalendarEvent.TYPE_EVENT) ;
@@ -463,14 +465,6 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
 }
 
 
-  /**
-   * method uploadFile() records an image in AddMembersStorage
-   *
-   * @param httpContext
-   * @param file
-   * @return Response.Content
-   * @throws java.io.IOException
-   */
   @Ajax
   @juzu.Resource
   @MimeType.JSON
@@ -479,11 +473,8 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   public Response uploadFile(Long requestId, FileItem file) throws IOException {
 
       if (file != null) {
-        saveRequestAttachement(file, requestId);
-        return Response.ok();
-
-
-
+        Utils.saveFile(file,"requests","req_"+requestId);
+          return Response.ok();
     } else {
       return Response.notFound();
     }
@@ -496,14 +487,10 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
 
   public Response deleteFile(String requestId, String fileName) throws IOException {
 
-
-    if(deleteAttachement(fileName, requestId)){
+    Utils.deleteFile("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName);
       return Response.ok();
-    } else {
-      return Response.notFound();
-    }
-  }
 
+  }
 
 
   @Ajax
@@ -526,7 +513,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
           Node node = (Node) iter.next();
           JSON attachment=new JSON();
           attachment.set("name",node.getName());
-          attachment.set("url","/rest/jcr/repository/collaboration/hrmanagement/requests/req_"+requestId+"/"+node.getName());
+          attachment.set("url","/rest/jcr/repository/collaboration/Application Data/hrmanagement/requests/req_"+requestId+"/"+node.getName());
           atts.add(attachment);
         }
         return Response.ok(atts.toString());
@@ -541,81 +528,5 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     } finally {
       sessionProvider.close();
     }
-  }
-
-  /**
-   * Save  file in the jcr
-   *
-   * @param item, item file
-   */
-
-  public void saveRequestAttachement(FileItem item , long requestId) {
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
-    try {
-      Session session = sessionProvider.getSession("collaboration",
-              repositoryService.getCurrentRepository());
-      Node rootNode = session.getRootNode();
-
-      if (!rootNode.hasNode("Application Data")) {
-        rootNode.addNode("Application Data", "nt:folder");
-        session.save();
-      }
-
-      rootNode = rootNode.getNode("Application Data");
-
-      if (!rootNode.hasNode("hrmanagement")) {
-        rootNode.addNode("hrmanagement", "nt:folder");
-        session.save();
-      }
-
-      Node applicationDataNode = rootNode.getNode("hrmanagement");
-      if (!applicationDataNode.hasNode("requests")) {
-        applicationDataNode.addNode("requests", "nt:folder");
-        session.save();
-      }
-      Node requestsFolder= applicationDataNode.getNode("requests");
-
-      Node reqFolder = null;
-      if (!requestsFolder.hasNode("req_"+requestId )) {
-        requestsFolder.addNode("req_"+requestId, "nt:folder");
-        session.save();
-      }
-      reqFolder = requestsFolder.getNode("req_"+requestId);
-
-      Node fileNode = reqFolder.addNode(item.getName(), "nt:file");
-      Node jcrContent = fileNode.addNode("jcr:content", "nt:resource");
-      jcrContent.setProperty("jcr:data", item.getInputStream());
-      jcrContent.setProperty("jcr:lastModified", java.util.Calendar.getInstance());
-      jcrContent.setProperty("jcr:encoding", "UTF-8");
-      jcrContent.setProperty("jcr:mimeType", item.getContentType());
-      reqFolder.save();
-      session.save();
-    } catch (Exception e) {
-      log.error("Error while saving the file: ", e.getMessage());
-    } finally {
-      sessionProvider.close();
-    }
-  }
-
-
-  public Boolean deleteAttachement(String fileName  , String requestId) {
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
-    try {
-
-      Session session = sessionProvider.getSession("collaboration",
-              repositoryService.getCurrentRepository());
-      Node rootNode = session.getRootNode();
-      if (rootNode.hasNode("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName)) {
-        Node att= rootNode.getNode("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName);
-        att.remove();
-        session.save();
-        return true;
-      }else return false;
-    } catch (Exception e) {
-      log.error("Error while deleting the file: ", e.getMessage());
-    } finally {
-      sessionProvider.close();
-    }
-    return null;
   }
 }

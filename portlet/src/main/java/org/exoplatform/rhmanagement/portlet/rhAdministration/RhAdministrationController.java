@@ -23,6 +23,7 @@ import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.UserDataService;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
@@ -291,11 +292,8 @@ public class RhAdministrationController {
   public Response uploadFile(String userId, FileItem file) throws IOException {
 
     if (file != null) {
-      saveEmployeeAttachement(file, userId);
+      Utils.saveFile(file,"employees","emp_"+userId);
       return Response.ok();
-
-
-
     } else {
       return Response.notFound();
     }
@@ -308,13 +306,8 @@ public class RhAdministrationController {
   @Jackson
 
   public Response deleteFile(String userId, String fileName) throws IOException {
-
-
-    if(deleteAttachement(fileName, userId)){
+    Utils.deleteFile("Application Data/hrmanagement/employees/emp_"+userId+"/"+fileName);
       return Response.ok();
-    } else {
-      return Response.notFound();
-    }
   }
 
 
@@ -338,7 +331,7 @@ public class RhAdministrationController {
           Node node = (Node) iter.next();
           JSON attachment=new JSON();
           attachment.set("name",node.getName());
-          attachment.set("url","/rest/jcr/repository/collaboration/hrmanagement/employees/emp_"+userId+"/"+node.getName());
+          attachment.set("url","/rest/jcr/repository/collaboration/Application Data/hrmanagement/employees/emp_"+userId+"/"+node.getName());
           atts.add(attachment);
         }
         return Response.ok(atts.toString());
@@ -354,80 +347,4 @@ public class RhAdministrationController {
       sessionProvider.close();
     }
   }
-
-  /**
-   * Save  file in the jcr
-   *
-   * @param item, item file
-   */
-
-  public void saveEmployeeAttachement(FileItem item , String userId) {
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
-    try {
-      Session session = sessionProvider.getSession("collaboration",
-              repositoryService.getCurrentRepository());
-      Node rootNode = session.getRootNode();
-
-      if (!rootNode.hasNode("Application Data")) {
-        rootNode.addNode("Application Data", "nt:folder");
-        session.save();
-      }
-
-     rootNode = rootNode.getNode("Application Data");
-
-      if (!rootNode.hasNode("hrmanagement")) {
-        rootNode.addNode("hrmanagement", "nt:folder");
-        session.save();
-      }
-      Node applicationDataNode = rootNode.getNode("hrmanagement");
-      if (!applicationDataNode.hasNode("employees")) {
-        applicationDataNode.addNode("employees", "nt:folder");
-        session.save();
-      }
-      Node usersFolder= applicationDataNode.getNode("employees");
-
-      Node userFolder = null;
-      if (!usersFolder.hasNode("emp_"+userId )) {
-        usersFolder.addNode("emp_"+userId, "nt:folder");
-        session.save();
-      }
-      userFolder = usersFolder.getNode("emp_"+userId);
-
-      Node fileNode = userFolder.addNode(item.getName(), "nt:file");
-      Node jcrContent = fileNode.addNode("jcr:content", "nt:resource");
-      jcrContent.setProperty("jcr:data", item.getInputStream());
-      jcrContent.setProperty("jcr:lastModified", java.util.Calendar.getInstance());
-      jcrContent.setProperty("jcr:encoding", "UTF-8");
-      jcrContent.setProperty("jcr:mimeType", item.getContentType());
-      userFolder.save();
-      session.save();
-    } catch (Exception e) {
-      LOG.error("Error while saving the file: ", e.getMessage());
-    } finally {
-      sessionProvider.close();
-    }
-  }
-
-
-  public Boolean deleteAttachement(String filename  , String userId) {
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
-    try {
-
-      Session session = sessionProvider.getSession("collaboration",
-              repositoryService.getCurrentRepository());
-      Node rootNode = session.getRootNode();
-      if (rootNode.hasNode("Application Data/hrmanagement/employees/emp_"+userId+"/"+filename)) {
-        Node att= rootNode.getNode("Application Data/hrmanagement/employees/emp_"+userId+"/"+filename);
-        att.remove();
-        session.save();
-        return true;
-      }else return false;
-    } catch (Exception e) {
-      LOG.error("Error while saving the file: ", e.getMessage());
-    } finally {
-      sessionProvider.close();
-    }
-    return null;
-  }
-
 }

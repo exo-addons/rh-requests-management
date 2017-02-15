@@ -26,7 +26,7 @@
                         <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
                     </div>
 <div class="ligne">
-<b>{{i18n.type}}:</b> <span>{{vacationRequesttoShow.type}}</span>
+<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
 </div>
                     <div class="ligne">
                         <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
@@ -45,7 +45,7 @@
 <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.name}}, </a>
                     </div>
 <div class="ligne">
-<b>{{i18n.status}}:</b> <span>{{vacationRequesttoShow.status}}</span>
+<b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
 </div>
                     <div class="ligne manager">
                         <b>{{i18n.managers}}:</b>
@@ -53,17 +53,16 @@
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a class="column-item column-title">{{vrmanager.validatorUserId}}
-        {{vrmanager.validatorMail}}</a>
+<a class="column-item column-title">{{vrmanager.validatorName}}</a>
                                     </td>
 <td ng-if="currentUser == vrmanager.validatorUserId" class="td-right-align">
-<button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i>{{i18n.approve}} 
+<button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i>{{i18n.approve}}
                                         </button>
 <button class="btn" ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'"><i class="uiIconClose uiIconDarkGray"></i>{{i18n.decline}}
                                         </button>
 </td>
                                     <td ng-if="currentUser != vrmanager.validatorUserId" class="td-right-align">
-                                        <b>{{vrmanager.reply}}</b>
+                                        <b>{{geti18n(vrmanager.reply)}}</b>
 </td>
                                 </tr>
 </tbody>
@@ -262,62 +261,65 @@
 <span ng-switch-when="approved" class="uiIconColorValidate"></span>
                                     <span ng-switch-when="declined" class="uiIconColorError"></span>
 <span ng-switch-when="pending" class="uiIconClock"></span>
+                                    <span ng-switch-when="validated" class="uiIconColorValidate"></span>
+<span ng-switch-when="canceled" class="uiIconColorError"></span>
                                     <span ng-switch-default class="uiIconInformation"></span>
 </span>
                                 </div>
-<a class="column-item column-title" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}}
-from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDate |
-        date:'yyyy-MM-dd'}}</a>
-                                <div class="column-item column-time">
-                                    <div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
-                                        <span class="text-time inline-block-show"></span>
-<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
-<i class="uiIconDeleteUser uiIconLightGray"></i>
-                                        </a>
+<a ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'" class="column-item column-title" ng-click="showVacationRequest(vacationRequest)"> {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
+                                <a ng-if="vacationRequest.status == 'validated' || vacationRequest.status == 'canceled'" class="column-item column-title requestCompleted" ng-click="showVacationRequest(vacationRequest)"> {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
+
+<div class="column-item column-time">
+<div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
+<span class="text-time inline-block-show"></span>
+                                        <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
+                                            <i class="uiIconDeleteUser uiIconLightGray"></i>
+</a>
+                                    </div>
 </div>
-                                </div>
-</li>
-                        </ul>
-</div>
-                    <!--Requests to validate-->
-                    <div ng-show="showList" style="padding: 20px;">
-                        <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsToValidate}}</h4>
-<div class="header-right pull-right groupByOptions" style="">
-<!-- this is filter action-->
-<div class="action-bar  dropdown pull-right">
-<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown" rel="tooltip" data-placement="bottom">
-<i class="uiIconFilter uiIconLightGray"></i>
-                                </a>
-<ul class="dropdown-menu">
-
-<li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate()">{{i18n.all}}</a>
-                                    </li>
-
-<li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('approved')">{{i18n.approved}}</a>
-                                    </li>
-
-<li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('declined')">{{i18n.declined}}</a>
-                                    </li>
-
-<li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('pending')">{{i18n.pending}}</a>
-                                    </li>
-
-
+                            </li>
 </ul>
-                            </div>
+                    </div>
+<!--Requests to validate-->
+<div ng-show="showList" style="padding: 20px;">
+<h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsToValidate}}</h4>
+                        <div class="header-right pull-right groupByOptions" style="">
+                            <!-- this is filter action-->
+                            <div class="action-bar  dropdown pull-right">
+                                <a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown" rel="tooltip" data-placement="bottom">
+                                    <i class="uiIconFilter uiIconLightGray"></i>
+</a>
+                                <ul class="dropdown-menu">
+
+                                    <li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate()">{{i18n.all}}</a>
+</li>
+
+                                    <li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('approved')">{{i18n.approved}}</a>
+</li>
+
+                                    <li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('declined')">{{i18n.declined}}</a>
+</li>
+
+                                    <li><a href="javascript:void(0)" ng-click="loadVacationRequestsToValidate('pending')">{{i18n.pending}}</a>
+</li>
+
+
+                                </ul>
 </div>
-                        <ul class="table-project" ng-repeat="vacationRequest in vacationRequestsToValidate">
-                            <li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{vacationRequest.id}}">
-                                <div class="column-item column-checkbox" ng-switch="vacationRequest.status">
-                                    <span ng-switch-when="approved" class="uiIconColorValidate"></span>
-<span ng-switch-when="declined" class="uiIconColorError"></span>
-                                    <span ng-switch-when="pending" class="uiIconClock"></span>
-<span ng-switch-default class="uiIconInformation"></span>
-                                    </span>
-</div>
-                                <a class="column-item column-title" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}}
-                                    from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDate |
-                                    date:'yyyy-MM-dd'}}</a>
+                        </div>
+<ul class="table-project" ng-repeat="vacationRequest in vacationRequestsToValidate">
+<li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{vacationRequest.id}}">
+<div class="column-item column-checkbox" ng-switch="vacationRequest.status">
+<span ng-switch-when="approved" class="uiIconColorValidate"></span>
+                                    <span ng-switch-when="declined" class="uiIconColorError"></span>
+<span ng-switch-when="pending" class="uiIconClock"></span>
+                                    <span ng-switch-when="validated" class="uiIconColorValidate"></span>
+<span ng-switch-when="canceled" class="uiIconColorError"></span>
+                                    <span ng-switch-default class="uiIconInformation"></span>
+</span>
+                                </div>
+<a ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'" class="column-item column-title" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}}: {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
+                                <a ng-if="vacationRequest.status == 'validated' || vacationRequest.status == 'canceled'" class="column-item column-title requestCompleted" ng-click="showVacationRequest(vacationRequest)">{{vacationRequest.userFullName}}: {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
 <div class="column-item column-time">
 <div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
 <span class="text-time inline-block-show"></span>
@@ -341,16 +343,16 @@ from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDat
 <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
 </div>
                     <div class="ligne">
-                        <b>{{i18n.type}}:</b> <span>{{vacationRequesttoShow.type}}</span>
+                        <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
                     </div>
 <div class="ligne">
 <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
 </div>
                     <div class="ligne">
-                        <b>{{i18n.fromDate}}:</b> <span>{{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</span>
+                        <b>{{i18n.fromDate}}:</b> <span>{{vacationRequesttoShow.fromDate | date:'d MMM y'}}</span>
                     </div>
 <div class="ligne">
-<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span>
+<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'d MMM y'}}</span>
 </div>
                     <div class="ligne">
                         <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
@@ -360,132 +362,118 @@ from {{vacationRequest.fromDate | date:'yyyy-MM-dd'}} to {{vacationRequest.toDat
                         <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}, </a>
 </div>
                     <div class="ligne">
-                        <b>{{i18n.status}}:</b> <span>{{vacationRequesttoShow.status}}</span>
+                        <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
                     </div>
 
-<b>{{i18n.eXoCalendar}}:</b> 
-<select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId" placeholder="{{i18n.serverUsername}}">
-<option value=""></option>
+<b>{{i18n.eXoCalendar}}:</b>
+                    <select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId" placeholder="{{i18n.serverUsername}}">
+                        <option value=""></option>
 <option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
 </option>
 
-</select>
+                    </select>
 <button id="calSaveButton" type="button" class="btn pull-right btn-primary" ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
 </button>
-</div>
+                </div>
 
 
 <div class="ligne">
 <b>{{i18n.attacements}}:</b>
 
-                        <table id="attachementssTable" ">
-<tbody>
-<tr ng-repeat="attachement in attachements " class="hover-action ">
-<td>
-<a class='column-item column-title' href='{{attachement.url}}'>{{attachement.name}}</a>
-</td>
-<td class="td-right-align ">
-<button class="btn btn-primary " ng-click="deleteAttachement(attachement.name) ">Delete</button>
 
-</td>
-                               
-</tr>
+<span ng-repeat="attachement in attachements" class="uiMention">
+                            <a class="column-item column-title" data-placement="bottom" rel="tooltip" href='{{attachement.url}}'>{{attachement.name}}</a>
+<a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteAttachement(attachement.name)">
+<i class="uiIconClose uiIconLightGray"></i>
+                                </a>
+</span>
 
-<tr>
-<td> </td>
-<td class="td-right-align ">
-<button type="file " ngf-select="uploadFiles($file, $invalidFiles) "  ngf-max-height="1000 " ngf-max-size="25MB ">
-        Select File</button>
-</td>
+                    <button type="file " ngf-select="uploadFiles($file, $invalidFiles) " ngf-max-height="1000 " ngf-max-size="25MB ">Select File</button>
 
-                    </tr>
-</tbody>
-                    </table>
-</div>					
-					
-				
+</div>
 
-<div class="ligne manager">
-<b>{{i18n.managers}}: </b>
+
+
+                <div class="ligne manager">
+                    <b>{{i18n.managers}}: </b>
 <table id="managersTable" class="table uiGrid table-hover table-striped">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a class="column-item column-title">{{vrmanager.validatorUserId}}
-        {{vrmanager.validatorMail}}</a>
-</td>
+<a class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                </td>
 <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'" class="td-right-align">
 <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-</button>
+                                    </button>
 <button class="btn" ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'"><i class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-</button>
+                                    </button>
 </td>
-<td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'" class="td-right-align">
-<b>{{vrmanager.reply}}</b>
+                                <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'" class="td-right-align">
+                                    <b>{{geti18n(vrmanager.reply)}}</b>
 </td>
 
 
-                                </tr>
+                            </tr>
 </tbody>
-                        </table>
-</div>		
-						<div class="ligne">
+                    </table>
+</div>
+                <div class="ligne">
 
-				
-<div id="tab-comments" class="tab-pane fade in active ">
-<div class="commentList">
-<div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
-<div class="commmentLeft">
-<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+
+                    <div id="tab-comments" class="tab-pane fade in active ">
+                        <div class="commentList">
+                            <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+                                <div class="commmentLeft">
+                                    <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
 <img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
 </a>
-                                    </div>
+                                </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
 <a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
-                                            <span class="date">
-                        {{comment.postedTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                        <span class="date">
+                        {{comment.postedTime | date:'d MMM y HH:mm:ss'}}
                         </span>
 </div>
-                                        <p class="contentComment">
-                                            {{comment.commentText}}
-                                        </p>
+                                    <p class="contentComment">
+                                        {{comment.commentText}}
+                                    </p>
 </div>
-                                    <!--end commentRight-->
-                                </div>
+                                <!--end commentRight-->
+                            </div>
 </div>
-                            <div class="commentList inputContainer">
-                                <div class="commentItem commentFormBox">
-                                    <div class="clearfix">
-                                        <div class="commmentLeft pull-left">
-                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+                        <div class="commentList inputContainer">
+                            <div class="commentItem commentFormBox">
+                                <div class="clearfix">
+                                    <div class="commmentLeft pull-left">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
 <img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="Root Root">
 </a>
-                                        </div>
+                                    </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="commentInputBox ">
 <div class="commentInput">
 <textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea" ng-model="newComment.commentText"></textarea>
-                                                </div>
-</div>
-                                        </div>
-<!--end commentRight-->
-</div>
-                                    <div class="clearfix">
-                                        <div class="pull-right">
-                                            <button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="saveomment()">{{i18n.comment}}
-                                            </button>
+                                            </div>
 </div>
                                     </div>
+<!--end commentRight-->
 </div>
-                                <!--end commentItem-->
-                            </div>
+                                <div class="clearfix">
+                                    <div class="pull-right">
+                                        <button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="saveComment()">{{i18n.comment}}
+                                        </button>
 </div>
-                   
+                                </div>
 </div>
+                            <!--end commentItem-->
+                        </div>
 </div>
+
+                </div>
 </div>
+        </div>
 </div>
 </div>

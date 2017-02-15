@@ -221,3 +221,22 @@ select[name=inputUsername] {
 @media screen and (max-width: 767px) {
     #right_col, #left_col{width : 100%}
 }
+
+
+.requestCompleted{
+    text-decoration: line-through;
+}
+
+.attachementName {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 11px;
+    padding: 0 10px;
+    margin: 0 5px 5px 0;
+    max-width: 92%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

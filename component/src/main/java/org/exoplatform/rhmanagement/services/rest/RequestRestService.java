@@ -110,7 +110,10 @@ public class RequestRestService implements ResourceContainer {
                     event.put("title",vr.getUserFullName());
                     event.put("start",dt1.format(vr.getFromDate()));
                     event.put("end",dt1.format(vr.getToDate()));
-                    event.put("backgroundColor","blue");
+                    if (("validated").equals(vr.getStatus()))event.put("backgroundColor","green");
+                    if (("approved").equals(vr.getStatus())) event.put("backgroundColor","blue");
+                    if (("declined").equals(vr.getStatus())||("canceled").equals(vr.getStatus()))event.put("backgroundColor","red");
+                    if (("pending").equals(vr.getStatus()))event.put("backgroundColor","grey");
                     events.put(event);
                 }
             }
@@ -125,7 +128,10 @@ public class RequestRestService implements ResourceContainer {
                         event.put("title",requestDTO.getUserFullName());
                         event.put("start",dt1.format(requestDTO.getFromDate()));
                         event.put("end",dt1.format(requestDTO.getFromDate()));
-                        event.put("backgroundColor","red");
+                        if (("validated").equals(requestDTO.getStatus()))event.put("backgroundColor","green");
+                        if (("approved").equals(requestDTO.getStatus())) event.put("backgroundColor","blue");
+                        if (("declined").equals(requestDTO.getStatus())||("canceled").equals(requestDTO.getStatus()))event.put("backgroundColor","red");
+                        if (("pending").equals(requestDTO.getStatus()))event.put("backgroundColor","grey");
                         events.put(event);
                     }
                 }

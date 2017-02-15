@@ -435,7 +435,11 @@ class="uiIconEdit" ng-click="enableInput('#others')"></i>
 <td class="td-right-align ">
 <button type="file " ngf-select="uploadFiles($file, $invalidFiles) "  ngf-max-height="1000 " ngf-max-size="25MB ">
         Select File</button>
+<div style="font:smaller ">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}<span class="progress" ng-show="f.progress>= 0">
+<div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                            </span>
 
+        {{errorMsg}}
 </td>
 
                     </tr>

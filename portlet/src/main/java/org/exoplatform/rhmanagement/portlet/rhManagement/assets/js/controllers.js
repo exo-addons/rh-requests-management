@@ -573,6 +573,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             });
         };
 
+
+        $scope.geti18n = function(id) {
+
+            for(var propt in $scope.i18n){
+                if(id==propt) return $scope.i18n[propt];
+            }
+            return id;
+        };
+
         $scope.loadVacationRequestsToValidate(null);
         $scope.loadMyVacationRequests(null);
         $scope.loadBundles();
