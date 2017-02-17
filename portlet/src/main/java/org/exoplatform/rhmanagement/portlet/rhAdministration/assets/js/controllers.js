@@ -3,7 +3,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         var rhAdminContainer = $('#rhAdminAddon');
         var deferred = $q.defer();
 
-
+        $scope.showAddForm = false;
         $scope.showEmployees=true;
         $scope.showElementDetail=false;
         $scope.getUserLigne=false;
@@ -21,6 +21,16 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
         $scope.newUserId = "";
         $scope.newUserDetails={
             id : null
+        };
+        $scope.showDetails = false;
+
+        $scope.newComment = {
+            id : null
+        };
+
+
+        $scope.vacationRequesttoShow = {
+            validatorUserId : null
         };
 
         $scope.vm = this;
@@ -117,7 +127,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                     if(!data.data.avatar){
                         $scope.newUserDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
                     }
-                    $scope.showElementDetail =true;
+                    $scope.showAddForm=true;
                     $timeout(function() {
                         $scope.setResultMessage("", "info")
                     }, 3000);
@@ -166,7 +176,20 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             });
         }
 
-
+        $scope.deleteUserHRData = function(employee) {
+            $http({
+                data : employee,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.deleteUserRHData')
+            }).then(function successCallback(data) {
+                $scope.loadEmployees();
+            }, function errorCallback(data) {
+                $scope.setResultMessage("", "error");
+            });
+        }
 
         $scope.validateRequest = function(vacationRequest) {
             $http({
@@ -268,6 +291,136 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 $scope.setResultMessage(data, "error");
             });
         };
+
+
+        $scope.geti18n = function(id) {
+
+            for(var propt in $scope.i18n){
+                if(id==propt) return $scope.i18n[propt];
+            }
+            return id;
+        };
+
+        $scope.loadSubstitues = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getSubstitutesByRequestID')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.vrsubs = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+        $scope.loadManagers = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getValidatorsByRequestID')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.vrmanagers = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+
+        $scope.loadComments = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getComments')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.comments = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+
+        $scope.saveComment = function() {
+
+            $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
+
+
+            $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
+            $scope.newComment.postedTime= new Date();
+            $scope.newComment.posterId=$scope.vacationRequesttoShow.userFullName;
+
+            $http({
+                data : $scope.newComment,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.saveComment')
+            }).then(function successCallback(data) {
+
+                $scope.setResultMessage(data, "success");
+                $scope.comments.push($scope.newComment);
+                $scope.newComment = {
+                    id : null
+                };
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        }
+
+
+        $scope.loadRequestAttachments = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getRequestAttachements')
+            }).then(function successCallback(data) {
+                $scope.setResultMessage(data, "success");
+                $scope.attachements = data.data;
+                $timeout(function() {
+                    $scope.setResultMessage("", "info")
+                }, 3000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage(data, "error");
+            });
+        };
+
+        $scope.showVacationRequest = function(vacationRequest) {
+            $scope.vacationRequesttoShow=vacationRequest;
+            $scope.loadManagers(vacationRequest);
+            $scope.loadSubstitues(vacationRequest);
+            $scope.loadRequestAttachments(vacationRequest);
+            $scope.loadComments(vacationRequest);
+            $scope.showDetails = true;
+        };
+
+
         $scope.loadBundles();
         $scope.loadEmployees();
 

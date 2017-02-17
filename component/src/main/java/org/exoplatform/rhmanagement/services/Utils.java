@@ -41,22 +41,22 @@ public class Utils {
                 applicationDataNode.addNode(typeFolder, "nt:folder");
                 session.save();
             }
-            Node requestsFolder= applicationDataNode.getNode("requests");
+            Node tFolder= applicationDataNode.getNode(typeFolder);
 
-            Node reqFolder = null;
-            if (!requestsFolder.hasNode(parentNode )) {
-                requestsFolder.addNode(parentNode, "nt:folder");
+            Node fFolder = null;
+            if (!tFolder.hasNode(parentNode )) {
+                tFolder.addNode(parentNode, "nt:folder");
                 session.save();
             }
-            reqFolder = requestsFolder.getNode(parentNode);
+            fFolder = tFolder.getNode(parentNode);
 
-            Node fileNode = reqFolder.addNode(item.getName(), "nt:file");
+            Node fileNode = fFolder.addNode(item.getName(), "nt:file");
             Node jcrContent = fileNode.addNode("jcr:content", "nt:resource");
             jcrContent.setProperty("jcr:data", item.getInputStream());
             jcrContent.setProperty("jcr:lastModified", java.util.Calendar.getInstance());
             jcrContent.setProperty("jcr:encoding", "UTF-8");
             jcrContent.setProperty("jcr:mimeType", item.getContentType());
-            reqFolder.save();
+            fFolder.save();
             session.save();
         } catch (Exception e) {
             log.error("Error while saving the file: ", e.getMessage());

@@ -5,6 +5,8 @@
         @Binding(value = IdentityManager.class),
         @Binding(value = OrganizationService.class),
         @Binding(value = RepositoryService.class),
+        @Binding(value = ValidatorService.class),
+        @Binding(value = CommentService.class),
         @Binding(value = VacationRequestService.class)})
 @Scripts({
     @Script(id = "jQueryUI", value = "js/lib/jquery-ui.js"),
@@ -36,8 +38,10 @@ import juzu.plugin.binding.Bindings;
 import juzu.plugin.less.Less;
 import juzu.plugin.portlet.Portlet;
 
+import org.exoplatform.rhmanagement.services.CommentService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.social.core.manager.IdentityManager;

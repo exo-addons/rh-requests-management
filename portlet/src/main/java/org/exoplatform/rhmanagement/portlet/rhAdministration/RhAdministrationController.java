@@ -16,21 +16,17 @@ import org.exoplatform.commons.juzu.ajax.Ajax;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.rhmanagement.dto.EmployeesDTO;
-import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
-import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
-import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.dto.*;
 import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
-import org.exoplatform.rhmanagement.services.UserDataService;
-import org.exoplatform.rhmanagement.services.Utils;
-import org.exoplatform.rhmanagement.services.VacationRequestService;
+import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserHandler;
+import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
@@ -61,6 +57,12 @@ public class RhAdministrationController {
   UserDataService userDataService;
 
   @Inject
+  CommentService commentService;
+
+  @Inject
+  ValidatorService validatorService;
+
+  @Inject
   VacationRequestService vacationRequestService;
 
   @Inject
@@ -82,16 +84,17 @@ public class RhAdministrationController {
     return indexTmpl.ok();
   }
 
+  private final String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
+
   @Ajax
   @Resource
   @MimeType.JSON
   @Jackson
   public List<EmployeesDTO> getAllUsersRhData() {
     try {
-      List<EmployeesDTO> userRHDataDTOS = userDataService.getAllUsersRhData(0,0);
-      return userRHDataDTOS;
-    } catch (Throwable e) {
-      LOG.error("Exception when retrieving tickets" + e);
+      return userDataService.getAllUsersRhData(0,0);
+         } catch (Throwable e) {
+      LOG.error("Exception when retrieving Users" + e);
       return null;
     }
   }
@@ -108,6 +111,22 @@ public class RhAdministrationController {
     } catch (Exception e) {
       LOG.error("Error when updating userData", e);
       throw e;
+    }
+  }
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public Response deleteUserRHData(@Jackson EmployeesDTO user) throws Exception {
+    try {
+       userDataService.remove(user.getHrData());
+       Utils.deleteFile("Application Data/hrmanagement/employees/emp_"+user.getUserId());
+      return Response.ok();
+    } catch (Exception e) {
+      LOG.error("Error when updating userData", e);
+      return Response.error("");
     }
   }
 
@@ -347,4 +366,112 @@ public class RhAdministrationController {
       sessionProvider.close();
     }
   }
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+
+  public Response  getRequestAttachements(@Jackson VacationRequestDTO obj) {
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    List<JSON> atts = new ArrayList<JSON>();
+    try {
+      Session session = sessionProvider.getSession("collaboration",
+              repositoryService.getCurrentRepository());
+      Node rootNode = session.getRootNode();
+      long requestId=obj.getId();
+      if (rootNode.hasNode("Application Data/hrmanagement/requests/req_"+requestId)) {
+        Node requestsFolder= rootNode.getNode("Application Data/hrmanagement/requests/req_"+requestId);
+        NodeIterator iter = requestsFolder.getNodes();
+        while (iter.hasNext()) {
+          Node node = (Node) iter.next();
+          JSON attachment=new JSON();
+          attachment.set("name",node.getName());
+          attachment.set("url","/rest/jcr/repository/collaboration/Application Data/hrmanagement/requests/req_"+requestId+"/"+node.getName());
+          atts.add(attachment);
+        }
+        return Response.ok(atts.toString());
+      }else{
+        return Response.ok();
+      }
+
+    } catch (Exception e) {
+
+      LOG.error("Error while getting attachements: ", e.getMessage());
+      return null;
+    } finally {
+      sessionProvider.close();
+    }
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveComment(@Jackson CommentDTO obj) {
+    obj.setPosterId(currentUser);
+    obj.setPostedTime(new Date());
+    commentService.save(obj);
+  }
+
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<CommentDTO> getComments(@Jackson VacationRequestDTO obj) {
+    try {
+      return commentService.getCommentsByRequestId(obj.getId(),0,100);
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<ValidatorDTO> getValidatorsByRequestID (@Jackson VacationRequestDTO obj) {
+    List<ValidatorDTO> validators=new ArrayList<ValidatorDTO>() ;
+    try {
+      for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
+        validator.setValidatorName(identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, validator.getValidatorUserId(), false).getProfile().getFullName());
+        validators.add(validator);
+      }
+      return validators;
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<EmployeesDTO>  getSubstitutesByRequestID(@Jackson VacationRequestDTO obj) {
+    try {
+      List<EmployeesDTO> userDTOs = new ArrayList<EmployeesDTO>();
+      EmployeesDTO employeesDTO=new EmployeesDTO();
+      for(String userId : obj.getSubstitute().split(",")){
+        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
+
+        if(id!=null){
+          employeesDTO.setUserId(userId);
+          employeesDTO.setName(id .getProfile().getFullName());
+          userDTOs.add(employeesDTO);
+        }
+      }
+      return userDTOs;
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
 }
