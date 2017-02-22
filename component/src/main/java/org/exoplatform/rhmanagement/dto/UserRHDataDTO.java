@@ -61,6 +61,10 @@ import java.util.Date;
 
     private Date contractEndDate;
 
+    private String myeXoUrl;
+
+    private String insuranceId;
+
     private String others;
 
 }

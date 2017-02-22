@@ -135,6 +135,17 @@
                                 <b>{{i18n.contractEndDate}}:</b>
 <input type="text" name="contractEndDate" class="requestEdit" ng-model="newUserDetails.hrData.contractEndDate" />
 </div>
+
+                            <div class="ligne">
+                                <b>{{i18n.insuranceId}}:</b>
+<input type="text" name="insuranceId" class="requestEdit" ng-model="newUserDetails.hrData.insuranceId" />
+</div>
+
+                            <div class="ligne">
+                                <b>{{i18n.myeXoUrl}}:</b>
+<input type="text" name="myeXoUrl" class="requestEdit" ng-model="newUserDetails.hrData.myeXoUrl" />
+</div>
+
                             <div class="ligne">
                                 <b>{{i18n.others}}:</b>
 <input type="text" name="others" class="requestEdit" ng-model="newUserDetails.hrData.others" />
@@ -199,8 +210,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                             </tr>
 </thead>
                         <tbody>
-                            <tr ng-repeat="userRhData in vm.items | orderBy:orderByField:reverseSort">
-                                <td><a href="" data-ng-click="loadUserHRData(userRhData)">{{userRhData.name}}</a>
+                            <tr ng-repeat="userRhData in rhEmployees | orderBy:orderByField:reverseSort">
+                                <td>
+								<span>{{userRhData.name}}</span>
 </td>
                                 <td>
                                     <span>{{userRhData.hrData.cin}}</span>
@@ -234,29 +246,8 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </tbody>
                     </table>
 
-<div id="wrapper">
-<div id="leftcolumn" class="pagination uiPageIterator">
-<!-- pager -->
-<ul ng-if="vm.pager.pages.length" class="pagination">
-<li ng-class="{disabled:vm.pager.currentPage === 1}">
-<a ng-click="vm.setPage(1)">{{i18n.first}}</a>
-                                </li>
-<li ng-class="{disabled:vm.pager.currentPage === 1}">
-<a ng-click="vm.setPage(vm.pager.currentPage - 1)">{{i18n.previous}}</a>
-                                </li>
-<li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
-<a ng-click="vm.setPage(page)">{{page}}</a>
-                                </li>
-<li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-<a ng-click="vm.setPage(vm.pager.currentPage + 1)">{{i18n.next}}</a>
-                                </li>
-<li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-<a ng-click="vm.setPage(vm.pager.totalPages)">{{i18n.last}}</a>
-                                </li>
-</ul>
-                        </div>
+
 </div>
-                </div>
 
 <!-- User's requests -->
 <div id="requestsList" ng-hide="showEmployees">
@@ -265,7 +256,7 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 <div class="uiBox elementDetail">
 <a class="actionIcon " style="float: right;margin-right: -10px;" ng-click="showEmployees=true ">
 <i class="uiIconClose "></i>
-                        </a>
+</a>
 <div class="uiContentBox clearfix row-fluid formContainer">
 <div class="span4">
 <div class="ligne">
@@ -362,6 +353,18 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 <b>{{i18n.contractEndDate}}:</b>
                                     <input type="text" name="contractEndDate" class="requestEdit" id="contractEndDate" ng-click="enableInput('#contractEndDate')" ng-model="userDetails.hrData.contractEndDate" value="{{userDetails.hrData.contractEndDate | date:'d MMM y'}}" readonly/><i class="uiIconEdit" ng-click="enableInput('#contractEndDate')"></i>
                                 </div>
+
+
+<div class="ligne">
+<b>{{i18n.insuranceId}}:</b>
+                                    <input type="text" name="insuranceId" class="requestEdit" id="insuranceId" ng-click="enableInput('#insuranceId')" ng-model="userDetails.hrData.insuranceId" value="{{userDetails.hrData.insuranceId}}" readonly/><i class="uiIconEdit" ng-click="enableInput('#insuranceId')"></i>
+                                </div>
+
+<div class="ligne">
+<b>{{i18n.myeXoUrl}}:</b>
+                                    <input type="text" name="myeXoUrl" class="requestEdit" id="myeXoUrl" ng-click="enableInput('#myeXoUrl')" ng-model="userDetails.hrData.myeXoUrl" value="{{userDetails.hrData.myeXoUrl}}" readonly/><i class="uiIconEdit" ng-click="enableInput('#myeXoUrl')"></i>
+                                </div>
+
 <div class="ligne">
 <b>{{i18n.others}}:</b>
                                     <input type="text" name="others" class="requestEdit" id="others" ng-click="enableInput('#others')" ng-model="userDetails.hrData.others" value="{{userDetails.hrData.others}}" readonly/><i class="uiIconEdit" ng-click="enableInput('#others')"></i>
@@ -461,9 +464,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                     <span>{{geti18n(vacationRequest.status)}}</span>
 </td>
                                 <td>
-                                    <button type="submit" data-ng-click="validateRequest(vacationRequest)" class="btn btn-primary">{{i18n.validate}}
+                                    <button type="submit" data-ng-click="validateRequest(vacationRequest,userDetails)" class="btn btn-primary">{{i18n.validate}}
                                     </button>
-<button type="submit" data-ng-click="cancelRequest(vacationRequest)" class="btn btn-default">{{i18n.cancel}}
+<button type="submit" data-ng-click="cancelRequest(vacationRequest,userDetails)" class="btn btn-default">{{i18n.cancel}}
 </button>
                                 </td>
 </tr>
@@ -575,7 +578,7 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                         </span>
 </div>
                         <p class="contentComment">
-                            {{comment.commentText}}
+                            {{geti18n(comment.commentText)}}
                         </p>
 </div>
                     <!--end commentRight-->
@@ -694,9 +697,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                 <span>{{geti18n(vRequest.status)}}</span>
 </td>
                             <td>
-                                <button type="submit" data-ng-click="validateRequest(vRequest)" class="btn btn-primary">{{i18n.validate}}
+                                <button type="submit" data-ng-click="validateRequest(vRequest,null)" class="btn btn-primary">{{i18n.validate}}
                                 </button>
-<button type="submit" data-ng-click="cancelRequest(vRequest)" class="btn btn-default">{{i18n.cancel}}
+<button type="submit" data-ng-click="cancelRequest(vRequest,null)" class="btn btn-default">{{i18n.cancel}}
 </button>
                             </td>
 </tr>

@@ -145,6 +145,8 @@ public class UserDataService {
     entity.setContract(dto.getContract());
     entity.setContractStartDate(dto.getContractStartDate());
     entity.setContractEndDate(dto.getContractEndDate());
+    entity.setInsuranceId(dto.getInsuranceId());
+    entity.setMyeXoUrl(dto.getMyeXoUrl());
     entity.setOthers(dto.getOthers());
     return entity;
   }
@@ -168,6 +170,8 @@ public class UserDataService {
     dto.setContract(entity.getContract());
     dto.setContractStartDate(entity.getContractStartDate());
     dto.setContractEndDate(entity.getContractEndDate());
+    dto.setInsuranceId(entity.getInsuranceId());
+    dto.setMyeXoUrl(entity.getMyeXoUrl());
     dto.setOthers(entity.getOthers());
     return dto;
   }

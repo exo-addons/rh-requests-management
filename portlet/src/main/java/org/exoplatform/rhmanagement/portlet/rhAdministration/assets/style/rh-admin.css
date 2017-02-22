@@ -173,14 +173,14 @@ input.requestEdit[readonly]{
     width:50%;
     border-right: 1px solid #dadada;
     height: 450px;
-    overflow-y: scroll;
+    overflow-y: overlay;
 }
 #left_col.no-border{border : 0!important}
 #right_col {
     float:right;
     width:48%;
     height: 450px;
-    overflow-y: scroll;
+    overflow-y: overlay;
     border-left: 1px solid #dadada;
 }
 

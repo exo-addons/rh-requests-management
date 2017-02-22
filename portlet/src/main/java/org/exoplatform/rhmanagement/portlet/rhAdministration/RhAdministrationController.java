@@ -86,18 +86,23 @@ public class RhAdministrationController {
 
   private final String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
 
+
+
   @Ajax
-  @Resource
+  @juzu.Resource
   @MimeType.JSON
   @Jackson
   public List<EmployeesDTO> getAllUsersRhData() {
     try {
-      return userDataService.getAllUsersRhData(0,0);
-         } catch (Throwable e) {
-      LOG.error("Exception when retrieving Users" + e);
+
+      return userDataService.getAllUsersRhData(0,100);
+
+    } catch (Throwable e) {
+      LOG.error(e);
       return null;
     }
   }
+
 
   @Ajax
   @Resource(method = HttpMethod.POST)
@@ -201,7 +206,13 @@ public class RhAdministrationController {
   @MimeType.JSON
   @Jackson
   public VacationRequestDTO validateRequest(@Jackson VacationRequestDTO obj) {
-    if(obj.getStatus().equals(APPROVED)) {
+    if(!obj.getStatus().equals(VALIDATED)) {
+      Set<String> managers = new HashSet<String>();
+      managers.add(obj.getUserId());
+      for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
+        managers.add(validator.getUserId());
+      }
+
       obj.setStatus(VALIDATED);
       obj=vacationRequestService.save(obj,false);
       UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
@@ -216,10 +227,15 @@ public class RhAdministrationController {
         userRHDataDTO.setNbrSickdays(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
       }
-/*      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);*/
-    }else {
-
+      CommentDTO comment=new CommentDTO();
+      comment.setRequestId(obj.getId());
+      comment.setCommentText("requestValidated");
+      comment.setPosterId(currentUser);
+      comment.setPostedTime(new Date());
+      //comment.setType("log");
+      commentService.save(comment);
+      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     }
     return obj;
   }
@@ -229,24 +245,39 @@ public class RhAdministrationController {
   @MimeType.JSON
   @Jackson
   public VacationRequestDTO cancelRequest(@Jackson VacationRequestDTO obj) {
-    if(obj.getStatus().equals(VALIDATED)) {
-      obj.setStatus(CANCELED);
-      obj=vacationRequestService.save(obj,false);
-      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
-      if(obj.getType().equals("holiday")){
-        float holidays=userRHDataDTO.getNbrHolidays();
-        float nbDays=obj.getDaysNumber();
-        userRHDataDTO.setNbrHolidays(holidays+nbDays);
-        userDataService.save(userRHDataDTO);
-      }if(obj.getType().equals("sick")){
-        userRHDataDTO.setNbrSickdays(userRHDataDTO.getNbrSickdays()+obj.getDaysNumber());
-        userDataService.save(userRHDataDTO);
+    if(!obj.getStatus().equals(CANCELED)) {
+
+      Set<String> managers = new HashSet<String>();
+      managers.add(obj.getUserId());
+      for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
+        managers.add(validator.getUserId());
       }
-/*      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);*/
-    }else {
+
+      if(obj.getStatus().equals(VALIDATED)) {
+        UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+        if (obj.getType().equals("holiday")) {
+          float holidays = userRHDataDTO.getNbrHolidays();
+          float nbDays = obj.getDaysNumber();
+          userRHDataDTO.setNbrHolidays(holidays + nbDays);
+          userDataService.save(userRHDataDTO);
+        }
+        if (obj.getType().equals("sick")) {
+          userRHDataDTO.setNbrSickdays(userRHDataDTO.getNbrSickdays() + obj.getDaysNumber());
+          userDataService.save(userRHDataDTO);
+        }
+      }
       obj.setStatus(CANCELED);
       obj=vacationRequestService.save(obj,false);
+
+      CommentDTO comment=new CommentDTO();
+      comment.setRequestId(obj.getId());
+      comment.setCommentText("requestCanceled");
+      comment.setPosterId(currentUser);
+      comment.setPostedTime(new Date());
+      //obj.setType("log");
+      commentService.save(comment);
+      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     }
     return obj;
   }
@@ -279,6 +310,26 @@ public class RhAdministrationController {
       return Response.status(500);
     }
   }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public Response getContext() {
+    try {
+      JSON data = new JSON();
+      data.set("currentUser",currentUser);
+      Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile();
+      data.set("currentUserAvatar",profile.getAvatarUrl());
+      data.set("currentUserName",profile.getFullName());
+      return Response.ok(data.toString());
+    } catch (Throwable e) {
+      LOG.error("error while getting context", e);
+      return Response.status(500);
+    }
+  }
+
 
 
 
@@ -412,6 +463,7 @@ public class RhAdministrationController {
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
+   // obj.setType("comment");
     commentService.save(obj);
   }
 

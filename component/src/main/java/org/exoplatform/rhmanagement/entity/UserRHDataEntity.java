@@ -92,6 +92,12 @@ public class UserRHDataEntity {
   @Column(name = "CONTRACT_END_DATE")
   private Date contractEndDate;
 
+  @Column(name = "MY_EXO_URL")
+  private String myeXoUrl;
+
+  @Column(name = "INSURANCE_ID")
+  private String insuranceId;
+
   @Column(name = "OTHERS")
   private String others;
 
