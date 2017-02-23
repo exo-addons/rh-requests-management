@@ -31,6 +31,11 @@ public class CommentDTO {
 
   private long              requestId;
 
+  private String              commentType;
+
   private String              commentText;
+
+  private String              posterName;
+  private String              posterAvatar;
 
 }

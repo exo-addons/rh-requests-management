@@ -43,6 +43,7 @@ import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.model.Profile;
@@ -294,6 +295,7 @@ public class RHRequestManagementController {
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
+    obj.setCommentType("comment");
     commentService.save(obj);
   }
 
@@ -371,11 +373,32 @@ public class RHRequestManagementController {
    if(declined) {
       obj.setStatus(DECLINED);
       vacationRequestService.save(obj,false);
+     CommentDTO comment=new CommentDTO();
+     comment.setRequestId(obj.getId());
+     comment.setCommentText("requestDeclined");
+     comment.setPosterId(currentUser);
+     comment.setPostedTime(new Date());
+     comment.setCommentType("log");
+     commentService.save(comment);
      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }else if(validated){
      obj.setStatus(APPROVED);
      vacationRequestService.save(obj,false);
+     CommentDTO comment=new CommentDTO();
+     comment.setRequestId(obj.getId());
+     comment.setCommentText("requestApproved");
+     comment.setPosterId(currentUser);
+     comment.setPostedTime(new Date());
+     comment.setCommentType("log");
+     commentService.save(comment);
+     try {
+       for (User rh : Utils.getRhManagers()){
+         managers.add(rh.getUserName());
+       }
+     } catch (Exception e) {
+
+     }
      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
    }
@@ -474,6 +497,13 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
 
       if (file != null) {
         Utils.saveFile(file,"requests","req_"+requestId);
+        CommentDTO comment=new CommentDTO();
+        comment.setRequestId(requestId);
+        comment.setCommentText("attachementAdded");
+        comment.setPosterId(currentUser);
+        comment.setPostedTime(new Date());
+        comment.setCommentType("log");
+        commentService.save(comment);
           return Response.ok();
     } else {
       return Response.notFound();
@@ -485,9 +515,16 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   @MimeType.JSON
   @Jackson
 
-  public Response deleteFile(String requestId, String fileName) throws IOException {
+  public Response deleteFile(Long requestId, String fileName) throws IOException {
 
     Utils.deleteFile("Application Data/hrmanagement/requests/req_"+requestId+"/"+fileName);
+    CommentDTO comment=new CommentDTO();
+    comment.setRequestId(requestId);
+    comment.setCommentText("attachementDeleted");
+    comment.setPosterId(currentUser);
+    comment.setPostedTime(new Date());
+    comment.setCommentType("log");
+    commentService.save(comment);
       return Response.ok();
 
   }

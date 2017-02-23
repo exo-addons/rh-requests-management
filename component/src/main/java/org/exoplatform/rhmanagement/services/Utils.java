@@ -1,13 +1,23 @@
 package org.exoplatform.rhmanagement.services;
 
 import org.apache.commons.fileupload.FileItem;
+import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.User;
+import org.exoplatform.services.organization.UserHandler;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.social.core.manager.RelationshipManager;
+
 import javax.jcr.Node;
 import javax.jcr.Session;
+import java.util.ArrayList;
 
 /**
  * Created by Medamine on 14/02/2017.
@@ -82,4 +92,21 @@ public class Utils {
             sessionProvider.close();
         }
     }
+
+    public static User[]  getRhManagers(){
+        String groupId = "/rh-managers";
+        OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+        UserHandler userHandler = organizationService.getUserHandler();
+        ListAccess<User> allManagers=null;
+        try {
+
+            allManagers = userHandler.findUsersByGroupId(groupId);
+           return (allManagers.load(0, allManagers.getSize()));
+
+        } catch (Exception e) {
+            log.error(" ERROR get manager ",e);
+            return null;
+        }
+    }
+
 }

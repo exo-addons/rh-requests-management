@@ -52,6 +52,9 @@ public class CommentEntity {
   @Column(name = "POSTED_TIME")
   private Date   postedTime;
 
+  @Column(name = "COMMENT_TYPE")
+  private String   commentType;
+
   @Column(name = "COMMENT_TEXT")
   private String   commentText;
 

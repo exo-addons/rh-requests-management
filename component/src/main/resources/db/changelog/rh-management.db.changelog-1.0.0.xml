@@ -40,7 +40,7 @@
       <column name="REQUEST_ID" type="BIGINT"></column>
       <column name="POSTED_TIME" type="DATE"></column>
       <column name="COMMENT_TEXT" type="NVARCHAR(1000)"></column>
-      <column name="TYPE" type="NVARCHAR(50)"></column>
+      <column name="COMMENT_TYPE" type="NVARCHAR(50)"></column>
     </createTable>
 
     <createTable tableName="VALIDATOR">
