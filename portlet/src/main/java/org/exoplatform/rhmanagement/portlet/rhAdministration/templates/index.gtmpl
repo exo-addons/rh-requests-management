@@ -464,10 +464,12 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                     <span>{{geti18n(vacationRequest.status)}}</span>
 </td>
                                 <td>
-                                    <button type="submit" data-ng-click="validateRequest(vacationRequest,userDetails)" class="btn btn-primary">{{i18n.validate}}
-                                    </button>
-<button type="submit" data-ng-click="cancelRequest(vacationRequest,userDetails)" class="btn btn-default">{{i18n.cancel}}
+								
+								                                <button class="btn btn-primary" ng-click="validateRequest(vacationRequest,userDetails)"  ng-disabled="vacationRequest.status=='validated'">{{i18n.validate}}
+                                </button>
+<button class="btn btn-default" ng-click="cancelRequest(vacationRequest,userDetails)"  ng-disabled="vacationRequest.status=='canceled'">{{i18n.cancel}}
 </button>
+
                                 </td>
 </tr>
                         </tbody>
@@ -697,9 +699,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                 <span>{{geti18n(vRequest.status)}}</span>
 </td>
                             <td>
-                                <button type="submit" data-ng-click="validateRequest(vRequest,null)" class="btn btn-primary">{{i18n.validate}}
+                                <button class="btn btn-primary" ng-click="validateRequest(vRequest,null)"  ng-disabled="vRequest.status=='validated'">{{i18n.validate}}
                                 </button>
-<button type="submit" data-ng-click="cancelRequest(vRequest,null)" class="btn btn-default">{{i18n.cancel}}
+<button class="btn btn-default" ng-click="cancelRequest(vRequest,null) "  ng-disabled="vRequest.status=='canceled'">{{i18n.cancel}}
 </button>
                             </td>
 </tr>
