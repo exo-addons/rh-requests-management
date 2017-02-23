@@ -23,7 +23,7 @@
     <page>
         <name>rh-administration</name>
         <title>rh-administration</title>
-        <access-permissions>*:/platform/administrators</access-permissions>
+        <access-permissions>*:/rh-managers</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
         <portlet-application>
@@ -31,7 +31,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhAdministrationControllerPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/platform/administrators</access-permissions>
+            <access-permissions>*:/rh-managers</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
     </page>

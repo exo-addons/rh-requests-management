@@ -566,51 +566,51 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
 <div class="commmentLeft">
 <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
+<img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
 </a>
-                    </div>
+                                </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
-<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
-                            <span class="date">
+<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
+                                        <span class="date">
                         {{comment.postedTime | date:'d MMM y HH:mm:ss'}}
                         </span>
 </div>
-                        <p class="contentComment">
-                            {{geti18n(comment.commentText)}}
-                        </p>
+                                    <p class="contentComment">
+                                        {{comment.commentText}}
+                                    </p>
 </div>
-                    <!--end commentRight-->
-                </div>
+                                <!--end commentRight-->
+                            </div>
 </div>
-            <div class="commentList inputContainer">
-                <div class="commentItem commentFormBox">
-                    <div class="clearfix">
-                        <div class="commmentLeft pull-left">
-                            <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="Root Root">
+                        <div class="commentList inputContainer">
+                            <div class="commentItem commentFormBox">
+                                <div class="clearfix">
+                                    <div class="commmentLeft pull-left">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+<img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
 </a>
-                        </div>
+                                    </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="commentInputBox ">
 <div class="commentInput">
 <textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea" ng-model="newComment.commentText"></textarea>
-                                </div>
+                                            </div>
 </div>
-                        </div>
+                                    </div>
 <!--end commentRight-->
 </div>
-                    <div class="clearfix">
-                        <div class="pull-right">
-                            <button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="saveComment()">{{i18n.comment}}
-                            </button>
+                                <div class="clearfix">
+                                    <div class="pull-right">
+                                        <button id="commentButton" type="button" class="btn pull-right btn-primary" ng-click="saveComment()">{{i18n.comment}}
+                                        </button>
 </div>
-                    </div>
+                                </div>
 </div>
-                <!--end commentItem-->
-            </div>
+                            <!--end commentItem-->
+                        </div>
 </div>
 
     </div>

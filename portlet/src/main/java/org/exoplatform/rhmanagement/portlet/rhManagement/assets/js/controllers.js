@@ -5,8 +5,13 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
         $scope.currentUser="";
+        $scope.currentUserAvatar="";
+        $scope.currentUserName="";
         $scope.sickBalance="";
         $scope.holidaysBalance="";
+        $scope.hrId="";
+        $scope.insuranceId="";
+        $scope.socialSecNumber="";
         $scope.vacationRequestsToValidate = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
@@ -89,8 +94,13 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
                 $scope.completeCurrentUser = data.data;
                 $scope.currentUser=data.data.currentUser;
+                $scope.currentUserAvatar=data.data.currentUserAvatar;
+                $scope.currentUserName=data.data.currentUserName;
                 $scope.sickBalance=data.data.sickBalance;
                 $scope.holidaysBalance=data.data.holidaysBalance;
+                $scope.hrId=data.data.hrId;
+                $scope.insuranceId=data.data.insuranceId;
+                $scope.socialSecNumber=data.data.socialSecNumber;
                 var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
@@ -408,7 +418,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
             $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
             $scope.newComment.postedTime= new Date();
-            $scope.newComment.posterId=$scope.vacationRequesttoShow.userFullName;
+            $scope.newComment.posterId=$scope.currentUser;
+            $scope.newComment.posterAvatar=$scope.currentUserAvatar;
+            $scope.newComment.posterName=$scope.currentUserName;
 
             $http({
                 data : $scope.newComment,

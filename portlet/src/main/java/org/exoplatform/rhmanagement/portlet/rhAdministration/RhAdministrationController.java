@@ -86,15 +86,12 @@ public class RhAdministrationController {
 
   private final String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
 
-
-
   @Ajax
   @juzu.Resource
   @MimeType.JSON
   @Jackson
   public List<EmployeesDTO> getAllUsersRhData() {
     try {
-
       return userDataService.getAllUsersRhData(0,100);
 
     } catch (Throwable e) {
@@ -463,7 +460,7 @@ public class RhAdministrationController {
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
-   // obj.setType("comment");
+  //  obj.setType("comment");
     commentService.save(obj);
   }
 
@@ -475,12 +472,23 @@ public class RhAdministrationController {
   @Jackson
   public List<CommentDTO> getComments(@Jackson VacationRequestDTO obj) {
     try {
-      return commentService.getCommentsByRequestId(obj.getId(),0,100);
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(),0,100);
+      for (CommentDTO comment : comments){
+        Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
+        comment.setPosterName(profile.getFullName());
+        if(profile.getAvatarUrl()!=null){
+          comment.setPosterAvatar(profile.getAvatarUrl());
+        }else{
+          comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+        }
+      }
+      return comments;
     } catch (Throwable e) {
       LOG.error(e);
       return null;
     }
   }
+
 
 
   @Ajax

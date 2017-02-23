@@ -2,83 +2,112 @@
 <div id="rhAddon" class="rhAddon" style="visibility: hidden;">
     <div ng-controller="rhCtrl" id="rhCtrl">
         <div id="wrap">
-            <div class="bg" ng-class="{ 'display': (showCal && showForm) }"></div>
+		
+		<div class="uiBox">
+<div class="ligne">
+<b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span>
+</div>
+<div class="ligne">
+<b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span>
+</div>
+<div class="ligne">
+<b>{{i18n.sickBalance}}:</b> <span>{{sickBalance}}</span>
+</div>
+<div class="ligne">
+<b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
+</div>
+
+
+                    <div class="ligne">
+                        <b>{{i18n.hrId}}:</b> <span>{{hrId}}</span>
+                    </div>
+
+<div class="ligne">
+<b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
+</div>
+
+                </div>
+
+
+
+
+<div class="bg" ng-class="{ 'display': (showCal && showForm) }"></div>
 <div class="manage-view">
 <a class="btn btn-primary" data-placement="right" data-original-title="Add" rel="tooltip" ng-show="!showForm" ng-click="showForm = true">
 <i class="uiIconSimplePlusMini"></i> {{i18n.newVacationRequest}}
-                </a>
+</a>
 <a class="btn btn-primary show-calender" data-placement="left" data-original-title="Add" rel="tooltip" ng-click="toggleView()">
         {{i18n.showCalendar}}
 </a>
 
-            </div>
+</div>
 <div id="myCalendar" ng-show="showCal"></div>
 
-            <!-- Request Resume -->
+<!-- Request Resume -->
 
-            <div id="requestResume" class="uiBox elementDetail" ng-show="showResume">
-                <a class="actionIcon close-vacationRequest" ng-click="showResume = false">
-                    <i class="uiIconClose"></i>
+<div id="requestResume" class="uiBox elementDetail" ng-show="showResume">
+<a class="actionIcon close-vacationRequest" ng-click="showResume = false">
+<i class="uiIconClose"></i>
 </a>
-                <div class="uiContentBox">
+<div class="uiContentBox">
 
-                    <div class="ligne">
-                        <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
-                    </div>
+<div class="ligne">
+<b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+</div>
 <div class="ligne">
 <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
 </div>
-                    <div class="ligne">
-                        <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
-                    </div>
+<div class="ligne">
+<b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
+</div>
 <div class="ligne">
 <b>{{i18n.fromDate}}:</b> <span>{{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</span>
 </div>
-                    <div class="ligne">
-                        <b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span>
-                    </div>
+<div class="ligne">
+<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span>
+</div>
 <div class="ligne">
 <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
 </div>
-                    <div class="ligne">
-                        <b>{{i18n.substitutes}}:</b>
+<div class="ligne">
+<b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.name}}, </a>
-                    </div>
+</div>
 <div class="ligne">
 <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
 </div>
-                    <div class="ligne manager">
-                        <b>{{i18n.managers}}:</b>
+<div class="ligne manager">
+<b>{{i18n.managers}}:</b>
 <table class="table uiGrid table-hover table-striped">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
 <a class="column-item column-title">{{vrmanager.validatorName}}</a>
-                                    </td>
+</td>
 <td ng-if="currentUser == vrmanager.validatorUserId" class="td-right-align">
 <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='approved'"><i class="uiIconTick uiIconWhite"></i>{{i18n.approve}}
-                                        </button>
+</button>
 <button class="btn" ng-click="declineRequest(vacationRequesttoShow)" ng-disabled="vrmanager.reply=='declined'"><i class="uiIconClose uiIconDarkGray"></i>{{i18n.decline}}
-                                        </button>
+</button>
 </td>
-                                    <td ng-if="currentUser != vrmanager.validatorUserId" class="td-right-align">
-                                        <b>{{geti18n(vrmanager.reply)}}</b>
+<td ng-if="currentUser != vrmanager.validatorUserId" class="td-right-align">
+<b>{{geti18n(vrmanager.reply)}}</b>
 </td>
-                                </tr>
+</tr>
 </tbody>
-                        </table>
+</table>
 <div class="tab-pane fade in active ">
 <div class="commentList">
 <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
 <div class="commmentLeft">
 <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
+<img src="{{comment.posterAvatar}}" alt="">
 </a>
                                     </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
-<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
+<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
                                             <span class="date">
                         {{comment.postedTime | date:'yyyy-MM-dd HH:mm:ss'}}
                         </span>
@@ -95,8 +124,8 @@
                                 <div class="commentItem commentFormBox">
                                     <div class="clearfix">
                                         <div class="commmentLeft pull-left">
-                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="Root Root">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+<img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
 </a>
                                         </div>
 <!--end commentLeft-->
@@ -427,13 +456,13 @@
 <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
 <div class="commmentLeft">
 <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
+<img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
 </a>
                                 </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
-<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
+<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
                                         <span class="date">
                         {{comment.postedTime | date:'d MMM y HH:mm:ss'}}
                         </span>
@@ -449,8 +478,8 @@
                             <div class="commentItem commentFormBox">
                                 <div class="clearfix">
                                     <div class="commmentLeft pull-left">
-                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="Root Root">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+<img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
 </a>
                                     </div>
 <!--end commentLeft-->

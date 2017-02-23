@@ -203,7 +203,17 @@ public class RHRequestManagementController {
   @Jackson
   public List<CommentDTO> getComments(@Jackson VacationRequestDTO obj) {
     try {
-      return commentService.getCommentsByRequestId(obj.getId(),0,100);
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(),0,100);
+      for (CommentDTO comment : comments){
+                Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
+                comment.setPosterName(profile.getFullName());
+              if(profile.getAvatarUrl()!=null){
+                comment.setPosterAvatar(profile.getAvatarUrl());
+                }else{
+                comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+                }
+      }
+      return comments;
     } catch (Throwable e) {
       log.error(e);
       return null;
@@ -258,10 +268,9 @@ public class RHRequestManagementController {
   @MimeType.JSON
   @Jackson
   public List<VacationRequestDTO> saveVacationRequest(@Jackson VacationRequestWithManagersDTO obj) {
-    Identity userId=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false);
     VacationRequestDTO vr=obj.getVacationRequestDTO();
     vr.setUserId(currentUser);
-    vr.setUserFullName(userId.getProfile().getFullName());
+    vr.setUserFullName(identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile().getFullName());
     vr.setStatus(PENDING);
     String substitutes="";
 
@@ -445,9 +454,22 @@ public class RHRequestManagementController {
     try {
       JSON data = new JSON();
       data.set("currentUser",currentUser);
+      Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile();
+      if(profile.getAvatarUrl()!=null){
+        data.set("currentUserAvatar",profile.getAvatarUrl());
+      }else{
+        data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+      }
+
+      data.set("currentUserName",profile.getFullName());
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
-      data.set("sickBalance",userRHDataDTO.getNbrSickdays());
-      data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
+      if (userRHDataDTO != null) {
+        data.set("sickBalance",userRHDataDTO.getNbrSickdays());
+        data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
+        data.set("hrId",userRHDataDTO.getHrId());
+        data.set("insuranceId",userRHDataDTO.getInsuranceId());
+        data.set("socialSecNumber",userRHDataDTO.getSocialSecNumber());
+      }
       return Response.ok(data.toString());
     } catch (Throwable e) {
       log.error("error while getting bundele", e);

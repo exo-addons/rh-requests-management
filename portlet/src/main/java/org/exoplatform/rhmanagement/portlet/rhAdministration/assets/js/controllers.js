@@ -384,7 +384,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
             $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
             $scope.newComment.postedTime= new Date();
-            $scope.newComment.posterId=$scope.vacationRequesttoShow.userFullName;
+            $scope.newComment.posterId=$scope.currentUser;
+            $scope.newComment.posterAvatar=$scope.currentUserAvatar;
+            $scope.newComment.posterName=$scope.currentUserName;
 
             $http({
                 data : $scope.newComment,
@@ -443,16 +445,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 method : 'GET',
                 url : rhAdminContainer.jzURL('RhAdministrationController.getContext')
             }).then(function successCallback(data) {
-
-                $scope.completeCurrentUser = data.data;
                 $scope.currentUser=data.data.currentUser;
                 $scope.currentUserAvatar=data.data.currentUserAvatar;
                 $scope.currentUserName=data.data.currentUserName;
-                $scope.sickBalance=data.data.sickBalance;
-                $scope.holidaysBalance=data.data.holidaysBalance;
-                var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
-                invite.build('managers', rsetUrl,'choose user');
-                invite.build('substitutes', rsetUrl,'choose user');
                 deferred.resolve(data);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
