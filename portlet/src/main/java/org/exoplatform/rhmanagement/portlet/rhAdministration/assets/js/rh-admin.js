@@ -87,7 +87,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 
 	});
 
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+/*    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
+    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );*/
 
 });

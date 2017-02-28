@@ -210,6 +210,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 if(user==null) {
                     $scope.loadAllVacationRequests();
                 }else{
+                    if (data.data!=null){
+                        user.hrData=data.data;
+                    }
                     $scope.loadUserHRData(user);
                     }
                 $scope.setResultMessage(data, "success");
@@ -218,7 +221,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             });
         }
 
-        $scope.cancelRequest = function(vacationRequest,userId) {
+        $scope.cancelRequest = function(vacationRequest,user) {
             $http({
                 data : vacationRequest,
                 method : 'POST',
@@ -230,6 +233,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 if(user==null) {
                     $scope.loadAllVacationRequests();
                 }else{
+                    if (data.data!=null){
+                        user.hrData=data.data;
+                    }
                     $scope.loadUserHRData(user);
                 }
                 $scope.setResultMessage(data, "success");

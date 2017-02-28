@@ -202,7 +202,9 @@ public class RhAdministrationController {
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
-  public VacationRequestDTO validateRequest(@Jackson VacationRequestDTO obj) {
+  public UserRHDataDTO validateRequest(@Jackson VacationRequestDTO obj) {
+
+    UserRHDataDTO userRHDataDTO=null;
     if(!obj.getStatus().equals(VALIDATED)) {
       Set<String> managers = new HashSet<String>();
       managers.add(obj.getUserId());
@@ -212,7 +214,7 @@ public class RhAdministrationController {
 
       obj.setStatus(VALIDATED);
       obj=vacationRequestService.save(obj,false);
-      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+      userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
       if(obj.getType().equals("holiday")){
         float holidays=userRHDataDTO.getNbrHolidays();
         float nbDays=obj.getDaysNumber();
@@ -234,14 +236,15 @@ public class RhAdministrationController {
       NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
       ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     }
-    return obj;
+    return userRHDataDTO;
   }
 
   @Ajax
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
-  public VacationRequestDTO cancelRequest(@Jackson VacationRequestDTO obj) {
+  public UserRHDataDTO cancelRequest(@Jackson VacationRequestDTO obj) {
+    UserRHDataDTO userRHDataDTO=null;
     if(!obj.getStatus().equals(CANCELED)) {
 
       Set<String> managers = new HashSet<String>();
@@ -251,7 +254,7 @@ public class RhAdministrationController {
       }
 
       if(obj.getStatus().equals(VALIDATED)) {
-        UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+        userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
         if (obj.getType().equals("holiday")) {
           float holidays = userRHDataDTO.getNbrHolidays();
           float nbDays = obj.getDaysNumber();
@@ -276,7 +279,7 @@ public class RhAdministrationController {
       NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
       ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
     }
-    return obj;
+    return userRHDataDTO;
   }
 
 

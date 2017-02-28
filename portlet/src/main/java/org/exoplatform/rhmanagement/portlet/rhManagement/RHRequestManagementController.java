@@ -25,8 +25,10 @@ import juzu.template.Template;
 
 import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
+import org.exoplatform.calendar.model.Event;
 import org.exoplatform.calendar.service.CalendarEvent;
 import org.exoplatform.calendar.service.CalendarService;
+import org.exoplatform.calendar.service.ExtendedCalendarService;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
@@ -84,6 +86,9 @@ public class RHRequestManagementController {
 
   @Inject
   UserDataService userDataService;
+
+  @Inject
+  ExtendedCalendarService xCalendarService;
 
   @Inject
   CalendarService calendarService;
@@ -492,7 +497,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   try {
     Calendar cal=calendarService.getCalendarById(calId);
     if(cal!=null){
-      CalendarEvent calendarEvent = new CalendarEvent();
+      Event calendarEvent = new CalendarEvent();
       calendarEvent.setId(calId+"_"+currentUser+"_"+obj.getId());
       calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
       calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
@@ -502,7 +507,8 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       calendarEvent.setEventType(CalendarEvent.TYPE_EVENT) ;
       calendarEvent.setParticipant(new String[]{currentUser}) ;
       calendarEvent.setParticipantStatus(new String[] {currentUser + ":"});
-      calendarService.saveUserEvent(currentUser, calId, calendarEvent, true) ;
+      calendarEvent.setCalendarId(calId);
+      xCalendarService.getEventHandler().saveEvent(calendarEvent) ;
     }
   } catch (Exception e) {
     log.error("Exception while create user event", e);
