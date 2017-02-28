@@ -294,9 +294,9 @@
                                 </ul>
 </div>
                         </div>
-<ul class="table-project" ng-repeat="vacationRequest in myVacationRequests">
-<li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{vacationRequest.id}}">
-<div class="column-item column-checkbox" ng-switch="vacationRequest.status">
+<ul class="table-project" ng-repeat="myVacationRequest in myVacationRequests">
+<li class="row-item row-odd hover-action-reveal has-border has-background " data-id="{{myVacationRequest.id}}">
+<div class="column-item column-checkbox" ng-switch="myVacationRequest.status">
 <span ng-switch-when="approved" class="uiIconColorValidate"></span>
                                     <span ng-switch-when="declined" class="uiIconColorError"></span>
 <span ng-switch-when="pending" class="uiIconClock"></span>
@@ -305,13 +305,13 @@
                                     <span ng-switch-default class="uiIconInformation"></span>
 </span>
                                 </div>
-<a ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'" class="column-item column-title" ng-click="showVacationRequest(vacationRequest)"> {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
-                                <a ng-if="vacationRequest.status == 'validated' || vacationRequest.status == 'canceled'" class="column-item column-title requestCompleted" ng-click="showVacationRequest(vacationRequest)"> {{geti18n(vacationRequest.type)}} {{i18n.from}} {{vacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{vacationRequest.toDate | date:'d MMM y'}}</a>
+<a ng-if="myVacationRequest.status != 'validated' && myVacationRequest.status != 'canceled'" class="column-item column-title" ng-click="showVacationRequest(myVacationRequest)"> {{geti18n(myVacationRequest.type)}} {{i18n.from}} {{myVacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{myVacationRequest.toDate | date:'d MMM y'}}</a>
+                                <a ng-if="myVacationRequest.status == 'validated' || myVacationRequest.status == 'canceled'" class="column-item column-title requestCompleted" ng-click="showVacationRequest(myVacationRequest)"> {{geti18n(myVacationRequest.type)}} {{i18n.from}} {{myVacationRequest.fromDate | date:'d MMM y'}} {{i18n.to}} {{myVacationRequest.toDate | date:'d MMM y'}}</a>
 
 <div class="column-item column-time">
-<div ng-if="vacationRequest.status != 'validated' && vacationRequest.status != 'canceled'">
+<div ng-if="myVacationRequest.status != 'validated' && myVacationRequest.status != 'canceled'">
 <span class="text-time inline-block-show"></span>
-                                        <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(vacationRequest)">
+                                        <a class="actionIcon inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip" ng-click="deleteRequest(myVacationRequest)">
                                             <i class="uiIconDeleteUser uiIconLightGray"></i>
 </a>
                                     </div>

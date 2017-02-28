@@ -497,14 +497,14 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   try {
     Calendar cal=calendarService.getCalendarById(calId);
     if(cal!=null){
-      Event calendarEvent = new CalendarEvent();
+      Event calendarEvent = new Event();
       calendarEvent.setId(calId+"_"+currentUser+"_"+obj.getId());
       calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
       calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
       calendarEvent.setSummary(obj.getUserFullName()+" Off");
       calendarEvent.setFromDateTime(obj.getFromDate());
       calendarEvent.setToDateTime(obj.getToDate());
-      calendarEvent.setEventType(CalendarEvent.TYPE_EVENT) ;
+      calendarEvent.setEventType(Event.TYPE_EVENT) ;
       calendarEvent.setParticipant(new String[]{currentUser}) ;
       calendarEvent.setParticipantStatus(new String[] {currentUser + ":"});
       calendarEvent.setCalendarId(calId);
