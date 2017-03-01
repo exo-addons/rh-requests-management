@@ -1,3 +1,11 @@
+/* INVALID INPUT */
+input.ng-invalid {
+    border-color: #f90000!important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #afc9f0!important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
+}
+/* -- -- */
 .rhLoadingBar {
 	background: url("/rh-management-portlet/skin/images/loading-16x16.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
 	background-size: 25px;
@@ -73,6 +81,7 @@ td.RightBodyTDContainer{
     border-radius: 5px;
     padding: 10px 20px;
 }
+
 .close-vacationRequest{
     position: relative;
     float: right;
@@ -118,7 +127,7 @@ select[name=inputUsername] {
     margin-bottom: 0;
 }
 #calSaveButton{width: 25%}
-
+#vacationRequestForm select{width: 100%!important}
 /* */
 /*  -- Date Pick --  */
 /* */
@@ -182,7 +191,7 @@ select[name=inputUsername] {
 }
 
 /* ITEMS WIDTH */
-.table-project .row-item .column-title{width: 80%}
+.table-project .row-item .column-title{width: 75%}
 
 /* */
 /*  -- New REQUEST FIXED --  */
@@ -204,7 +213,7 @@ select[name=inputUsername] {
 }
 
 /* ITEMS WIDTH */
-.table-project .row-item .column-title{width: 80%}
+
 
 .bg{
     position: absolute;
@@ -242,3 +251,100 @@ select[name=inputUsername] {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+select#managerCalendarId {
+    width: 49%;
+}
+
+/* ---- requestTabs ---- */
+#requestTabs{margin-top: 5px}
+div#vacationRequestSaveAs {
+    text-align: center;
+    margin-top: 20px;
+}
+div#left_col.displayNone {display: none}
+div#left_col.fullWidth, div#right_col.fullWidth {
+    width: 100%;
+}
+.actionIcon, .actionIconSmall {
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-block;
+    color: #333333;
+    padding: 0 5px;
+    text-align: center;
+    line-height: 19px;
+    min-width: 15px;
+    padding-bottom: 5px;
+    vertical-align: middle;
+}
+
+/* -- -- ADDON MENU -- -- */
+ul#addonMenu {
+    margin: -20px -30px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    background-image: -moz-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#f8f8f8),to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: -o-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: linear-gradient(to bottom,#f8f8f8,#e6e6e6);
+    background-repeat: repeat-x;
+    background-repeat-x: repeat;
+    background-repeat-y: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8',endColorstr='#ffe6e6e6',GradientType=0);
+    -webkit-box-shadow: inset;
+    -moz-box-shadow: inset;
+    box-shadow: inset;
+    height: 90px;
+}
+ul#addonMenu > .active > a{
+    background-color: #8f8f8f;
+    background-image: -moz-linear-gradient(top,#999,#808080);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#999),to(#808080));
+    background-image: -webkit-linear-gradient(top,#999,#808080);
+    background-image: -o-linear-gradient(top,#999,#808080);
+    background-image: linear-gradient(to bottom,#999,#808080);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff999999',endColorstr='#ff808080',GradientType=0);
+    -webkit-box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+    -moz-box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+    box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+}
+ul#addonMenu > li > a {
+    text-align: center;
+    border: none;
+    background: none;
+    height: 51px;
+    min-width: 45px;
+    margin: 10px 20px;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    border: 1px solid transparent;
+        border-radius: 5px;
+}
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+ul#addonMenu > li > a > i{  font-size: 32px;}
+ul#addonMenu li > a > span {
+    display: block;
+    color: #333;
+}
+ul#addonMenu > .active> a > span,
+ul#addonMenu > .active> a > i{
+    color: #fff;
+    text-shadow: none;
+}
+.nav-tabs li, .nav li{cursor: pointer}

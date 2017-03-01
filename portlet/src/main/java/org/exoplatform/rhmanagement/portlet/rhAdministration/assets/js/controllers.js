@@ -63,6 +63,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             $scope.resultMessageClass = "alert-" + type;
             $scope.resultMessageClassExt = "uiIcon" + type.charAt(0).toUpperCase()
                 + type.slice(1);
+
             $scope.resultMessage = text;
         }
 
@@ -73,6 +74,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
                 deferred.resolve(data);
+                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -85,12 +87,11 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 method : 'GET',
                 url : rhAdminContainer.jzURL('RhAdministrationController.getAllUsersRhData')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.rhEmployees = data.data;
                 //$scope.vm.setPage(1);
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -108,12 +109,11 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId')+ "&userId=" +userRhData.userId
             }).then(function successCallback(data) {
                 $scope.loadAttachments(userRhData);
-                $scope.setResultMessage(data, "success");
                 $scope.vacationRequests = data.data;
                 $scope.showEmployees=false;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -129,15 +129,14 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                     method : 'GET',
                     url : rhAdminContainer.jzURL('RhAdministrationController.getUser')+ "&userId=" +newUserId
                 }).then(function successCallback(data) {
-                    $scope.setResultMessage(data, "success");
                     $scope.newUserDetails = data.data;
                     if(!data.data.avatar){
                         $scope.newUserDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
                     }
                     $scope.showAddForm=true;
                     $timeout(function() {
-                        $scope.setResultMessage("", "info")
-                    }, 3000);
+                        $scope.setResultMessage(data, "success")
+                    }, 1000);
                 }, function errorCallback(data) {
                     $scope.setResultMessage(data, "error");
                 });
@@ -152,11 +151,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 method : 'GET',
                 url : rhAdminContainer.jzURL('RhAdministrationController.getAllVacationRequests')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.allVacationRequests = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -168,6 +166,23 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
 
         $scope.saveUserHRData = function(employee) {
+
+            if(employee.hrData.bDay){
+                employee.hrData.bDay = new Date($("#bDay1").val()).getTime();
+            }
+            if(employee.hrData.startDate){
+                employee.hrData.startDate = new Date($("#startDate1").val()).getTime();
+            }
+            if(employee.hrData.leaveDate){
+                employee.hrData.leaveDate = new Date($("#leaveDate1").val()).getTime();
+            }
+            if(employee.hrData.contractStartDate){
+                employee.hrData.contractStartDate = new Date($("#contractStartDate1").val()).getTime();
+            }
+            if(employee.hrData.contractEndDate){
+                employee.hrData.contractEndDate = new Date($("#contractEndDate1").val()).getTime();
+            }
+
             $http({
                 data : employee,
                 method : 'POST',
@@ -178,8 +193,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             }).then(function successCallback(data) {
                 employee.id = data.data.id;
                 $scope.loadEmployees();
+                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
-                $scope.setResultMessage("", "error");
+                $scope.setResultMessage(data, "error");
             });
         }
 
@@ -193,8 +209,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 url : rhAdminContainer.jzURL('RhAdministrationController.deleteUserRHData')
             }).then(function successCallback(data) {
                 $scope.loadEmployees();
+                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
-                $scope.setResultMessage("", "error");
+                $scope.setResultMessage(data, "error");
             });
         }
 
@@ -291,11 +308,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getEmployeeAttachements')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.attachements = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -305,11 +321,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
             $http({
                 url : rhAdminContainer.jzURL('RhAdministrationController.deleteFile')+"&userId="+$scope.userDetails.userId+"&fileName="+fileName
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.attachements = $scope.loadAttachments($scope.userDetails);
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -333,11 +348,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getSubstitutesByRequestID')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.vrsubs = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -352,11 +366,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getValidatorsByRequestID')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.vrmanagers = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -372,11 +385,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getComments')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.comments = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -409,8 +421,8 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                     id : null
                 };
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -426,11 +438,10 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getRequestAttachements')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.attachements = data.data;
                 $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+                    $scope.setResultMessage(data, "success")
+                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });
@@ -455,6 +466,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 $scope.currentUserAvatar=data.data.currentUserAvatar;
                 $scope.currentUserName=data.data.currentUserName;
                 deferred.resolve(data);
+                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
                 $scope.setResultMessage(data, "error");
             });

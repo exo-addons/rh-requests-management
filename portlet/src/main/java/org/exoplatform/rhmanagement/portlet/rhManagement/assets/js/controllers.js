@@ -29,6 +29,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showCal = false;
         $scope.showSick = false;
         $scope.showHollidays = false;
+        $scope.showLogs = false;
+        $scope.showFullReq= false;
         $scope.newVacationRequest = {
             id : null
         };
@@ -59,17 +61,20 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.showCal = !$scope.showCal;
             $text = $(".show-calender").text();
             if($text.indexOf($scope.i18n.showCalendar) >= 0){
-                $text = $scope.i18n.hideCalendar;
+                /*$text = $scope.i18n.hideCalendar;*/
+                $text = "<i class='uiIconPLFEvent'></i><span id='forum' class='tabName show-calender'>"+$scope.i18n.hideCalendar+"</span>";
+
                 $scope.showForm = false;
                 $scope.showList = false;
                 $scope.showDetails = false;
             }else{
-                $text = $scope.i18n.showCalendar;
+                /*$text = $scope.i18n.showCalendar;*/
+                $text = "<i class='uiIconPLFEvent'></i><span id='forum' class='tabName show-calender'>"+$scope.i18n.showCalendar+"</span>";
                 $scope.showResume = false;
                 $scope.showList = true;
                 $scope.showDetails = true;
             }
-            $text = $(".show-calender").text($text);
+            $text = $(".show-calender").html($text);
         }
 
         $scope.loadBundles = function() {
@@ -131,11 +136,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     method : 'GET',
                     url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +requestId
                 }).then(function successCallback(data) {
-                    $scope.setResultMessage(data, "success");
                     $scope.showVacationRequest(data.data);
+                    $scope.showFullReq = true;
                     $timeout(function() {
-                        $scope.setResultMessage("", "info")
-                    }, 3000);
+                        $scope.setResultMessage(data, "success");
+                    }, 1000);
                 }, function errorCallback(data) {
                     $scope.setResultMessage(data, "error");
                 });
