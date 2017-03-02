@@ -348,3 +348,5 @@ ul#addonMenu > .active> a > i{
     text-shadow: none;
 }
 .nav-tabs li, .nav li{cursor: pointer}
+.commentItem.commentFormBox {margin-top: 30px;}
+

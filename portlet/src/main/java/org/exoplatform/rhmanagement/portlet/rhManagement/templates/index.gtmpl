@@ -2,7 +2,7 @@
 <div id="rhAddon" class="rhAddon" style="visibility: hidden;">
 
     <div ng-controller="rhCtrl" id="rhCtrl">
-        <ul class="nav nav-tabs addonMenu" id="addonMenu" style="visibility: visible;">
+        <ul class="nav nav-tabs addonMenu" id="addonMenu">
             <li class="item" ng-class="{ 'active': showForm }">
                 <a class="" data-placement="right" data-original-title="Add" rel="tooltip"
                    ng-click="showForm = true">
@@ -443,7 +443,7 @@
             </div>
             <!--End Left column-->
             <div id="right_col" class="uiBox elementDetail" ng-show="showDetails" ng-class="{ 'fullWidth': showFullReq }">
-                <a class="actionIcon " style="float:right" ng-click="showDetails=false">
+                <a class="actionIcon " style="float:right" ng-click="showDetails=false; showList= true">
                     <i class="uiIconClose "></i>
                 </a>
                 <div class="uiContentBox">
@@ -506,48 +506,51 @@
                             <i class="uiIconUpload uiIconLightGray"></i>
                         </a>
                     </div>
+                    <div class="managersTabs">
+                        <div class="ligne manager">
+                            <b>{{i18n.managers}}:</b>
+                            <table id="managersTable" class="table uiGrid table-hover table-striped">
+                                <tbody>
+                                <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+                                    <td>
+                                        <a class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                    </td>
+                                    <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
+                                        class="td-right-align">
+                                        <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
+                                                ng-disabled="vrmanager.reply=='declined'"><i
+                                                class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+                                        </button>
+                                        <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
+                                                ng-disabled="vrmanager.reply=='approved'"><i
+                                                class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+                                        </button>
+
+                                    </td>
+                                    <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
+                                        class="td-right-align">
+                                        <b>{{geti18n(vrmanager.reply)}}</b>
+                                    </td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 <!-- -->
                     <div id="requestTabs" class="uiTabPane uiTabNormal">
                         <ul id="myTab" class="nav nav-tabs">
-                            <li class="active" ng-click="showLogs=false">
-                                <a href="#tab-home" data-toggle="tab">{{i18n.managers}}:</a>
+                            <li class="active" ng-click="showLogs=false" ng-class="{ 'active': !showLogs }">
+                                <a href="#tab-home" data-toggle="tab">{{i18n.comments}}:</a>
                             </li>
-                            <li ng-click="showLogs=true">
+                            <li ng-click="showLogs=true" ng-class="{ 'active': showLogs }">
                                 <a href="#tab-properties" data-toggle="tab">{{i18n.log}}:</a>
                             </li>
                         </ul>
                     </div>
 <!-- -->
-                    <div class="managersTabs" ng-show="!showLogs">
-                    <div class="ligne manager">
-                        <table id="managersTable" class="table uiGrid table-hover table-striped">
-                            <tbody>
-                            <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
-                                <td>
-                                    <a class="column-item column-title">{{vrmanager.validatorName}}</a>
-                                </td>
-                                <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
-                                    class="td-right-align">
-                                    <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
-                                            ng-disabled="vrmanager.reply=='declined'"><i
-                                            class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-                                    </button>
-                                    <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
-                                            ng-disabled="vrmanager.reply=='approved'"><i
-                                            class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-                                    </button>
-
-                                </td>
-                                <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
-                                    class="td-right-align">
-                                    <b>{{geti18n(vrmanager.reply)}}</b>
-                                </td>
-
-
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <div class="commentsBloc"  ng-show="!showLogs">
 
                     <div class="ligne">
 
