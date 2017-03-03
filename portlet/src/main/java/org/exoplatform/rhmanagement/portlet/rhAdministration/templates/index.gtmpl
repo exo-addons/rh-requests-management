@@ -1,20 +1,29 @@
 <div id="rhLoadingBar" class="LoadingBar"></div>
 <div id="rhAdminAddon" class="rhAdminAddon" style="visibility: hidden;">
-    <div ng-app="rhAdminApp" ng-controller="rhAdminCtrl" id="rhAdminCtrl">
-        <div id="resultMessage" ng-show="(resultMessage.length > 0)"
+    <div ng-controller="rhAdminCtrl" id="rhAdminCtrl">
+        <div id="resultMessage" ng-show="showAlert"
              class="result-message alert {{resultMessageClass}}">
             <i class="{{resultMessageClassExt}}"></i> {{resultMessage}}
         </div>
-        <div id="hrAdminApplication" style="padding: 5px;">
+        <div id="hrAdminApplication">
+            <ul class="nav nav-tabs addonMenu " id="addonMenu">
+                <li class="item active" id="employeesTab">
+                    <a class=""
+                       ng-click="openTab('employees', 'requests')">
+                        <i class="uiIconSocConnectUser"></i>
+                        <span class="tabName">{{i18n.employeesList}}</span>
+                    </a>
+                </li>
+                <li class="item" id="requestsTab" >
+                    <a class=""
+                       ng-click="openTab('requests', 'employees'); loadAllVacationRequests()">
+                        <i class="uiIconEcmsTemplateList"></i>
+                        <span id="forum" class="tabName show-calender">{{i18n.requestsList}}</span>
+                    </a>
+                </li>
 
-            <ul class="tab">
-                <li><a href="javascript:void(0)" class="tablinks active" id="employeesTab"
-                       ng-click="openTab('employees', 'requests')">{{i18n.employeesList}}</a>
-                </li>
-                <li><a href="javascript:void(0)" class="tablinks" id="requestsTab"
-                       ng-click="openTab('requests', 'employees'); loadAllVacationRequests()">{{i18n.requestsList}}</a>
-                </li>
             </ul>
+
 
             <div id="employees" class="tabcontent" style="display: block;">
 
@@ -484,7 +493,7 @@
 
                                     <span ng-repeat="attachement in attachements" class="attachementName">
                             <a class="column-item column-title" data-placement="bottom" rel="tooltip"
-                               href='{{attachement.url}}'>{{attachement.name}}</a>
+                               href='{{attachement.url}}'><i class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0,1).toUpperCase()+(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
 <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
    ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconClose uiIconLightGray"></i>
@@ -492,7 +501,7 @@
 </span>
 
 
-                                    <a class="actionIcon inline-block-hide"
+                                    <a class="actionIcon inline-block-hide attachement"
                                        ngf-select="uploadFiles($file, $invalidFiles) " ngf-max-height="1000 "
                                        ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
                                         <i class="uiIconUpload uiIconLightGray"></i>
@@ -639,7 +648,7 @@
 
                                 <span ng-repeat="attachement in attachements" class="attachementName">
                             <a class="column-item column-title" data-placement="bottom" rel="tooltip"
-                               href='{{attachement.url}}'>{{attachement.name}}</a>
+                               href='{{attachement.url}}'><i class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0,1).toUpperCase()+(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
 <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
    ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconClose uiIconLightGray"></i>
@@ -725,7 +734,8 @@
                                                 <div class="commentInput">
                                                     <textarea title="Add your comment..." name="comment" cols="30"
                                                               rows="10" class="textarea"
-                                                              ng-model="newComment.commentText"></textarea>
+                                                              ng-model="newComment.commentText" required>
+                                                    </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -734,7 +744,7 @@
                                     <div class="clearfix">
                                         <div class="pull-right">
                                             <button id="commentButton" type="button" class="btn pull-right btn-primary"
-                                                    ng-click="saveComment()">{{i18n.comment}}
+                                                     ng-click="saveComment()">{{i18n.comment}}
                                             </button>
                                         </div>
                                     </div>

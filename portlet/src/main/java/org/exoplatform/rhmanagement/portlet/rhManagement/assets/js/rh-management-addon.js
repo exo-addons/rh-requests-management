@@ -28,8 +28,45 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
             console.log(e);
         }
 
+        /* -- -- */
+
+        var dateFormat = "yy-mm-dd",
+        from = $( "#fromDate" ).datepicker({
+            defaultDate: "+1w",
+            numberOfMonths: 1
+        }),
+
+        to = $( "#toDate" ).datepicker({
+            defaultDate: "+1w",
+            numberOfMonths: 1
+        });
+
+
     });
 
-    $( "#fromDate, #toDate" ).datepicker();
+    function getDate( element ) {
+        console.log(element);
+        var date;
+        try {
+//            date = $.datepicker.parseDate( dateFormat, element );
+              date = new Date(element, 1 - 1, 1);
+        } catch( error ) {
+            date = null;
+        }
+        return date;
+    }
+
+    //$("#toDate").val()
+    //$("#fromDate").val()
+
+//    $( "#fromDate, #toDate" ).datepicker();
     $( "#fromDate, #toDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#toDate" ).on( "change", function() {
+        $("#toDate").attr("value", $("#toDate").val());
+        $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
+    });
+    $( "#fromDate" ).on( "change", function() {
+        $("#fromDate").attr("value", $("#fromDate").val());
+        $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
+    });
 });

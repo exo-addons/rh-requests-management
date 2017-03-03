@@ -241,10 +241,9 @@ select[name=inputUsername] {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    border: 1px solid #215ab2;
-    display: inline-block;
+    display: inline-flex;
     font-size: 11px;
-    padding: 0 5px;
+    padding: 2px 5px;
     margin: 0 5px 5px 0;
     max-width: 92%;
     overflow: hidden;
@@ -253,8 +252,13 @@ select[name=inputUsername] {
 }
 select#managerCalendarId {
     width: 49%;
+    max-width: 200px;
 }
-
+#calSaveButton {
+    width: 25%;
+    max-width: 100px;
+    float: none;
+}
 /* ---- requestTabs ---- */
 #requestTabs{margin-top: 5px}
 div#vacationRequestSaveAs {
@@ -349,4 +353,14 @@ ul#addonMenu > .active> a > i{
 }
 .nav-tabs li, .nav li{cursor: pointer}
 .commentItem.commentFormBox {margin-top: 30px;}
-
+.commentsBloc, .logsTabs{
+border: 1px solid #cccccc;
+border-top: 0;
+}
+a.actionIcon.inline-block-hide.uploadicon {
+    padding: 1px 5px;
+}
+.selectize-input{padding: 0px 8px;}
+div#resultMessage {
+    margin-left: 5px;
+}

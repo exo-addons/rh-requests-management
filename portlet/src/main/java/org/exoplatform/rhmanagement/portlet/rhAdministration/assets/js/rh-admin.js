@@ -89,8 +89,55 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 
     $( "#startDate1, #bDay1, #leaveDate1, #contractStartDate1, #contractEndDate1" ).datepicker();
     $( "#startDate1, #bDay1, #leaveDate1, #contractStartDate1, #contractEndDate1" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#startDate1, #bDay1, #leaveDate1, #contractStartDate1, #contractEndDate1" ).datepicker( "option", "changeYear", true );
 
     $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
     $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "changeYear", true );
 
+
+    function getDate( element ) {
+        console.log(element);
+        var date;
+        try {
+//            date = $.datepicker.parseDate( dateFormat, element );
+              date = new Date(element, 1 - 1, 1);
+        } catch( error ) {
+            date = null;
+        }
+        return date;
+    }
+
+    //$("#toDate").val()
+    //$("#fromDate").val()
+
+//    $( "#fromDate, #toDate" ).datepicker();
+    $( "#startDate" ).on( "change", function() {
+        $( "#leaveDate" ).datepicker( "option", "minDate", $("#startDate").val() );
+    });
+    $( "#leaveDate" ).on( "change", function() {
+        $( "#startDate" ).datepicker( "option", "maxDate", $("#leaveDate").val() );
+    });
+    /**/
+    $( "#startDate1" ).on( "change", function() {
+        $( "#leaveDate1" ).datepicker( "option", "minDate", $("#startDate1").val() );
+    });
+    $( "#leaveDate1" ).on( "change", function() {
+        $( "#startDate1" ).datepicker( "option", "maxDate", $("#leaveDate1").val() );
+    });
+
+    /**/
+    $( "#contractStartDate" ).on( "change", function() {
+        $( "#contractEndDate" ).datepicker( "option", "minDate", $("#contractStartDate").val() );
+    });
+    $( "#contractEndDate" ).on( "change", function() {
+        $( "#contractStartDate" ).datepicker( "option", "maxDate", $("#contractEndDate").val() );
+    });
+    /**/
+    $( "#contractStartDate1" ).on( "change", function() {
+        $( "#contractEndDate1" ).datepicker( "option", "minDate", $("#contractStartDate1").val() );
+    });
+    $( "#contractEndDate1" ).on( "change", function() {
+        $( "#contractStartDate1" ).datepicker( "option", "maxDate", $("#contractEndDate1").val() );
+    });
 });

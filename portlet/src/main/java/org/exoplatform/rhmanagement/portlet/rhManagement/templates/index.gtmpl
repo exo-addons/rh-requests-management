@@ -193,9 +193,9 @@
 
 
             <!--Start Left column-->
-            <div id="left_col" class="uiBox" ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails , 'displayNone': showFullReq}">
+            <div id="left_col" class="uiBox" ng-show="showList || showForm" ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails , 'displayNone': showFullReq}">
                 <!--<div id="myCalendar" ng-show="showCal"></div>-->
-                <div id="resultMessage" ng-show="(resultMessage.length > 0)"
+                <div id="resultMessage" ng-show="showAlert"
                      class="result-message alert {{resultMessageClass}}">
                     <i class="{{resultMessageClassExt}}"></i>{{resultMessage}}
                 </div>
@@ -211,7 +211,7 @@
                                 <label class="control-label" for="daysNumber">{{i18n.type}}:</label>
                                 <div class="controls">
                                     <select name="inputUsername" id="type" ng-change="showBalance()"
-                                            placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
+                                            placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type" required>
                                         <option value="holiday">{{i18n.holiday}}</option>
                                         <option value="sick">{{i18n.sick}}</option>
                                         <option value="leave">{{i18n.leave}}</option>
@@ -233,26 +233,36 @@
                                 </div>
                             </div>
 
-                            <div class="control-group {{usernameClass}}">
-                                <label class="control-label" for="daysNumber">{{i18n.numberDays}}:</label>
+                            <div class="control-group {{usernameClass}}" ng-show="showSick">
+                                <label class="control-label" for="daysNumberSick">{{i18n.numberDays}}:</label>
                                 <div class="controls">
-                                    <input type="number" name="inputUsername" id="daysNumber"
+                                    <input type="number" name="inputUsername" id="daysNumberSick" min="0" max="{{sickBalance}}"
                                            placeholder="{{i18n.serverUsername}}"
-                                           ng-model="newVacationRequest.daysNumber">
+                                           ng-model="newVacationRequest.daysNumber" required = "showSick">
+
+                                </div>
+                            </div>
+                            <div class="control-group {{usernameClass}}" ng-show="showHollidays">
+                                <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
+                                <div class="controls">
+                                    <input type="number" name="inputUsername" id="daysNumberHollidays" min="0" max="{{holidaysBalance}}"
+                                           placeholder="{{i18n.serverUsername}}"
+                                           ng-model="newVacationRequest.daysNumber" required = "showHollidays">
+
                                 </div>
                             </div>
                             <div class="control-group {{usernameClass}}">
-                                <label class="control-label" for="inputName">{{i18n.fromDate}}:</label>
+                                <label class="control-label" for="fromDate">{{i18n.fromDate}}:</label>
                                 <div class="controls">
                                     <input type="text" name="inputUsername" id="fromDate"
-                                           placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
+                                           placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate" required>
                                 </div>
                             </div>
                             <div class="control-group {{usernameClass}}">
                                 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
                                 <div class="controls">
                                     <input type="text" name="inputUsername" id="toDate"
-                                           placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
+                                           placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate" required>
                                 </div>
                             </div>
                             <div class="control-group {{usernameClass}}">
@@ -266,7 +276,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="substitutes">{{i18n.substitutes}}:</label>
                                 <div class="controls {{usernameClass}}">
-                                    <input type="text" name="substitutes" id="substitutes" required>
+                                    <input type="text" name="substitutes" id="substitutes">
                                 </div>
                             </div>
 
@@ -443,7 +453,7 @@
             </div>
             <!--End Left column-->
             <div id="right_col" class="uiBox elementDetail" ng-show="showDetails" ng-class="{ 'fullWidth': showFullReq }">
-                <a class="actionIcon " style="float:right" ng-click="showDetails=false; showList= true">
+                <a class="actionIcon " style="float:right" ng-click="showDetails=false; showList= true; showFullReq= false">
                     <i class="uiIconClose "></i>
                 </a>
                 <div class="uiContentBox">
@@ -493,15 +503,15 @@
 
                         <span ng-repeat="attachement in attachements" class="attachementName">
                             <a class="column-item column-title" data-placement="bottom" rel="tooltip"
-                               href='{{attachement.url}}'>{{attachement.name}}</a>
-<a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
-   ng-click="deleteAttachement(attachement.name)">
-<i class="uiIconClose uiIconLightGray"></i>
-                                </a>
-</span>
+                                href='{{attachement.url}}'><i class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0,1).toUpperCase()+(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i> {{attachement.name}}</a>
+                            <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
+                                ng-click="deleteAttachement(attachement.name)">
+                                <i class="uiIconClose uiIconLightGray"></i>
+                            </a>
+                        </span>
 
 
-                        <a class="actionIcon inline-block-hide" ngf-select="uploadFiles($file, $invalidFiles) "
+                        <a class="actionIcon inline-block-hide uploadicon" ngf-select="uploadFiles($file, $invalidFiles) "
                            ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
                             <i class="uiIconUpload uiIconLightGray"></i>
                         </a>
