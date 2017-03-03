@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.services.listener.ListenerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,7 @@ public class VacationRequestService {
 
 
   private VacationRequestDAO      vacationRequestDAO;
+ // private ListenerService listenerService = CommonsUtils.getService(ListenerService.class);
 
 
   public VacationRequestService() {

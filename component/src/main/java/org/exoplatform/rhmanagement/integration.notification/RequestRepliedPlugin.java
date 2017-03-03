@@ -93,37 +93,23 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
     }
 
-    String userId=obj.getValidatorUserId();
-    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
 
-    Calendar lastModified = Calendar.getInstance();
-    String lastModifiedDate= TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(NotificationPluginUtils.getLanguage(userId)), TimeConvertUtils.YEAR);
-    String avatarUrl=userProfile.getAvatarUrl();
-    if(avatarUrl==null)avatarUrl="/eXoSkin/skin/images/system/UserAvtDefault.png";
-    String content="<li class='unread clearfix'>\n" +
-            "  <div class='media'>\n" +
-            "    <div class='avatarXSmall pull-left'>\n" +
-            "      <img src='"+avatarUrl+"' alt='"+userProfile.getFullName()+"'>\n" +
-            "    </div>\n" +
-            "    <div class='media-body'>\n" +
-            "      \n" +
-            "      <div class='contentSmall' data-link='/portal/intranet/rh-management?rid="+obj.getRequestId()+"'>\n" +
-            "        <div class='status'><a class='user-name text-bold' href='javascript:void(0)'>"+userProfile.getFullName()+"</a> has replied to your Request</div>\n" +
-            "        <div class='lastUpdatedTime'>"+lastModifiedDate+"</div>\n" +
-            "      </div>\n" +
-            "    </div>\n" +
-            "  </div>\n" +
-            "  <span class='remove-item' data-rest=''><i class='uiIconClose uiIconLightGray'></i></span>\n" +
-            "</li>";
+    String userId=obj.getValidatorUserId();
+    StringBuilder activityId = new StringBuilder(userId);
+    activityId.append("-").append(obj.getRequestId());
+
+
+
     return NotificationInfo.instance()
 
             .setFrom(userId)
-
-            .to(new ArrayList<String>(receivers))
-
-            .setTitle(content)
-
-            .key(getId());
+            .to(new LinkedList<String>(receivers))
+            .with(NotificationUtils.CREATOR, userId)
+/*            .with(NotificationUtils.FROM_DATE, obj.getVacationRequestDTO().getFromDate().toString())
+            .with(NotificationUtils.TO_DATE, obj.getVacationRequestDTO().getToDate().toString())*/
+            .with(NotificationUtils.VACATION_URL, "/portal/intranet/rh-management?rid="+obj.getRequestId())
+            .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
+            .key(getKey()).end();
 
   }
 }

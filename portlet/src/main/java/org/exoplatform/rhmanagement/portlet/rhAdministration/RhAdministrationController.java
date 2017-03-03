@@ -17,14 +17,15 @@ import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.dto.*;
-import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
 import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
+import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.services.organization.UserHandler;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.identity.model.Identity;
@@ -74,6 +75,9 @@ public class RhAdministrationController {
 
   @Inject
   RepositoryService repositoryService;
+
+  @Inject
+  ListenerService listenerService;
 
   @Inject
   @Path("index.gtmpl")
@@ -233,8 +237,19 @@ public class RhAdministrationController {
       comment.setPostedTime(new Date());
       //comment.setType("log");
       commentService.save(comment);
-      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
+
+      try {
+        for (User rh : Utils.getRhManagers()){
+         if(!rh.getUserName().equals(currentUser)) managers.add(rh.getUserName());
+        }
+      } catch (Exception e) {
+
+      }
+      try {
+        listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+      } catch (Exception e) {
+        LOG.error("Cannot broadcast update request event");
+      }
     }
     return userRHDataDTO;
   }
@@ -276,8 +291,19 @@ public class RhAdministrationController {
       comment.setPostedTime(new Date());
       //obj.setType("log");
       commentService.save(comment);
-      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
+      try {
+        for (User rh : Utils.getRhManagers()){
+          if(!rh.getUserName().equals(currentUser)) managers.add(rh.getUserName());
+        }
+      } catch (Exception e) {
+
+      }
+
+      try {
+        listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+      } catch (Exception e) {
+        LOG.error("Cannot broadcast update request event");
+      }
     }
     return userRHDataDTO;
   }

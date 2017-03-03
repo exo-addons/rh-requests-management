@@ -43,6 +43,7 @@ import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
+import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.User;
@@ -95,6 +96,9 @@ public class RHRequestManagementController {
 
   @Inject
   RepositoryService repositoryService;
+
+  @Inject
+  ListenerService listenerService;
 
 
   @Inject
@@ -284,6 +288,7 @@ public class RHRequestManagementController {
     }
     vr.setSubstitute(substitutes);
     vr=vacationRequestService.save(vr,true);
+
     obj.setVacationRequestDTO(vr);
     for (String manager : obj.getManagers()){
       ValidatorDTO val_=new ValidatorDTO();
@@ -296,8 +301,11 @@ public class RHRequestManagementController {
     if (obj.getEXoCalendarId()!=""){
       shareCalendar_(vr,obj.getEXoCalendarId());
     }
-    NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestCreatedPlugin.REQUEST, obj);
-    ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestCreatedPlugin.ID))).execute(ctx);
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestCreation", "", obj);
+    } catch (Exception e) {
+     log.error("Cannot broadcast request creation event");
+    }
     return getVacationRequestsOfCurrentUser(null);
   }
 
@@ -353,13 +361,24 @@ public class RHRequestManagementController {
     for(ValidatorDTO validator :validatorService.getValidatorsByValidatorUserIdandRequestId(currentUser,obj.getId())){
       validator.setReply(DECLINED);
       validatorService.save(validator);
-      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestRepliedPlugin.VALIDATOR, validator);
-      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestRepliedPlugin.ID))).execute(ctx);
+      try {
+        listenerService.broadcast("exo.hrmanagement.requestReply", "", validator);
+      } catch (Exception e) {
+        log.error("Cannot broadcast request reply event");
+      }
     }
     obj.setStatus(DECLINED);
     vacationRequestService.save(obj,false);
-    NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj);
-    ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
+    Set<String> managers = new HashSet<String>();
+    for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
+      managers.add(validator.getUserId());
+    }
+
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+    } catch (Exception e) {
+      log.error("Cannot broadcast request reply event");
+    }
     return obj;
   }
 
@@ -376,8 +395,11 @@ public class RHRequestManagementController {
       if(validator.getValidatorUserId().equals(currentUser)){
         validator.setReply(APPROVED);
         validatorService.save(validator);
-        NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestRepliedPlugin.VALIDATOR, validator);
-        ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestRepliedPlugin.ID))).execute(ctx);
+        try {
+          listenerService.broadcast("exo.hrmanagement.requestReply", "", validator);
+        } catch (Exception e) {
+          log.error("Cannot broadcast request reply event");
+        }
       }else{
         if (validator.getReply().equals(DECLINED)) declined=true;
         if (validator.getReply().equals(PENDING)) validated=false;
@@ -394,8 +416,12 @@ public class RHRequestManagementController {
      comment.setPostedTime(new Date());
      comment.setCommentType("log");
      commentService.save(comment);
-     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
+     try {
+       listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+     } catch (Exception e) {
+       log.error("Cannot broadcast update request event");
+     }
+
    }else if(validated){
      obj.setStatus(APPROVED);
      vacationRequestService.save(obj,false);
@@ -413,8 +439,11 @@ public class RHRequestManagementController {
      } catch (Exception e) {
 
      }
-     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(RequestStatusChangedPlugin.REQUEST, obj).append(RequestStatusChangedPlugin.MANAGERS, managers);
-     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(RequestStatusChangedPlugin.ID))).execute(ctx);
+     try {
+       listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+     } catch (Exception e) {
+       log.error("Cannot broadcast update request event");
+     }
    }
    return obj;
   }

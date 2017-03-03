@@ -126,6 +126,20 @@ public class UserDataService {
   }
 
 
+
+  public List<UserRHDataDTO> getAllRhData(int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getAllUsersRhData - Parameter 'offset' must be positive");
+    }
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getAllUsersRhData(offset, limit)) {
+        dtos.add(convert(entity));
+      }
+
+    return dtos;
+  }
+
+
   private UserRHDataEntity convert(UserRHDataDTO dto) {
     UserRHDataEntity entity = new UserRHDataEntity();
     entity.setId(dto.getId());

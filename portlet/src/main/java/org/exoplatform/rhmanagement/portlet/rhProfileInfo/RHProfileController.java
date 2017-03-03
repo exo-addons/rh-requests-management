@@ -12,36 +12,19 @@ import juzu.Resource;
 import juzu.Response;
 import juzu.SessionScoped;
 import juzu.View;
-import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
-
-import org.exoplatform.commons.api.notification.NotificationContext;
-import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
-import org.exoplatform.commons.notification.impl.NotificationContextImpl;
-import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.RequestNavigationData;
 import org.exoplatform.rhmanagement.dto.*;
-import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin;
-import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
-import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
-import org.exoplatform.rhmanagement.services.CommentService;
 import org.exoplatform.rhmanagement.services.UserDataService;
-import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.common.router.ExoRouter;
-import org.exoplatform.social.core.identity.model.Identity;
-import org.exoplatform.social.core.identity.model.Profile;
-import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
-import org.exoplatform.social.core.manager.ActivityManager;
 import org.exoplatform.social.core.manager.IdentityManager;
-import org.exoplatform.social.core.profile.ProfileFilter;
-import org.exoplatform.social.core.space.spi.SpaceService;
+
 
 @SessionScoped
 public class RHProfileController {

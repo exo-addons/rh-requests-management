@@ -7,6 +7,7 @@
         @Binding(value = RepositoryService.class),
         @Binding(value = ValidatorService.class),
         @Binding(value = CommentService.class),
+        @Binding(value = ListenerService.class),
         @Binding(value = VacationRequestService.class)})
 @Scripts({
     @Script(id = "jQueryUI", value = "js/lib/jquery-ui.js"),
@@ -43,6 +44,7 @@ import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.social.core.manager.IdentityManager;
 

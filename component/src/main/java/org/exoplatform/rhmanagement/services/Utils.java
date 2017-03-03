@@ -1,9 +1,14 @@
 package org.exoplatform.rhmanagement.services;
 
 import org.apache.commons.fileupload.FileItem;
+import org.exoplatform.calendar.service.CalendarService;
+import org.exoplatform.calendar.service.CalendarSetting;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.commons.utils.ListAccess;
+import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.PortalContainer;
+import org.exoplatform.portal.mop.SiteKey;
+import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
@@ -14,10 +19,15 @@ import org.exoplatform.services.organization.UserHandler;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.social.core.manager.RelationshipManager;
+import org.exoplatform.web.controller.router.Router;
 
 import javax.jcr.Node;
 import javax.jcr.Session;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Medamine on 14/02/2017.
@@ -27,7 +37,7 @@ public class Utils {
     private static Log log = ExoLogger.getLogger(Utils.class);
 
     public static void saveFile(FileItem item, String typeFolder, String parentNode){
-        RepositoryService repositoryService = (RepositoryService) PortalContainer.getInstance().getComponentInstanceOfType(RepositoryService.class);
+        RepositoryService repositoryService = CommonsUtils.getService(RepositoryService.class);
         SessionProvider sessionProvider = SessionProvider.createSystemProvider();
         try {
             Session session = sessionProvider.getSession("collaboration",
@@ -107,6 +117,34 @@ public class Utils {
             log.error(" ERROR get manager ",e);
             return null;
         }
+    }
+
+    public static String formatDate(Date date, TimeZone timezone) {
+        if (date == null) {
+            return null;
+        }
+
+        Calendar today = Calendar.getInstance(timezone);
+        Calendar cal = Calendar.getInstance(timezone);
+        cal.setTime(date);
+        String format = "MMM dd yyyy";
+        if (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+            format = "MMM dd";
+        }
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        df.setTimeZone(timezone);
+        return df.format(date);
+    }
+
+    public static TimeZone getUserTimezone(String username) {
+        try {
+            CalendarService calService=CommonsUtils.getService(CalendarService.class);
+            CalendarSetting setting = calService.getCalendarSetting(username);
+            return TimeZone.getTimeZone(setting.getTimeZone());
+        } catch (Exception e) {
+            log.error("Can't retrieve timezone", e);
+        }
+        return null;
     }
 
 }

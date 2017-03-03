@@ -7,6 +7,7 @@
         @Binding(value = CalendarService.class),
         @Binding(value = RepositoryService.class),
         @Binding(value = ExtendedCalendarService.class),
+        @Binding(value = ListenerService.class),
         @Binding(value = ActivityManager.class)
 })
 @Scripts({
@@ -49,6 +50,7 @@ import org.exoplatform.calendar.service.ExtendedCalendarService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.social.core.manager.ActivityManager;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.social.core.space.spi.SpaceService;
