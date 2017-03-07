@@ -77,4 +77,33 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         }else{
         $("#fromDate").addClass("ng-invalid");}
     });
+
+
+    $( "#daysNumberHollidays, #daysNumberSick" ).on( "change", function() {
+            if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
+                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+            }else{
+                $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
+            }
+    });
+
+
+
+    $("#saveVacationRequest").click(function(){
+        if($("#toDate").val() != ""){
+            $("#toDate").removeClass("ng-invalid");
+        }else{
+            $("#toDate").addClass("ng-invalid");}
+
+        if($("#fromDate").val() != ""){
+            $("#fromDate").removeClass("ng-invalid");
+        }else{
+        $("#fromDate").addClass("ng-invalid");}
+
+        if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
+            $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+        }else{
+            $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
+        }
+    });
 });

@@ -199,12 +199,13 @@
             <div id="left_col" class="uiBox" ng-show="showList || showForm"
                  ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails , 'displayNone': showFullReq}">
                 <!--<div id="myCalendar" ng-show="showCal"></div>-->
-                <div id="resultMsgLeft_col" ng-show="showAlert"
-                     class="result-message alert {{resultMessageClass}}">
-                    <i class="{{resultMessageClassExt}}"></i>{{resultMessage}}
-                </div>
+
 
                 <div class="vacationRequest-container" ng-show="showForm" ng-class="{ 'fixed': showCal }">
+                    <div id="resultMsgLeft_col" ng-show="showAlert"
+                         class="result-message alert {{resultMessageClass}}">
+                        <i class="{{resultMessageClassExt}}"></i>{{resultMessage}}
+                    </div>
                     <!--<a class="actionIcon close-vacationRequest" ng-click="showForm = false">-->
                     <!--<i class="uiIconClose"></i>-->
                     <!--</a>-->
@@ -309,7 +310,7 @@
                             <div id="vacationRequestSaveAs"
                                  class="control-group form-horizontal {{vacationRequestNameClass}}">
                                 <button type="button" class="btn" ng-click="showForm = false">{{i18n.cancel}}</button>
-                                <button type="button" class="btn btn-primary"
+                                <button type="button" class="btn btn-primary" id="saveVacationRequest"
                                         ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
                                 </button>
 
