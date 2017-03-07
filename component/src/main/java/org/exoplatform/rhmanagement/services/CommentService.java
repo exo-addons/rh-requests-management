@@ -65,11 +65,11 @@ public class CommentService {
     commentDAO.delete(convert(entity));
   }
 
-  public List<CommentDTO> getCommentsByRequestId(long id, int offset, int limit) {
+  public List<CommentDTO> getCommentsByRequestId(long id, String commentType, int offset, int limit) {
     if (offset < 0) {
       throw new IllegalArgumentException("Method getCommentsByRequestID - Parameter 'offset' must be positive");
     }
-    List<CommentEntity> entities = commentDAO.getCommentsByRequestId(id, offset, limit);
+    List<CommentEntity> entities = commentDAO.getCommentsByRequestId(id,commentType, offset, limit);
     List<CommentDTO> dtos = new ArrayList<CommentDTO>();
     for (CommentEntity entity : entities) {
       dtos.add(convert(entity));
@@ -77,8 +77,9 @@ public class CommentService {
     return dtos;
   }
 
-  public long getCommentsByRequestIdCount(Long id) {
-    return commentDAO.getCommentsByRequestIdCount(id);
+
+  public long getCommentsByRequestIdCount(Long id, String commentType) {
+    return commentDAO.getCommentsByRequestIdCount(id, commentType);
   }
 
   private CommentEntity convert(CommentDTO dto) {
@@ -88,6 +89,7 @@ public class CommentService {
     entity.setPostedTime(dto.getPostedTime());
     entity.setRequestId(dto.getRequestId());
     entity.setCommentText(dto.getCommentText());
+    entity.setCommentType(dto.getCommentType());
     return entity;
   }
 
@@ -98,7 +100,7 @@ public class CommentService {
     dto.setPostedTime(entity.getPostedTime());
     dto.setRequestId(entity.getRequestId());
     dto.setCommentText(entity.getCommentText());
-
+    dto.setCommentType(entity.getCommentType());
     return dto;
   }
 

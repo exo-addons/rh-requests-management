@@ -9,7 +9,9 @@
 	  <uri>rh-management</uri>
 	  <name>rh-management</name>
 	  <label>HR Management</label>
+<!--
       <visibility>HIDDEN</visibility>
+-->
 	  <page-reference>portal::intranet::rh-management</page-reference>
     </node>
 

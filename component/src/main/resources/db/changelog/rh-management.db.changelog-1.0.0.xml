@@ -81,6 +81,15 @@
     </createTable>
 
 
+    <createTable tableName="REL_EMP_MANAGER" >
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="USER_ID" type="NVARCHAR(50)"></column>
+      <column name="MANAGER_ID" type="NVARCHAR(50)"></column>
+      <column name="ROLE" type="NVARCHAR(50)"></column>
+    </createTable>
+
     <modifySql dbms="mysql">
       <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>

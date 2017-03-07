@@ -35,6 +35,18 @@ import java.util.TimeZone;
 public class Utils {
 
     private static Log log = ExoLogger.getLogger(Utils.class);
+    private final static String HR_MANAGERS_GROUP = "exo.hrmanagement.managers.group";
+    private final static String HR_MANAGERS_GROUP_DEFAULT = "/rh-managers";
+
+    public static final String ALL="all";
+    public static final String APPROVED="approved";
+    public static final String DECLINED="declined";
+    public static final String PENDING="pending";
+    public static final String CANCELED="canceled";
+    public static final String VALIDATED="validated";
+    public static final String COMMENT="comment";
+    public static final String HISTORY="history";
+
 
     public static void saveFile(FileItem item, String typeFolder, String parentNode){
         RepositoryService repositoryService = CommonsUtils.getService(RepositoryService.class);
@@ -104,7 +116,11 @@ public class Utils {
     }
 
     public static User[]  getRhManagers(){
-        String groupId = "/rh-managers";
+
+        String groupId = System.getProperty(HR_MANAGERS_GROUP);
+        if(groupId==null){
+            groupId =HR_MANAGERS_GROUP_DEFAULT;
+        }
         OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
         UserHandler userHandler = organizationService.getUserHandler();
         ListAccess<User> allManagers=null;

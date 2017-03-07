@@ -110,6 +110,7 @@
     </component-plugin>
   </external-component-plugins>
 
+<!--
   <external-component-plugins>
     <target-component>org.exoplatform.services.scheduler.JobSchedulerService</target-component>
     <component-plugin>
@@ -124,11 +125,12 @@
           <property name="jobName" value="NotificationsJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.NotificationsJob"/>
-          <property name="expression" value="0 0 0 1 JAN ? *"/>
+          <property name="expression" value="0 0 0 ? * * *"/>
         </properties-param>
       </init-params>
     </component-plugin>
   </external-component-plugins>
+-->
 
 
   <external-component-plugins>

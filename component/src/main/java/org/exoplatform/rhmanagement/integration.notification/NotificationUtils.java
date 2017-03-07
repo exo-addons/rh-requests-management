@@ -35,18 +35,4 @@ public class NotificationUtils {
   public final static String TO_DATE = "to";
   public final static String ACTIVITY_ID = "activityId";
 
-/*  public static final ArgumentLiteral<Set> MENTIONED = new ArgumentLiteral<Set>(Set.class, "mentioned");
-  public static final ArgumentLiteral<Set> RECEIVERS = new ArgumentLiteral<Set>(Set.class, "receivers");
-  public static final String TASKS = "tasks";
-  public final static String TASK_TITLE = "taskName";
-  public final static String TASK_DESCRIPTION = "taskDescription";
-  public final static String DUE_DATE = "dueDate";
-  public final static String PROJECT_NAME = "projectName";
-  public final static String COUNT = "count";
-
-
-
-
-  public static final String PROJECT_URL = "projectUrl";*/
-  
 }

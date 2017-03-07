@@ -26,6 +26,7 @@ import juzu.template.Template;
 import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
 import org.exoplatform.calendar.model.Event;
+import org.exoplatform.calendar.model.query.CalendarQuery;
 import org.exoplatform.calendar.service.CalendarEvent;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.ExtendedCalendarService;
@@ -107,11 +108,10 @@ public class RHRequestManagementController {
 
   private String     bundleString;
 
-  private final String APPROVED="approved";
-  private final String DECLINED="declined";
-  private final String PENDING="pending";
-
   private final String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
+
+  private final static String EMPLOYEES_SPACE = "exo.hrmanagement.employees.space";
+  private final static String EMPLOYEES_SPACE_DEFAULT = "exo_employees";
 
 
   @View
@@ -140,7 +140,9 @@ public class RHRequestManagementController {
   public Response getUserCalendars() {
     JSONArray cals=new JSONArray();
     try {
-      for (org.exoplatform.calendar.service.Calendar cal: calendarService.getUserCalendars(currentUser,true)){
+      CalendarQuery query = new CalendarQuery();
+      query.setIdentity(ConversationState.getCurrent().getIdentity());
+      for (Calendar cal: xCalendarService.getCalendarHandler().findCalendars(query)){
         JSONObject data = new JSONObject();
         data.put("calId",cal.getId());
         data.put("calName",cal.getName());
@@ -161,9 +163,14 @@ public class RHRequestManagementController {
   public List<VacationRequestDTO> getVacationRequestsOfCurrentUser(String status) {
     try {
       if (status != null) {
-        return vacationRequestService.getVacationRequestsByUserIdAndStatus(currentUser,status,0,100);
+        if(status.equals(Utils.ALL)){
+          return vacationRequestService.getVacationRequestsByUserId(currentUser,0,100);
+        }else{
+          return vacationRequestService.getVacationRequestsByUserIdAndStatus(currentUser,status,0,100);
+        }
+
        }else{
-        return vacationRequestService.getVacationRequestsByUserId(currentUser,0,100);
+        return vacationRequestService.getActiveVacationRequestsByUserId(currentUser,0,100);
       }
 
     } catch (Throwable e) {
@@ -179,19 +186,31 @@ public class RHRequestManagementController {
   public List<VacationRequestDTO> getVacationRequestsForCurrentValidator(String status) {
     List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
     try {
-      for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
-        VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
-       if(requestDTO!=null) {
-         if(status!=null&&!status.equals(requestDTO.getStatus())) continue;
-         dtos.add(requestDTO);
-       }
+      if(status!=null){
+        for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
+          VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
+          if(requestDTO!=null) {
+            if(!status.equals(Utils.ALL)&&!status.equals(requestDTO.getStatus())) continue;
+            dtos.add(requestDTO);
+          }
+        }
+      }else{
+        for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
+          VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
+          if(requestDTO!=null) {
+            if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())) continue;
+            dtos.add(requestDTO);
+          }
+        }
       }
+
     } catch (Throwable e) {
       log.error(e);
       return null;
     }
     return dtos;
   }
+
 
   @Ajax
   @juzu.Resource
@@ -212,15 +231,38 @@ public class RHRequestManagementController {
   @Jackson
   public List<CommentDTO> getComments(@Jackson VacationRequestDTO obj) {
     try {
-      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(),0,100);
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(), Utils.COMMENT,0,100);
       for (CommentDTO comment : comments){
-                Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
-                comment.setPosterName(profile.getFullName());
-              if(profile.getAvatarUrl()!=null){
-                comment.setPosterAvatar(profile.getAvatarUrl());
-                }else{
-                comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
-                }
+        Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
+        comment.setPosterName(profile.getFullName());
+        if(profile.getAvatarUrl()!=null){
+          comment.setPosterAvatar(profile.getAvatarUrl());
+        }else{
+          comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+        }
+      }
+      return comments;
+    } catch (Throwable e) {
+      log.error(e);
+      return null;
+    }
+  }
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<CommentDTO> getHistory(@Jackson VacationRequestDTO obj) {
+    try {
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(), Utils.HISTORY,0,100);
+      for (CommentDTO comment : comments){
+        Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
+        comment.setPosterName(profile.getFullName());
+        if(profile.getAvatarUrl()!=null){
+          comment.setPosterAvatar(profile.getAvatarUrl());
+        }else{
+          comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+        }
       }
       return comments;
     } catch (Throwable e) {
@@ -280,7 +322,7 @@ public class RHRequestManagementController {
     VacationRequestDTO vr=obj.getVacationRequestDTO();
     vr.setUserId(currentUser);
     vr.setUserFullName(identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile().getFullName());
-    vr.setStatus(PENDING);
+    vr.setStatus(Utils.PENDING);
     String substitutes="";
 
     for (String substitute : obj.getSubstitutes()){
@@ -295,7 +337,7 @@ public class RHRequestManagementController {
       val_.setRequestId(vr.getId());
       val_.setValidatorUserId(manager);
       val_.setUserId(currentUser);
-      val_.setReply(PENDING);
+      val_.setReply(Utils.PENDING);
      validatorService.save(val_);
     }
     if (obj.getEXoCalendarId()!=""){
@@ -317,7 +359,7 @@ public class RHRequestManagementController {
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
-    obj.setCommentType("comment");
+    obj.setCommentType(Utils.COMMENT);
     commentService.save(obj);
   }
 
@@ -346,7 +388,10 @@ public class RHRequestManagementController {
     for(ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
       validatorService.remove(validator);
     }
-    for(CommentDTO comment :commentService.getCommentsByRequestId(obj.getId(),0,0)){
+    for(CommentDTO comment :commentService.getCommentsByRequestId(obj.getId(),Utils.COMMENT,0,0)){
+      commentService.remove(comment);
+    }
+    for(CommentDTO comment :commentService.getCommentsByRequestId(obj.getId(),Utils.HISTORY,0,0)){
       commentService.remove(comment);
     }
     vacationRequestService.remove(obj);
@@ -359,7 +404,7 @@ public class RHRequestManagementController {
   @Jackson
   public VacationRequestDTO declineRequest(@Jackson VacationRequestDTO obj) {
     for(ValidatorDTO validator :validatorService.getValidatorsByValidatorUserIdandRequestId(currentUser,obj.getId())){
-      validator.setReply(DECLINED);
+      validator.setReply(Utils.DECLINED);
       validatorService.save(validator);
       try {
         listenerService.broadcast("exo.hrmanagement.requestReply", "", validator);
@@ -367,7 +412,7 @@ public class RHRequestManagementController {
         log.error("Cannot broadcast request reply event");
       }
     }
-    obj.setStatus(DECLINED);
+    obj.setStatus(Utils.DECLINED);
     vacationRequestService.save(obj,false);
     Set<String> managers = new HashSet<String>();
     for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
@@ -393,7 +438,7 @@ public class RHRequestManagementController {
     Set<String> managers = new HashSet<String>();
     for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
       if(validator.getValidatorUserId().equals(currentUser)){
-        validator.setReply(APPROVED);
+        validator.setReply(Utils.APPROVED);
         validatorService.save(validator);
         try {
           listenerService.broadcast("exo.hrmanagement.requestReply", "", validator);
@@ -401,20 +446,20 @@ public class RHRequestManagementController {
           log.error("Cannot broadcast request reply event");
         }
       }else{
-        if (validator.getReply().equals(DECLINED)) declined=true;
-        if (validator.getReply().equals(PENDING)) validated=false;
+        if (validator.getReply().equals(Utils.DECLINED)) declined=true;
+        if (validator.getReply().equals(Utils.PENDING)) validated=false;
       }
       managers.add(validator.getUserId());
     }
    if(declined) {
-      obj.setStatus(DECLINED);
+      obj.setStatus(Utils.DECLINED);
       vacationRequestService.save(obj,false);
      CommentDTO comment=new CommentDTO();
      comment.setRequestId(obj.getId());
      comment.setCommentText("requestDeclined");
      comment.setPosterId(currentUser);
      comment.setPostedTime(new Date());
-     comment.setCommentType("log");
+     comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
        listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
@@ -423,14 +468,14 @@ public class RHRequestManagementController {
      }
 
    }else if(validated){
-     obj.setStatus(APPROVED);
+     obj.setStatus(Utils.APPROVED);
      vacationRequestService.save(obj,false);
      CommentDTO comment=new CommentDTO();
      comment.setRequestId(obj.getId());
      comment.setCommentText("requestApproved");
      comment.setPosterId(currentUser);
      comment.setPostedTime(new Date());
-     comment.setCommentType("log");
+     comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
        for (User rh : Utils.getRhManagers()){
@@ -494,8 +539,12 @@ public class RHRequestManagementController {
       }else{
         data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
-
       data.set("currentUserName",profile.getFullName());
+      String employeesSpace = System.getProperty(EMPLOYEES_SPACE);
+      if(employeesSpace==null){
+        employeesSpace =EMPLOYEES_SPACE_DEFAULT;
+      }
+      data.set("employeesSpace",employeesSpace);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
       if (userRHDataDTO != null) {
         data.set("sickBalance",userRHDataDTO.getNbrSickdays());
@@ -559,7 +608,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
         comment.setCommentText("attachementAdded");
         comment.setPosterId(currentUser);
         comment.setPostedTime(new Date());
-        comment.setCommentType("log");
+        comment.setCommentType(Utils.HISTORY);
         commentService.save(comment);
           return Response.ok();
     } else {
@@ -580,7 +629,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     comment.setCommentText("attachementDeleted");
     comment.setPosterId(currentUser);
     comment.setPostedTime(new Date());
-    comment.setCommentType("log");
+    comment.setCommentType(Utils.HISTORY);
     commentService.save(comment);
       return Response.ok();
 

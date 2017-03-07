@@ -6,6 +6,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
         $scope.currentUser="";
+        $scope.employeesSpace="";
         $scope.currentUserAvatar="";
         $scope.currentUserName="";
         $scope.sickBalance="";
@@ -16,6 +17,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vacationRequestsToValidate = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
+        $scope.history = [];
         $scope.userCalendars = [];
         $scope.userCalendarId = "";
         $scope.managerCalendarId = "";
@@ -101,6 +103,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
                 $scope.completeCurrentUser = data.data;
                 $scope.currentUser=data.data.currentUser;
+                $scope.employeesSpace=data.data.employeesSpace
                 $scope.currentUserAvatar=data.data.currentUserAvatar;
                 $scope.currentUserName=data.data.currentUserName;
                 $scope.sickBalance=data.data.sickBalance;
@@ -108,7 +111,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId=data.data.hrId;
                 $scope.insuranceId=data.data.insuranceId;
                 $scope.socialSecNumber=data.data.socialSecNumber;
-                var rsetUrl="/rest/social/people/suggest.json?currentUser="+$scope.currentUser;
+                var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
                 deferred.resolve(data);
@@ -285,6 +288,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.loadSubstitues(vacationRequest);
             $scope.loadAttachments(vacationRequest);
             $scope.loadComments(vacationRequest);
+            $scope.loadHistory(vacationRequest);
             $scope.showDetails = true;
         };
 
@@ -317,7 +321,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.loadManagers(data.data);
                 $scope.loadSubstitues(data.data);
                 $scope.loadComments(data.data);
-
+                $scope.loadHistory(data.data);
 
                 $scope.showResume = true;
 
@@ -384,6 +388,22 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.getComments')
             }).then(function successCallback(data) {
                 $scope.comments = data.data;
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        };
+
+        $scope.loadHistory = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhContainer.jzURL('RHRequestManagementController.getHistory')
+            }).then(function successCallback(data) {
+                $scope.history = data.data;
                 $scope.showAlert = false;
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
@@ -532,12 +552,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 },
                 url : rhContainer.jzURL('RHRequestManagementController.getRequestAttachements')
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
+                $scope.showAlert = false;
                 $scope.attachements = data.data;
-
-                $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });

@@ -32,8 +32,8 @@ import java.util.Date;
 @ExoEntity
 @Table(name = "COMMENT")
 @NamedQueries({
-        @NamedQuery(name = "commentEntity.findByRequestId", query = "SELECT a FROM HRCommentEntity a where a.requestId = :requestId"),
-        @NamedQuery(name = "commentEntity.count", query = "SELECT count(a.id) FROM HRCommentEntity a  where a.requestId = :requestId") })
+        @NamedQuery(name = "commentEntity.findByRequestId", query = "SELECT a FROM HRCommentEntity a where a.requestId = :requestId and a.commentType = :commentType"),
+        @NamedQuery(name = "commentEntity.count", query = "SELECT count(a.id) FROM HRCommentEntity a  where a.requestId = :requestId and a.commentType = :commentType") })
 @Data
 public class CommentEntity {
 

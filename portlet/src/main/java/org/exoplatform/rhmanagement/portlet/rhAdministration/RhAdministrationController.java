@@ -501,7 +501,7 @@ public class RhAdministrationController {
   @Jackson
   public List<CommentDTO> getComments(@Jackson VacationRequestDTO obj) {
     try {
-      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(),0,100);
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(), Utils.COMMENT,0,100);
       for (CommentDTO comment : comments){
         Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
         comment.setPosterName(profile.getFullName());

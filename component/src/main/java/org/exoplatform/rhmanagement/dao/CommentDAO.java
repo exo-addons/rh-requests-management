@@ -33,17 +33,19 @@ import java.util.List;
 public class CommentDAO extends GenericDAOJPAImpl<CommentEntity, String> {
     private static final Logger LOG = LoggerFactory.getLogger(CommentDAO.class);
 
-    public List<CommentEntity> getCommentsByRequestId(long id, int offset, int limit) {
+    public List<CommentEntity> getCommentsByRequestId(long id, String commentType, int offset, int limit) {
         try {
             if (offset >= 0 && limit > 0) {
                 return getEntityManager().createNamedQuery("commentEntity.findByRequestId", CommentEntity.class)
                         .setParameter("requestId", id)
+                        .setParameter("commentType", commentType)
                         .setFirstResult(offset)
                         .setMaxResults(limit)
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("commentEntity.findByRequestId", CommentEntity.class)
                         .setParameter("requestId", id)
+                        .setParameter("commentType", commentType)
                         .getResultList();
             }
         } catch (Exception e) {
@@ -52,14 +54,18 @@ public class CommentDAO extends GenericDAOJPAImpl<CommentEntity, String> {
         }
     }
 
-    public  long getCommentsByRequestIdCount(long id) {
+    public  long getCommentsByRequestIdCount(long id, String commentType) {
         try {
-            return getEntityManager().createNamedQuery("commentEntity.count", Long.class).setParameter("requesId", id).getSingleResult();
+            return getEntityManager().createNamedQuery("commentEntity.count", Long.class)
+                    .setParameter("requesId", id)
+                    .setParameter("commentType", commentType)
+                    .getSingleResult();
         } catch (Exception e) {
             LOG.warn("Exception while attempting to get comments count.", e);
             throw e;
         }
     }
+
 
 
 }

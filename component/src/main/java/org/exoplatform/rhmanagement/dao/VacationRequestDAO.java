@@ -101,6 +101,25 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
     }
 
 
+    public List<VacationRequestEntity> getActiveVacationRequestsByUserId(String userId, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByUserId", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("userId", userId)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByUserId", VacationRequestEntity.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
     public List<VacationRequestEntity> getVacationRequestbyId(long id) {
         try {
             return getEntityManager().createNamedQuery("vacatioRequestEntity.findById", VacationRequestEntity.class)

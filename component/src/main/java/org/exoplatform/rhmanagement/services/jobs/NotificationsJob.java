@@ -1,14 +1,24 @@
 package org.exoplatform.rhmanagement.services.jobs;
 
+import org.exoplatform.commons.api.notification.NotificationContext;
+import org.exoplatform.commons.api.notification.model.PluginKey;
+import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
+import org.exoplatform.rhmanagement.integration.notification.HRNotificationPlugin;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -22,14 +32,39 @@ public class NotificationsJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         LOG.info("==================Notifications Job started==================");
-        Long start = System.currentTimeMillis();
-        //userDataService = CommonsUtils.getService(UserDataService.class);
+       Long start = System.currentTimeMillis();
+     /*    IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
         List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
+        Calendar now= Calendar.getInstance();
         for(UserRHDataDTO employee : employees){
+            if(employee.getBDay()!=null){
+            Calendar cal=Calendar.getInstance().setTime(employee.getBDay());
+            cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
+                int rem=daysBetween(cal,now);
+                if(rem<3){
+                    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
+                    String message= "The Birthday of "+userProfile.getFullName()+"will be in "+rem+" days";
+                    NotificationContext ctx = NotificationContextImpl.cloneInstance().append(HRNotificationPlugin.EMPLOYEE, employee).append(HRNotificationPlugin.NOTIF_TYPE, message);
+                    ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(HRNotificationPlugin.ID))).execute(ctx);
+                }
+            }
+            if(employee.getContractStartDate()!=null){
+                Calendar cal=Calendar.getInstance().setTime(employee.getContractStartDate());
+                cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
+                int rem=daysBetween(cal,now);
+            if(rem<10){
+                Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
+                String message= "The Anniversary of contract of "+userProfile.getFullName()+"will be in "+rem+" days";
+                NotificationContext ctx = NotificationContextImpl.cloneInstance().append(HRNotificationPlugin.EMPLOYEE, employee).append(HRNotificationPlugin.NOTIF_TYPE, message);
+                ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(HRNotificationPlugin.ID))).execute(ctx);
+            }}
 
-        }
+
+        }*/
         LOG.info("=============================== Notifications Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");
 
     }
-
+    public int daysBetween(Calendar d1, Calendar d2){
+        return (int)( (d2.getTime().getTime() - d1.getTime().getTime()) / (1000 * 60 * 60 * 24));
+    }
 }
