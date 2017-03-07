@@ -31,6 +31,8 @@ import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.commons.utils.HTMLEntityEncoder;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.services.Utils;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
@@ -41,6 +43,8 @@ import org.exoplatform.webui.utils.TimeConvertUtils;
 import org.gatein.common.text.EntityEncoder;
 
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @TemplateConfigs(
@@ -51,6 +55,10 @@ import java.util.*;
    }
 )
 public class WebTemplateProvider extends TemplateProvider {
+  //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
+  // --- Create formatter
+  protected DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+  protected static Log log = ExoLogger.getLogger(MailTemplateProvider.class);
   
   public WebTemplateProvider(InitParams initParams) {
     super(initParams);
@@ -71,18 +79,6 @@ public class WebTemplateProvider extends TemplateProvider {
       
       String creator = notification.getValueOwnerParameter(NotificationUtils.CREATOR);
       String vacationUrl = notification.getValueOwnerParameter(NotificationUtils.VACATION_URL);
-
-      Date fromDate = null;
-      String tmpD = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
-      if (tmpD != null) {
-        fromDate = new Date(Long.parseLong(tmpD));
-      }
-
-      Date toDate = null;
-       tmpD = notification.getValueOwnerParameter(NotificationUtils.TO_DATE);
-      if (toDate != null) {
-        toDate = new Date(Long.parseLong(tmpD));
-      }
       
       EntityEncoder encoder = HTMLEntityEncoder.getInstance();
       Identity identity = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
@@ -92,9 +88,29 @@ public class WebTemplateProvider extends TemplateProvider {
       templateContext.put("PROFILE_URL", LinkProviderUtils.getRedirectUrl("user", identity.getRemoteId()));
       //
       templateContext.put("VACATION_URL", vacationUrl);
-      templateContext.put("FROM_DATE", Utils.formatDate(fromDate, Utils.getUserTimezone(notification.getTo())));
-      templateContext.put("FROM_TO", Utils.formatDate(toDate, Utils.getUserTimezone(notification.getTo())));
 
+      //--- Get Date From :
+      String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
+      if (fromDate != null) {
+        Date theDate = new Date();
+        try {
+          theDate = (Date)formatter.parse(fromDate);
+        } catch (Exception e){
+          log.error("Error when parsing FROM_DATE var {}",fromDate, e);
+        }
+        templateContext.put("FROM_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+      }
+      //--- Get Date To : underlying levels : Wed Mar 15 01:00:00 CET 2017
+      String toDate = notification.getValueOwnerParameter(NotificationUtils.TO_DATE);
+      if (toDate != null) {
+        Date theDate = new Date();
+        try {
+          theDate = (Date)formatter.parse(toDate);
+        } catch (Exception e){
+          log.error("Error when parsing TO_DATE var {}",fromDate, e);
+        }
+        templateContext.put("FROM_TO", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+      }
       //
       templateContext.put("READ", Boolean.valueOf(notification.getValueOwnerParameter(NotificationMessageUtils.READ_PORPERTY.getKey())) ? "read" : "unread");
       templateContext.put("NOTIFICATION_ID", notification.getId());      
