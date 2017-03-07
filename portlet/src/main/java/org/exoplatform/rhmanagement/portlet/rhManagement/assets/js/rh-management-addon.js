@@ -62,11 +62,19 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
 //    $( "#fromDate, #toDate" ).datepicker();
     $( "#fromDate, #toDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
     $( "#toDate" ).on( "change", function() {
-        $("#toDate").attr("value", $("#toDate").val());
-        $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
+        if($("#toDate").val() != ""){
+            $("#toDate").removeClass("ng-invalid");
+            $("#toDate").attr("value", $("#toDate").val());
+            $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
+        }else{
+        $("#toDate").addClass("ng-invalid");}
     });
     $( "#fromDate" ).on( "change", function() {
-        $("#fromDate").attr("value", $("#fromDate").val());
-        $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
+        if($("#fromDate").val() != ""){
+            $("#fromDate").removeClass("ng-invalid");
+            $("#fromDate").attr("value", $("#fromDate").val());
+            $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
+        }else{
+        $("#fromDate").addClass("ng-invalid");}
     });
 });

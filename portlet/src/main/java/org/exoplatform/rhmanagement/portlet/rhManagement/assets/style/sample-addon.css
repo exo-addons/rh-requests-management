@@ -364,3 +364,5 @@ a.actionIcon.inline-block-hide.uploadicon {
 div#resultMessage {
     margin-left: 5px;
 }
+#resultMsgLeft_col{display: none}
+.vacationRequest-container.fixed #resultMsgLeft_col{display: block}

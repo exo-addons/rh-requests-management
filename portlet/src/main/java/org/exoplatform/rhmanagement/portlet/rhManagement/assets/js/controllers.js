@@ -198,15 +198,20 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
             if(($scope.newVacationRequest.type != "leave") && (!$scope.newVacationRequest.daysNumber)){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
+                $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
+                $("#toDate, #fromDate").removeClass("ng-invalid");
             }else if(($("#toDate").val() == "") || ($("#fromDate").val() == "")){
+                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.fromToDate, "error");
+                $("#toDate, #fromDate").addClass("ng-invalid");
             }else{
+                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+                $("#toDate, #fromDate").removeClass("ng-invalid");
                 $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();
                 $scope.newVacationRequest.toDate = new Date($("#toDate").val()).getTime();
 
                 var managers= $scope.getUsers("managers");
                 var substitutes= $scope.getUsers("substitutes");
-                $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
 
                 $scope.newVacationRequestWithManagers  = {
                     vacationRequestDTO : $scope.newVacationRequest,
@@ -272,6 +277,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.deleteRequest')
             }).then(function successCallback(data) {
                 $scope.myVacationRequests = data.data;
+                $scope.showForm = false;
                 $scope.showForm = false;
                 $scope.setResultMessage($scope.i18n.deleteRequest, "success");
                 $timeout(function() {
@@ -565,11 +571,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $http({
                 url : rhContainer.jzURL('RHRequestManagementController.deleteFile')+"&requestId="+$scope.vacationRequesttoShow.id+"&fileName="+fileName
             }).then(function successCallback(data) {
-                $scope.setResultMessage(data, "success");
                 $scope.attachements = $scope.loadAttachments($scope.vacationRequesttoShow);
-                $timeout(function() {
-                    $scope.setResultMessage("", "info")
-                }, 3000);
+
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
