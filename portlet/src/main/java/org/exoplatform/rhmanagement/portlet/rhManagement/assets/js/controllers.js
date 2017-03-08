@@ -78,6 +78,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.showList = true;
                 $scope.showDetails = true;
             }
+            $("#resultMessage").toggleClass("hide_alert");
             $text = $(".show-calender").html($text);
         }
 
@@ -207,6 +208,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }else{
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
+                $scope.showAlert=false;
                 $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();
                 $scope.newVacationRequest.toDate = new Date($("#toDate").val()).getTime();
 

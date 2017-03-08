@@ -146,7 +146,7 @@ input.requestEdit[readonly]{
     float: right;
     margin: 20px 20px 0 20px;
 }
-#submit {display: none}
+
 .addRequest{
         float: right;
         margin-top: -45px;

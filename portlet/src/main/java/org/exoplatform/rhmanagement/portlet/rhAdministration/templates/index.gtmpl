@@ -56,155 +56,13 @@
                         </div>
 
 
-                        <div class="uiContentBox clearfix row-fluid formContainer" ng-show="showAddForm">
-                            <div class="span4">
-                                <div class="ligne">
-                                    <img src="{{newUserDetails.avatar}}" class="avatar" alt=""/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.userFullName}}:</b>
-                                    <input type="text" name="name" class="requestEdit" value="{{newUserDetails.name}}"
-                                           readonly/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.email}}:</b>
-                                    <input type="email" name="email" class="requestEdit" value="{{newUserDetails.email}}"
-                                           readonly/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.jobTitle}}:</b>
-                                    <input type="text" name="jobTitle" class="requestEdit"
-                                           value="{{newUserDetails.jobTitle}}" readonly/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.gender}}:</b>
-                                    <input type="text" name="gende" class="requestEdit"
-                                           value="{{newUserDetails.gender}}" readonly/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.phone}}:</b>
-                                    <input type="tel" name="phone" class="requestEdit"
-                                           value="{{newUserDetails.phone}}" readonly/>
-                                </div>
 
-                            </div>
-                            <div class="span4">
-
-                                <div class="ligne">
-                                    <b>{{i18n.cin}}:</b>
-                                    <input type="number" name="cin" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.cin"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.holidaysBalance}}:</b>
-                                    <input type="number" name="holiday" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.nbrHolidays"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.sickBalance}}:</b>
-                                    <input type="number" name="nbrSickdays" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.nbrSickdays"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.socialSecNumber}}:</b>
-                                    <input type="text" name="socialSecNumber" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.socialSecNumber"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.hrId}}:</b>
-                                    <input type="text" name="hrId" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.hrId"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.bDay}}:</b>
-                                    <input type="text" name="bDay" id="bDay1" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.bDay"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.situation}}:</b>
-                                    <input type="text" name="situation" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.situation"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.nbChildren}}:</b>
-                                    <input type="number" name="nbChildren" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.nbChildren"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.team}}:</b>
-                                    <input type="text" name="team" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.team"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.address}}:</b>
-                                    <input type="text" name="address" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.address"/>
-                                </div>
-
-                            </div>
-                            <div class="span4">
-
-                                <div class="ligne">
-                                    <b>{{i18n.bankId}}:</b>
-                                    <input type="number" name="bankId" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.bankId"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.startDate}}:</b>
-                                    <input type="text" name="startDate" id="startDate1" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.startDate"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.leaveDate}}:</b>
-                                    <input type="text" name="leaveDate" id="leaveDate1" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.leaveDate"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.contract}}:</b>
-                                    <input type="text" name="contract" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.contract"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.contractStartDate}}:</b>
-                                    <input type="text" name="contractStartDate" id="contractStartDate1"
-                                           class="requestEdit"
-                                           ng-click="enableInput('#contractStartDate')"
-                                           ng-model="newUserDetails.hrData.contractStartDate"/>
-                                </div>
-                                <div class="ligne">
-                                    <b>{{i18n.contractEndDate}}:</b>
-                                    <input type="text" name="contractEndDate" id="contractEndDate1" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.contractEndDate"/>
-                                </div>
-
-                                <div class="ligne">
-                                    <b>{{i18n.insuranceId}}:</b>
-                                    <input type="text" name="insuranceId" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.insuranceId"/>
-                                </div>
-
-                                <div class="ligne">
-                                    <b>{{i18n.myeXoUrl}}:</b>
-                                    <input type="text" name="myeXoUrl" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.myeXoUrl"/>
-                                </div>
-
-                                <div class="ligne">
-                                    <b>{{i18n.others}}:</b>
-                                    <input type="text" name="others" class="requestEdit"
-                                           ng-model="newUserDetails.hrData.others"/>
-                                </div>
-
-                            </div>
-                            <input type="submit" class="btn btn-primary Submitbtn" value="Submit"
-                                   data-ng-click="saveUserHRData(newUserDetails)"/>
-                        </div>
 
 
                     </div>
 
 
-                    <table id="employeesTable" class="table uiGrid table-hover table-striped">
+                    <table id="employeesTable" class="table uiGrid table-hover table-striped" ng-show="!showAddForm">
                         <thead>
                         <tr>
                             <th><a href="#" ng-click="orderByField='title'; reverseSort = !reverseSort">{{i18n.userFullName}}
@@ -295,11 +153,11 @@
                 </div>
 
                 <!-- User's requests -->
-                <div id="requestsList" ng-hide="showEmployees">
+                <div id="requestsList" ng-show="showAddForm">
 
 
                     <div class="uiBox elementDetail">
-                        <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;" ng-click="showEmployees=true ">
+                        <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;" ng-click="showAddForm=false">
                             <i class="uiIconClose "></i>
                         </a>
                         <div class="uiContentBox clearfix row-fluid formContainer">
@@ -515,8 +373,8 @@
                                    data-ng-click="saveUserHRData(userDetails)"/>
                         </div>
                     </div>
-                    <br/>
-                    <table id="requestsTable " class="table uiGrid table-hover table-striped ">
+
+                    <table id="requestsTable" class="table uiGrid table-hover table-striped ">
                         <thead>
                         <tr>
                             <th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Id
@@ -759,7 +617,7 @@
                 </div>
 
 
-                <table id="requestsTable " class="table uiGrid table-hover table-striped ">
+                <table id="requestsTable" class="table uiGrid table-hover table-striped ">
                     <thead>
                     <tr>
                         <th><a href="# " ng-click="orderByField='title' ; reverseSort=! reverseSort ">Id
