@@ -157,7 +157,7 @@
 
 
                     <div class="uiBox elementDetail">
-                        <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;" ng-click="showAddForm=false">
+                        <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;" ng-click="closeFormAdd()">
                             <i class="uiIconClose "></i>
                         </a>
                         <div class="uiContentBox clearfix row-fluid formContainer">
@@ -197,14 +197,14 @@
 
                                 <div class="ligne">
                                     <b>{{i18n.cin}}:</b>
-                                    <input type="number" name="cin" class="requestEdit" id="cinEdit"
+                                    <input type="text" name="cin" class="requestEdit" id="cinEdit"
                                            ng-click="enableInput('#cinEdit')" ng-model="userDetails.hrData.cin"
                                            value="{{userDetails.hrData.cin}}" readonly/><i class="uiIconEdit"
                                                                                            ng-click="enableInput('#cinEdit')"></i>
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.holidaysBalance}}:</b>
-                                    <input type="number" name="holiday" class="requestEdit" id="holidayEdit"
+                                    <input type="text" name="holiday" class="requestEdit" id="holidayEdit"
                                            ng-click="enableInput('#holidayEdit')"
                                            ng-model="userDetails.hrData.nbrHolidays"
                                            value="{{userDetails.hrData.nbrHolidays}}" readonly/><i class="uiIconEdit"
@@ -212,7 +212,7 @@
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.sickBalance}}:</b>
-                                    <input type="number" name="nbrSickdays" class="requestEdit" id="nbrSickdaysEdit"
+                                    <input type="text" name="nbrSickdays" class="requestEdit" id="nbrSickdaysEdit"
                                            ng-click="enableInput('#nbrSickdaysEdit')"
                                            ng-model="userDetails.hrData.nbrSickdays"
                                            value="{{userDetails.hrData.nbrSickdays}}" readonly/><i class="uiIconEdit"
@@ -249,7 +249,7 @@
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.nbChildren}}:</b>
-                                    <input type="number" name="nbChildren" class="requestEdit" id="nbChildren"
+                                    <input type="text" name="nbChildren" class="requestEdit" id="nbChildren"
                                            ng-click="enableInput('#nbChildren')"
                                            ng-model="userDetails.hrData.nbChildren"
                                            value="{{userDetails.hrData.nbChildren}}" readonly/><i class="uiIconEdit"
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.bankId}}:</b>
-                                    <input type="number" name="bankId" class="requestEdit" id="bankId"
+                                    <input type="text" name="bankId" class="requestEdit" id="bankId"
                                            ng-click="enableInput('#bankId')" ng-model="userDetails.hrData.bankId"
                                            value="{{userDetails.hrData.bankId}}" readonly/><i class="uiIconEdit"
                                                                                               ng-click="enableInput('#bankId')"></i>
@@ -710,5 +710,4 @@
 
         </div>
     </div>
-</div>
 </div>

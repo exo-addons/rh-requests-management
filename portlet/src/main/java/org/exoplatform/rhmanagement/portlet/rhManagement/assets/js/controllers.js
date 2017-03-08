@@ -25,10 +25,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vrsubs = [];
         $scope.calEvents = [];
         $scope.attachements = [];
-        $scope.showForm = true;
+        $scope.showForm = false;
         $scope.showDetails = false;
         $scope.showResume = false;
-        $scope.showList = false;
+        $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
         $scope.showHollidays = false;
@@ -535,8 +535,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;
-                        console.log("attachement :");
-                        console.log(file);
+
 
                         $scope.attachements = $scope.loadAttachments($scope.vacationRequesttoShow);
 
