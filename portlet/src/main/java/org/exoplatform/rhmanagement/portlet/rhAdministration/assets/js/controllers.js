@@ -301,6 +301,8 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                     $timeout(function () {
                         file.result = response.data;
                         $scope.attachements = $scope.loadAttachments($scope.userDetails);
+                        file.progress =undefined;
+
                     });
                 }, function (response) {
                     if (response.status > 0)

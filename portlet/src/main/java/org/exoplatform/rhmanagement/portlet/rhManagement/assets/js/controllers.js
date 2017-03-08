@@ -538,6 +538,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
                         $scope.attachements = $scope.loadAttachments($scope.vacationRequesttoShow);
+                        file.progress =undefined;
 
                     });
                 }, function (response) {
