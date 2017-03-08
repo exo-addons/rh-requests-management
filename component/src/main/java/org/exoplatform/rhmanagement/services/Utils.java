@@ -46,6 +46,8 @@ public class Utils {
     public static final String VALIDATED="validated";
     public static final String COMMENT="comment";
     public static final String HISTORY="history";
+    public final static String EMPLOYEES_SPACE = "exo.hrmanagement.employees.space";
+    public final static String EMPLOYEES_SPACE_DEFAULT = "exo_employees";
 
 
     public static void saveFile(FileItem item, String typeFolder, String parentNode){
@@ -61,7 +63,7 @@ public class Utils {
                 session.save();
             }
 
-            rootNode = rootNode.getNode("Application Data");
+            rootNode= rootNode.getNode("Application Data");
 
             if (!rootNode.hasNode("hrmanagement")) {
                 rootNode.addNode("hrmanagement", "nt:folder");

@@ -39,6 +39,7 @@
 <%
 String profileUrl = "<a style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\" href=\""+ PROFILE_URL + "\"><strong>" + USER + "</strong></a>";
 def msg = _ctx.appRes("Notification.message.RequestRepliedPlugin", profileUrl);
+def description = _ctx.appRes("Notification.description.email.RequestCreatedPlugin", FROM_DATE,TO_DATE);
 %>
 <%=msg%>:
 </p>
@@ -51,7 +52,7 @@ def msg = _ctx.appRes("Notification.message.RequestRepliedPlugin", profileUrl);
 </a>
 </p>
 <p style="margin: 0; color: #333333; font-size: 13px; line-height: 18px;">
-		bbbbbbbbbbbbbbbbbbbbb
+		<%=description%>
 </p>
 </td>
 </tr>
@@ -110,7 +111,7 @@ border: 1px solid #c7c7c7;
 box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 vertical-align: middle;
 margin-left: 3px;
-" href="$VACATION_URL" target="_blank"><%=_ctx.appRes("Notification.label.openTask")%></a>
+" href="$VACATION_URL" target="_blank"><%=_ctx.appRes("Notification.label.openRequest")%></a>
 </p>
 																			</td>
 </tr>

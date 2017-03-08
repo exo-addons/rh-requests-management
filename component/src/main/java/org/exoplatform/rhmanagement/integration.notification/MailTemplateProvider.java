@@ -89,9 +89,6 @@ public class MailTemplateProvider extends TemplateProvider {
       Identity receiver = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, notification.getTo(), true);
       templateContext.put("FIRST_NAME", encoder.encode(receiver.getProfile().getProperty(Profile.FIRST_NAME).toString()));
       //
-/*      templateContext.put("TASK_TITLE", encoder.encode(taskTitle));
-      templateContext.put("TASK_DESCRIPTION", encoder.encode(getExcerpt(taskDesc, 130)));
-      templateContext.put("COMMENT_TEXT", commentText == null ? "" : encoder.encode(getExcerpt(commentText, 130)));*/
       templateContext.put("VACATION_URL", vacationUrl);
 
 
@@ -115,7 +112,7 @@ public class MailTemplateProvider extends TemplateProvider {
         } catch (Exception e){
           log.error("Error when parsing TO_DATE var {}",fromDate, e);
         }
-        templateContext.put("FROM_TO", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+        templateContext.put("TO_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
       }
 
       //
@@ -170,138 +167,20 @@ public class MailTemplateProvider extends TemplateProvider {
       for (String activityID : map.keySet()) {
         List<NotificationInfo> notifs = map.get(activityID);
         NotificationInfo first = notifs.get(0);
-        String vacationkUrl = first.getValueOwnerParameter(NotificationUtils.VACATION_URL);
-
-        String taskTitle = "";
+        String vacationUrl = first.getValueOwnerParameter(NotificationUtils.VACATION_URL);
         if (notifs.size() == 1) {
-         // taskTitle = first.getValueOwnerParameter(NotificationUtils.TASK_TITLE);
           templateContext.digestType(ElementType.DIGEST_ONE.getValue());
         } else {
           templateContext.digestType(ElementType.DIGEST_MORE.getValue());
         }
-     //   templateContext.put("TASK_TITLE", "<a href=\"" + taskUrl + "\" style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\">" + encoder.encode(getExcerpt(taskTitle, 30)) + "</a>");
-       // templateContext.put("DUE_DATE", getDueDate(first));
-        
         sb.append("<li style=\"margin:0 0 13px 14px;font-size:13px;line-height:18px;font-family:HelveticaNeue,Helvetica,Arial,sans-serif\"><div style=\"color: #333;\">");
         String digester = TemplateUtils.processDigest(templateContext);
         sb.append(digester);
         sb.append("</div></li>");
       }
-
       return sb.toString();
     }
-
-
   };
-
-/*  private class CommentTemplateBuilder extends TemplateBuilder {
-    protected String buildDigestMsg(List<NotificationInfo> notifications, TemplateContext templateContext) {
-      EntityEncoder encoder = HTMLEntityEncoder.getInstance();
-
-      Map<String, List<NotificationInfo>> map = new HashMap<String, List<NotificationInfo>>();
-      for (NotificationInfo notif : notifications) {
-        String activityID = notif.getValueOwnerParameter(NotificationUtils.ACTIVITY_ID);
-        List<NotificationInfo> tmp = map.get(activityID);
-        if (tmp == null) {
-          tmp = new LinkedList<NotificationInfo>();
-          map.put(activityID, tmp);
-        }
-        tmp.add(notif);
-      }
-
-      StringBuilder sb = new StringBuilder();
-      for (String activityID : map.keySet()) {
-        List<NotificationInfo> notifs = map.get(activityID);
-        NotificationInfo first = notifs.get(0);
-        String taskUrl = first.getValueOwnerParameter(NotificationUtils.TASK_URL);
-        String projectUrl = first.getValueOwnerParameter(NotificationUtils.PROJECT_URL);
-
-        PluginConfig config = CommonsUtils.getService(PluginSettingService.class).getPluginConfig(templateContext.getPluginId());
-        Locale locale = org.exoplatform.commons.notification.NotificationUtils.getLocale(templateContext.getLanguage());
-        String resourcePath = config.getBundlePath();
-
-        //. Count user
-        List<String> creators = new ArrayList<>();
-        for (NotificationInfo n : notifs) {
-          String creator = n.getValueOwnerParameter(NotificationUtils.CREATOR.getKey());
-          creators.remove(creator);
-          creators.add(creator);
-        }
-        Collections.reverse(creators);
-
-        IdentityManager idManager = CommonsUtils.getService(IdentityManager.class);
-        Profile lastUser = idManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creators.get(0), true).getProfile();
-        String lastProfileURL = LinkProviderUtils.getRedirectUrl("user", creators.get(0));
-        String user = "<a href=\"" + lastProfileURL + "\" style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\">" + encoder.encode(lastUser.getFullName()) + "</a>";
-
-        if (creators.size() <= 1) {
-          templateContext.digestType(ElementType.DIGEST_ONE.getValue());
-        } else {
-          templateContext.digestType(ElementType.DIGEST_MORE.getValue());
-
-          lastUser = idManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creators.get(1), true).getProfile();
-          lastProfileURL = LinkProviderUtils.getRedirectUrl("user", creators.get(1));
-
-          if (creators.size() == 2) {
-            user += " " + TemplateUtils.getResourceBundle("Notification.label.and", locale, resourcePath);
-          } else {
-            user += ", ";
-          }
-          user += " <a href=\"" + lastProfileURL + "\" style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\">" + encoder.encode(lastUser.getFullName()) + "</a>";
-
-          if (creators.size() == 3) {
-            user += " " + TemplateUtils.getResourceBundle("Notification.label.one.other", locale, resourcePath);
-          } else if (creators.size() > 3) {
-            String s = TemplateUtils.getResourceBundle("Notification.label.more.other", locale, resourcePath);
-            s = s.replace("{0}", String.valueOf(creators.size() - 2));
-            user += " " + s;
-          }
-        }
-        templateContext.put("USER", user);
-
-        // Count task
-        List<Long> tasks = new ArrayList<>();
-        for (NotificationInfo n : notifs) {
-          long id = Long.parseLong(n.getValueOwnerParameter(NotificationUtils.TASKS));
-          tasks.remove(id);
-          tasks.add(id);
-        }
-
-        String countTask = "";
-        if (tasks.size() <= 1) {
-          countTask = TemplateUtils.getResourceBundle("Notification.label.task", locale, resourcePath);
-          String taskTitle = first.getValueOwnerParameter(NotificationUtils.TASK_TITLE);
-          templateContext.put("TASK_TITLE", "<a href=\"" + taskUrl + "\" style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\">" + encoder.encode(getExcerpt(taskTitle, 30)) + "</a>");
-        } else {
-          countTask = TemplateUtils.getResourceBundle("Notification.label.tasks", locale, resourcePath);
-          countTask = countTask.replace("{0}", String.valueOf(tasks.size()));
-          templateContext.put("TASK_TITLE", "");
-        }
-        templateContext.put("COUNT_TASK", countTask);
-
-        String projectName = first.getValueOwnerParameter(NotificationUtils.PROJECT_NAME);
-        String inProject = "";
-        if (projectName != null && !projectName.isEmpty()) {
-          inProject = TemplateUtils.getResourceBundle("Notification.message.inProject", locale, resourcePath);
-          inProject = inProject.replace("{0}", "<a href=\"" + projectUrl + "\" style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\"><strong>" +
-                  encoder.encode(projectName) + "</strong></a>");
-        } else {
-          inProject = "";
-        }
-        if (tasks.size() <= 1) {
-          inProject += ":";
-        }
-        templateContext.put("PROJECT_NAME", inProject);
-
-        sb.append("<li style=\"margin:0 0 13px 14px;font-size:13px;line-height:18px;font-family:HelveticaNeue,Helvetica,Arial,sans-serif\"><div style=\"color: #333;\">");
-        String digester = TemplateUtils.processDigest(templateContext);
-        sb.append(digester);
-        sb.append("</div></li>");
-      }
-
-      return sb.toString();
-    }
-  }*/
 
   public static String getExcerpt(String str, int len) {
     if (str == null) {

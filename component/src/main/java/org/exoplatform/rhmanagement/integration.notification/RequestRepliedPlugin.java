@@ -22,10 +22,13 @@ import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
+import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
+import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.identity.model.Profile;
@@ -97,6 +100,8 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
     String userId=obj.getValidatorUserId();
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getRequestId());
+    VacationRequestDTO vacationRequest = CommonsUtils.getService(VacationRequestService.class).getVacationRequest(obj.getRequestId());
+    String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getRequestId();
 
 
 
@@ -105,9 +110,9 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-/*            .with(NotificationUtils.FROM_DATE, obj.getVacationRequestDTO().getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, obj.getVacationRequestDTO().getToDate().toString())*/
-            .with(NotificationUtils.VACATION_URL, "/portal/intranet/rh-management?rid="+obj.getRequestId())
+            .with(NotificationUtils.FROM_DATE, vacationRequest.getFromDate().toString())
+            .with(NotificationUtils.TO_DATE, vacationRequest.getToDate().toString())
+            .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

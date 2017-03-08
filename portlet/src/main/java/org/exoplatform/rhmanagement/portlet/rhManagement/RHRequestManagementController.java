@@ -27,6 +27,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
 import org.exoplatform.calendar.model.Event;
 import org.exoplatform.calendar.model.query.CalendarQuery;
+import org.exoplatform.calendar.model.query.EventQuery;
 import org.exoplatform.calendar.service.CalendarEvent;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.ExtendedCalendarService;
@@ -109,10 +110,6 @@ public class RHRequestManagementController {
   private String     bundleString;
 
   private final String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
-
-  private final static String EMPLOYEES_SPACE = "exo.hrmanagement.employees.space";
-  private final static String EMPLOYEES_SPACE_DEFAULT = "exo_employees";
-
 
   @View
   public Response.Content index() {
@@ -540,9 +537,9 @@ public class RHRequestManagementController {
         data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
       data.set("currentUserName",profile.getFullName());
-      String employeesSpace = System.getProperty(EMPLOYEES_SPACE);
+      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
       if(employeesSpace==null){
-        employeesSpace =EMPLOYEES_SPACE_DEFAULT;
+        employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
       }
       data.set("employeesSpace",employeesSpace);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);

@@ -24,6 +24,7 @@ import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
+import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.EmployeesDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
@@ -92,14 +93,15 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
     String userId=obj.getUserId();
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getId());
+    String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getId();
     return NotificationInfo.instance()
 
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-/*            .with(NotificationUtils.FROM_DATE, obj.getVacationRequestDTO().getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, obj.getVacationRequestDTO().getToDate().toString())*/
-            .with(NotificationUtils.VACATION_URL, "/portal/intranet/rh-management?rid="+obj.getId())
+            .with(NotificationUtils.FROM_DATE, obj.getFromDate().toString())
+            .with(NotificationUtils.TO_DATE, obj.getToDate().toString())
+            .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

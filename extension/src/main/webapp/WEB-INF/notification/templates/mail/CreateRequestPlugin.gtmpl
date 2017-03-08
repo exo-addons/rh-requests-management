@@ -39,6 +39,7 @@
 <%
 String profileUrl = "<a style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\" href=\""+ PROFILE_URL + "\"><strong>" + USER + "</strong></a>";
 def msg = _ctx.appRes("Notification.message.RequestCreatedPlugin", profileUrl);
+def description = _ctx.appRes("Notification.description.email.RequestCreatedPlugin", FROM_DATE,TO_DATE);
 %>
 <%=msg%>:
 </p>
@@ -49,42 +50,42 @@ def msg = _ctx.appRes("Notification.message.RequestCreatedPlugin", profileUrl);
 																				<p style="margin: 0 0 10px; color: #333333; font-size: 13px; line-height: 18px;">
 																				<a href="$VACATION_URL" style="text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif">
 </a>
-																				</p>
-<p style="margin: 0; color: #333333; font-size: 13px; line-height: 18px;">
-		bbbbbbbbbbbbbbbbbbbbb
 </p>
-																			</td>
+<p style="margin: 0; color: #333333; font-size: 13px; line-height: 18px;">
+		<%=description%>
+</p>
+</td>
 </tr>
-																		<tr>
+<tr>
 
-																			<td align="left" valign="top" bgcolor="#ffffff" style="vertical-align: top; background-color: #ffffff; padding: 10px 0 0">
-																				<p style="margin: 0">
-																					<!-- <a target="_blank" style="
-																					display: inline-block;
-																					text-decoration: none;
-																					font-size: 11px;
-																					font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif;
-																					color: #ffffff;
+<td align="left" valign="top" bgcolor="#ffffff" style="vertical-align: top; background-color: #ffffff; padding: 10px 0 0">
+<p style="margin: 0">
+<!-- <a target="_blank" style="
+display: inline-block;
+text-decoration: none;
+font-size: 11px;
+font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif;
+color: #ffffff;
 
-																					background-color: #567ab6;
-																					background-image: -moz-linear-gradient(top, #638acd, #426393);
-																					background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#638acd), to(#426393));
-																					background-image: -webkit-linear-gradient(top, #638acd, #426393);
-																					background-image: -o-linear-gradient(top, #638acd, #426393);
-																					background-image: linear-gradient(to bottom, #638acd, #426393);
-																					background-repeat: repeat-x;
-																					border-radius: 4px;
-																					-moz-border-radius: 4px;
-																					padding: 5px 8px;
-																					line-height: 100%;
-																					text-align: center;
-																					border: 1px solid #224886;
-																					font-weight: bold;
-																					-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-																					-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-																					box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-																					vertical-align: middle;
-																					" href="http://www.exoplatform.com/company/en/home" title="Reply">Reply</a> -->
+background-color: #567ab6;
+background-image: -moz-linear-gradient(top, #638acd, #426393);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#638acd), to(#426393));
+background-image: -webkit-linear-gradient(top, #638acd, #426393);
+background-image: -o-linear-gradient(top, #638acd, #426393);
+background-image: linear-gradient(to bottom, #638acd, #426393);
+background-repeat: repeat-x;
+border-radius: 4px;
+-moz-border-radius: 4px;
+padding: 5px 8px;
+line-height: 100%;
+text-align: center;
+border: 1px solid #224886;
+font-weight: bold;
+-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+vertical-align: middle;
+" href="http://www.exoplatform.com/company/en/home" title="Reply">Reply</a> -->
 
 <a target="_blank" style="
 display: inline-block;
@@ -110,7 +111,7 @@ border: 1px solid #c7c7c7;
 box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 vertical-align: middle;
 margin-left: 3px;
-" href="$VACATION_URL" target="_blank"><%=_ctx.appRes("Notification.label.openTask")%></a>
+" href="$VACATION_URL" target="_blank"><%=_ctx.appRes("Notification.label.openRequest")%></a>
 </p>
 																			</td>
 </tr>

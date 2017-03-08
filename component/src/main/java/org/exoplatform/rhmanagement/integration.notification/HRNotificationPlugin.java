@@ -44,7 +44,7 @@ public class HRNotificationPlugin extends BaseNotificationPlugin {
 
   private static final Log LOG = ExoLogger.getLogger(HRNotificationPlugin.class);
 
-  public final static String ID = "RequestCreatedPlugin";
+  public final static String ID = "HRNotificationPlugin";
 
   IdentityManager identityManager;
 
