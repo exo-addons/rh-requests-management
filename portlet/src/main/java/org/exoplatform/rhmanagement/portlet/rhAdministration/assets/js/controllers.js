@@ -181,7 +181,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
 
 
         $scope.saveUserHRData = function(employee) {
-            if ($("#bDay").val() !== ""){employee.hrData.bDay = new Date($("#bDay").val());}
+            if ($("#birthDay").val() !== ""){employee.hrData.birthDay= new Date($("#birthDay").val());}
             if($("#startDate") !== ""){employee.hrData.startDate = new Date($("#startDate").val());}
             if($("#leaveDate").val() !== ""){employee.hrData.leaveDate = new Date($("#leaveDate").val());}
             if($("#contractStartDate").val() !==""){employee.hrData.contractStartDate = new Date($("#contractStartDate").val());}

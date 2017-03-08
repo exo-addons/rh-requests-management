@@ -60,7 +60,7 @@ public class UserRHDataEntity {
   private String hrId;
 
   @Column(name = "B_DAY")
-  private Date bDay;
+  private Date birthDay;
 
   @Column(name = "SITUATION")
   private String situation;

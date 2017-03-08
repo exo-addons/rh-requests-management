@@ -37,8 +37,8 @@ public class NotificationsJob implements Job {
         List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
         Calendar now= Calendar.getInstance();
         for(UserRHDataDTO employee : employees){
-            if(employee.getBDay()!=null){
-            Calendar cal=Calendar.getInstance().setTime(employee.getBDay());
+            if(employee.getBirthDay()!=null){
+            Calendar cal=Calendar.getInstance().setTime(employee.getBirthDay());
             cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
                 int rem=daysBetween(cal,now);
                 if(rem<3){

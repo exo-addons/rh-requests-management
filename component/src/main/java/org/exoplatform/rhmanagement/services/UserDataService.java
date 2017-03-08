@@ -149,7 +149,7 @@ public class UserDataService {
     entity.setNbrSickdays(dto.getNbrSickdays());
     entity.setSocialSecNumber(dto.getSocialSecNumber());
     entity.setHrId(dto.getHrId());
-    entity.setBDay(dto.getBDay());
+    entity.setBirthDay(dto.getBirthDay());
     entity.setSituation(dto.getSituation());
     entity.setNbChildren(dto.getNbChildren());
     entity.setTeam(dto.getTeam());
@@ -174,7 +174,7 @@ public class UserDataService {
     dto.setNbrSickdays(entity.getNbrSickdays());
     dto.setSocialSecNumber(entity.getSocialSecNumber());
     dto.setHrId(entity.getHrId());
-    dto.setBDay(entity.getBDay());
+    dto.setBirthDay(entity.getBirthDay());
     dto.setSituation(entity.getSituation());
     dto.setNbChildren(entity.getNbChildren());
     dto.setTeam(entity.getTeam());

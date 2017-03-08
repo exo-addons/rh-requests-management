@@ -235,10 +235,10 @@
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.bDay}}:</b>
-                                    <input type="text" name="bDay" class="requestEdit" id="bDay"
-                                           ng-click="enableInput('#bDay')" ng-model="userDetails.hrData.bDay"
-                                           value="{{userDetails.hrData.bDay | date:'d MMM y'}}" readonly/><i
-                                        class="uiIconEdit" ng-click="enableInput('#bDay')"></i>
+                                    <input type="text" name="birthDay" class="requestEdit" id="birthDay"
+                                           ng-click="enableInput('#birthDay')" ng-model="userDetails.hrData.birthDay"
+                                           value="{{userDetails.hrData.birthDay | date:'d MMM y'}}" readonly/><i
+                                        class="uiIconEdit" ng-click="enableInput('#birthDay')"></i>
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.situation}}:</b>

@@ -39,7 +39,7 @@ import java.util.Date;
 
     private String hrId;
 
-    private Date bDay;
+    private Date birthDay;
 
     private String situation;
 

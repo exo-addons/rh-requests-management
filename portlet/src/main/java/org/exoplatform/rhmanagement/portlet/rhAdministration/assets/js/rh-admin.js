@@ -87,10 +87,10 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 
 	});
 
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "changeYear", true );
-    $( "#startDate, #bDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "changeYear", true );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
 
 
     function getDate( element ) {
