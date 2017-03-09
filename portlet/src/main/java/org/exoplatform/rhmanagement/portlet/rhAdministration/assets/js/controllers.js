@@ -144,6 +144,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                                     $scope.showAlert = false;
                                 }, 2000);
                             }else{
+                                $scope.loadUserHRData(data.data);
                                 $scope.showAddForm=true;
                                 if(!data.data.avatar){
                                     $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
