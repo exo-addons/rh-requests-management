@@ -33,6 +33,8 @@ public class NotificationUtils {
   public final static String COMMENT_TEXT = "commentText";
   public final static String FROM_DATE = "from";
   public final static String TO_DATE = "to";
+  public final static String BIRTHDAY_DATE = "birthdayDate";
+  public final static String CONTRACT_ANNIV_DATE = "birthdayDate";
   public final static String ACTIVITY_ID = "activityId";
 
 }

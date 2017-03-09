@@ -51,7 +51,8 @@ import java.util.*;
    templates = {
        @TemplateConfig( pluginId=RequestRepliedPlugin.ID, template="war:/notification/templates/web/RequestReplyPlugin.gtmpl"),
        @TemplateConfig( pluginId=RequestStatusChangedPlugin.ID, template="war:/notification/templates/web/UpdateRequestPlugin.gtmpl"),
-       @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/templates/web/CreateRequestPlugin.gtmpl")
+       @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/templates/web/CreateRequestPlugin.gtmpl"),
+           @TemplateConfig( pluginId=HRBirthdayNotificationPlugin.ID, template="war:/notification/templates/web/HRBirthdayNotificationPlugin.gtmpl")
    }
 )
 public class WebTemplateProvider extends TemplateProvider {
@@ -66,6 +67,7 @@ public class WebTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(RequestRepliedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestStatusChangedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestCreatedPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
   }
 
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -87,7 +89,9 @@ public class WebTemplateProvider extends TemplateProvider {
       templateContext.put("AVATAR", profile.getAvatarUrl() != null ? profile.getAvatarUrl() : LinkProvider.PROFILE_DEFAULT_AVATAR_URL);
       templateContext.put("PROFILE_URL", LinkProviderUtils.getRedirectUrl("user", identity.getRemoteId()));
       //
-      templateContext.put("VACATION_URL", vacationUrl);
+      if(vacationUrl!=null) {
+        templateContext.put("VACATION_URL", vacationUrl);
+      }
 
       //--- Get Date From :
       String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
@@ -110,6 +114,17 @@ public class WebTemplateProvider extends TemplateProvider {
           log.error("Error when parsing TO_DATE var {}",fromDate, e);
         }
         templateContext.put("FROM_TO", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+      }
+
+      String birthDate = notification.getValueOwnerParameter(NotificationUtils.BIRTHDAY_DATE);
+      if (birthDate != null) {
+        Date theDate = new Date();
+        try {
+          theDate = (Date)formatter.parse(birthDate);
+        } catch (Exception e){
+          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
+        }
+        templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
       }
       //
       templateContext.put("READ", Boolean.valueOf(notification.getValueOwnerParameter(NotificationMessageUtils.READ_PORPERTY.getKey())) ? "read" : "unread");

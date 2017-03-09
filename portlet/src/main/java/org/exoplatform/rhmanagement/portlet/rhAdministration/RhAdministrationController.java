@@ -347,7 +347,11 @@ public class RhAdministrationController {
       JSON data = new JSON();
       data.set("currentUser",currentUser);
       Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile();
-      data.set("currentUserAvatar",profile.getAvatarUrl());
+      if(profile.getAvatarUrl()!=null){
+        data.set("currentUserAvatar",profile.getAvatarUrl());
+      }else{
+        data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+      }
       data.set("currentUserName",profile.getFullName());
       return Response.ok(data.toString());
     } catch (Throwable e) {

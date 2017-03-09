@@ -235,7 +235,7 @@ ng-click="enableInput('#hrIdEdit')"></i>
                                 </div>
 <div class="ligne">
 <b>{{i18n.bDay}}:</b>
-                                    <input type="text" name="birthDay" class="requestEdit" id="birthDay"
+                                    <input  type="text" name="birthDay" class="requestEdit" id="birthDay"
                                            ng-click="enableInput('#birthDay')" ng-model="userDetails.hrData.birthDay"
                                            value="{{userDetails.hrData.birthDay | date:'d MMM y'}}" readonly/><i
 class="uiIconEdit" ng-click="enableInput('#birthDay')"></i>
@@ -357,7 +357,7 @@ ng-click="enableInput('#others')"></i>
 <i class="uiIconClose uiIconLightGray"></i>
 </a>
 </span>
-<div  style="font:status-bar" ><div ng-show="f.progress >= 0">{{f.name}}</div> <div ng-show="errFile.$error">Cannot upload the file {{f.name}} : {{errFile.$error}} {{errFile.$errorParam}}</div>
+<div  style="font:status-bar" ><div ng-show="f.progress >= 0">{{f.name}}</div> <div ng-show="errFile.$error">Cannot upload {{f.name}} : {{errFile.$error}} {{errFile.$errorParam}}</div>
 <span class="progress" ng-show="f.progress >= 0">
 <div style="width:{{f.progress}}%"
 ng-bind="f.progress + '%'"></div>

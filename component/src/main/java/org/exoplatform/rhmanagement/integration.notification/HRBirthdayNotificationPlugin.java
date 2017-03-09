@@ -22,6 +22,7 @@ import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.api.notification.plugin.NotificationPluginUtils;
+import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
@@ -37,18 +38,18 @@ import org.exoplatform.webui.utils.TimeConvertUtils;
 import java.util.*;
 
 
-public class HRNotificationPlugin extends BaseNotificationPlugin {
+public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<UserRHDataDTO> EMPLOYEE = new ArgumentLiteral<UserRHDataDTO>(UserRHDataDTO.class, "employee");
   public final static ArgumentLiteral<String> NOTIF_TYPE = new ArgumentLiteral<String>(String.class, "notifType");
 
-  private static final Log LOG = ExoLogger.getLogger(HRNotificationPlugin.class);
+  private static final Log LOG = ExoLogger.getLogger(HRBirthdayNotificationPlugin.class);
 
-  public final static String ID = "HRNotificationPlugin";
+  public final static String ID = "HRBirthdayNotificationPlugin";
 
   IdentityManager identityManager;
 
-  public HRNotificationPlugin(InitParams initParams, IdentityManager identityManager) {
+  public HRBirthdayNotificationPlugin(InitParams initParams, IdentityManager identityManager) {
 
     super(initParams);
     this.identityManager = identityManager;
@@ -100,34 +101,16 @@ public class HRNotificationPlugin extends BaseNotificationPlugin {
 
 
     String userId=obj.getUserId();
-        Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
-                Calendar lastModified = Calendar.getInstance();
-        String lastModifiedDate= TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(NotificationPluginUtils.getLanguage(userId)), TimeConvertUtils.YEAR);
-        String avatarUrl=userProfile.getAvatarUrl();
-        if(avatarUrl==null)avatarUrl="/eXoSkin/skin/images/system/UserAvtDefault.png";
-        String content="<li class='unread clearfix'>\n" +
-                       "  <div class='media'>\n" +
-                       "    <div class='avatarXSmall pull-left'>\n" +
-                       "      <img src='"+avatarUrl+"' alt='"+userProfile.getFullName()+"'>\n" +
-                       "    </div>\n" +
-                       "    <div class='media-body'>\n" +
-                       "      \n" +
-                       "      <div class='contentSmall' data-link='/portal/intranet/profile/"+userId+"'>\n" +
-                       "        <div class='status'>"+notifType+"</div>\n" +
-                       "        <div class='lastUpdatedTime'>"+lastModifiedDate+"</div>\n" +
-                       "      </div>\n" +
-                       "    </div>\n" +
-                       "  </div>\n" +
-                       "  <span class='remove-item' data-rest=''><i class='uiIconClose uiIconLightGray'></i></span>\n" +
-                       "</li>";
+    StringBuilder activityId = new StringBuilder(userId);
+    activityId.append("-").append(obj.getUserId());
     return NotificationInfo.instance()
 
             .setFrom(userId)
-            .to(new ArrayList<String>(receivers))
-
-             .setTitle(content)
-
-            .key(getId());
+            .to(new LinkedList<String>(receivers))
+            .with(NotificationUtils.CREATOR, userId)
+            .with(NotificationUtils.BIRTHDAY_DATE, new Date().toString())//obj.getBirthDay().toString())
+            .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
+            .key(getKey()).end();
 
   }
 }

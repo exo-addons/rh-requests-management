@@ -50,7 +50,8 @@ import java.util.*;
 
     @TemplateConfig(pluginId = RequestRepliedPlugin.ID, template = "war:/notification/templates/mail/RequestReplyPlugin.gtmpl"),
     @TemplateConfig(pluginId = RequestStatusChangedPlugin.ID, template = "war:/notification/templates/mail/UpdateRequestPlugin.gtmpl"),
-    @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl")
+    @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl"),
+     @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl")
 })
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
@@ -64,6 +65,7 @@ public class MailTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(RequestRepliedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestStatusChangedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestCreatedPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
   }
   
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -89,7 +91,9 @@ public class MailTemplateProvider extends TemplateProvider {
       Identity receiver = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, notification.getTo(), true);
       templateContext.put("FIRST_NAME", encoder.encode(receiver.getProfile().getProperty(Profile.FIRST_NAME).toString()));
       //
-      templateContext.put("VACATION_URL", vacationUrl);
+        if(vacationUrl!=null) {
+            templateContext.put("VACATION_URL", vacationUrl);
+        }
 
 
       //--- Get Date From :
@@ -113,6 +117,18 @@ public class MailTemplateProvider extends TemplateProvider {
           log.error("Error when parsing TO_DATE var {}",fromDate, e);
         }
         templateContext.put("TO_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+      }
+
+
+      String birthDate = notification.getValueOwnerParameter(NotificationUtils.BIRTHDAY_DATE);
+      if (birthDate != null) {
+        Date theDate = new Date();
+        try {
+          theDate = (Date)formatter.parse(birthDate);
+        } catch (Exception e){
+          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
+        }
+        templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
       }
 
       //
@@ -180,7 +196,8 @@ public class MailTemplateProvider extends TemplateProvider {
       }
       return sb.toString();
     }
-  };
+  }
+
 
   public static String getExcerpt(String str, int len) {
     if (str == null) {

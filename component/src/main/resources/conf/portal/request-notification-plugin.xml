@@ -169,19 +169,19 @@
     <component-plugin>
       <name>notification.plugins</name>
       <set-method>addPlugin</set-method>
-      <type>org.exoplatform.rhmanagement.integration.notification.HRNotificationPlugin</type>
+      <type>org.exoplatform.rhmanagement.integration.notification.HRBirthdayNotificationPlugin</type>
       <description>Initial information for plugin.</description>
       <init-params>
         <object-param>
-          <name>template.RequestRepliedPlugin</name>
-          <description>The template of RequestRepliedPlugin</description>
+          <name>template.HRBirthdayNotificationPlugin</name>
+          <description>The template of HRBirthdayNotificationPlugin</description>
           <object
                   type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
             <field name="pluginId">
-              <string>HRNotificationPlugin</string>
+              <string>HRBirthdayNotificationPlugin</string>
             </field>
             <field name="resourceBundleKey">
-              <string>UINotification.label.HRNotificationPlugin</string>
+              <string>UINotification.label.HRBirthdayNotificationPlugin</string>
             </field>
             <field name="order">
               <string>3</string>
@@ -200,7 +200,7 @@
               <string>request</string>
             </field>
             <field name="bundlePath">
-              <string>locale.notification.HRNotificationPlugin</string>
+              <string>locale.notification.RequestNotification</string>
             </field>
           </object>
         </object-param>
