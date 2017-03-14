@@ -235,7 +235,7 @@ public class RhAdministrationController {
       comment.setCommentText("requestValidated");
       comment.setPosterId(currentUser);
       comment.setPostedTime(new Date());
-      //comment.setType("log");
+      comment.setCommentType(Utils.HISTORY);
       commentService.save(comment);
 
       try {
@@ -289,7 +289,7 @@ public class RhAdministrationController {
       comment.setCommentText("requestCanceled");
       comment.setPosterId(currentUser);
       comment.setPostedTime(new Date());
-      //obj.setType("log");
+      comment.setCommentType(Utils.HISTORY);
       commentService.save(comment);
       try {
         for (User rh : Utils.getRhManagers()){
@@ -493,7 +493,7 @@ public class RhAdministrationController {
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
     obj.setPostedTime(new Date());
-  //  obj.setType("comment");
+    obj.setCommentType(Utils.COMMENT);
     commentService.save(obj);
   }
 

@@ -340,6 +340,13 @@ public class RHRequestManagementController {
     if (obj.getEXoCalendarId()!=""){
       shareCalendar_(vr,obj.getEXoCalendarId());
     }
+    CommentDTO comment=new CommentDTO();
+    comment.setRequestId(vr.getId());
+    comment.setCommentText("requestCreated");
+    comment.setPosterId(currentUser);
+    comment.setPostedTime(new Date());
+    comment.setCommentType(Utils.HISTORY);
+    commentService.save(comment);
     try {
       listenerService.broadcast("exo.hrmanagement.requestCreation", "", obj);
     } catch (Exception e) {

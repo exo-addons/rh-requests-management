@@ -672,7 +672,7 @@ ng-model="newComment.commentText"></textarea>
                         </span>
 </div>
                                     <p class="contentComment">
-                                        {{item.commentText}}
+                                        {{geti18n(item.commentText)}}
                                     </p>
 </div>
                                 <!--end commentRight-->

@@ -375,8 +375,9 @@ ng-bind="f.progress + '%'"></div>
                                 </div>
 
 </div>
-                            <input type="submit" id="submit" class="btn btn-primary Submitbtn" value="Submit"
-                                   data-ng-click="saveUserHRData(userDetails)"/>
+
+								                                   <button class="btn btn-primary" data-ng-click="saveUserHRData(userDetails)">{{i18n.validate}}
+                                </button>
 </div>
                     </div>
 
