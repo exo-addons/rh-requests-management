@@ -15,7 +15,7 @@
   <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
 
   <changeSet author="rh-management" id="1.0.0-1">
-    <createTable tableName="VACATION_REQUEST">
+    <createTable tableName="HR_VACATION_REQUEST">
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
@@ -29,10 +29,11 @@
       <column name="SUBSTITUTE" type="NVARCHAR(100)"></column>
       <column name="STATUS" type="NVARCHAR(100)" defaultValue="pending"></column>
       <column name="TYPE" type="NVARCHAR(100)"></column>
+      <column name="CREATION_DATE" type="DATE"></column>
 
     </createTable>
 
-    <createTable tableName="COMMENT" >
+    <createTable tableName="HR_COMMENT" >
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
@@ -41,9 +42,10 @@
       <column name="POSTED_TIME" type="DATE"></column>
       <column name="COMMENT_TEXT" type="NVARCHAR(1000)"></column>
       <column name="COMMENT_TYPE" type="NVARCHAR(50)"></column>
+      <column name="CREATION_DATE" type="DATE"></column>
     </createTable>
 
-    <createTable tableName="VALIDATOR">
+    <createTable tableName="HR_VALIDATOR">
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
@@ -52,16 +54,17 @@
       <column name="VALIDATOR_USER_ID" type="NVARCHAR(50)"></column>
       <column name="VALIDATOR_EMAIL" type="NVARCHAR(50)"></column>
       <column name="REPLY" type="NVARCHAR(50)" defaultValue="pending"></column>
+      <column name="CREATION_DATE" type="DATE"></column>
     </createTable>
 
-    <createTable tableName="RH_USER_DATA" >
+    <createTable tableName="HR_USER_DATA" >
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
       <column name="USER_ID" type="NVARCHAR(50)"></column>
       <column name="CIN" type="BIGINT"></column>
-      <column name="NB_HOLIDAYS" type="FLOAT"></column>
-      <column name="NB_SICK_DAYS" type="FLOAT"></column>
+      <column name="HOLIDAYS_BALANCE" type="FLOAT"></column>
+      <column name="SICK_DAYS_BALANCE" type="FLOAT"></column>
       <column name="SOC_NUMBER" type="BIGINT"></column>
       <column name="HR_ID" type="NVARCHAR(50)"></column>
       <column name="B_DAY" type="DATE"></column>
@@ -78,16 +81,18 @@
       <column name="MY_EXO_URL" type="NVARCHAR(50)"></column>
       <column name="INSURANCE_ID" type="NVARCHAR(50)"></column>
       <column name="OTHERS" type="NVARCHAR(1000)"></column>
+      <column name="CREATION_DATE" type="DATE"></column>
     </createTable>
 
 
-    <createTable tableName="REL_EMP_MANAGER" >
+    <createTable tableName="HR_REL_EMP_MANAGER" >
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
       <column name="USER_ID" type="NVARCHAR(50)"></column>
       <column name="MANAGER_ID" type="NVARCHAR(50)"></column>
       <column name="ROLE" type="NVARCHAR(50)"></column>
+      <column name="CREATION_DATE" type="DATE"></column>
     </createTable>
 
     <modifySql dbms="mysql">

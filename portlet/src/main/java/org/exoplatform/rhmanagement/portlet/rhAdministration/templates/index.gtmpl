@@ -122,10 +122,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                                 <span>{{userRhData.hrData.socialSecNumber}}</span>
 </td>
                             <td>
-                                <span>{{userRhData.hrData.nbrHolidays}}</span>
+                                <span>{{userRhData.hrData.holidaysBalance}}</span>
 </td>
                             <td>
-                                <span>{{userRhData.hrData.nbrSickdays}}</span>
+                                <span>{{userRhData.hrData.sickdaysBalance}}</span>
 </td>
 
                             <td>
@@ -206,17 +206,17 @@ ng-click="enableInput('#cinEdit')"></i>
 <b>{{i18n.holidaysBalance}}:</b>
                                     <input type="text" name="holiday" class="requestEdit" id="holidayEdit"
                                            ng-click="enableInput('#holidayEdit')"
-                                           ng-model="userDetails.hrData.nbrHolidays"
-                                           value="{{userDetails.hrData.nbrHolidays}}" readonly/><i class="uiIconEdit"
+                                           ng-model="userDetails.hrData.holidaysBalance"
+                                           value="{{userDetails.hrData.holidaysBalance}}" readonly/><i class="uiIconEdit"
 ng-click="enableInput('#holidayEdit')"></i>
                                 </div>
 <div class="ligne">
 <b>{{i18n.sickBalance}}:</b>
-                                    <input type="text" name="nbrSickdays" class="requestEdit" id="nbrSickdaysEdit"
-                                           ng-click="enableInput('#nbrSickdaysEdit')"
-                                           ng-model="userDetails.hrData.nbrSickdays"
-                                           value="{{userDetails.hrData.nbrSickdays}}" readonly/><i class="uiIconEdit"
-ng-click="enableInput('#nbrSickdaysEdit')"></i>
+                                    <input type="text" name="sickdaysBalance" class="requestEdit" id="sickdaysBalanceEdit"
+                                           ng-click="enableInput('#sickdaysBalanceEdit')"
+                                           ng-model="userDetails.hrData.sickdaysBalance"
+                                           value="{{userDetails.hrData.sickdaysBalance}}" readonly/><i class="uiIconEdit"
+ng-click="enableInput('#sickdaysBalanceEdit')"></i>
                                 </div>
 <div class="ligne">
 <b>{{i18n.socialSecNumber}}:</b>

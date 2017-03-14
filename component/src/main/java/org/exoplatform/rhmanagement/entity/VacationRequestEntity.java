@@ -27,7 +27,7 @@ import java.util.Date;
  */
 @Entity(name = "HRVacatioRequestEntity")
 @ExoEntity
-@Table(name = "VACATION_REQUEST")
+@Table(name = "HR_VACATION_REQUEST")
 @NamedQueries({
         @NamedQuery(name = "vacatioRequestEntity.findAllOrderBy", query = "SELECT a FROM HRVacatioRequestEntity a order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.count", query = "SELECT count(a.id) FROM HRVacatioRequestEntity a"),

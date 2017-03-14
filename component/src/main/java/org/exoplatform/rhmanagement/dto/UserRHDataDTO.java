@@ -31,9 +31,9 @@ import java.util.Date;
 
     private long cin;
 
-    private float nbrHolidays;
+    private float holidaysBalance;
 
-    private float nbrSickdays;
+    private float sickdaysBalance;
 
     private long socialSecNumber;
 

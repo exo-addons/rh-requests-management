@@ -12,14 +12,14 @@
 <div class="control-group {{usernameClass}}">
 <label class="control-label" for="daysNumber">Number of Holidays</label>
                     <div class="controls">
-                        <input type="text" name="nbrHolidays" id="nbrHolidays" placeholder="{{i18n.serverUsername}}" ng-model="userData.nbrHolidays">
+                        <input type="text" name="holidaysBalance" id="holidaysBalance" placeholder="{{i18n.serverUsername}}" ng-model="userData.holidaysBalance">
                     </div>
 </div>
 				
 				 <div class="control-group {{usernameClass}}">
                     <label class="control-label" for="daysNumber">Number of Sick Days</label>
 <div class="controls">
-<input type="text" name="nbrSickdays" id="nbrSickdays" placeholder="{{i18n.serverUsername}}" ng-model="userData.nbrSickdays">
+<input type="text" name="sickdaysBalance" id="sickdaysBalance" placeholder="{{i18n.serverUsername}}" ng-model="userData.sickdaysBalance">
 </div>
                 </div>
 
@@ -54,7 +54,7 @@
 </div>
                 <div class="value-user-info">
 
-                    <div class="ellipsis" rel="tooltip" data-placement="top" title="" data-original-title="">{{userData.nbrHolidays}}</div>
+                    <div class="ellipsis" rel="tooltip" data-placement="top" title="" data-original-title="">{{userData.holidaysBalance}}</div>
 
 
 </div>
@@ -65,7 +65,7 @@
                 </div>
 <div class="value-user-info">
 
-<div class="ellipsis" rel="tooltip" data-placement="top" title="" data-original-title="">{{userData.nbrSickdays}}</div>
+<div class="ellipsis" rel="tooltip" data-placement="top" title="" data-original-title="">{{userData.sickdaysBalance}}</div>
 
 
                 </div>

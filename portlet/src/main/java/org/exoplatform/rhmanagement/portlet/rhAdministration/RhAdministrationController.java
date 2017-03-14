@@ -220,14 +220,14 @@ public class RhAdministrationController {
       obj=vacationRequestService.save(obj,false);
       userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
       if(obj.getType().equals("holiday")){
-        float holidays=userRHDataDTO.getNbrHolidays();
+        float holidays=userRHDataDTO.getHolidaysBalance();
         float nbDays=obj.getDaysNumber();
-        userRHDataDTO.setNbrHolidays(holidays-nbDays);
+        userRHDataDTO.setHolidaysBalance(holidays-nbDays);
         userDataService.save(userRHDataDTO);
       }if(obj.getType().equals("sick")){
-        float sickdays=userRHDataDTO.getNbrSickdays();
+        float sickdays=userRHDataDTO.getSickdaysBalance();
         float nbDays=obj.getDaysNumber();
-        userRHDataDTO.setNbrSickdays(sickdays-nbDays);
+        userRHDataDTO.setSickdaysBalance(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
       }
       CommentDTO comment=new CommentDTO();
@@ -271,13 +271,13 @@ public class RhAdministrationController {
       if(obj.getStatus().equals(VALIDATED)) {
         userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
         if (obj.getType().equals("holiday")) {
-          float holidays = userRHDataDTO.getNbrHolidays();
+          float holidays = userRHDataDTO.getHolidaysBalance();
           float nbDays = obj.getDaysNumber();
-          userRHDataDTO.setNbrHolidays(holidays + nbDays);
+          userRHDataDTO.setHolidaysBalance(holidays + nbDays);
           userDataService.save(userRHDataDTO);
         }
         if (obj.getType().equals("sick")) {
-          userRHDataDTO.setNbrSickdays(userRHDataDTO.getNbrSickdays() + obj.getDaysNumber());
+          userRHDataDTO.setSickdaysBalance(userRHDataDTO.getSickdaysBalance() + obj.getDaysNumber());
           userDataService.save(userRHDataDTO);
         }
       }

@@ -30,7 +30,7 @@ import java.util.Date;
  */
 @Entity(name = "HRValidatorEntity")
 @ExoEntity
-@Table(name = "VALIDATOR")
+@Table(name = "HR_VALIDATOR")
 @NamedQueries({
         @NamedQuery(name = "validatorEntity.findAllByRequestId", query = "SELECT a FROM HRValidatorEntity a where a.requestId = :requestId"),
         @NamedQuery(name = "validatorEntity.count", query = "SELECT count(a.id) FROM HRValidatorEntity a  where a.requestId = :requestId"),

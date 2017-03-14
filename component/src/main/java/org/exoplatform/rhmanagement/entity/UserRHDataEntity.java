@@ -27,7 +27,7 @@ import java.util.Date;
  */
 @Entity(name = "HRUserRHDataEntity")
 @ExoEntity
-@Table(name = "RH_USER_DATA")
+@Table(name = "HR_USER_DATA")
 @NamedQueries({
         @NamedQuery(name = "userRHDataEntity.findByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.userId = :userId"),
         @NamedQuery(name = "userRHDataEntity.findAll", query = "SELECT a FROM HRUserRHDataEntity a")
@@ -47,11 +47,11 @@ public class UserRHDataEntity {
   @Column(name = "CIN")
   private long   cin;
 
-  @Column(name = "NB_HOLIDAYS")
-  private float   nbrHolidays;
+  @Column(name = "HOLIDAYS_BALANCE")
+  private float   holidaysBalance;
 
-  @Column(name = "NB_SICK_DAYS")
-  private float   nbrSickdays;
+  @Column(name = "SICK_DAYS_BALANCE")
+  private float   sickdaysBalance;
 
   @Column(name = "SOC_NUMBER")
   private long   socialSecNumber;

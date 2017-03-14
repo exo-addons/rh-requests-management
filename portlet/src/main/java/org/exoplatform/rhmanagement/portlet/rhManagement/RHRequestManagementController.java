@@ -544,8 +544,8 @@ public class RHRequestManagementController {
       data.set("employeesSpace",employeesSpace);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
       if (userRHDataDTO != null) {
-        data.set("sickBalance",userRHDataDTO.getNbrSickdays());
-        data.set("holidaysBalance",userRHDataDTO.getNbrHolidays());
+        data.set("sickBalance",userRHDataDTO.getSickdaysBalance());
+        data.set("holidaysBalance",userRHDataDTO.getHolidaysBalance());
         data.set("hrId",userRHDataDTO.getHrId());
         data.set("insuranceId",userRHDataDTO.getInsuranceId());
         data.set("socialSecNumber",userRHDataDTO.getSocialSecNumber());

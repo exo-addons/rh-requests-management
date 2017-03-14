@@ -27,8 +27,8 @@ public class UpdateHolidaysBalanceJob implements Job {
         List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
 
         for(UserRHDataDTO employee : employees){
-            float holidays=employee.getNbrHolidays();
-            employee.setNbrHolidays(holidays+2);
+            float holidays=employee.getHolidaysBalance();
+            employee.setHolidaysBalance(holidays+2);
             userDataService.save(employee);
         }
         LOG.info("=============================== Update Holidays Balance Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");

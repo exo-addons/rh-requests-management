@@ -27,7 +27,7 @@ public class UpdateSickBalanceJob implements Job {
         List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
 
         for(UserRHDataDTO employee : employees){
-            employee.setNbrSickdays(10);
+            employee.setSickdaysBalance(10);
             userDataService.save(employee);
         }
         LOG.info("=============================== Update Sick Balance Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");
