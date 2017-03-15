@@ -74,4 +74,7 @@ public class VacationRequestEntity {
   @Column(name = "TYPE")
   private String   type;
 
+  @Column(name = "CREATION_DATE")
+  private Date creationDate;
+
 }

@@ -418,13 +418,8 @@ public class RHRequestManagementController {
     }
     obj.setStatus(Utils.DECLINED);
     vacationRequestService.save(obj,false);
-    Set<String> managers = new HashSet<String>();
-    for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
-      managers.add(validator.getUserId());
-    }
-
     try {
-      listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+      listenerService.broadcast("exo.hrmanagement.requestUpadate", currentUser, obj);
     } catch (Exception e) {
       log.error("Cannot broadcast request reply event");
     }
@@ -439,7 +434,6 @@ public class RHRequestManagementController {
   public VacationRequestDTO approveRequest(@Jackson VacationRequestDTO obj) {
     Boolean validated=true;
     Boolean declined=false;
-    Set<String> managers = new HashSet<String>();
     for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(obj.getId(),0,0)){
       if(validator.getValidatorUserId().equals(currentUser)){
         validator.setReply(Utils.APPROVED);
@@ -453,7 +447,6 @@ public class RHRequestManagementController {
         if (validator.getReply().equals(Utils.DECLINED)) declined=true;
         if (validator.getReply().equals(Utils.PENDING)) validated=false;
       }
-      managers.add(validator.getUserId());
     }
    if(declined) {
       obj.setStatus(Utils.DECLINED);
@@ -466,7 +459,7 @@ public class RHRequestManagementController {
      comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
-       listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+       listenerService.broadcast("exo.hrmanagement.requestUpadate", currentUser, obj);
      } catch (Exception e) {
        log.error("Cannot broadcast update request event");
      }
@@ -482,14 +475,7 @@ public class RHRequestManagementController {
      comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
-       for (User rh : Utils.getRhManagers()){
-         managers.add(rh.getUserName());
-       }
-     } catch (Exception e) {
-
-     }
-     try {
-       listenerService.broadcast("exo.hrmanagement.requestUpadate", managers, obj);
+       listenerService.broadcast("exo.hrmanagement.requestUpadate", currentUser, obj);
      } catch (Exception e) {
        log.error("Cannot broadcast update request event");
      }

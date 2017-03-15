@@ -101,4 +101,7 @@ public class UserRHDataEntity {
   @Column(name = "OTHERS")
   private String others;
 
+  @Column(name = "CREATION_DATE")
+  private Date creationDate;
+
 }

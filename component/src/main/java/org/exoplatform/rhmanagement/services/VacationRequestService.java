@@ -58,6 +58,7 @@ public class VacationRequestService {
 
     VacationRequestEntity  vacationRequestEntity = null;
    if (newRequest) {
+      entity.setCreationDate(new Date());
       vacationRequestEntity = vacationRequestDAO.create(convert(entity));
     } else {
       vacationRequestEntity = vacationRequestDAO.update(convert(entity));
@@ -162,6 +163,7 @@ public class VacationRequestService {
     entity.setSubstitute(dto.getSubstitute());
     entity.setType(dto.getType());
     entity.setStatus(dto.getStatus());
+    entity.setCreationDate(dto.getCreationDate());
     return entity;
   }
 
@@ -181,6 +183,7 @@ public class VacationRequestService {
     dto.setSubstitute(entity.getSubstitute());
     dto.setType(entity.getType());
     dto.setStatus(entity.getStatus());
+    dto.setCreationDate(entity.getCreationDate());
 
     return dto;
   }

@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +63,11 @@ public class UserDataService {
         if(userRHDataDTO!=null){
           userRHDataEntity = userRHDataDAO.update(convert(entity));
         }else{
+          entity.setCreationDate(new Date());
           userRHDataEntity = userRHDataDAO.create(convert(entity));
         }
       } catch (Exception e) {
+        entity.setCreationDate(new Date());
         userRHDataEntity = userRHDataDAO.create(convert(entity));
       }
 
@@ -162,6 +165,7 @@ public class UserDataService {
     entity.setInsuranceId(dto.getInsuranceId());
     entity.setMyeXoUrl(dto.getMyeXoUrl());
     entity.setOthers(dto.getOthers());
+    entity.setCreationDate(dto.getCreationDate());
     return entity;
   }
 
@@ -187,6 +191,7 @@ public class UserDataService {
     dto.setInsuranceId(entity.getInsuranceId());
     dto.setMyeXoUrl(entity.getMyeXoUrl());
     dto.setOthers(entity.getOthers());
+    dto.setCreationDate(entity.getCreationDate());
     return dto;
   }
 

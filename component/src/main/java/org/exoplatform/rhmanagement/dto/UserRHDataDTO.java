@@ -67,4 +67,6 @@ import java.util.Date;
 
     private String others;
 
+    private Date creationDate;
+
 }

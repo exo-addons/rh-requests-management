@@ -30,9 +30,11 @@ import org.exoplatform.rhmanagement.dto.EmployeesDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
@@ -45,7 +47,9 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<VacationRequestDTO> REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "request");
 
-  public static final ArgumentLiteral<Set> MANAGERS = new ArgumentLiteral<Set>(Set.class, "managers");
+  public static final ArgumentLiteral<String> CURRENT_USER = new ArgumentLiteral<String>(String.class, "currentUser");
+
+  public static final ArgumentLiteral<Set> RECEIVERS = new ArgumentLiteral<Set>(Set.class, "receivers");
 
   private static final Log LOG = ExoLogger.getLogger(RequestStatusChangedPlugin.class);
 
@@ -88,9 +92,11 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
     VacationRequestDTO obj = ctx.value(REQUEST);
 
-    Set<String> receivers = ctx.value(MANAGERS);
+    String currentUser = ctx.value(CURRENT_USER);
 
-    String userId=obj.getUserId();
+    Set<String> receivers =  ctx.value(RECEIVERS);
+
+    String userId=currentUser;
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getId());
     String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getId();
