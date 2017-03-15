@@ -143,9 +143,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     method : 'GET',
                     url : rhContainer.jzURL('RHRequestManagementController.getVacationRequest')+ "&id=" +requestId
                 }).then(function successCallback(data) {
-                    $scope.showVacationRequest(data.data);
-                    $scope.showFullReq = true;
-                    $scope.showAlert = false;
+                    if(data.data==""){
+                        $scope.setResultMessage($scope.i18n.requestNotFound, "error");
+                    }else{
+                        $scope.showVacationRequest(data.data);
+                        $scope.showFullReq = true;
+                        $scope.showAlert = false;
+                    }
+
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
