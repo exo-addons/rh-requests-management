@@ -503,25 +503,100 @@ ng-click="declineRequest(vRequest)">
 <a ng-repeat="vrsub in vrsubs"
 href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}, </a>
                     </div>
+
+
 <div class="ligne">
-<b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
-</div>
-                    <div class="ligne">
-                        <b>{{i18n.eXoCalendar}}:</b>
+<fieldset class="StatusTable">
+
+<b>{{i18n.status}}:</b>
+		<ul class="statusAction clearfix">
+			
+				<li ng-if="vacationRequesttoShow.status == 'pending'" class="currentStatus"><a class="node">
+				
+					</a>
+<p>{{i18n.pending}}</p>
+				</li>
+
+<li ng-if="vacationRequesttoShow.status != 'pending'" class="disableStatus"><a class="node">
+
+</a>
+					<p>{{i18n.pending}}</p>
+</li>
+				
+				<li ng-if="vacationRequesttoShow.status == 'approved'" class="currentStatus"><a class="node">
+				
+					</a>
+<p>{{i18n.approved}}</p>
+				</li>
+
+<li ng-if="vacationRequesttoShow.status != 'approved'" class="disableStatus"><a class="node">
+
+</a>
+					<p>{{i18n.approved}}</p>
+</li>		
+				
+				
+				<li ng-if="vacationRequesttoShow.status == 'declined'" class="currentStatus"><a class="node">
+				
+					</a>
+<p>{{i18n.declined}}</p>
+				</li>
+
+<li ng-if="vacationRequesttoShow.status != 'declined'" class="disableStatus"><a class="node">
+
+</a>
+					<p>{{i18n.declined}}</p>
+</li>
+				
+
+				<li ng-if="vacationRequesttoShow.status == 'validated'" class="currentStatus"><a class="node">
+				
+					</a>
+<p>{{i18n.validated}}</p>
+				</li>
+
+<li ng-if="vacationRequesttoShow.status != 'validated'" class="disableStatus"><a class="node">
+
+</a>
+					<p>{{i18n.validated}}</p>
+</li>
+				
+				
+				<li ng-if="vacationRequesttoShow.status == 'canceled'" class="currentStatus"><a class="node">
+				
+					</a>
+<p>{{i18n.canceled}}</p>
+				</li>
+
+<li ng-if="vacationRequesttoShow.status != 'canceled'" class="disableStatus"><a class="node">
+
+</a>
+					<p>{{i18n.canceled}}</p>
+</li>			
+				 
+				
+		</ul>
+</fieldset>
+  </div>
+
+
+
+<div class="ligne">
+<b>{{i18n.eXoCalendar}}:</b>
 <select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId"
 placeholder="{{i18n.serverUsername}}">
 <option value=""></option>
-                            <option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
-                            </option>
+<option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
+</option>
 </select>
-                        <button id="calSaveButton" type="button" class="btn pull-right btn-primary"
-                                ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
-                        </button>
+<button id="calSaveButton" type="button" class="btn pull-right btn-primary"
+ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
+</button>
 </div>
 
 
-                    <div class="ligne">
-                        <b>{{i18n.attacements}}:</b>
+<div class="ligne">
+<b>{{i18n.attacements}}:</b>
 
 
 <span ng-repeat="attachement in attachements" class="attachementName">
@@ -531,64 +606,64 @@ class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.
 <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
 ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconDelete uiIconLightGray"></i>
-                            </a>
+</a>
 </span>
-									                        <div  style="font:status-bar" ><div ng-show="f.progress >= 0">{{f.name}}</div> <div ng-show="errFile.$error">Cannot upload the file {{f.name}} : {{errFile.$error}} {{errFile.$errorParam}}</div>
-                            <span class="progress" ng-show="f.progress >= 0">
-          <div style="width:{{f.progress}}%"  
-               ng-bind="f.progress + '%'"></div>
+<div  style="font:status-bar" ><div ng-show="f.progress >= 0">{{f.name}}</div> <div ng-show="errFile.$error">Cannot upload the file {{f.name}} : {{errFile.$error}} {{errFile.$errorParam}}</div>
+<span class="progress" ng-show="f.progress >= 0">
+<div style="width:{{f.progress}}%"
+ng-bind="f.progress + '%'"></div>
 </span>
-                        </div>
+</div>
 
 <a class="actionIcon inline-block-hide uploadicon"
 ngf-select="uploadFiles($file, $invalidFiles) "
 ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconUpload uiIconLightGray"></i>
-                        </a>
+</a>
 </div>
-                    <div class="managersTabs">
-                        <div class="ligne manager">
-                            <b>{{i18n.managers}}:</b>
+<div class="managersTabs">
+<div class="ligne manager">
+<b>{{i18n.managers}}:</b>
 <table id="managersTable" class="table uiGrid table-hover table-striped">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
 <a class="column-item column-title">{{vrmanager.validatorName}}</a>
-                                    </td>
+</td>
 <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
 class="td-right-align">
 <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
 ng-disabled="vrmanager.reply=='declined'"><i
 class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-                                        </button>
+</button>
 <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
 ng-disabled="vrmanager.reply=='approved'"><i
 class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-                                        </button>
+</button>
 
 </td>
-                                    <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
-                                        class="td-right-align">
-                                        <b>{{geti18n(vrmanager.reply)}}</b>
+<td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
+class="td-right-align">
+<b>{{geti18n(vrmanager.reply)}}</b>
 </td>
 
 
-                                </tr>
+</tr>
 </tbody>
-                            </table>
+</table>
 </div>
-                    </div>
+</div>
 <!-- -->
 <div id="requestTabs" class="uiTabPane uiTabNormal">
 <ul id="myTab" class="nav nav-tabs">
 <li class="active" ng-click="showLogs=false" ng-class="{ 'active': !showLogs }">
 <a href="#tab-home" data-toggle="tab">{{i18n.comments}}:</a>
-                            </li>
+</li>
 <li ng-click="showLogs=true" ng-class="{ 'active': showLogs }">
 <a href="#tab-properties" data-toggle="tab">{{i18n.log}}:</a>
-                            </li>
+</li>
 </ul>
-                    </div>
+</div>
 <!-- -->
 <div class="commentsBloc" ng-show="!showLogs">
 
