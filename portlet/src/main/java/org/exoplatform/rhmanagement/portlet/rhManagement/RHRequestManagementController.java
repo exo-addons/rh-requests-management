@@ -215,7 +215,9 @@ public class RHRequestManagementController {
   @Jackson
   public VacationRequestDTO getVacationRequest (Long id) {
     try {
-      return vacationRequestService.getVacationRequest(id);
+      VacationRequestDTO vr=vacationRequestService.getVacationRequest(id);
+      if (canView(vr,currentUser)) return vr;
+      return null;
     } catch (Throwable e) {
       log.error(e);
       return null;
@@ -559,6 +561,17 @@ public class RHRequestManagementController {
       bundle = getResourceBundle(PortalRequestContext.getCurrentInstance().getLocale());
     }
     return bundle;
+  }
+
+  private Boolean canView(VacationRequestDTO vr,String user){
+    if(user.equals(vr.getUserId())) return true;
+    for (ValidatorDTO validator : validatorService.getValidatorsByRequestId(vr.getId(),0,0)){
+      if(user.equals(validator.getValidatorUserId())) return true;
+    }
+    for (User manager : Utils.getRhManagers()){
+      if(user.equals(manager.getUserName())) return true;
+    }
+    return false;
   }
 
 private void shareCalendar_(VacationRequestDTO obj, String calId){
