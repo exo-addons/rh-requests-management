@@ -1,4 +1,4 @@
-define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], function($) {
+define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation"], function($, jz,invite, calendar)  {
     var rhAdminCtrl = function($scope, $q, $timeout, $http, $filter, PagerService , Upload) {
         var rhAdminContainer = $('#rhAdminAddon');
         var deferred = $q.defer();
@@ -124,7 +124,6 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 };
 
 
-
                 $scope.getUser = function(newUserId) {
 
                     if(newUserId){
@@ -144,6 +143,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                                     $scope.showAlert = false;
                                 }, 2000);
                             }else{
+
                                 $scope.loadUserHRData(data.data);
                                 $scope.showAddForm=true;
                                 if(!data.data.avatar){
@@ -382,6 +382,8 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 },
                 url : rhAdminContainer.jzURL('RhAdministrationController.getValidatorsByRequestID')
             }).then(function successCallback(data) {
+
+
                 $scope.vrmanagers = data.data;
 //                $timeout(function() {
 //                    $scope.setResultMessage(data, "success")
@@ -484,12 +486,76 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], functi
                 $scope.currentUser=data.data.currentUser;
                 $scope.currentUserAvatar=data.data.currentUserAvatar;
                 $scope.currentUserName=data.data.currentUserName;
+
+                 $scope.searchEmployees = $scope.getEmployees($scope.currentUser);
+
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
+
+        $scope.getEmployees = function(currentUser) {
+
+            var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
+
+            $http({
+                method : 'GET',
+                url : rsetUrl
+            }).then(function successCallback(data) {
+//                console.log(data);
+
+                /* create a table of users IDs*/
+                /* A revoir selon le retour du web-service */
+                    var users = [];
+                    angular.forEach(data.data.options, function(value, key) {
+                        users[key]['name'] = value["userId"];
+                        users[key]['fullName'] = value["name"];
+                        users[key]['avatar'] = value["avatar"];
+                    });
+                /**/
+
+
+                $( "#newUserId" ).autocomplete({
+                    minLength: 0,
+                    source: users,
+                    focus: function( event, ui ) {
+                        $( "#newUserId" ).val( ui.item.name );
+                        return false;
+                      },
+                      select: function( event, ui ) {
+                        $( "#newUserId" ).val( ui.item.name );
+                        return false;
+                      }
+                }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+                    return $( "<li>" )
+                      .append( "<div> <img src='http://localhost:8080/eXoSkin/skin/images/system/"+item.avatar +"' class='avataruser' /> " + item.fullName + "</div>" )
+                      .appendTo( ul );
+                  };
+                      //http://localhost:8080/eXoSkin/skin/images/system/
+             /*   $( "#newUserId" ).autocomplete({
+                      source: users,
+                      focus: function( event, ui ) {
+                          $( "#newUserId" ).val( ui.item.name );
+                        },
+                        select: function( event, ui ) {
+                          $( "#newUserId" ).val( ui.item.name );
+                          $scope.getUser(ui.item.name);
+                        }
+                })
+                .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                  return $( "<li>" )
+                    .append( "<div>" + item.name + "<br>" + item.name + "</div>" )
+                    .appendTo( ul );
+                };*/
+
+            }, function errorCallback(data) {
+                console.log("error getEmployees");
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        }
+
 
         $scope.closeFormAdd = function() {
             $scope.showAddForm=false;

@@ -206,6 +206,9 @@ input.requestEdit[readonly]{
     height: 480px;
     overflow-y: overlay;
     border-left: 1px solid #dadada;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right:3px
 }
 
 
@@ -227,9 +230,11 @@ hr.clearfix {
 .uiBox.elementDetail {
     position: relative;
 }
-div#tab-comments {
-    padding: 25px 10px;
+div#tab-comments, #tab-logs {
+    padding: 25px 10px 0;
     padding-right: 0;
+    border: 1px solid #ccc;
+    border-top: 0
 }
 .commentList.inputContainer {
     position: absolute;
@@ -334,3 +339,14 @@ a.actionIcon.inline-block-hide.attachement{
 div#resultMessage {
     margin-left: 5px;
 }
+#resultMessage.userSearch{
+    margin-left: 5px;
+    position: absolute;
+    width: 100%;
+}
+div#rhAdminCtrl{position: relative}
+.admin_getUser{
+    display: inline-block;
+    width: 250px;
+}
+.avataruser{width : 26px; height:26px; margin-right: 5px}

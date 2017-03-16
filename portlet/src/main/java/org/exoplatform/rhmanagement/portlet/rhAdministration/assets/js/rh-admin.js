@@ -85,6 +85,9 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
     	  console.log(e);
       }
 
+
+
+
 	});
 
     $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
@@ -105,10 +108,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
         return date;
     }
 
-    //$("#toDate").val()
-    //$("#fromDate").val()
-
-//    $( "#fromDate, #toDate" ).datepicker();
+    /* -- DATE PICKER CONFIG -- */
     $( "#startDate" ).on( "change", function() {
         $( "#leaveDate" ).datepicker( "option", "minDate", $("#startDate").val() );
     });
@@ -124,5 +124,26 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
     $( "#contractEndDate" ).on( "change", function() {
         $( "#contractStartDate" ).datepicker( "option", "maxDate", $("#contractEndDate").val() );
     });
+    /* -- / DATE PICKER CONFIG -- */
+
+    /* -- USER AUTOCOMPLETE SEARCH -- */
+//    $(function(){
+//        /**/
+//        /**/
+//           if( $(".selectize-control > .selectize-input").hasClass("has-items") ){
+//                alert("hi");
+//                $(".selectize-control > .selectize-dropdown").css("display", "none!important");
+//                $(".selectize-input.items.has-options").removeClass("not-full").addClass("full");
+//           }
+//           console.log($(".selectize-input").children().length);
+//        /**/
+//        /**/
+//    })
+
+//     $("input#newUserId").on( "change", function() {
+//        	alert("hello2");
+//        	$("input#newUserId").keypress();
+//        });
+    /* -- / USER AUTOCOMPLETE SEARCH -- */
 
 });

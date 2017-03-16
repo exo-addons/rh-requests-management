@@ -369,24 +369,45 @@ div#resultMessage {
 #resultMessage.hide_alert{display:none}
 
 .statusAction {
-    padding: 0;margin: 0 0 15px 30px;white-space: nowrap
+    padding: 0;
+    margin: 0 0 15px 0;
+    white-space: nowrap
 }
 .activeStatus, .disableStatus, .currentStatus {
-    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png") no-repeat left top;display: inline-block;width: 101px;text-align:center;position: relative;margin-right: -4px
+    background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat;
+    display: inline-block;
+    width: 85px;
+    text-align: center;
+    position: relative;
+    background-position: top center;
 }
 .activeStatus p, .disableStatus p, .currentStatus p {
     font-size: 13px;
     font-weight: bold;
     margin: 10px 0
 }
-.activeStatus.node, .disableStatus.node, .currentStatus.node {
-    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/normalNode.png") no - repeat left top;width: 49 px;height: 49 px;display: block;margin: 0 auto;cursor: pointer
+.activeStatus .node, .disableStatus .node, .currentStatus .node {
+    background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/normalNode.png) no-repeat;
+    width: 85px;
+    height: 49px;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    background-position: 48% top;
 }
 .activeStatus p, .disableStatus p {
     color: #999}  .completed p,  .activeStatus.completed p,  .disableStatus.completed p{color:#333
                   }
-li:before {
-    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/lineGray.png") no-repeat left top;content: "";height: 13px;left: -31px;position: absolute;top: 17px;width: 60px
+.activeStatus:before,
+.disableStatus:before,
+.currentStatus:before {
+    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/lineGray.png") no-repeat left top;
+    content: "";
+    height: 13px;
+    left: -29px;
+    position: absolute;
+    top: 17px;
+    width: 50px;
 }
 li:first-child:before {
                 background: none
@@ -394,9 +415,32 @@ li:first-child:before {
 .disableStatus p {
     color: #999}  .currentStatus p{color:#2f5e92
                   }
-.disableStatus.node {
-    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/unTickNode.png") no-repeat left top;cursor: no-drop
+.disableStatus .node {
+    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/unTickNode.png") no-repeat;
+    background-position: 48% top;
+    cursor: no-drop;
 }
-.currentStatus.node {
-    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/tickNode.png") no-repeat left top
+.currentStatus .node {
+    background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/tickNode.png") no-repeat;
+    background-position: 48% top;
 }
+
+/*
+.uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
+    background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat left top;
+    display: inline-block;
+    width: 101px;
+    text-align: center;
+    position: relative;
+    margin-right: -4px;
+}
+.uiPublicationPanel .statusAction .activeStatus .node,
+.uiPublicationPanel .statusAction .disableStatus .node,
+.uiPublicationPanel .statusAction .currentStatus .node{
+    background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/normalNode.png) no-repeat left top;
+    width: 49px;
+    height: 49px;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+}*/
