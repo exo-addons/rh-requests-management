@@ -87,7 +87,11 @@ public class RequestRestService implements ResourceContainer {
                         user.put("type","user");
                         user.put("invalid",false);
                         user.put("order","1");
-                        user.put("avatarUrl",profile.getAvatarUrl());
+                        if(profile.getAvatarUrl()!=null){
+                            user.put("avatarUrl",profile.getAvatarUrl());
+                        }else{
+                            user.put("avatarUrl","/eXoSkin/skin/images/system/UserAvtDefault.png");
+                        }
                         user.put("text",profile.getFullName() + " (" + profile.getIdentity().getRemoteId() + ")");
                         users.put(user);
                     }
@@ -130,13 +134,13 @@ public class RequestRestService implements ResourceContainer {
                     if (("validated").equals(vr.getStatus()))event.put("backgroundColor","green");
                     if (("approved").equals(vr.getStatus())) event.put("backgroundColor","blue");
                     if (("declined").equals(vr.getStatus())||("canceled").equals(vr.getStatus()))event.put("backgroundColor","red");
-                    if (("pending").equals(vr.getStatus()))event.put("backgroundColor","grey");
+                    if (("pending").equals(vr.getStatus()))event.put("backgroundColor","orange");
                     events.put(event);
                 }
             }
             List<ValidatorDTO> validators= validatorService.getValidatorsByValidatorUserId(currentUser,0,100);
 
-            if (vrs.size() > 0) {
+            if (validators.size() > 0) {
                 for (ValidatorDTO validator : validators) {
                     VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
                     if(requestDTO!=null) {
@@ -148,7 +152,7 @@ public class RequestRestService implements ResourceContainer {
                         if (("validated").equals(requestDTO.getStatus()))event.put("backgroundColor","green");
                         if (("approved").equals(requestDTO.getStatus())) event.put("backgroundColor","blue");
                         if (("declined").equals(requestDTO.getStatus())||("canceled").equals(requestDTO.getStatus()))event.put("backgroundColor","red");
-                        if (("pending").equals(requestDTO.getStatus()))event.put("backgroundColor","grey");
+                        if (("pending").equals(requestDTO.getStatus()))event.put("backgroundColor","orange");
                         events.put(event);
                     }
                 }
