@@ -350,3 +350,12 @@ div#rhAdminCtrl{position: relative}
     width: 250px;
 }
 .avataruser{width : 26px; height:26px; margin-right: 5px}
+input#newUserId {
+    margin-left: -20px;
+}
+i.uiIconEcmsSearchMini.newUserId {
+    font-size: 15px;
+    margin-left: -20px;
+    top: 3px;
+    cursor: pointer;
+}

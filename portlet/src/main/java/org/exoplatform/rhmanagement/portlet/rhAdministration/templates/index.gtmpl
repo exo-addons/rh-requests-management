@@ -48,22 +48,14 @@
                         <!--<i class="uiIconClose "></i>-->
                         <!--</a>-->
 
-                        <div class="ligne getUserLigne uiBox" layout="column" ng-cloak>
-                            <b>User:</b>
+                        <div class="ligne getUserLigne uiBox">
+                            <b>{{i18n.user}}:</b>
 
                         <div class="uiSearchInput">
-                            <input type="text" id="newUserId" ng-change="getUser(newUserId)" ng-model="newUserId" name="newUserId" placeholder="Search"/>
-                        </div>
-                            <!--                            <div class="controls uiSearchInput admin_getUser {{usernameClass}}">
-                                                            <input type="text" name="newUserId" id="newUserId" ng-model="newUserId" />
-                                                        </div>-->
-                            <!--ng-model="newUserId" ng-change="getUser(newUserId)"-->
-                            <!--<a class="btn" data-original-title="get" rel="tooltip" ng-click="getUser(newUserId)"><i class="uiIconEcmsSearchMini"></i></a>-->
+                            <input type="text" id="newUserId" ng-change="getUser(newUserId)" ng-model="newUserId" name="newUserId" placeholder="{{i18n.searchUser}}"/><i class="uiIconEcmsSearchMini newUserId"></i>
                         </div>
 
-
-
-
+                        </div>
 
                     </div>
 

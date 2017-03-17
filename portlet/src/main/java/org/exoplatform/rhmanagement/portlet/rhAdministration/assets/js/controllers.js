@@ -126,6 +126,9 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
 
                 $scope.getUser = function(newUserId) {
 
+                    $scope.getEmployees($scope.currentUser, newUserId);
+
+
                     if(newUserId){
                         $("#getUser").removeClass("invalid");
                         $http({
@@ -487,8 +490,6 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
                 $scope.currentUserAvatar=data.data.currentUserAvatar;
                 $scope.currentUserName=data.data.currentUserName;
 
-                 $scope.searchEmployees = $scope.getEmployees($scope.currentUser);
-
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
@@ -496,59 +497,40 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
             });
         }
 
-        $scope.getEmployees = function(currentUser) {
-
-            var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
+        $scope.getEmployees = function(currentUser, searchUser = null) {
+            var rsetUrl="/rest/rhrequest/users/find?currentUser="+currentUser+"&spaceURL=exo_employees&nameToSearch="+searchUser;//+$scope.employeesSpace;
 
             $http({
                 method : 'GET',
                 url : rsetUrl
             }).then(function successCallback(data) {
-//                console.log(data);
 
                 /* create a table of users IDs*/
-                /* A revoir selon le retour du web-service */
                     var users = [];
                     angular.forEach(data.data.options, function(value, key) {
-                        users[key]['name'] = value["userId"];
-                        users[key]['fullName'] = value["name"];
-                        users[key]['avatar'] = value["avatar"];
+                        users[key] = [];
+                        users[key]['value'] = value.value;
+                        users[key]['fullName'] = value.text;
+                        users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
                     });
                 /**/
-
 
                 $( "#newUserId" ).autocomplete({
                     minLength: 0,
                     source: users,
                     focus: function( event, ui ) {
-                        $( "#newUserId" ).val( ui.item.name );
+                        $( "#newUserId" ).val( ui.item.value );
                         return false;
                       },
                       select: function( event, ui ) {
-                        $( "#newUserId" ).val( ui.item.name );
+                        $( "#newUserId" ).val( ui.item.value );
                         return false;
                       }
                 }).autocomplete( "instance" )._renderItem = function( ul, item ) {
                     return $( "<li>" )
-                      .append( "<div> <img src='http://localhost:8080/eXoSkin/skin/images/system/"+item.avatar +"' class='avataruser' /> " + item.fullName + "</div>" )
+                      .append( "<div> <img src='"+item.avatar +"' class='avataruser' /> " + item.fullName + "</div>" )
                       .appendTo( ul );
                   };
-                      //http://localhost:8080/eXoSkin/skin/images/system/
-             /*   $( "#newUserId" ).autocomplete({
-                      source: users,
-                      focus: function( event, ui ) {
-                          $( "#newUserId" ).val( ui.item.name );
-                        },
-                        select: function( event, ui ) {
-                          $( "#newUserId" ).val( ui.item.name );
-                          $scope.getUser(ui.item.name);
-                        }
-                })
-                .autocomplete( "instance" )._renderItem = function( ul, item ) {
-                  return $( "<li>" )
-                    .append( "<div>" + item.name + "<br>" + item.name + "</div>" )
-                    .appendTo( ul );
-                };*/
 
             }, function errorCallback(data) {
                 console.log("error getEmployees");
