@@ -30,6 +30,12 @@ define('calendar', ["SHARED/jquery","fullcalendar"], function($,fullcalendar) {
                     }
                 });
 
+            },
+
+            refresh: function(selector) {
+                $('#'+selector).fullCalendar('removeEvents');
+                $('#'+selector).fullCalendar('refetchEvents');
+
             }
         };
 

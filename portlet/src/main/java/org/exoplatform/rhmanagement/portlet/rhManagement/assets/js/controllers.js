@@ -244,7 +244,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     $("#substitutes").val("");
                     $("#userCalendar").val("");
                     $scope.showAlert = false;
-                    calendar.build('myCalendar');
+                    calendar.refresh('myCalendar');
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
@@ -288,7 +288,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.myVacationRequests = data.data;
                 $scope.showForm = false;
                 $scope.showForm = false;
-                calendar.build('myCalendar');
+                calendar.refresh('myCalendar');
                 $scope.setResultMessage($scope.i18n.deleteRequest, "success");
                 $timeout(function() {
                     $scope.showAlert = false;
@@ -317,7 +317,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.showVacationRequest(data.data);
                 $scope.showAlert = false;
-                calendar.build('myCalendar');
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
@@ -478,7 +477,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }).then(function successCallback(data) {
                     $scope.showVacationRequest(data.data);
                     $scope.showAlert = false;
-                    calendar.build('myCalendar');
+                    calendar.refresh('myCalendar');
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
@@ -504,7 +503,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }).then(function successCallback(data) {
                     $scope.showVacationRequest(data.data);
                     $scope.showAlert = false;
-                    calendar.build('myCalendar');
+                    calendar.refresh('myCalendar');
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
