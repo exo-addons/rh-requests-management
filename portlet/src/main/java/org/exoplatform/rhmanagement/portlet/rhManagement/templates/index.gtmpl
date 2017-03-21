@@ -657,10 +657,10 @@ class="td-right-align">
 <div id="requestTabs" class="uiTabPane uiTabNormal">
 <ul id="myTab" class="nav nav-tabs">
 <li class="active" ng-click="showLogs=false" ng-class="{ 'active': !showLogs }">
-<a href="#tab-home" data-toggle="tab">{{i18n.comments}}:</a>
+<a href="#tab-home" data-toggle="tab">{{i18n.comments}}</a>
 </li>
 <li ng-click="showLogs=true" ng-class="{ 'active': showLogs }">
-<a href="#tab-properties" data-toggle="tab">{{i18n.log}}:</a>
+<a href="#tab-properties" data-toggle="tab">{{i18n.log}}</a>
 </li>
 </ul>
 </div>

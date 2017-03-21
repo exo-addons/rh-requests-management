@@ -497,6 +497,28 @@ public class RhAdministrationController {
   }
 
 
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<CommentDTO> getHistory(@Jackson VacationRequestDTO obj) {
+    try {
+      List<CommentDTO> comments= commentService.getCommentsByRequestId(obj.getId(), Utils.HISTORY,0,100);
+      for (CommentDTO comment : comments){
+        Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, comment.getPosterId(), false).getProfile();
+        comment.setPosterName(profile.getFullName());
+        if(profile.getAvatarUrl()!=null){
+          comment.setPosterAvatar(profile.getAvatarUrl());
+        }else{
+          comment.setPosterAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+        }
+      }
+      return comments;
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
 
   @Ajax
   @juzu.Resource

@@ -21,6 +21,8 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
            };
         $scope.allVacationRequests = [];
         $scope.attachements = [];
+        $scope.comments = [];
+        $scope.history = [];
         $scope.orderByField = 'title';
         $scope.reverseSort = false;
         $scope.rhEmployee = {};
@@ -453,6 +455,24 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
         }
 
 
+
+        $scope.loadHistory = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhAdminContainer.jzURL('RhAdministrationController.getHistory')
+            }).then(function successCallback(data) {
+                $scope.history = data.data;
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        };
+
+
         $scope.loadRequestAttachments = function(vacationRequest) {
             $http({
                 data : vacationRequest,
@@ -477,6 +497,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
             $scope.loadSubstitues(vacationRequest);
             $scope.loadRequestAttachments(vacationRequest);
             $scope.loadComments(vacationRequest);
+            $scope.loadHistory(vacationRequest);
             $scope.showDetails = true;
         };
 
