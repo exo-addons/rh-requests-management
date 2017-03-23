@@ -35,18 +35,12 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showLogs = false;
         $scope.showFullReq= false;
         $scope.showAlert = false;
-        $scope.newVacationRequest = {
-            id : null
-        };
+        $scope.newVacationRequest = null;
 
-        $scope.newComment = {
-            id : null
-        };
+        $scope.newComment = null;
 
 
-        $scope.vacationRequesttoShow = {
-            validatorUserId : null
-        };
+        $scope.vacationRequesttoShow = null;
 
         $scope.showBalance= function(){
            if( $scope.newVacationRequest.type == 'holiday'){

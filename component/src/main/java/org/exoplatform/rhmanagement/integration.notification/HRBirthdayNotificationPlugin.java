@@ -108,7 +108,7 @@ public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.BIRTHDAY_DATE, new Date().toString())//obj.getBirthDay().toString())
+            .with(NotificationUtils.BIRTHDAY_DATE, obj.getBirthDay().toString())
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

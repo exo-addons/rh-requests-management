@@ -197,7 +197,7 @@ class="result-message alert {{resultMessageClass}}">
             </div>
 <!--Start Left column-->
 <div id="left_col" class="uiBox" ng-show="showList || showForm"
-ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails , 'displayNone': showFullReq}">
+ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails || vacationRequesttoShow ==null , 'displayNone': showFullReq}">
 <!--<div id="myCalendar" ng-show="showCal"></div>-->
 
 
@@ -473,7 +473,7 @@ ng-click="declineRequest(vRequest)">
                 </div>
 </div>
             <!--End Left column-->
-            <div id="right_col" class="uiBox elementDetail" ng-show="showDetails"
+            <div id="right_col" class="uiBox elementDetail" ng-show="showDetails && vacationRequesttoShow !=null"
                  ng-class="{ 'fullWidth': showFullReq }">
                 <a class="actionIcon " style="float:right"
                    ng-click="showDetails=false; showList= true; showFullReq= false">
