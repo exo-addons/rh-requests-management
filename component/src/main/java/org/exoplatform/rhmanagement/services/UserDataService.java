@@ -37,9 +37,6 @@ import java.util.Map;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 public class UserDataService {
   private  final Logger LOG = LoggerFactory.getLogger(UserDataService.class);

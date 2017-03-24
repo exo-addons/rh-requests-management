@@ -26,9 +26,6 @@ import java.util.List;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 public class UserRHDataDAO extends GenericDAOJPAImpl<UserRHDataEntity, String> {
     private static final Logger LOG = LoggerFactory.getLogger(UserRHDataDAO.class);

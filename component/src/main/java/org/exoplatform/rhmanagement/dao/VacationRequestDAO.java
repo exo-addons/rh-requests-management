@@ -26,9 +26,6 @@ import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity, String> {
     private static final Logger LOG = LoggerFactory.getLogger(VacationRequestDAO.class);

@@ -30,9 +30,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 public class CommentService {
   private  final Logger LOG = LoggerFactory.getLogger(CommentService.class);

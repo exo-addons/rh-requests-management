@@ -33,9 +33,6 @@ import java.util.List;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 public class ValidatorService {
   private  final Logger LOG = LoggerFactory.getLogger(ValidatorService.class);

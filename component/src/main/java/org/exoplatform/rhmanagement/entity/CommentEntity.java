@@ -24,9 +24,6 @@ import java.util.Date;
 
 /**
  * Created by The eXo Platform SAS
- *
- * @author boubaker.khanfir@exoplatform.com
- * @since Apr 27, 2016
  */
 @Entity(name = "HRCommentEntity")
 @ExoEntity
