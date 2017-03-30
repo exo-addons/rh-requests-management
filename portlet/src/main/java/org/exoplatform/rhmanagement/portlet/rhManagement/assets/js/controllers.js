@@ -31,7 +31,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
-        $scope.showHollidays = false;
+        $scope.showHollidays = true;
+        $scope.showLeave = false;
         $scope.showLogs = false;
         $scope.showFullReq= false;
         $scope.showAlert = false;
@@ -46,12 +47,19 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
            if( $scope.newVacationRequest.type == 'holiday'){
                $scope.showSick=false;
                $scope.showHollidays=true;
+               $scope.showLeave=false;
            } else if( $scope.newVacationRequest.type == 'sick'){
                $scope.showSick=true;
                $scope.showHollidays=false;
-           } else{
+               $scope.showLeave=false;
+           } else if( $scope.newVacationRequest.type == 'leave'){
                $scope.showSick=false;
                $scope.showHollidays=false;
+               $scope.showLeave=true;
+           }else {
+               $scope.showSick=false;
+               $scope.showHollidays=false;
+               $scope.showLeave=false;
            }
         }
 
@@ -201,9 +209,13 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
-            }else if(($("#toDate").val() == "") || ($("#fromDate").val() == "")){
+            }else if( ($scope.newVacationRequest.type != "leave") && (($("#toDate").val() == "") || ($("#fromDate").val() == ""))){
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.fromToDate, "error");
+                $("#toDate, #fromDate").addClass("ng-invalid");
+            }else if(($scope.newVacationRequest.type == "leave") && ($("#fromDate").val() == "")){
+                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+                $scope.setResultMessage($scope.i18n.leaveDateMsg, "error");
                 $("#toDate, #fromDate").addClass("ng-invalid");
             }else{
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");

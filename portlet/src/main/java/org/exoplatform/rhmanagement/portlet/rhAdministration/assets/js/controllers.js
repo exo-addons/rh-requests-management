@@ -143,7 +143,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
 
                             if(data.data == ""){
                                 $scope.showAddForm=false;
-                                $scope.setResultMessage($scope.i18n.noUser, "info");
+                            //    $scope.setResultMessage($scope.i18n.noUser, "info");
                                 $timeout(function() {
                                     $scope.showAlert = false;
                                 }, 2000);

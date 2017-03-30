@@ -328,6 +328,7 @@ public class RHRequestManagementController {
       substitutes=substitutes.concat(substitute+",");
     }
     vr.setSubstitute(substitutes);
+    if ("leave".equals(vr.getType())) vr.setToDate(vr.getFromDate());
     vr=vacationRequestService.save(vr,true);
 
     obj.setVacationRequestDTO(vr);
