@@ -109,12 +109,12 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 </td>
                                 <td>
                                     <div class="center">
-                                        <a class="actionIcon" title="" rel="tooltip" href=""
+                                        <a class="actionIcon" title=""  href=""
                                            data-ng-click="loadUserHRData(userRhData)">
                                             <i class="uiIconViewUserInfo uiIconLightGray"> </i>
 </a>
 
-                                        <a class="actionIcon" title="" rel="tooltip" href=""
+                                        <a class="actionIcon" title=""  href=""
                                            data-ng-click="deleteUserHRData(userRhData)">
                                             <i class="uiIconDeleteUser uiIconLightGray"> </i>
 </a>
@@ -326,9 +326,9 @@ ng-click="enableInput('#others')"></i>
 
 
                                     <span ng-repeat="attachement in attachements" class="attachementName">
-                                        <a class="column-item column-title" data-placement="bottom" rel="tooltip"
+                                        <a class="column-item column-title" data-placement="bottom"
                                            href='{{attachement.url}}'><i class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0, 1).toUpperCase() + (attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
-                                        <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
+                                        <a class="inline-block-hide" data-placement="left" data-original-title="Delete "
                                            ng-click="deleteAttachement(attachement.name)">
                                             <i class="uiIconClose uiIconLightGray"></i>
 </a>
@@ -476,7 +476,7 @@ ng-click="showDetails = false">
                             </div>
 <div class="ligne">
 <b>{{i18n.substitutes}}:</b>
-                                <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}, </a>
+                                <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
 </div>
                             <div class="ligne">
                                 <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
@@ -487,9 +487,9 @@ ng-click="showDetails = false">
 
 
                                 <span ng-repeat="attachement in attachements" class="attachementName">
-                                    <a class="column-item column-title" data-placement="bottom" rel="tooltip"
+                                    <a class="column-item column-title" data-placement="bottom" target="_blank"
                                        href='{{attachement.url}}'><i class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0, 1).toUpperCase() + (attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
-                                    <a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
+                                    <a class="inline-block-hide" data-placement="left" data-original-title="Delete "
                                        ng-click="deleteAttachement(attachement.name)">
                                         <i class="uiIconClose uiIconLightGray"></i>
 </a>
@@ -504,7 +504,7 @@ ng-click="showDetails = false">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a class="column-item column-title">{{vrmanager.validatorName}}</a>
+<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
                                             </td>
 <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
 class="td-right-align">

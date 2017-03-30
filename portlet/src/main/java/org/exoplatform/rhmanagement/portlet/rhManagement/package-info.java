@@ -26,11 +26,11 @@
         @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" , "calendar" }),
     @Script(id = "rhAddon", value = "js/rh-management-addon.js", depends = { "controllers" }) })
-@Less("style/sample-addon.less")
+@Less("style/rh-manager.less")
 @Stylesheets({
         @Stylesheet(id = "jQueryUISkin", value = "style/jquery-ui.css") ,
         @Stylesheet(id = "fullcalendarSkin", value = "style/fullcalendar.css") ,
-        @Stylesheet(id = "sample-addonSkin", value = "style/sample-addon.css") })
+        @Stylesheet(id = "sample-addonSkin", value = "style/rh-manager.css") })
 @Assets("*")
 package org.exoplatform.rhmanagement.portlet.rhManagement;
 

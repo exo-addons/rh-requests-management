@@ -295,10 +295,10 @@ public class RHRequestManagementController {
   public List<EmployeesDTO>  getSubstitutesByRequestID(@Jackson VacationRequestDTO obj) {
     try {
       List<EmployeesDTO> userDTOs = new ArrayList<EmployeesDTO>();
-      EmployeesDTO employeesDTO=new EmployeesDTO();
+
       for(String userId : obj.getSubstitute().split(",")){
         Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
-
+        EmployeesDTO employeesDTO=new EmployeesDTO();
         if(id!=null){
           employeesDTO.setUserId(userId);
           employeesDTO.setName(id .getProfile().getFullName());

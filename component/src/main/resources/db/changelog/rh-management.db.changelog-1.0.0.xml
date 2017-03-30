@@ -25,7 +25,7 @@
       <column name="FROM_DATE" type="DATE"></column>
       <column name="TO_DATE" type="DATE"></column>
       <column name="REASON" type="NVARCHAR(550)"></column>
-      <column name="ANNUAL" type="BOOLEAN"></column>
+      <column name="VACATION_TYPE" type="NVARCHAR(50)"></column>
       <column name="SUBSTITUTE" type="NVARCHAR(100)"></column>
       <column name="STATUS" type="NVARCHAR(100)" defaultValue="pending"></column>
       <column name="TYPE" type="NVARCHAR(100)"></column>

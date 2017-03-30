@@ -546,11 +546,11 @@ public class RhAdministrationController {
   public List<EmployeesDTO>  getSubstitutesByRequestID(@Jackson VacationRequestDTO obj) {
     try {
       List<EmployeesDTO> userDTOs = new ArrayList<EmployeesDTO>();
-      EmployeesDTO employeesDTO=new EmployeesDTO();
       for(String userId : obj.getSubstitute().split(",")){
         Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
 
         if(id!=null){
+          EmployeesDTO employeesDTO=new EmployeesDTO();
           employeesDTO.setUserId(userId);
           employeesDTO.setName(id .getProfile().getFullName());
           userDTOs.add(employeesDTO);

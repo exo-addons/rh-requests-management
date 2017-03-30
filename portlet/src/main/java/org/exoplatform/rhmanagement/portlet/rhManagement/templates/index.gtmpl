@@ -4,14 +4,14 @@
     <div ng-controller="rhCtrl" id="rhCtrl">
         <ul class="nav nav-tabs addonMenu" id="addonMenu">
             <li class="item" ng-class="{ 'active': showForm }">
-                <a class="" data-placement="right" data-original-title="Add" rel="tooltip"
+                <a class="" data-placement="right" data-original-title="Add"
                    ng-click="showForm = true">
                     <i class="uiIconCalAddCalendar"></i>
 <span class="tabName">{{i18n.newVacationRequest}}</span>
                 </a>
 </li>
             <li class="item" ng-class="{ 'active': showCal }">
-                <a class=" show-calender" data-placement="left" data-original-title="Add" rel="tooltip"
+                <a class=" show-calender" data-placement="left" data-original-title="Add" 
                    ng-click="toggleView()">
                     <i class="uiIconPLFEvent"></i>
 <span id="forum" class="tabName show-calender">{{i18n.showCalendar}}</span>
@@ -58,17 +58,7 @@
 
 
             <div class="bg" ng-class="{ 'display': (showCal && showForm) }"></div>
-<!--<div class="manage-view">
-<a class="btn btn-primary" data-placement="right" data-original-title="Add" rel="tooltip"
-ng-show="!showForm" ng-click="showForm = true">
-<i class="uiIconSimplePlusMini"></i> {{i18n.newVacationRequest}}
-                            </a>
-<a class="btn btn-primary show-calender" data-placement="left" data-original-title="Add" rel="tooltip"
-ng-click="toggleView()">
-        {{i18n.showCalendar}}
-</a>
 
-                        </div>-->
 <div id="myCalendar" ng-show="showCal"></div>
 
             <!-- Request Resume -->
@@ -99,7 +89,7 @@ ng-click="toggleView()">
 </div>
                     <div class="ligne">
                         <b>{{i18n.substitutes}}:</b>
-<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.name}}, </a>
+<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
                     </div>
 <div class="ligne">
 <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
@@ -110,7 +100,7 @@ ng-click="toggleView()">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a class="column-item column-title">{{vrmanager.validatorName}}</a>
+<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
                                 </td>
 <td ng-if="currentUser == vrmanager.validatorUserId" class="td-right-align">
 <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
@@ -328,7 +318,7 @@ ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
 <div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
-<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown" rel="tooltip"
+<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
 data-placement="bottom">
 <i class="uiIconFilter uiIconLightGray"></i>
                                 </a>
@@ -383,7 +373,7 @@ ng-click="showVacationRequest(myVacationRequest)">
                                     <div ng-if="myVacationRequest.status != 'validated' && myVacationRequest.status != 'canceled'">
                                         <span class="text-time inline-block-show"></span>
 <a class="actionIcon inline-block-hide" data-placement="left"
-data-original-title="Delete " rel="tooltip"
+data-original-title="Delete "
 ng-click="deleteRequest(myVacationRequest)">
 <i class="uiIconDeleteUser uiIconLightGray"></i>
                                         </a>
@@ -398,7 +388,7 @@ ng-click="deleteRequest(myVacationRequest)">
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
 <div class="action-bar  dropdown pull-right">
-<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown" rel="tooltip"
+<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
 data-placement="bottom">
 <i class="uiIconFilter uiIconLightGray"></i>
                                 </a>
@@ -456,12 +446,12 @@ ng-click="showVacationRequest(vRequest)">{{vRequest.userFullName}}:
                                     <div ng-if="vRequest.status != 'validated' && vRequest.status != 'canceled'">
                                         <span class="text-time inline-block-show"></span>
 <a class="actionIcon validate inline-block-hide" data-placement="left"
-data-original-title="Validate" rel="tooltip"
+data-original-title="Validate"
 ng-click="approveRequest(vRequest)">
 <i class="uiIconValidate uiIconLightGray"></i>
                                         </a>
 <a class="actionIcon deny inline-block-hide" data-placement="left"
-data-original-title="Decline" rel="tooltip"
+data-original-title="Decline"
 ng-click="declineRequest(vRequest)">
 <i class="uiIconEcmsRemove uiIconLightGray"></i>
                                         </a>
@@ -501,7 +491,7 @@ ng-click="declineRequest(vRequest)">
                     <div class="ligne">
                         <b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs"
-href='/portal/intranet/profile/{{vrsub.id}}'>{{vrsub.value}}, </a>
+href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
                     </div>
 
 
@@ -600,10 +590,10 @@ ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
 
 
 <span ng-repeat="attachement in attachements" class="attachementName">
-<a class="column-item column-title" data-placement="bottom" rel="tooltip"
+<a class="column-item column-title" data-placement="bottom" target="_blank"
 href='{{attachement.url}}'><i
 class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0,1).toUpperCase()+(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i> {{attachement.name}}</a>
-<a class="inline-block-hide" data-placement="left" data-original-title="Delete " rel="tooltip"
+<a class="inline-block-hide" data-placement="left" data-original-title="Delete "
 ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconDelete uiIconLightGray"></i>
 </a>
@@ -628,7 +618,7 @@ ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachem
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a class="column-item column-title">{{vrmanager.validatorName}}</a>
+<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
 </td>
 <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
 class="td-right-align">
