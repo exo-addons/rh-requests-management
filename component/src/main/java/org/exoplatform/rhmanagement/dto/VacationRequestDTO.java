@@ -37,7 +37,7 @@ public class VacationRequestDTO {
 
   private String              reason;
 
-  private boolean             annual;
+  private String             vacationType;
 
   private String              substitute;
 

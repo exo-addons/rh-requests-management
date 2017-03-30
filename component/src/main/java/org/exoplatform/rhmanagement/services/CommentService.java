@@ -48,6 +48,7 @@ public class CommentService {
 
     CommentEntity commentEntity = null;
     if (entity == null) {
+      entity.setPostedTime(System.currentTimeMillis());
       commentEntity = commentDAO.create(convert(entity));
     } else {
       commentEntity = commentDAO.update(convert(entity));

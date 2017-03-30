@@ -47,7 +47,7 @@ public class CommentEntity {
   private long requestId;
 
   @Column(name = "POSTED_TIME")
-  private Date   postedTime;
+  private long   postedTime;
 
   @Column(name = "COMMENT_TYPE")
   private String   commentType;

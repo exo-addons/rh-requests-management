@@ -154,9 +154,7 @@ public class VacationRequestService {
     entity.setFromDate(dto.getFromDate());
     entity.setToDate(dto.getToDate());
     entity.setReason(dto.getReason());
-/*
-    entity.setAnnual(dto.getAnnual());
-*/
+    entity.setVacationType(dto.getVacationType());
     entity.setSubstitute(dto.getSubstitute());
     entity.setType(dto.getType());
     entity.setStatus(dto.getStatus());
@@ -174,9 +172,7 @@ public class VacationRequestService {
     dto.setFromDate(entity.getFromDate());
     dto.setToDate(entity.getToDate());
     dto.setReason(entity.getReason());
-/*
-    dto.setAnnual(entity.getAnnual());
-*/
+    dto.setVacationType(entity.getVacationType());
     dto.setSubstitute(entity.getSubstitute());
     dto.setType(entity.getType());
     dto.setStatus(entity.getStatus());

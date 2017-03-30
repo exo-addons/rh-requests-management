@@ -27,7 +27,7 @@ public class CommentDTO {
 
   private String              posterId;
 
-  private Date              postedTime;
+  private long              postedTime;
 
   private long              requestId;
 

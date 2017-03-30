@@ -346,7 +346,6 @@ public class RHRequestManagementController {
     comment.setRequestId(vr.getId());
     comment.setCommentText("requestCreated");
     comment.setPosterId(currentUser);
-    comment.setPostedTime(new Date());
     comment.setCommentType(Utils.HISTORY);
     commentService.save(comment);
     try {
@@ -364,7 +363,6 @@ public class RHRequestManagementController {
   @Jackson
   public void saveComment(@Jackson CommentDTO obj) {
     obj.setPosterId(currentUser);
-    obj.setPostedTime(new Date());
     obj.setCommentType(Utils.COMMENT);
     commentService.save(obj);
   }
@@ -457,7 +455,6 @@ public class RHRequestManagementController {
      comment.setRequestId(obj.getId());
      comment.setCommentText("requestDeclined");
      comment.setPosterId(currentUser);
-     comment.setPostedTime(new Date());
      comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
@@ -473,7 +470,6 @@ public class RHRequestManagementController {
      comment.setRequestId(obj.getId());
      comment.setCommentText("requestApproved");
      comment.setPosterId(currentUser);
-     comment.setPostedTime(new Date());
      comment.setCommentType(Utils.HISTORY);
      commentService.save(comment);
      try {
@@ -610,7 +606,6 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
         comment.setRequestId(requestId);
         comment.setCommentText("attachementAdded");
         comment.setPosterId(currentUser);
-        comment.setPostedTime(new Date());
         comment.setCommentType(Utils.HISTORY);
         commentService.save(comment);
           return Response.ok();
@@ -631,7 +626,6 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     comment.setRequestId(requestId);
     comment.setCommentText("attachementDeleted");
     comment.setPosterId(currentUser);
-    comment.setPostedTime(new Date());
     comment.setCommentType(Utils.HISTORY);
     commentService.save(comment);
       return Response.ok();

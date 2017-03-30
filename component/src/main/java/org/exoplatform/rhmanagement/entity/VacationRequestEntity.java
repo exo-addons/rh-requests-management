@@ -62,8 +62,8 @@ public class VacationRequestEntity {
   @Column(name = "REASON")
   private String   reason;
 
-  @Column(name = "ANNUAL")
-  private boolean annual;
+  @Column(name = "VACATION_TYPE")
+  private String  vacationType;
 
   @Column(name = "SUBSTITUTE")
   private String   substitute;

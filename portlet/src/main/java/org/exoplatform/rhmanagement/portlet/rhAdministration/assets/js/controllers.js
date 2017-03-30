@@ -424,7 +424,7 @@ define("rhAdminAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/
             if($scope.newComment.commentText){
             $scope.showAlert = false;
                 $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
-                $scope.newComment.postedTime= new Date();
+                $scope.newComment.postedTime= Date.now();
                 $scope.newComment.posterId=$scope.currentUser;
                 $scope.newComment.posterAvatar=$scope.currentUserAvatar;
                 $scope.newComment.posterName=$scope.currentUserName;

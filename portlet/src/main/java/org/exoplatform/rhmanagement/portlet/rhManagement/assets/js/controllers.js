@@ -428,7 +428,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
                 $scope.newComment.requestId=$scope.vacationRequesttoShow.id;
-                $scope.newComment.postedTime= new Date();
+                $scope.newComment.postedTime= Date.now();
                 $scope.newComment.posterId=$scope.currentUser;
                 $scope.newComment.posterAvatar=$scope.currentUserAvatar;
                 $scope.newComment.posterName=$scope.currentUserName;
