@@ -462,13 +462,16 @@ ng-click="showDetails = false">
                                 <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
                             </div>
 <div class="ligne">
-<b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
+<b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.numberDays}}:</b> 
+<b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.numberHours}}:</b>
+<span>{{vacationRequesttoShow.daysNumber}}</span>
 </div>
-                            <div class="ligne">
-                                <b>{{i18n.fromDate}}:</b>
+<div class="ligne">
+<b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
+								<b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
 <span>{{vacationRequesttoShow.fromDate| date:'d MMM y'}}</span>
                             </div>
-<div class="ligne">
+<div   ng-show="vacationRequesttoShow.type!='leave'" class="ligne">
 <b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate| date:'d MMM y'}}</span>
 </div>
                             <div class="ligne">
