@@ -46,7 +46,6 @@ ul.tab li a:hover {background-color: #ddd;}
 .tabcontent .ligne {
     position : relative;
     padding: 2px 0;
-    margin-bottom: 8px;
     min-height: 20px;
     padding: 1px 10px;
 }
@@ -88,6 +87,7 @@ img.avatar {
     overflow: hidden;
     float: left;
 }
+.tabcontent .ligne::after{clear: both}
 .tabcontent .span3 .ligne > b{
     width: 40%;
     margin-right: 4px;
@@ -291,11 +291,9 @@ ul#addonMenu > li > a {
     background: none;
     height: 51px;
     min-width: 45px;
-    margin: 10px 20px;
+    margin: 10px 5px;
     margin-top: 10px;
-    margin-right: 20px;
     margin-bottom: 10px;
-    margin-left: 20px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -350,12 +348,46 @@ div#rhAdminCtrl{position: relative}
     width: 250px;
 }
 .avataruser{width : 26px; height:26px; margin-right: 5px}
-input#newUserId {
-    margin-left: -20px;
-}
+
 i.uiIconEcmsSearchMini.newUserId {
     font-size: 15px;
     margin-left: -20px;
     top: 3px;
     cursor: pointer;
+}
+#employeesList .uiSearchInput{
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+.table-responsive {
+    overflow: auto;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 100%;
+}
+.table-responsive > table{
+    margin: 10px auto;
+    width: 100%;
+    min-width: 400px;
+}
+@media (max-width: 776px) {
+    #left_col{width: 100%}
+    #right_col{width: 100%; padding: 0; border: 0}
+    .commentRight textarea {
+        width: 100%;
+        height: 80px;
+    }
+    .commentList {height: 265px;}
+    .inputContainer {
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        left: 10px;
+    }
+}
+@media (max-width: 432px) {
+    #employeesList .uiSearchInput{
+        position: relative;
+    }
 }
