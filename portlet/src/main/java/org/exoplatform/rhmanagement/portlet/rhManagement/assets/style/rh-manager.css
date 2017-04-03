@@ -101,7 +101,11 @@ td.RightBodyTDContainer{
 
 }
 .elementDetail .ligne{
-    padding: 5px 15px;
+    padding: 10px 15px;
+    display: flex;
+}
+.ligne.manager {
+    display: block;
 }
 .elementDetail .ligne > b{ margin-left: 0}
 .elementDetail .ligne:nth-child(even){
@@ -174,7 +178,7 @@ select[name=inputUsername] {
 }
 /* */
 /*  -- New REQUEST FIXED --  */
-/* */
+/*
 .vacationRequest-container.fixed{
         position: fixed;
         top: 14%;
@@ -197,19 +201,14 @@ select[name=inputUsername] {
 /*  -- New REQUEST FIXED --  */
 /* */
 .vacationRequest-container.fixed{
-        position: fixed;
-           top: 14%;
-           left:43%;
-           bottom: 0%;
-           height: 465px;
-           overflow: auto;
-           border: solid 1px #ccc;
-           background: #FFF;
-           z-index:20;
-           background-color: white;
-           padding-top: 20px;
-           padding-right: 23px;
-           border-radius: 5px;
+    display: block;
+    position: absolute;
+    top: 80px;
+    width: initial;
+    height: initial;
+    z-index: 20;
+    right: 20%;
+    left: 20%;
 }
 
 /* ITEMS WIDTH */
@@ -227,9 +226,7 @@ select[name=inputUsername] {
 }
 .bg.display{display: block}
 
-@media screen and (max-width: 767px) {
-    #right_col, #left_col{width : 100%}
-}
+
 
 
 .requestCompleted{
@@ -253,11 +250,13 @@ select[name=inputUsername] {
 select#managerCalendarId {
     width: 30%;
     max-width: 200px;
+    min-width: 165px;
 }
 #calSaveButton {
     width: 20.5%;
     max-width: 100px;
     float: none;
+    min-width: 71px;
 }
 /* ---- requestTabs ---- */
 #requestTabs{margin-top: 5px}
@@ -320,11 +319,9 @@ ul#addonMenu > li > a {
     background: none;
     height: 51px;
     min-width: 45px;
-    margin: 10px 20px;
+    margin: 10px 5px;
     margin-top: 10px;
-    margin-right: 20px;
     margin-bottom: 10px;
-    margin-left: 20px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -332,7 +329,7 @@ ul#addonMenu > li > a {
     padding-bottom: 8px;
     line-height: 20px;
     border: 1px solid transparent;
-        border-radius: 5px;
+    border-radius: 5px;
 }
 .nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
     color: #555;
@@ -424,7 +421,47 @@ li:first-child:before {
     background: url("/eXoSkin/skin/images/themes/default/ecms/skin/Publication/tickNode.png") no-repeat;
     background-position: 48% top;
 }
-
+hr.clearfix{
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+@media screen and (max-width: 767px) {
+    #right_col, #left_col{width : 100%}
+    .rhAddon {padding: 20px 0px;}
+    ul#addonMenu {margin: -20px 0px 0;}
+    .fc-toolbar .fc-left{
+        float: none;
+        margin: auto;
+        display: inline-block;
+        text-align: center;
+        width: auto;
+    }
+    .fc-toolbar .fc-right {
+        float: right;
+        float: none;
+        display: inline-block;
+    }
+    .vacationRequest-container.fixed {
+        right: 5px;
+        left: 5px;
+    }
+    div#vacationRequestSaveAs {
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .fc-toolbar .fc-center {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin: auto;
+    }
+    .fc .fc-toolbar > * > :first-child {
+        margin-left: 0;
+        float: none;
+    }
+}
 /*
 .uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
     background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat left top;

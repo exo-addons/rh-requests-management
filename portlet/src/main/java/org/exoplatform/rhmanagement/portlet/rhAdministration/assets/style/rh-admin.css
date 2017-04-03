@@ -371,6 +371,7 @@ i.uiIconEcmsSearchMini.newUserId {
     width: 100%;
     min-width: 400px;
 }
+.actionIcon, .actionIconSmall{z-index: 1}
 @media (max-width: 776px) {
     #left_col{width: 100%}
     #right_col{width: 100%; padding: 0; border: 0}

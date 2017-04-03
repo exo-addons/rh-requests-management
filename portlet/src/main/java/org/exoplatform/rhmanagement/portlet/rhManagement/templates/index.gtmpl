@@ -22,38 +22,38 @@
 <div id="wrap">
 
 <div class="uiBox" style="padding: 10px;">
-<table id="infoTable">
-<tbody>
-<tr>
-<td>
-<div class="ligne">
-<b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
-                            </div>
-
-</td>
-                        <td>
-                            <div class="ligne">
-                                <b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span>
-                            </div>
-<div class="ligne">
-<b>{{i18n.sickBalance}}:</b> <span>{{sickBalance}}</span>
-</div>
-                        </td>
-<td>
-<div class="ligne">
-<b>{{i18n.hrId}}:</b> <span>{{hrId}}</span>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
-                            </div>
-</td>
-
-                    </tr>
-</tbody>
-                </table>
+<div id="infoTable" class="row-fluid">
+                    <div class="span4">
+                        <div class="ligne">
+                            <b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                        <div class="ligne">
+                            <b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="ligne">
+                            <b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                        <div class="ligne">
+                            <b>{{i18n.sickBalance}}:</b> <span>{{sickBalance}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="ligne">
+                            <b>{{i18n.hrId}}:</b> <span>{{hrId}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                        <div class="ligne">
+                            <b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
+                            <hr class="clearfix" />
+                        </div>
+                    </div>
+                </div>
 </div>
 
 
@@ -71,33 +71,40 @@
 
                     <div class="ligne">
                         <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+                        <hr class="clearfix" />
                     </div>
 <div class="ligne">
 <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
+<hr class="clearfix" />
 </div>
                     <div class="ligne">
                         <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.numberDays}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.numberHours}}:</b>
 						<span>{{vacationRequesttoShow.daysNumber}}</span>
+                                                <hr class="clearfix" />
 </div>
 
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
  <span>{{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</span>
+ <hr class="clearfix" />
 </div>
                     <div class="ligne" ng-show="vacationRequesttoShow.type!='leave'">
                         <b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span>
+                        <hr class="clearfix" />
                     </div>
 <div class="ligne">
 <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+<hr class="clearfix" />
 </div>
                     <div class="ligne">
                         <b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
-                    </div>
+                    <hr class="clearfix" /></div>
 <div class="ligne">
 <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
+<hr class="clearfix" />
 </div>
                     <div class="ligne manager">
                         <b>{{i18n.managers}}:</b>
@@ -489,32 +496,33 @@ ng-click="declineRequest(vRequest)">
                 <div class="uiContentBox">
                     <div class="ligne">
                         <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+                        <hr class="clearfix" />
                     </div>
 <div class="ligne">
-<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
+<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span><hr class="clearfix" />
 </div>
                     <div class="ligne">
-                        <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
+                        <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span><hr class="clearfix" />
                     </div>
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
-<span>{{vacationRequesttoShow.fromDate | date:'d MMM y'}}</span>
+<span>{{vacationRequesttoShow.fromDate | date:'d MMM y'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne" ng-show="vacationRequesttoShow.type!='leave'">
-<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'d MMM y'}}</span>
+<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'d MMM y'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
 <b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs"
-href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
+href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a><hr class="clearfix" />
 </div>
 
 
-<div class="ligne">
+<div class="ligne" style="overflow: auto">
 <fieldset class="StatusTable">
 
 <b>{{i18n.status}}:</b>
@@ -590,7 +598,7 @@ href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{
 
 
 
-<div class="ligne">
+<div class="ligne manager">
 <b>{{i18n.eXoCalendar}}:</b>
 <select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId"
 placeholder="{{i18n.serverUsername}}">
@@ -604,7 +612,7 @@ ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
 </div>
 
 
-<div class="ligne">
+<div class="ligne manager">
 <b>{{i18n.attacements}}:</b>
 
 
@@ -797,27 +805,27 @@ ng-click="toggleView()">
 <tr>
 <td>
 <div class="ligne">
-<b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span>
+<b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
+<b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span><hr class="clearfix" />
 </div>
 
 </td>
 <td>
 <div class="ligne">
-<b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span>
+<b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.sickBalance}}:</b> <span>{{sickBalance}}</span>
+<b>{{i18n.sickBalance}}:</b> <span>{{sickBalance}}</span><hr class="clearfix" />
 </div>
 </td>
 <td>
 <div class="ligne">
-<b>{{i18n.hrId}}:</b> <span>{{hrId}}</span>
+<b>{{i18n.hrId}}:</b> <span>{{hrId}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
+<b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span><hr class="clearfix" />
 </div>
 </td>
 
@@ -840,34 +848,35 @@ ng-click="toggleView()">
 <div class="uiContentBox">
 
 <div class="ligne">
-<b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+<b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
+<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.numberDays}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.numberHours}}:</b>
-<span>{{vacationRequesttoShow.daysNumber}}</span>
+<span>{{vacationRequesttoShow.daysNumber}}</span><hr class="clearfix" />
 </div>
 
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
-<span>{{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</span>
+<span>{{vacationRequesttoShow.fromDate | date:'yyyy-MM-dd'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne" ng-show="vacationRequesttoShow.type!='leave'">
-<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span>
+<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'yyyy-MM-dd'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
 <b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
+<hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
+<b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span><hr class="clearfix" />
 </div>
 <div class="ligne manager">
 <b>{{i18n.managers}}:</b>
@@ -1258,29 +1267,29 @@ ng-click="declineRequest(vRequest)">
 </a>
                 <div class="uiContentBox">
                     <div class="ligne">
-                        <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+                        <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span><hr class="clearfix" />
                     </div>
 <div class="ligne">
-<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
+<b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span><hr class="clearfix" />
 </div>
                     <div class="ligne">
-                        <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span>
+                        <b>{{i18n.numberDays}}:</b> <span>{{vacationRequesttoShow.daysNumber}}</span><hr class="clearfix" />
                     </div>
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
-<span>{{vacationRequesttoShow.fromDate | date:'d MMM y'}}</span>
+<span>{{vacationRequesttoShow.fromDate | date:'d MMM y'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne" ng-show="vacationRequesttoShow.type!='leave'">
-<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'d MMM y'}}</span>
+<b>{{i18n.toDate}}:</b> <span>{{vacationRequesttoShow.toDate | date:'d MMM y'}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
-<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+<b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
 <b>{{i18n.substitutes}}:</b>
 <a ng-repeat="vrsub in vrsubs"
-href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
+href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a><hr class="clearfix" />
 </div>
 
 
