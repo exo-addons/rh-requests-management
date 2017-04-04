@@ -1,29 +1,23 @@
 package org.exoplatform.rhmanagement.portlet.rhProfileInfo;
 
-import java.util.*;
-
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-
-import juzu.HttpMethod;
-import juzu.MimeType;
-import juzu.Path;
-import juzu.Resource;
-import juzu.Response;
-import juzu.SessionScoped;
-import juzu.View;
+import juzu.*;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 import org.exoplatform.commons.juzu.ajax.Ajax;
-import org.exoplatform.portal.application.RequestNavigationData;
-import org.exoplatform.rhmanagement.dto.*;
-import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.application.RequestNavigationData;
+import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
+import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.common.router.ExoRouter;
 import org.exoplatform.social.core.manager.IdentityManager;
+
+import javax.inject.Inject;
+import javax.persistence.NoResultException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 @SessionScoped

@@ -45,7 +45,9 @@ import org.gatein.common.text.EntityEncoder;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @TemplateConfigs(
    templates = {

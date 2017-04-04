@@ -16,13 +16,7 @@
  */
 package org.exoplatform.rhmanagement.dto;
 
-import org.apache.commons.lang.StringUtils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
-  public class EmployeesDTO {
+public class EmployeesDTO {
 
   private  long id;
 

@@ -16,10 +16,7 @@
  */
 package org.exoplatform.rhmanagement.dto;
 
-import lombok.Data;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 
 

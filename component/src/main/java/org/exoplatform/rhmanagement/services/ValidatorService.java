@@ -18,11 +18,8 @@
  */
 package org.exoplatform.rhmanagement.services;
 
-import org.exoplatform.rhmanagement.dao.CommentDAO;
 import org.exoplatform.rhmanagement.dao.ValidatorDAO;
-import org.exoplatform.rhmanagement.dto.CommentDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
-import org.exoplatform.rhmanagement.entity.CommentEntity;
 import org.exoplatform.rhmanagement.entity.ValidatorEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

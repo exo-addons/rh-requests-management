@@ -1,23 +1,14 @@
 package org.exoplatform.rhmanagement.portlet.rhAdministration;
 
-import juzu.HttpMethod;
-import juzu.MimeType;
-import juzu.Path;
-import juzu.Resource;
-import juzu.Response;
-import juzu.View;
+import juzu.*;
 import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 import org.apache.commons.fileupload.FileItem;
-import org.exoplatform.commons.api.notification.NotificationContext;
-import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
-import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.dto.*;
-import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
@@ -25,14 +16,12 @@ import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.organization.User;
 import org.exoplatform.services.organization.UserHandler;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
-
 
 import javax.inject.Inject;
 import javax.jcr.Node;

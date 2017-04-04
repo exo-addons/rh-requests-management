@@ -16,11 +16,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.commons</groupId>
-			<artifactId>commons-testing</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.exoplatform.commons</groupId>
 			<artifactId>commons-component-common</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -40,26 +35,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.exoplatform.ecms</groupId>
-			<artifactId>ecms-core-webui</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.exoplatform.social</groupId>
-			<artifactId>social-component-service</artifactId>
-            <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.8</version>
@@ -71,21 +46,6 @@
 	<build>
 		<finalName>rh-management-component</finalName>
 		<plugins>
-			<!-- 			<plugin> -->
-			<!-- 				<groupId>com.jcabi</groupId> -->
-			<!-- 				<artifactId>jcabi-maven-plugin</artifactId> -->
-			<!-- 			</plugin> -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<systemPropertyVariables>
-						<exo.properties.url>classpath:/conf/configuration.properties</exo.properties.url>
-						<exo.profiles>hsqldb</exo.profiles>
-						<java.naming.factory.initial>org.exoplatform.services.naming.SimpleContextFactory</java.naming.factory.initial>
-					</systemPropertyVariables>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>

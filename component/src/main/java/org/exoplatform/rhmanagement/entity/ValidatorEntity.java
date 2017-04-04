@@ -20,7 +20,6 @@ import lombok.Data;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by The eXo Platform SAS

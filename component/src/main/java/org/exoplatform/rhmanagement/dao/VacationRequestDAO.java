@@ -16,13 +16,12 @@
  */
 package org.exoplatform.rhmanagement.dao;
 
-import java.util.List;
-
+import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
 import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
+import java.util.List;
 
 /**
  * Created by The eXo Platform SAS

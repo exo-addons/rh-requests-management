@@ -3,7 +3,7 @@
   <parent>
     <artifactId>addons-parent-pom</artifactId>
     <groupId>org.exoplatform.addons</groupId>
-    <version>7-RC01</version>
+    <version>7</version>
   </parent>
   <groupId>org.exoplatform.addons.rh-management</groupId>
   <artifactId>rh-management</artifactId>
@@ -25,7 +25,7 @@
   </scm>
   <properties>
     <juzu.jackson.version>1.1.0</juzu.jackson.version>
-    <org.exoplatform.platform.version>4.4.0-RC05</org.exoplatform.platform.version>
+    <org.exoplatform.platform.version>4.4.1-RC11</org.exoplatform.platform.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -65,17 +65,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>

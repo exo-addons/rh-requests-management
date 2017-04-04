@@ -11,8 +11,6 @@ import org.exoplatform.services.listener.Listener;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 
-import java.util.Set;
-
 /**
  * Created by Medamine on 25/01/2017.
  */

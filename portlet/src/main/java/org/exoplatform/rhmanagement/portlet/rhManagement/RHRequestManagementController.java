@@ -1,48 +1,20 @@
 package org.exoplatform.rhmanagement.portlet.rhManagement;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
-
-import javax.inject.Inject;
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.Session;
-
-import juzu.HttpMethod;
-import juzu.MimeType;
-import juzu.Path;
-import juzu.Resource;
-import juzu.Response;
-import juzu.SessionScoped;
-import juzu.View;
+import juzu.*;
 import juzu.impl.common.JSON;
-import juzu.io.Stream;
 import juzu.plugin.jackson.Jackson;
-import juzu.request.HttpContext;
 import juzu.template.Template;
-
 import org.apache.commons.fileupload.FileItem;
 import org.exoplatform.calendar.model.Calendar;
 import org.exoplatform.calendar.model.Event;
 import org.exoplatform.calendar.model.query.CalendarQuery;
-import org.exoplatform.calendar.model.query.EventQuery;
-import org.exoplatform.calendar.service.CalendarEvent;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.ExtendedCalendarService;
-import org.exoplatform.commons.api.notification.NotificationContext;
-import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
-import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
-import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.rhmanagement.dto.*;
-import org.exoplatform.rhmanagement.integration.notification.RequestCreatedPlugin;
-import org.exoplatform.rhmanagement.integration.notification.RequestRepliedPlugin;
-import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
-import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.rhmanagement.dto.*;
+import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.listener.ListenerService;
@@ -55,10 +27,16 @@ import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.ActivityManager;
 import org.exoplatform.social.core.manager.IdentityManager;
-import org.exoplatform.social.core.profile.ProfileFilter;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import javax.inject.Inject;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Session;
+import java.io.IOException;
+import java.util.*;
 
 
 @SessionScoped

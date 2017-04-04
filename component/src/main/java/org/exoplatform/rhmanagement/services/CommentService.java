@@ -18,14 +18,14 @@
  */
 package org.exoplatform.rhmanagement.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.exoplatform.rhmanagement.dao.CommentDAO;
 import org.exoplatform.rhmanagement.dto.CommentDTO;
 import org.exoplatform.rhmanagement.entity.CommentEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

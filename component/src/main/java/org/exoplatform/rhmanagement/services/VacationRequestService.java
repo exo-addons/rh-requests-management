@@ -18,19 +18,15 @@
  */
 package org.exoplatform.rhmanagement.services;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.exoplatform.commons.utils.CommonsUtils;
-import org.exoplatform.services.listener.ListenerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.exoplatform.rhmanagement.dao.VacationRequestDAO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**

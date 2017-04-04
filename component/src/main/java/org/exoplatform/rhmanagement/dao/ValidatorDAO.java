@@ -17,7 +17,6 @@
 package org.exoplatform.rhmanagement.dao;
 
 import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
-import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
 import org.exoplatform.rhmanagement.entity.ValidatorEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
