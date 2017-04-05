@@ -8,7 +8,7 @@
     <node>
 	  <uri>rh-management</uri>
 	  <name>rh-management</name>
-	  <label>HR Management</label>
+	  <label>#{rhAddon.intranet.rhManagement}</label>
 <!--
       <visibility>HIDDEN</visibility>
 -->
@@ -18,7 +18,7 @@
       <node>
           <uri>rh-administration</uri>
           <name>rh-administration</name>
-          <label>HR Admin</label>
+          <label>#{rhAddon.intranet.rhAdministration}</label>
           <visibility>HIDDEN</visibility>
           <page-reference>portal::intranet::rh-administration</page-reference>
       </node>

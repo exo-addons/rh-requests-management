@@ -6,7 +6,7 @@
         <node>
             <uri>rh-administration</uri>
             <name>rh-administration</name>
-            <label>HR Admin</label>
+            <label>#{rhAddon.intranet.rhAdministration}</label>
             <page-reference>portal::intranet::rh-administration</page-reference>
         </node>
     </page-nodes>
