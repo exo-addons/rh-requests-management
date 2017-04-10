@@ -1,4 +1,3 @@
-
 define('calendar', ["SHARED/jquery","fullcalendar"], function($,fullcalendar) {
     var require = eXo.require, requirejs = eXo.require,define = eXo.define;
     eXo.define.names=["$","fullcalendar"];
