@@ -1,4 +1,3 @@
-
 define('moment', ["SHARED/jquery"], function(jquery) {
     var require = eXo.require, requirejs = eXo.require,define = eXo.define;
     eXo.define.names=["jquery"];
