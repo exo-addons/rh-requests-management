@@ -41,6 +41,7 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
             numberOfMonths: 1
         });
 
+        $(".selectize-input.items.not-full.has-options.ng-invalid.has-items").removeClass("ng-invalid");
 
     });
 
@@ -86,6 +87,7 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
             }
     });
+
 
 
 

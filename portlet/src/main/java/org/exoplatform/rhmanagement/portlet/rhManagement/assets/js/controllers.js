@@ -217,8 +217,12 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.leaveDateMsg, "error");
                 $("#toDate, #fromDate").addClass("ng-invalid");
+            }else if($scope.getUsers("managers")[0] == ""){
+                $scope.setResultMessage($scope.i18n.manager, "error");
+                $(".managersInput .selectize-input").addClass("ng-invalid");
+
             }else{
-                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+                $("#daysNumberHollidays, #daysNumberSick,.managersInput .selectize-input").removeClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
                 $scope.showAlert=false;
                 $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();

@@ -1,9 +1,13 @@
 /* INVALID INPUT */
-input.ng-invalid {
+.ng-invalid{
     border-color: #f90000!important;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
     -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #afc9f0!important;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
+}
+form.ng-invalid{
+    border: 0!important;
+    box-shadow: none!important;
 }
 /* -- -- */
 .rhLoadingBar {

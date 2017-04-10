@@ -303,7 +303,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
 
 <div class="control-group">
 <label class="control-label" for="managers">{{i18n.managers}}:</label>
-                                <div class="controls {{usernameClass}}">
+                                <div class="controls managersInput {{usernameClass}}">
                                     <input type="text" name="managers" id="managers">
                                 </div>
 </div>
@@ -1076,7 +1076,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
 <div class="control-group">
 <label class="control-label" for="managers">{{i18n.managers}}:</label>
                                 <div class="controls {{usernameClass}}">
-                                    <input type="text" name="managers" id="managers">
+                                    <input type="text" name="managers" id="managers" >
                                 </div>
 </div>
 
