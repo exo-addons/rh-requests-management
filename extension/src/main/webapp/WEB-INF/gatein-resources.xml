@@ -3,12 +3,5 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_3 http://www.gatein.org/xml/ns/gatein_resources_1_3"
     xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_3">
-
-    <portal-skin>
-        <skin-name>Default</skin-name>
-        <skin-module>forumCommunityResources</skin-module>
-        <css-path>/skin/css/forum/DefaultStylesheet.css</css-path>
-    </portal-skin>
-
 </gatein-resources>
 
