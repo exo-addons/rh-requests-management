@@ -23,7 +23,7 @@
 @Stylesheets({
         @Stylesheet(id = "jQueryUISkin", value = "style/jquery-ui.css") ,
         @Stylesheet(id = "fullcalendarSkin", value = "style/fullcalendar.css") ,
-        @Stylesheet(id = "sample-addonSkin", value = "style/rh-admin.css") })
+        @Stylesheet(id = "rh-admin", value = "style/rh-admin.css") })
 
 @Assets("*")
 package org.exoplatform.rhmanagement.portlet.rhAdministration;

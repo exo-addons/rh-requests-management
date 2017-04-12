@@ -340,10 +340,6 @@ public class RhAdministrationController {
   /**
    * method uploadFile() records an image in AddMembersStorage
    *
-   * @param httpContext
-   * @param file
-   * @return Response.Content
-   * @throws java.io.IOException
    */
   @Ajax
   @juzu.Resource

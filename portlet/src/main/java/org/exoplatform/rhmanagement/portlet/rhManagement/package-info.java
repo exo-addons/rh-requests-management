@@ -20,7 +20,7 @@
         @Script(id = "material", value = "js/lib/angular-material.min.js", depends = "angularjs"),
     // services and controllers js are AMD modules, required by controllers.js
         @Script(id = "moment", value = "js/lib/moment.js"),
-        @Script(id = "fullCalendar", value = "js/lib/fullCalendar.js", depends = "moment"),
+        @Script(id = "fullCalendar", value = "js/lib/fullcalendar.js", depends = "moment"),
         @Script(id = "calendar", value = "js/lib/calendar.js", depends = "moment"),
         @Script(id = "ng-file-upload", value = "js/lib/ng-file-upload.js", depends = "angularjs"),
         @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
