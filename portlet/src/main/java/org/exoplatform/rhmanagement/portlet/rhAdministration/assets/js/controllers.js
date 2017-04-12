@@ -536,15 +536,6 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }).then(function successCallback(data) {
 
                 /* create a table of users IDs*/
-                var users = [];
-                angular.forEach(data.data.options, function (value, key) {
-                    users[key] = [];
-                    users[key]['value'] = value.value;
-                    users[key]['fullName'] = value.text;
-                    users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
-                });
-                /**/
-
                 $("#newUserName").autocomplete({
                     source: function( request, response ) {
                         var users = [];
