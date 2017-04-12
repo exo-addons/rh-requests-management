@@ -200,6 +200,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 employee.hrData.contractEndDate = new Date($("#contractEndDate").val());
             }
 
+
             $http({
                 data: employee,
                 method: 'POST',
@@ -545,8 +546,17 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 /**/
 
                 $("#newUserName").autocomplete({
+                    source: function( request, response ) {
+                        var users = [];
+                        angular.forEach(data.data.options, function (value, key) {
+                            users[key] = [];
+                            users[key]['value'] = value.value;
+                            users[key]['fullName'] = value.text;
+                            users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
+                        });
+                        response( users );
+                    },
                     minLength: 3,
-                    source: users,
                     focus: function (event, ui) {
                         $("#newUserName").val(ui.item.fullName);
                         $scope.getUser(ui.item.value);
@@ -558,6 +568,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                         return false;
                     }
                 }).autocomplete("instance")._renderItem = function (ul, item) {
+
                     return $("<li>")
                         .append("<div> <img src='" + item.avatar + "' class='avataruser' /> " + item.fullName + "</div>")
                         .appendTo(ul);
