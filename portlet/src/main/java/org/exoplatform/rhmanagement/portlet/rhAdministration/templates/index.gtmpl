@@ -224,7 +224,7 @@
                                     <b>{{i18n.bDay}}:</b>
                                     <input  type="text" name="birthDay" class="requestEdit" id="birthDay"
                                             ng-click="enableInput('#birthDay')" ng-model="userDetails.hrData.birthDay"
-                                            value="{{userDetails.hrData.birthDay| date:'d MMM y'}}" readonly/><i
+                                            value="" readonly/><i
                                             class="uiIconEdit" ng-click="enableInput('#birthDay')"></i>
                                             <hr class="clearfix" />
                                 </div>

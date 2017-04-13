@@ -113,6 +113,27 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 method: 'GET',
                 url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId') + "&userId=" + userRhData.userId
             }).then(function successCallback(data) {
+                var birthDay = new Date($scope.userDetails.hrData.birthDay);
+                var startDate = new Date($scope.userDetails.hrData.startDate);
+                var leaveDate = new Date($scope.userDetails.hrData.leaveDate);
+                var contractStartDate = new Date($scope.userDetails.hrData.contractStartDate);
+                var contractEndDate = new Date($scope.userDetails.hrData.contractEndDate);
+
+                $( "#birthDay" ).datepicker( "option", "defaultDate", birthDay );
+                $( "#birthDay" ).val(birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear());
+
+                $( "#startDate" ).datepicker( "option", "defaultDate", startDate );
+                $( "#startDate" ).val(startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear());
+
+                $( "#leaveDate" ).datepicker( "option", "defaultDate", leaveDate );
+                $( "#leaveDate" ).val(leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear());
+
+                $( "#contractStartDate" ).datepicker( "option", "defaultDate", contractStartDate );
+                $( "#contractStartDate" ).val(contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear());
+
+                $( "#contractEndDate" ).datepicker( "option", "defaultDate", contractEndDate );
+                $( "#contractEndDate" ).val(contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear());
+
                 $scope.loadAttachments(userRhData);
                 $scope.vacationRequests = data.data;
                 $scope.showAddForm = true;
@@ -185,21 +206,25 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
         $scope.saveUserHRData = function (employee) {
             if ($("#birthDay").val() !== "") {
-                employee.hrData.birthDay = new Date($("#birthDay").val());
+                var date = ($("#birthDay").val()).split("-");
+                employee.hrData.birthDay = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
             if ($("#startDate") !== "") {
-                employee.hrData.startDate = new Date($("#startDate").val());
+                var date = ($("#startDate").val()).split("-");
+                employee.hrData.startDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
             if ($("#leaveDate").val() !== "") {
-                employee.hrData.leaveDate = new Date($("#leaveDate").val());
+                var date = ($("#leaveDate").val()).split("-");
+                employee.hrData.leaveDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
             if ($("#contractStartDate").val() !== "") {
-                employee.hrData.contractStartDate = new Date($("#contractStartDate").val());
+                var date = ($("#contractStartDate").val()).split("-");
+                employee.hrData.contractStartDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
-            if ($("#contractStartDate").val() !== "") {
-                employee.hrData.contractEndDate = new Date($("#contractEndDate").val());
+            if ($("#contractEndDate").val() !== "") {
+                var date = ($("#contractEndDate").val()).split("-");
+                employee.hrData.contractEndDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
-
 
             $http({
                 data: employee,
