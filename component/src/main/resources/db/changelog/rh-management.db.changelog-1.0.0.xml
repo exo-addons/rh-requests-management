@@ -115,11 +115,5 @@
                     tableName="HR_USER_DATA"/>
   </changeSet>
 
-  <changeSet author="rh-management" id="1.0.0-3">
-
-    <modifyDataType columnName="CIN"
-                    newDataType="NVARCHAR(50)"
-                    tableName="HR_USER_DATA"/>
-  </changeSet>
 
 </databaseChangeLog>

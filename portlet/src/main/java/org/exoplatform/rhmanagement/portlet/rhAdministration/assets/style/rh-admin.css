@@ -131,6 +131,7 @@ input.requestEdit{
     height: 20px;
     margin-bottom: 0
 }
+textarea.requestEdit{max-width:100%;}
 .span3 input.requestEdit{width: 54%}
 input.requestEdit[readonly]{
     display: inline-block;

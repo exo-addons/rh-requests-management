@@ -255,10 +255,14 @@
                                 </div>
                                 <div class="ligne">
                                     <b>{{i18n.address}}:</b>
-                                    <input type="text" name="address" class="requestEdit" id="address"
+                                    <!--<input type="text" name="address" class="requestEdit" id="address"
                                            ng-click="enableInput('#address')" ng-model="userDetails.hrData.address"
-                                           value="{{userDetails.hrData.address}}" readonly/><i class="uiIconEdit"
-                                           ng-click="enableInput('#address')"></i>
+                                           value="{{userDetails.hrData.address}}" readonly/>-->
+                                    <textarea class="requestEdit" id="address"
+                                              ng-click="enableInput('#address')" ng-model="userDetails.hrData.address" readonly>
+                                        {{userDetails.hrData.address}}
+                                    </textarea>
+                                    <i class="uiIconEdit" ng-click="enableInput('#address')"></i>
                                     <hr class="clearfix" />
                                 </div>
                                 <div class="ligne">
@@ -338,10 +342,14 @@
 
                                 <div class="ligne">
                                     <b>{{i18n.others}}:</b>
-                                    <input type="text" name="others" class="requestEdit" id="others"
+                                    <!--<input type="text" name="others" class="requestEdit" id="others"
                                            ng-click="enableInput('#others')" ng-model="userDetails.hrData.others"
-                                           value="{{userDetails.hrData.others}}" readonly/><i class="uiIconEdit"
-                                           ng-click="enableInput('#others')"></i>
+                                           value="{{userDetails.hrData.others}}" readonly/>-->
+                                    <textarea name="others" class="requestEdit" id="others"
+                                              ng-click="enableInput('#others')" ng-model="userDetails.hrData.others" readonly>
+                                        {{userDetails.hrData.others}}
+                                    </textarea>
+                                    <i class="uiIconEdit" ng-click="enableInput('#others')"></i>
                                     <hr class="clearfix" />
                                 </div>
 
