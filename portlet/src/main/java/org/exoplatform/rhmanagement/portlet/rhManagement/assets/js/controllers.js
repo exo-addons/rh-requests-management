@@ -609,15 +609,33 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             return id;
         };
 
-        $scope.loadVacationRequestsToValidate(null);
-        $scope.loadMyVacationRequests(null);
+        $scope.loadData = function() {
+            $http({
+                method : 'GET',
+                url : rhContainer.jzURL('RHRequestManagementController.getData')
+            }).then(function successCallback(data) {
+                $scope.currentUserAvatar = data.data.currentUserAvatar;
+                $scope.currentUserName = data.data.currentUserName;
+                $scope.employeesSpace = data.data.employeesSpace;
+                $scope.sickBalance = data.data.sickBalance;
+                $scope.holidaysBalance = data.data.holidaysBalance;
+                $scope.hrId = data.data.hrId;
+                $scope.insuranceId = data.data.insuranceId;
+                $scope.socialSecNumber = data.data.socialSecNumber;
+                $scope.myVacationRequests = data.data.myVacationRequests;
+                $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
+                $scope.showAlert = false;
+                deferred.resolve(data);
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        }
+
+
         $scope.loadBundles();
-        $scope.loadContext();
-        $scope.showRequestfromUrl();
+        $scope.loadData();
         $scope.loadUserCalendars();
-
-
-
+        $scope.showRequestfromUrl();
         $scope.refreshController = function() {
             try {
                 $scope.$digest()

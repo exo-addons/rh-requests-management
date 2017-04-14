@@ -29,13 +29,13 @@ import java.util.Date;
 
     private String userId;
 
-    private long cin;
+    private String cin;
 
     private float holidaysBalance;
 
     private float sickdaysBalance;
 
-    private long socialSecNumber;
+    private String socialSecNumber;
 
     private String hrId;
 

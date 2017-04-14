@@ -14,6 +14,7 @@
   <property name="now" value="sysdate" dbms="oracle"/>
   <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
 
+
   <changeSet author="rh-management" id="1.0.0-1">
     <createTable tableName="HR_VACATION_REQUEST">
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
@@ -95,12 +96,30 @@
       <column name="CREATION_DATE" type="DATE"></column>
     </createTable>
 
+
+
+
     <modifySql dbms="mysql">
       <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
   </changeSet>
 
 
+  <changeSet author="rh-management" id="1.0.0-2">
+    <modifyDataType columnName="SOC_NUMBER"
+                    newDataType="NVARCHAR(50)"
+                    tableName="HR_USER_DATA"/>
 
+    <modifyDataType columnName="CIN"
+                    newDataType="NVARCHAR(50)"
+                    tableName="HR_USER_DATA"/>
+  </changeSet>
+
+  <changeSet author="rh-management" id="1.0.0-3">
+
+    <modifyDataType columnName="CIN"
+                    newDataType="NVARCHAR(50)"
+                    tableName="HR_USER_DATA"/>
+  </changeSet>
 
 </databaseChangeLog>

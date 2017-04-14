@@ -45,7 +45,7 @@ public class UserRHDataEntity {
   private String userId;
 
   @Column(name = "CIN")
-  private long   cin;
+  private String   cin;
 
   @Column(name = "HOLIDAYS_BALANCE")
   private float   holidaysBalance;
@@ -54,7 +54,7 @@ public class UserRHDataEntity {
   private float   sickdaysBalance;
 
   @Column(name = "SOC_NUMBER")
-  private long   socialSecNumber;
+  private String   socialSecNumber;
 
   @Column(name = "HR_ID")
   private String hrId;

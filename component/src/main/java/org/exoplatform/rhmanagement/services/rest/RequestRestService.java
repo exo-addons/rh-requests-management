@@ -1,13 +1,16 @@
 package org.exoplatform.rhmanagement.services.rest;
 
 
+import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.rhmanagement.services.ValidatorService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.services.organization.*;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
@@ -44,12 +47,16 @@ public class RequestRestService implements ResourceContainer {
     private SpaceService spaceService;
     private VacationRequestService vacationRequestService;
     private ValidatorService validatorService;
+    private OrganizationService organizationService;
+    private UserDataService userDataService;
 
-    public RequestRestService(IdentityManager identityManager,SpaceService spaceService, VacationRequestService vacationRequestService, ValidatorService validatorService) {
+    public RequestRestService(IdentityManager identityManager,SpaceService spaceService, VacationRequestService vacationRequestService, ValidatorService validatorService, OrganizationService organizationService, UserDataService userDataService) {
         this.identityManager=identityManager;
         this.spaceService=spaceService;
         this.vacationRequestService=vacationRequestService;
         this.validatorService=validatorService;
+        this.organizationService=organizationService;
+        this.userDataService=userDataService;
     }
 
 
@@ -164,5 +171,30 @@ private List<Profile> getSpaceMembersProfiles(Space space){
         }
         return profiles;
 
+    }
+
+
+    @POST
+    @Path("createemployees")
+    @RolesAllowed("administrators")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createEmployees(@Context HttpServletRequest request,
+                              @Context UriInfo uriInfo,
+                              List<UserRHDataDTO> emloyees      ) throws Exception {
+
+        MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
+        UserHandler uh = organizationService.getUserHandler();
+        try {
+            for(UserRHDataDTO emp:emloyees){
+               if (uh.findUserByName(emp.getUserId()) != null){
+                    userDataService.save(emp);
+                }
+
+            }
+            return Response.ok().build();
+        } catch (Exception e) {
+            LOG.error(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
+        }
     }
 }

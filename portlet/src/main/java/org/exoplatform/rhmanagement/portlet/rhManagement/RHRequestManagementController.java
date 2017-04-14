@@ -1,5 +1,7 @@
 package org.exoplatform.rhmanagement.portlet.rhManagement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import juzu.*;
 import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
@@ -650,4 +652,58 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       sessionProvider.close();
     }
   }
+
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public ContextDTO  getData() {
+    ContextDTO data = new ContextDTO();
+
+      data.setCurrentUser(currentUser);
+      Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile();
+      if(profile.getAvatarUrl()!=null){
+        data.setCurrentUserAvatar(profile.getAvatarUrl());
+      }else{
+        data.setCurrentUserAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+      }
+      data.setCurrentUserName(profile.getFullName());
+      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
+      if(employeesSpace==null){
+        employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
+      }
+      data.setEmployeesSpace(employeesSpace);
+      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
+      if (userRHDataDTO != null) {
+        data.setSickBalance(userRHDataDTO.getSickdaysBalance());
+        data.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+        data.setHrId(userRHDataDTO.getHrId());
+        data.setInsuranceId(userRHDataDTO.getInsuranceId());
+        data.setSocialSecNumber(userRHDataDTO.getSocialSecNumber());
+      }
+      data.setMyVacationRequests(vacationRequestService.getActiveVacationRequestsByUserId(currentUser,0,100));
+      List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+
+      ObjectMapper mapper = new ObjectMapper();
+      for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
+        VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
+        if(requestDTO!=null) {
+          if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())) continue;
+
+            dtos.add(requestDTO);
+
+        }
+
+    }
+
+              data.setVacationRequestsToValidate(dtos);
+
+      return data;
+
+  }
+
+
+
 }
