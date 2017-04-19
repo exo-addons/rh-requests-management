@@ -113,26 +113,35 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 method: 'GET',
                 url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId') + "&userId=" + userRhData.userId
             }).then(function successCallback(data) {
-                var birthDay = new Date($scope.userDetails.hrData.birthDay);
-                var startDate = new Date($scope.userDetails.hrData.startDate);
-                var leaveDate = new Date($scope.userDetails.hrData.leaveDate);
-                var contractStartDate = new Date($scope.userDetails.hrData.contractStartDate);
-                var contractEndDate = new Date($scope.userDetails.hrData.contractEndDate);
+
+                var offset = 1;
+
+            if($scope.userDetails.hrData.birthDay){
+                var birthDay = new Date($scope.userDetails.hrData.birthDay + (3600000*offset));
 
                 $( "#birthDay" ).datepicker( "option", "defaultDate", birthDay );
                 $( "#birthDay" ).val(birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear());
-
+            }
+            if($scope.userDetails.hrData.startDate){
+                var startDate = new Date($scope.userDetails.hrData.startDate + (3600000*offset));
                 $( "#startDate" ).datepicker( "option", "defaultDate", startDate );
                 $( "#startDate" ).val(startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear());
-
+            }
+            if($scope.userDetails.hrData.leaveDate){
+                var leaveDate = new Date($scope.userDetails.hrData.leaveDate + (3600000*offset));
                 $( "#leaveDate" ).datepicker( "option", "defaultDate", leaveDate );
                 $( "#leaveDate" ).val(leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear());
-
+            }
+            if($scope.userDetails.hrData.contractStartDate){
+                var contractStartDate = new Date($scope.userDetails.hrData.contractStartDate + (3600000*offset));
                 $( "#contractStartDate" ).datepicker( "option", "defaultDate", contractStartDate );
                 $( "#contractStartDate" ).val(contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear());
-
+            }
+            if($scope.userDetails.hrData.contractEndDate){
+                var contractEndDate = new Date($scope.userDetails.hrData.contractEndDate + (3600000*offset));
                 $( "#contractEndDate" ).datepicker( "option", "defaultDate", contractEndDate );
                 $( "#contractEndDate" ).val(contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear());
+            }
 
                 $scope.loadAttachments(userRhData);
                 $scope.vacationRequests = data.data;
