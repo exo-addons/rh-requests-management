@@ -5,6 +5,7 @@
 </div> 
     <div class="media-body">
       <%
+        String URL = PROFILE_URL;
       	String msg = "";
       	String profileUrl = "<a class=\"user-name text-bold\" href=\"" + PROFILE_URL + "\">" + USER + "</a>";
 msg = _ctx.appRes("Notification.message.HRBirthdayNotificationPlugin", profileUrl);

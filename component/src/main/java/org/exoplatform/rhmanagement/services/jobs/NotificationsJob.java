@@ -40,8 +40,7 @@ public class NotificationsJob implements Job {
             cal.setTime(employee.getBirthDay());
             cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
                 int rem=daysBetween(cal,now);
-                if(rem<3){
-                    LOG.info("============= annif for "+employee.getUserId() +"================== ");
+                if(rem==0){
                     Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
                     String message= "The Birthday of "+userProfile.getFullName()+"will be in "+rem+" days";
                     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(HRBirthdayNotificationPlugin.EMPLOYEE, employee).append(HRBirthdayNotificationPlugin.NOTIF_TYPE, message);

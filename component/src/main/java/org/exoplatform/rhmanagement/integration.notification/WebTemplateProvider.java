@@ -123,14 +123,14 @@ public class WebTemplateProvider extends TemplateProvider {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(birthDate);
+          templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+
         } catch (Exception e){
-          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
+          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e.getMessage());
         }
-        templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
       }
-      //
       templateContext.put("READ", Boolean.valueOf(notification.getValueOwnerParameter(NotificationMessageUtils.READ_PORPERTY.getKey())) ? "read" : "unread");
-      templateContext.put("NOTIFICATION_ID", notification.getId());      
+      templateContext.put("NOTIFICATION_ID", notification.getId());
       Calendar lastModified = Calendar.getInstance();
       lastModified.setTimeInMillis(notification.getLastModifiedDate());
       templateContext.put("LAST_UPDATED_TIME", TimeConvertUtils.convertXTimeAgoByTimeServer(lastModified.getTime(),"EE, dd yyyy", new Locale(language), TimeConvertUtils.YEAR));

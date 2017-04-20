@@ -29,6 +29,8 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -80,6 +82,7 @@ public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
 
     UserRHDataDTO obj = ctx.value(EMPLOYEE);
     String notifType = ctx.value(NOTIF_TYPE);
+    DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
 
     Set<String> receivers = new HashSet<String>();
 
@@ -104,7 +107,7 @@ public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.BIRTHDAY_DATE, obj.getBirthDay().toString())
+            .with(NotificationUtils.BIRTHDAY_DATE, formatter.format(obj.getBirthDay()))
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

@@ -57,6 +57,7 @@ public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
   // --- Create formatter
   protected DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+  //protected DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
   protected static Log log = ExoLogger.getLogger(MailTemplateProvider.class);
 
   public MailTemplateProvider(InitParams initParams) {
@@ -125,13 +126,13 @@ public class MailTemplateProvider extends TemplateProvider {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(birthDate);
+          templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+
+
         } catch (Exception e){
           log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
         }
-        templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
       }
-
-      //
       templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
       String subject = TemplateUtils.processSubject(templateContext);
 
