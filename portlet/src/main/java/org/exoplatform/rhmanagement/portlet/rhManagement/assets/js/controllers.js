@@ -624,6 +624,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.socialSecNumber = data.data.socialSecNumber;
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
+                var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
+                invite.build('managers', rsetUrl,'choose user');
+                invite.build('substitutes', rsetUrl,'choose user');
+                console.log(deferred.resolve(data));
                 $scope.showAlert = false;
                 deferred.resolve(data);
             }, function errorCallback(data) {
