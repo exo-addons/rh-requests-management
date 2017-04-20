@@ -280,7 +280,7 @@
                                     <b>{{i18n.startDate}}:</b>
                                     <input type="text" name="startDate" class="requestEdit" id="startDate"
                                            ng-click="enableInput('#startDate')" ng-model="userDetails.hrData.startDate"
-                                           value="{{userDetails.hrData.startDate| date:'d MMM y'}}" readonly/><i
+                                           value="" readonly/><i
                                            class="uiIconEdit" ng-click="enableInput('#startDate')"></i>
                                            <hr class="clearfix" />
                                 </div>
@@ -288,7 +288,7 @@
                                     <b>{{i18n.leaveDate}}:</b>
                                     <input type="text" name="leaveDate" class="requestEdit" id="leaveDate"
                                            ng-click="enableInput('#leaveDate')" ng-model="userDetails.hrData.leaveDate"
-                                           value="{{userDetails.hrData.leaveDate| date:'d MMM y'}}" readonly/><i
+                                           value="" readonly/><i
                                            class="uiIconEdit" ng-click="enableInput('#leaveDate')"></i>
                                            <hr class="clearfix" />
                                 </div>
@@ -305,7 +305,7 @@
                                     <input type="text" name="contractStartDate" class="requestEdit"
                                            id="contractStartDate" ng-click="enableInput('#contractStartDate')"
                                            ng-model="userDetails.hrData.contractStartDate"
-                                           value="{{userDetails.hrData.contractStartDate| date:'d MMM y'}}"
+                                           value=""
                                            readonly/><i class="uiIconEdit"
                                            ng-click="enableInput('#contractStartDate')"></i>
                                     <hr class="clearfix" />
@@ -315,7 +315,7 @@
                                     <input type="text" name="contractEndDate" class="requestEdit" id="contractEndDate"
                                            ng-click="enableInput('#contractEndDate')"
                                            ng-model="userDetails.hrData.contractEndDate"
-                                           value="{{userDetails.hrData.contractEndDate| date:'d MMM y'}}" readonly/><i
+                                           value="" readonly/><i
                                            class="uiIconEdit" ng-click="enableInput('#contractEndDate')"></i>
                                            <hr class="clearfix" />
                                 </div>
