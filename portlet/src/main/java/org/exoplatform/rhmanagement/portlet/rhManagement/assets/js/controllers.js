@@ -91,6 +91,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
                 $scope.showAlert = false;
+                $scope.loadData();
                 deferred.resolve(data);
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
@@ -614,6 +615,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 method : 'GET',
                 url : rhContainer.jzURL('RHRequestManagementController.getData')
             }).then(function successCallback(data) {
+                $scope.currentUser=data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
                 $scope.currentUserName = data.data.currentUserName;
                 $scope.employeesSpace = data.data.employeesSpace;
@@ -627,6 +629,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
+                $scope.loadUserCalendars();
                 console.log(deferred.resolve(data));
                 $scope.showAlert = false;
                 deferred.resolve(data);
@@ -634,11 +637,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
-
-
         $scope.loadBundles();
-        $scope.loadData();
-        $scope.loadUserCalendars();
         $scope.showRequestfromUrl();
         $scope.refreshController = function() {
             try {

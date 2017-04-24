@@ -78,6 +78,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 url: rhAdminContainer.jzURL('RhAdministrationController.getBundle') + "&locale=" + eXo.env.portal.language
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
+                $scope.loadContext();
                 deferred.resolve(data);
                 /*$scope.setResultMessage(data, "success");*/
                 $scope.showAlert = false;
@@ -553,7 +554,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.currentUser = data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
                 $scope.currentUserName = data.data.currentUserName;
-
+                $scope.loadEmployees();
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
@@ -613,8 +614,8 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
         $scope.loadBundles();
-        $scope.loadContext();
-        $scope.loadEmployees();
+       // $scope.loadContext();
+       // $scope.loadEmployees();
 
         $('#rhAdminAddon').css('visibility', 'visible');
         $(".rhLoadingBar").remove();
