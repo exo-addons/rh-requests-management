@@ -47,12 +47,12 @@ public class CommentService {
     }
 
     CommentEntity commentEntity = null;
-    if (entity == null) {
+    /*if (entity == null) {*/
       entity.setPostedTime(System.currentTimeMillis());
       commentEntity = commentDAO.create(convert(entity));
-    } else {
+/*    } else {
       commentEntity = commentDAO.update(convert(entity));
-    }
+    }*/
     return convert(commentEntity);
   }
 
