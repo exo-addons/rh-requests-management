@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,14 @@ public class VacationRequestService {
     VacationRequestEntity  vacationRequestEntity = null;
    if (newRequest) {
       entity.setCreationDate(new Date());
+      /*     entity.setCreationDate(new Date());
+     Calendar cal=Calendar.getInstance();
+     cal.setTime(entity.getFromDate());
+     cal.set(Calendar.HOUR,8);
+     entity.setFromDate(cal.getTime());
+     cal.setTime(entity.getToDate());
+     cal.set(Calendar.HOUR,18);
+     entity.setToDate(cal.getTime());*/
       vacationRequestEntity = vacationRequestDAO.create(convert(entity));
     } else {
       vacationRequestEntity = vacationRequestDAO.update(convert(entity));

@@ -485,8 +485,14 @@ public class RHRequestManagementController {
         }
       }
 
+
+      TimeZone userTimeZone=Utils.getUserTimezone(currentUser);
+      data.set("userTimeZone",userTimeZone.toString());
+      data.set("offset",userTimeZone.getOffset(new Date().getTime()));
+      int offset = userTimeZone.getOffset(new Date().getTime()) / 3600000;
+      String timeZone = ((offset < 0) ? "-" : "") + String.format("%02d", Math.abs(offset))+ "00";
+      data.set("timeZone", timeZone);
       data.set("currentUser",currentUser);
-      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
       bundleString = data.toString();
       return Response.ok(bundleString);
     } catch (Throwable e) {
@@ -660,6 +666,9 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   @MimeType.JSON
   @Jackson
   public ContextDTO  getData() {
+
+
+
     ContextDTO data = new ContextDTO();
 
       data.setCurrentUser(currentUser);

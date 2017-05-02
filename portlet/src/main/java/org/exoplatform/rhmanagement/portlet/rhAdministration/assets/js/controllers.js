@@ -405,6 +405,15 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             return id;
         };
 
+        $scope.getLocaleDate = function(date) {
+            if($scope.i18n&&$scope.i18n.offset){
+                return date+$scope.i18n.offset;
+            }else{
+                return  date;
+            }
+
+        };
+
         $scope.loadSubstitues = function (vacationRequest) {
             $http({
                 data: vacationRequest,

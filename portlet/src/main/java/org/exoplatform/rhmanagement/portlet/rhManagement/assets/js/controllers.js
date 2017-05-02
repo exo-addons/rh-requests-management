@@ -610,6 +610,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             return id;
         };
 
+        $scope.getLocaleDate = function(date) {
+           if($scope.i18n&&$scope.i18n.offset){
+               return date+$scope.i18n.offset;
+           }else{
+               return  date;
+           }
+
+        };
+
         $scope.loadData = function() {
             $http({
                 method : 'GET',

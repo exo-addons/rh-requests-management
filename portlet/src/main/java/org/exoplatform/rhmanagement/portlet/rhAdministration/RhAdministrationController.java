@@ -290,6 +290,13 @@ public class RhAdministrationController {
           // Nothing to do, this happens sometimes
         }
       }
+      TimeZone userTimeZone=Utils.getUserTimezone(currentUser);
+      data.set("userTimeZone",userTimeZone.toString());
+      data.set("offset",userTimeZone.getOffset(new Date().getTime()));
+      int offset = userTimeZone.getOffset(new Date().getTime()) / 3600000;
+      String timeZone = ((offset < 0) ? "-" : "") + String.format("%02d", Math.abs(offset))+ "00";
+      data.set("timeZone", timeZone);
+      data.set("currentUser",currentUser);
       bundleString = data.toString();
       return Response.ok(bundleString);
     } catch (Throwable e) {
