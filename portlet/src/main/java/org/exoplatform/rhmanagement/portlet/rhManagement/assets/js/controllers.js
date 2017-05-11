@@ -37,6 +37,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showFullReq= false;
         $scope.showAlert = false;
         $scope.newVacationRequest = null;
+        $scope.vacationsToVAlidateFilter = "active";
+        $scope.myVacationsFilter = "active";
 
         $scope.newComment = null;
 

@@ -16,7 +16,7 @@
 </li>
                 <li class="item" id="requestsTab" >
                     <a class=""
-                       ng-click="openTab('requests', 'employees'); loadAllVacationRequests()">
+                       ng-click="openTab('requests', 'employees'); loadVacationRequests('active')">
                         <i class="uiIconEcmsTemplateList"></i>
 <span id="forum" class="tabName show-calender">{{i18n.requestsList}}</span>
                     </a>
@@ -389,6 +389,32 @@ data-ng-click="saveUserHRData(userDetails)"/>
 </div>
                     </div>
 <div class="table-responsive">
+<h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsList}}</h4>
+
+<div class="header-right pull-right">{{geti18n(userVrFilter)}}</div>
+<div class="header-right pull-right groupByOptions" style="">
+<!-- this is filter action-->
+<div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
+<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+data-placement="bottom">
+<i class="uiIconFilter uiIconLightGray"></i>
+                                </a>
+<ul class="dropdown-menu">
+
+<li><a href="javascript:void(0)"ng-click="userVrFilter='all';loadVacationRequestsbyUserId(userDetails.userId,'all')">{{i18n.all}}</a>
+                                    </li>
+
+<li><a href="javascript:void(0)" ng-click="userVrFilter='active';loadVacationRequestsbyUserId(userDetails.userId,'active')">{{i18n.active}}</a>
+                                    </li>
+</ul>
+                            </div>
+</div>
+
+
+
+
+
+
 <table id="requestsTable" class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
@@ -478,8 +504,25 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
 
 <div id="requests" class="tabcontent">
 
+<h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsList}}</h4>
+<div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
+<div class="header-right pull-right groupByOptions" style="">
+<!-- this is filter action-->
+<div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
+<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+data-placement="bottom">
+<i class="uiIconFilter uiIconLightGray"></i>
+                                </a>
+<ul class="dropdown-menu">
 
-<h4 class="titleWithBorder">{{i18n.requestsList}}</h4>
+<li><a href="javascript:void(0)"ng-click="vrFilter='all';loadVacationRequests('all')">{{i18n.all}}</a>
+                                    </li>
+
+<li><a href="javascript:void(0)" ng-click="vrFilter='active';loadVacationRequests('active')">{{i18n.active}}</a>
+                                    </li>
+</ul>
+                            </div>
+</div>
 
                 <div class="uiBox elementDetail" ng-show="showDetails">
                     <a class="actionIcon " style="float: right;position: absolute;right: 0;"

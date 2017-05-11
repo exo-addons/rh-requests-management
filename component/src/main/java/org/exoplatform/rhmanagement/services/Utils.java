@@ -6,6 +6,8 @@ import org.exoplatform.calendar.service.CalendarSetting;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.container.PortalContainer;
+import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
+import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
@@ -31,6 +33,7 @@ public class Utils {
     private final static String HR_MANAGERS_GROUP_DEFAULT = "/rh-managers";
 
     public static final String ALL="all";
+    public static final String ACTIVE="active";
     public static final String APPROVED="approved";
     public static final String DECLINED="declined";
     public static final String PENDING="pending";
@@ -156,5 +159,18 @@ public class Utils {
         }
         return null;
     }
+
+    public static Boolean canView(VacationRequestDTO vr, String user){
+        if(user.equals(vr.getUserId())) return true;
+        ValidatorService validatorService=CommonsUtils.getService(ValidatorService.class);
+        for (ValidatorDTO validator : validatorService.getValidatorsByRequestId(vr.getId(),0,0)){
+            if(user.equals(validator.getValidatorUserId())) return true;
+        }
+        for (User manager : Utils.getRhManagers()){
+            if(user.equals(manager.getUserName())) return true;
+        }
+        return false;
+    }
+
 
 }

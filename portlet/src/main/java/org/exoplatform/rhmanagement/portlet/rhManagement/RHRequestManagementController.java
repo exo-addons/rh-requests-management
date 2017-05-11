@@ -196,7 +196,7 @@ public class RHRequestManagementController {
   public VacationRequestDTO getVacationRequest (Long id) {
     try {
       VacationRequestDTO vr=vacationRequestService.getVacationRequest(id);
-      if (canView(vr,currentUser)) return vr;
+      if (Utils.canView(vr,currentUser)) return vr;
       return null;
     } catch (Throwable e) {
       log.error(e);
@@ -548,16 +548,6 @@ public class RHRequestManagementController {
     return bundle;
   }
 
-  private Boolean canView(VacationRequestDTO vr,String user){
-    if(user.equals(vr.getUserId())) return true;
-    for (ValidatorDTO validator : validatorService.getValidatorsByRequestId(vr.getId(),0,0)){
-      if(user.equals(validator.getValidatorUserId())) return true;
-    }
-    for (User manager : Utils.getRhManagers()){
-      if(user.equals(manager.getUserName())) return true;
-    }
-    return false;
-  }
 
 private void shareCalendar_(VacationRequestDTO obj, String calId){
   try {
@@ -699,7 +689,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
         VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
         if(requestDTO!=null) {
-          if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())) continue;
+          if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())||requestDTO.getToDate().before(new Date())) continue;
 
             dtos.add(requestDTO);
 

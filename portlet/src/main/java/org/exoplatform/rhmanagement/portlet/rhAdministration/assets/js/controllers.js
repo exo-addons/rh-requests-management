@@ -46,6 +46,9 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.vm.pager = {};
         $scope.vm.setPage = setPage;
 
+        $scope.vrFilter="active";
+        $scope.userVrFilter="active";
+
         $scope.initController = function () {
             // initialize to page 1
             $scope.vm.setPage(1);
@@ -110,13 +113,9 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             if (!userRhData.avatar) {
                 $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
             }
-            $http({
-                method: 'GET',
-                url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId') + "&userId=" + userRhData.userId
-            }).then(function successCallback(data) {
 
 
-/*here*/
+            /*here*/
             if($scope.userDetails.hrData.birthDay){
                 var birthDay = new Date($scope.getLocaleDate($scope.userDetails.hrData.birthDay));
 
@@ -144,7 +143,19 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $( "#contractEndDate" ).val(contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear());
             }
 
-                $scope.loadAttachments(userRhData);
+
+            $scope.loadVacationRequestsbyUserId(userRhData.userId,$scope.userVrFilter);
+            $scope.loadAttachments(userRhData);
+
+        };
+
+
+        $scope.loadVacationRequestsbyUserId = function (userId,userVrFilter) {
+            $http({
+                method: 'GET',
+                url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequestsbyUserId') + "&userId=" + userId+ "&vrFilter=" + userVrFilter
+            }).then(function successCallback(data) {
+
                 $scope.vacationRequests = data.data;
                 $scope.showAddForm = true;
 
@@ -153,7 +164,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.showAddForm = false;
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
-        };
+        }
 
 
         $scope.getUser = function (newUserId) {
@@ -195,10 +206,32 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         };
 
 
-        $scope.loadAllVacationRequests = function () {
+        $scope.loadVacationRequests = function (vrFilter) {
+            var url="";
+            if(status!=null){
+                url="&vrFilter="+vrFilter;
+            }
             $http({
                 method: 'GET',
-                url: rhAdminContainer.jzURL('RhAdministrationController.getAllVacationRequests')
+                url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequests')+url
+            }).then(function successCallback(data) {
+                $scope.allVacationRequests = data.data;
+//                $timeout(function() {
+//                    $scope.setResultMessage(data, "success")
+//                }, 1000);
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        };
+
+        $scope.editUserRhData = function (modifiedEmplyee) {
+            $scope.rhEmployee = modifiedEmplyee;
+        }
+
+        $scope.loadActivVacationRequests = function () {
+            $http({
+                method: 'GET',
+                url: rhAdminContainer.jzURL('RhAdministrationController.getActivVacationRequests')
             }).then(function successCallback(data) {
                 $scope.allVacationRequests = data.data;
 //                $timeout(function() {
@@ -287,7 +320,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 url: rhAdminContainer.jzURL('RhAdministrationController.validateRequest')
             }).then(function successCallback(data) {
                 if (user == null) {
-                    $scope.loadAllVacationRequests();
+                    $scope.loadVacationRequests($scope.vrFilter);
                 } else {
                     if (data.data != null) {
                         user.hrData = data.data;
@@ -310,7 +343,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 url: rhAdminContainer.jzURL('RhAdministrationController.cancelRequest')
             }).then(function successCallback(data) {
                 if (user == null) {
-                    $scope.loadAllVacationRequests();
+                    $scope.loadVacationRequests($scope.vrFilter);
                 } else {
                     if (data.data != null) {
                         user.hrData = data.data;
@@ -616,6 +649,42 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
 
+        $scope.getUrlParameterByName = function(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+
+        $scope.showRequestfromUrl = function() {
+            var requestId = $scope.getUrlParameterByName('rid');
+            if (typeof requestId !== 'undefined' && requestId !==null) {
+                $http({
+                    method : 'GET',
+                    url : rhAdminContainer.jzURL('RhAdministrationController.getVacationRequest')+ "&id=" +requestId
+                }).then(function successCallback(data) {
+                    if(data.data==""){
+                        $scope.setResultMessage($scope.i18n.requestNotFound, "error");
+                    }else{
+                        $scope.openTab('requests', 'employees')
+                        $scope.showVacationRequest(data.data);
+                    }
+                }, function errorCallback(data) {
+                    $scope.setResultMessage($scope.i18n.defaultError, "error");
+                });
+            }
+        }
+
+
+
+
         $scope.closeFormAdd = function () {
             $scope.showAddForm = false;
             $("#requestsList .elementDetail input").attr("readonly", "true");
@@ -623,6 +692,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
         $scope.loadBundles();
+        $scope.showRequestfromUrl();
        // $scope.loadContext();
        // $scope.loadEmployees();
 

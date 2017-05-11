@@ -129,10 +129,15 @@ public class RhAdministrationController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getVacationRequestsbyUserId(String userId) {
+  public List<VacationRequestDTO> getVacationRequestsbyUserId(String userId, String vrFilter) {
     try {
 
+      if (vrFilter != null&&vrFilter.equals(Utils.ACTIVE)) {
+
+        return vacationRequestService.getActiveVacationRequestsByUserId(userId,0,100);
+      }else{
         return vacationRequestService.getVacationRequestsByUserId(userId,0,100);
+      }
 
     } catch (Throwable e) {
       LOG.error(e);
@@ -178,16 +183,36 @@ public class RhAdministrationController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getAllVacationRequests() {
+  public List<VacationRequestDTO> getVacationRequests(String vrFilter) {
+    try {
+      if (vrFilter != null&&vrFilter.equals(Utils.ACTIVE)) {
+
+          return vacationRequestService.getActivVacationRequests(0,100);
+        }else{
+          return vacationRequestService.getVacationRequests(0,100);
+      }
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<VacationRequestDTO> getActivVacationRequests() {
     try {
 
-      return vacationRequestService.getVacationRequests(0,100);
+      return vacationRequestService.getActivVacationRequests(0,100);
 
     } catch (Throwable e) {
       LOG.error(e);
       return null;
     }
   }
+
 
 
 
@@ -551,5 +576,23 @@ public class RhAdministrationController {
       return null;
     }
   }
+
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public VacationRequestDTO getVacationRequest (Long id) {
+    try {
+      VacationRequestDTO vr=vacationRequestService.getVacationRequest(id);
+      if (Utils.canView(vr,currentUser)) return vr;
+      return null;
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
 
 }

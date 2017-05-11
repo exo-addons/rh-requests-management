@@ -21,6 +21,7 @@ import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,6 +55,23 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
         }
     }
 
+    public List<VacationRequestEntity> getActiveVacationRequests(int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActive", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("currentDate", new Date())
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActive", VacationRequestEntity.class)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
 
     public List<VacationRequestEntity> getVacationRequestsByUserId(String userId, int offset, int limit) {
         try {
@@ -104,6 +122,7 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
                         .setFirstResult(offset)
                         .setMaxResults(limit)
                         .setParameter("userId", userId)
+                        .setParameter("currentDate", new Date())
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByUserId", VacationRequestEntity.class)
