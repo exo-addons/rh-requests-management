@@ -90,7 +90,8 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                         <tbody>
                             <tr ng-repeat="userRhData in rhEmployees| orderBy:orderByField:reverseSort">
                                 <td>
-                                    <span>{{userRhData.name}}</span>
+                                    <a class="actionIcon nameOpen" title=""  href=""
+                                       data-ng-click="loadUserHRData(userRhData)"><span>{{userRhData.name}}</span></a>
 </td>
                                 <td>
                                     <span>{{userRhData.hrData.cin}}</span>
@@ -390,7 +391,7 @@ data-ng-click="saveUserHRData(userDetails)"/>
                     </div>
 <div class="table-responsive">
 <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsList}}</h4>
-
+<div class="div_filter">
 <div class="header-right pull-right">{{geti18n(userVrFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
@@ -408,6 +409,7 @@ data-placement="bottom">
                                     </li>
 </ul>
                             </div>
+</div>
 </div>
 
 
@@ -466,7 +468,7 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                         <tbody>
                             <tr ng-repeat="vacationRequest in vacationRequests| orderBy:orderByField:reverseSort ">
 
-                                <td>
+                                <td class="request_id">
                                     <a href="" data-ng-click="showRequest(vacationRequest)">{{vacationRequest.id}}</a>
 </td>
                                 <td>
@@ -505,6 +507,7 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
 <div id="requests" class="tabcontent">
 
 <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsList}}</h4>
+<div class="div_filter">
 <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
@@ -523,10 +526,11 @@ data-placement="bottom">
 </ul>
                             </div>
 </div>
+</div>
 
                 <div class="uiBox elementDetail" ng-show="showDetails">
                     <a class="actionIcon " style="float: right;position: absolute;right: 0;"
-                       ng-click="showDetails = false">
+                       ng-click="CloseVacationRequest(vRequest)">
                         <i class="uiIconClose "></i>
 </a>
                     <div id="left_col">
@@ -777,8 +781,8 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                         </tr>
 </thead>
                     <tbody>
-                        <tr ng-repeat="vRequest in allVacationRequests| orderBy:orderByField:reverseSort">
-                            <td>
+                        <tr ng-repeat="vRequest in allVacationRequests| orderBy:orderByField:reverseSort" class="request_{{vRequest.id}}">
+                            <td class="request_id">
                                 <a href="" data-ng-click="showVacationRequest(vRequest)">{{vRequest.id}}</a>
 </td>
                             <td><span>{{vRequest.userFullName}}</span>

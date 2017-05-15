@@ -65,6 +65,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
            }
         }
 
+        $scope.showFormFn = function(){
+            $scope.showForm = true;
+            if($scope.getUrlParameterByName('rid')){
+                $scope.showDetails = true;
+                $scope.showFullReq = false;
+            }
+
+        }
+
         $scope.toggleView = function(){
             $scope.showCal = !$scope.showCal;
             $text = $(".show-calender").text();

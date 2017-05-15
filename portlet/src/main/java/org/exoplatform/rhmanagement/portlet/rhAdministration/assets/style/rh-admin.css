@@ -46,7 +46,8 @@ ul.tab li a:hover {background-color: #ddd;}
 .tabcontent .ligne {
     position : relative;
     padding: 2px 0;
-    min-height: 20px;
+    min-height: 25px;
+    line-height: 25px;
     padding: 1px 10px;
 }
 #left_col .uiContentBox .tabcontent .ligne{
@@ -196,7 +197,8 @@ input.requestEdit[readonly]{
     float:left;
     width:50%;
     border-right: 1px solid #dadada;
-    height: 480px;
+    height: 494px;
+    margin-top: -35px;
     overflow-y: overlay;
 }
 #left_col.no-border{border : 0!important}
@@ -209,7 +211,8 @@ input.requestEdit[readonly]{
     border-left: 1px solid #dadada;
     padding-left: 10px;
     padding-top: 10px;
-    padding-right:3px
+    padding-right:3px;
+    margin-top: -35px;
 }
 
 
@@ -322,7 +325,7 @@ ul#addonMenu > .active> a > i{
     text-shadow: none;
 }
 .nav-tabs li, .nav li{cursor: pointer}
-.commentItem.commentFormBox {margin-top: 30px;}
+
 .commentsBloc, .logsTabs{
 border: 1px solid #cccccc;
 border-top: 0;
@@ -360,6 +363,8 @@ i.uiIconEcmsSearchMini.newUserId {
     position: absolute;
     top: 5px;
     right: 0;
+    padding-left: 15px;
+    background: #f2f2f2;
 }
 .table-responsive {
     overflow: auto;
@@ -373,6 +378,71 @@ i.uiIconEcmsSearchMini.newUserId {
     min-width: 400px;
 }
 .actionIcon, .actionIconSmall{z-index: 1}
+.request_id{
+    padding: 0!important;
+    text-align: center!important;
+}
+.request_id > a{display: block}
+.nameOpen, .nameOpen *{
+    color: #476a9c;
+}
+.nameOpen:hover, .nameOpen:focus{border-color: transparent;background: none;}
+.table-striped tbody tr.selected td{
+    background: #8ebff5!important;
+}
+.div_filter {
+    position: absolute;
+    right: 15px;
+    background: #f2f2f2;
+    margin-top: 15px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.commentItem {
+    padding-top: 30px!important;
+   /* display: flex!important;
+    align-items: center!important;*/
+}
+.elementDetail .ligne {
+    padding: 10px 8px!important;}
+ul#addonMenu {
+    background: #f8f8f8!important;
+    margin-left: -50px!important;
+    padding-left: 45px!important;
+}
+ul#addonMenu [class^="uiIcon"], .LeftNavigationTDContainer .uiPopup [class^="uiIcon"]{ color : #a8b3c5!important;}
+
+ul#addonMenu > .active> a > span, ul#addonMenu > .active> a > i {
+    color: #578dc9!important;
+}
+ul#addonMenu > .active > a{background: none!important;box-shadow: none!important;}
+ul#addonMenu li {margin: 0 19px;}
+ul#addonMenu li.active {
+    cursor: pointer;
+    border-bottom: 4px solid #578dc9;
+    border-radius: 0;
+    height: 88px;
+    margin: 0 19px;
+}
+#requestResume {
+    top: 15%!important;
+    bottom: 15%!important;
+    left: 45%!important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+div#hrAdminApplication ul#addonMenu {
+    background: #f8f8f8!important;
+    margin-left: -20px!important;
+    padding-left: 10px!important;
+}
+
+.tabcontent .ligne i.uiIconEdit{    top: 9px;!important}
+h4.titleWithBorder {
+    margin-top: 15px;
+}
 @media (max-width: 776px) {
     #left_col{width: 100%}
     #right_col{width: 100%; padding: 0; border: 0}

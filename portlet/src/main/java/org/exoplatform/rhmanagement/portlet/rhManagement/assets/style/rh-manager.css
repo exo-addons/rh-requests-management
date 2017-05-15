@@ -1,3 +1,7 @@
+body{
+    overflow-x: hidden;
+    color: #4d5466;
+}
 /* INVALID INPUT */
 .ng-invalid{
     border-color: #f90000!important;
@@ -96,7 +100,7 @@ td.RightBodyTDContainer{
     width: 22px;
 }
 .table-project .row-item {
-    height: 35px;
+    height: 40px;
 }
 .uiIconExt-rh-managements:before{
     content: "\e6e1";
@@ -111,7 +115,11 @@ td.RightBodyTDContainer{
 .ligne.manager {
     display: block;
 }
-.elementDetail .ligne > b{ margin-left: 0}
+.elementDetail .ligne > b{
+    margin-left: 0;
+    width: 35%;
+    color: #476a9c;
+}
 .elementDetail .ligne:nth-child(even){
     background : #f8f8f8;
 }
@@ -252,12 +260,11 @@ select[name=inputUsername] {
     white-space: nowrap;
 }
 select#managerCalendarId {
-    width: 30%;
+    width: 100%;
     max-width: 200px;
     min-width: 165px;
 }
 #calSaveButton {
-    width: 20.5%;
     max-width: 100px;
     float: none;
     min-width: 71px;
@@ -287,7 +294,7 @@ div#left_col.fullWidth, div#right_col.fullWidth {
 
 /* -- -- ADDON MENU -- -- */
 ul#addonMenu {
-    margin: -20px -30px 0;
+    margin: -20px -30px 10px;
     border-bottom: 1px solid #ccc;
     background-color: #f1f1f1;
     background-image: -moz-linear-gradient(top,#f8f8f8,#e6e6e6);
@@ -355,8 +362,9 @@ ul#addonMenu > .active> a > i{
 .nav-tabs li, .nav li{cursor: pointer}
 .commentItem.commentFormBox {margin-top: 30px;}
 .commentsBloc, .logsTabs{
-border: 1px solid #cccccc;
-border-top: 0;
+    border: 1px solid #cccccc;
+    border-top: 0;
+    padding: 15px;
 }
 a.actionIcon.inline-block-hide.uploadicon {
     padding: 1px 5px;
@@ -429,6 +437,70 @@ hr.clearfix{
     opacity: 0;
     margin: 0;
     padding: 0;
+}
+
+div#infoTable {
+    color: #385989;
+    font-size: 15px;
+    margin: 5px 0;
+}
+div#infoTable .ligne > span{
+    color: #4d5466;
+}
+.filtername{font-weight: bold; font-size: 11px}
+.groupByOptions .actionIcon, .groupByOptions .actionIconSmall{padding: 0}
+.title_filter{
+    position: relative;
+    width: 100%;
+}
+.div_filter {
+    position: absolute;
+    right: 15px;
+    background: #FFF;
+    margin-top: 8px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 11px;
+}
+div#tab-comments{
+    width: 100%;
+}
+.uiIconClock:before{font-size: 18px}
+i.uiIconDeleteUser.uiIconLightGray,i.uiIconValidate.uiIconLightGray, i.uiIconEcmsRemove.uiIconLightGray{
+    top: 5px;
+}
+.commentItem {
+    padding: 5px!important;
+    /*display: flex!important;
+    align-items: center!important;*/
+}
+.elementDetail .ligne {
+    padding: 10px 8px!important;}
+ul#addonMenu {
+    background: #f8f8f8!important;
+    margin-left: -50px!important;
+    padding-left: 45px!important;
+}
+ul#addonMenu [class^="uiIcon"], .LeftNavigationTDContainer .uiPopup [class^="uiIcon"]{ color : #a8b3c5!important;}
+
+ul#addonMenu > .active> a > span, ul#addonMenu > .active> a > i {
+    color: #578dc9!important;
+}
+ul#addonMenu > .active > a{background: none!important;box-shadow: none!important;}
+ul#addonMenu li {margin: 0 19px;}
+ul#addonMenu li.active {
+    cursor: pointer;
+    border-bottom: 4px solid #578dc9;
+    border-radius: 0;
+    height: 88px;
+    margin: 0 19px;
+}
+#requestResume {
+    top: 15%!important;
+    bottom: 15%!important;
+    left: 45%!important;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 @media screen and (max-width: 767px) {
     #right_col, #left_col{width : 100%}

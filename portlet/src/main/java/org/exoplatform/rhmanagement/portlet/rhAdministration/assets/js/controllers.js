@@ -362,6 +362,8 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $("#" + tabHide).css("display", "none");
             $("#" + tabName + "Tab").addClass("active");
             $("#" + tabHide + "Tab").removeClass("active");
+            $scope.showDetails=false;
+            $scope.showAddForm =false;
         }
 
         $scope.enableInput = function (id) {
@@ -585,8 +587,14 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $scope.loadComments(vacationRequest);
             $scope.loadHistory(vacationRequest);
             $scope.showDetails = true;
+            $(".table-striped tbody tr").removeClass("selected");
+            $(".request_"+vacationRequest.id).addClass("selected");
         };
 
+        $scope.CloseVacationRequest = function (vacationRequest) {
+            $scope.showDetails = false;
+            $(".table-striped tbody tr").removeClass("selected");
+        };
 
         $scope.loadContext = function () {
             $http({

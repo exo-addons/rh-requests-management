@@ -5,7 +5,7 @@
         <ul class="nav nav-tabs addonMenu" id="addonMenu">
             <li class="item" ng-class="{ 'active': showForm }">
                 <a class="" data-placement="right" data-original-title="Add"
-                   ng-click="showForm = true">
+                   ng-click="showFormFn()">
                     <i class="uiIconCalAddCalendar"></i>
 <span class="tabName">{{i18n.newVacationRequest}}</span>
                 </a>
@@ -21,7 +21,7 @@
         </ul>
 <div id="wrap">
 
-<div class="uiBox" style="padding: 10px;">
+<div class="uiBox" style="padding: 15px 20px;">
 <div id="infoTable" class="row-fluid">
 <div class="span4">
 <div class="ligne">
@@ -337,8 +337,9 @@ ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
 
 
                     <!--My Requests-->
-                    <div ng-show="showList" style="padding: 20px;">
+                    <div ng-show="showList" style="padding: 20px;position: relative">
                         <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.myRequests}}</h4>
+                        <div class = "div_filter">
 <div class="header-right pull-right">{{geti18n(myVacationsFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
@@ -374,6 +375,7 @@ ng-click="myVacationsFilter='all';loadMyVacationRequests('all')">{{i18n.all}}</a
 
 
 </ul>
+</div>
 </div>
 </div>
 <ul class="table-project" ng-repeat="myVacationRequest in myVacationRequests">
@@ -412,8 +414,9 @@ ng-click="deleteRequest(myVacationRequest)">
 </ul>
 </div>
 <!--Requests to validate-->
-<div ng-show="showList" style="padding: 20px;">
+<div ng-show="showList" style="padding: 20px;position: relative">
 <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.requestsToValidate}}</h4>
+    <div class = "div_filter">
 <div class="header-right pull-right">{{geti18n(vacationsToVAlidateFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
 <!-- this is filter action-->
@@ -452,6 +455,7 @@ ng-click="vacationsToVAlidateFilter='canceled';loadVacationRequestsToValidate('c
 
 
 </ul>
+</div>
 </div>
 </div>
 <ul class="table-project" ng-repeat="vRequest in vacationRequestsToValidate">
@@ -808,7 +812,7 @@ ng-click="toggleView()">
 </ul>
 <div id="wrap">
 
-<div class="uiBox" style="padding: 10px;">
+<div class="uiBox" style="padding: 15px 20px;">
 <table id="infoTable">
 <tbody>
 <tr>
@@ -1118,7 +1122,7 @@ ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
 
 
                     <!--My Requests-->
-                    <div ng-show="showList" style="padding: 20px;">
+                    <div ng-show="showList" style="padding: 20px;position: relative">
                         <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.myRequests}}</h4>
 <div class="header-right pull-right">{{geti18n(myVacationsFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
