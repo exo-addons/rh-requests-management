@@ -118,29 +118,33 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             /*here*/
             if($scope.userDetails.hrData.birthDay){
                 var birthDay = new Date($scope.getLocaleDate($scope.userDetails.hrData.birthDay));
-
                 $( "#birthDay" ).datepicker( "option", "defaultDate", birthDay );
-                $( "#birthDay" ).val(birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear());
+                birthDay = birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear() ;
+                $( "#birthDay" ).val(birthDay);
             }
             if($scope.userDetails.hrData.startDate){
                 var startDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.startDate));
                 $( "#startDate" ).datepicker( "option", "defaultDate", startDate );
-                $( "#startDate" ).val(startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear());
+                startDate = startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear();
+                $( "#startDate" ).val(startDate);
             }
             if($scope.userDetails.hrData.leaveDate){
                 var leaveDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.leaveDate));
                 $( "#leaveDate" ).datepicker( "option", "defaultDate", leaveDate );
-                $( "#leaveDate" ).val(leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear());
+                leaveDate = leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear();
+                $( "#leaveDate" ).val(leaveDate);
             }
             if($scope.userDetails.hrData.contractStartDate){
                 var contractStartDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractStartDate));
                 $( "#contractStartDate" ).datepicker( "option", "defaultDate", contractStartDate );
-                $( "#contractStartDate" ).val(contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear());
+                contractStartDate = contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear();
+                $( "#contractStartDate" ).val(contractStartDate);
             }
             if($scope.userDetails.hrData.contractEndDate){
                 var contractEndDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractEndDate));
                 $( "#contractEndDate" ).datepicker( "option", "defaultDate", contractEndDate );
-                $( "#contractEndDate" ).val(contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear());
+                contractEndDate = contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear();
+                $( "#contractEndDate" ).val(contractEndDate);
             }
 
 
