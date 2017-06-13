@@ -522,11 +522,11 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
 <i class="uiIconClose "></i>
 </a>
 <div class="uiContentBox">
-<div class="" style="margin-right: 10px;">
-            <a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge pull-left">
+<div class="user_details row-fluid">
+            <a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge span4" style="padding-top: 15px; margin-bottom: 20px; margin-left: 20px;">
 <img src="{{vrOwnerData.avatar}}" alt="{{vacationRequesttoShow.userFullName}}">
 </a>
-            <div class="contentBox">
+            <div class="contentBox span8">
             <div class="ligne">
                 <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span> <hr class="clearfix" />
 </div>
@@ -537,7 +537,7 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
 				<b>{{i18n.sickBalance}}:</b> <span>{{vrOwnerData.hrData.sickdaysBalance}}</span><hr class="clearfix" />
 </div>
               </div>
-
+<hr class="clearfix"/>
 
 </div>
 <div class="ligne">

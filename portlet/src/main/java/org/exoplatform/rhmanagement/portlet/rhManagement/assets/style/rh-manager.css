@@ -437,6 +437,7 @@ hr.clearfix{
     opacity: 0;
     margin: 0;
     padding: 0;
+    clear: both;
 }
 
 div#infoTable {
@@ -461,6 +462,9 @@ div#infoTable .ligne > span{
     padding-left: 10px;
     font-weight: bold;
     font-size: 11px;
+}
+.div_filter .dropdown-menu li a{
+    font-size: 12px;
 }
 div#tab-comments{
     width: 100%;
@@ -502,6 +506,14 @@ ul#addonMenu li.active {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.user_details {
+    margin: 0 0 15px 0;
+    background: #f8f8f8;
+
+}
+.user_details:after{clear: both}
+.user_details .ligne > b{width: 40%;}
 @media screen and (max-width: 767px) {
     #right_col, #left_col{width : 100%}
     .rhAddon {padding: 20px 0px;}
