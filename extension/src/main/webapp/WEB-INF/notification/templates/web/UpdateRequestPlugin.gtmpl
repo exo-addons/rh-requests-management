@@ -6,9 +6,10 @@
     <div class="media-body">
       <%
         String URL = VACATION_URL;
+        String userName = USER_NAME;
       	String msg = "";
       	String profileUrl = "<a class=\"user-name text-bold\" href=\"" + PROFILE_URL + "\">" + USER + "</a>";
-msg = _ctx.appRes("Notification.message.RequestStatusChangedPlugin", profileUrl);
+msg = _ctx.appRes("Notification.message.RequestStatusChangedPlugin", profileUrl,userName );
 
 %>
 <div class="contentSmall" data-link="$URL">

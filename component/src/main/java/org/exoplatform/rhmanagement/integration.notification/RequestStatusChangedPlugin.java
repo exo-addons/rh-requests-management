@@ -97,6 +97,7 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
             .with(NotificationUtils.CREATOR, userId)
             .with(NotificationUtils.FROM_DATE, obj.getFromDate().toString())
             .with(NotificationUtils.TO_DATE, obj.getToDate().toString())
+            .with(NotificationUtils.USER_NAME, obj.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();

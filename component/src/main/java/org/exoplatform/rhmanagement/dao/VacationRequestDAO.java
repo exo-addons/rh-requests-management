@@ -61,7 +61,7 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findActive", VacationRequestEntity.class)
                         .setFirstResult(offset)
                         .setMaxResults(limit)
-                        .setParameter("currentDate", new Date())
+                        .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findActive", VacationRequestEntity.class)
@@ -122,7 +122,7 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
                         .setFirstResult(offset)
                         .setMaxResults(limit)
                         .setParameter("userId", userId)
-                        .setParameter("currentDate", new Date())
+                        .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByUserId", VacationRequestEntity.class)

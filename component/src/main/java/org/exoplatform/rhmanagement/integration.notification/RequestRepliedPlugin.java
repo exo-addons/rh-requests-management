@@ -25,9 +25,11 @@ import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
 import java.util.HashSet;
@@ -86,6 +88,11 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
     try {
         receivers.add(obj.getUserId());
 
+      for (User rhManager : Utils.getRhManagers()){
+        if(!receivers.contains(rhManager.getUserName()))
+          receivers.add(rhManager.getUserName());
+      }
+
     } catch (Exception ex) {
 
       LOG.error(ex.getMessage(), ex);
@@ -101,6 +108,8 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
 
 
+
+
     return NotificationInfo.instance()
 
             .setFrom(userId)
@@ -108,6 +117,7 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
             .with(NotificationUtils.CREATOR, userId)
             .with(NotificationUtils.FROM_DATE, vacationRequest.getFromDate().toString())
             .with(NotificationUtils.TO_DATE, vacationRequest.getToDate().toString())
+            .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();

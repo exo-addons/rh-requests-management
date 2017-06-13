@@ -5,7 +5,7 @@
 <tr>
 <td  height="45" valign="middle" style="margin:0;height:45px;font-weight:bold;vertical-align:middle;;background-color: #efefef;font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif;color:#2f5e92;font-size:18px;text-align:center">
 <a href="#" style="text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif; font-size: 18px;">
-<%=_ctx.appRes("Notification.title.RequestStatusChangedPlugin")%>
+<%=_ctx.appRes("Notification.title.RequestStatusChangedPlugin",USER_NAME)%>
 </a>
 						</td>
 </tr>
@@ -38,8 +38,8 @@
 <p style="margin: 0 0 10px; color: #333333; font-size: 13px; line-height: 18px;">
 <%
 String profileUrl = "<a style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\" href=\""+ PROFILE_URL + "\"><strong>" + USER + "</strong></a>";
-def msg = _ctx.appRes("Notification.message.RequestStatusChangedPlugin", profileUrl);
-def description = _ctx.appRes("Notification.description.email.RequestCreatedPlugin", FROM_DATE,TO_DATE);
+def msg = _ctx.appRes("Notification.message.email.RequestStatusChangedPlugin", profileUrl, USER_NAME);
+def description = _ctx.appRes("Notification.description.email.RequestStatusChangedPlugin",USER_NAME, FROM_DATE,TO_DATE);
 %>
 <%=msg%>:
 </p>

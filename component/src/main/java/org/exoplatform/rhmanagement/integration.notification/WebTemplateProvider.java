@@ -83,9 +83,11 @@ public class WebTemplateProvider extends TemplateProvider {
       
       String creator = notification.getValueOwnerParameter(NotificationUtils.CREATOR);
       String vacationUrl = notification.getValueOwnerParameter(NotificationUtils.VACATION_URL);
+      String userName = notification.getValueOwnerParameter(NotificationUtils.USER_NAME);
       
       EntityEncoder encoder = HTMLEntityEncoder.getInstance();
-      Identity identity = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
+      IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
+      Identity identity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
       Profile profile = identity.getProfile();
       templateContext.put("USER", encoder.encode(profile.getFullName().toString()));
       templateContext.put("AVATAR", profile.getAvatarUrl() != null ? profile.getAvatarUrl() : LinkProvider.PROFILE_DEFAULT_AVATAR_URL);
@@ -94,6 +96,12 @@ public class WebTemplateProvider extends TemplateProvider {
       if(vacationUrl!=null) {
         templateContext.put("VACATION_URL", vacationUrl);
       }
+
+      if(userName!=null) {
+        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userName, false);
+        templateContext.put("USER_NAME", id.getProfile().getFullName());
+      }
+
 
       //--- Get Date From :
       String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);

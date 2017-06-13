@@ -7,8 +7,9 @@
       <%
         String URL = VACATION_URL;
       	String msg = "";
+      	String userName = USER_NAME;
       	String profileUrl = "<a class=\"user-name text-bold\" href=\"" + PROFILE_URL + "\">" + USER + "</a>";
-msg = _ctx.appRes("Notification.message.RequestRepliedPlugin", profileUrl);
+msg = _ctx.appRes("Notification.message.RequestRepliedPlugin", profileUrl, userName);
 
 %>
 <div class="contentSmall" data-link="$URL">

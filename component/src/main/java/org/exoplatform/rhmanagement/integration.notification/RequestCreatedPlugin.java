@@ -24,8 +24,11 @@ import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationConfig;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
 import java.util.HashSet;
@@ -85,6 +88,11 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
       for (String manager : obj.getManagers()){
         receivers.add(manager);
+      }
+
+      for (User rhManager : Utils.getRhManagers()){
+        if(!receivers.contains(rhManager.getUserName()))
+        receivers.add(rhManager.getUserName());
       }
 
     } catch (Exception ex) {

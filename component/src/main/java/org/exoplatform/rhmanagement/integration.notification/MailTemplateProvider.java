@@ -80,9 +80,11 @@ public class MailTemplateProvider extends TemplateProvider {
 
       String creator = notification.getValueOwnerParameter(NotificationUtils.CREATOR);
       String vacationUrl = notification.getValueOwnerParameter(NotificationUtils.VACATION_URL);
+      String userName = notification.getValueOwnerParameter(NotificationUtils.USER_NAME);
 
       TemplateContext templateContext = new TemplateContext(notification.getKey().getId(), language);
-      Identity author = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
+      IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
+      Identity author = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
       Profile profile = author.getProfile();
       //creator
       templateContext.put("USER", encoder.encode(profile.getFullName()));
@@ -95,6 +97,11 @@ public class MailTemplateProvider extends TemplateProvider {
         if(vacationUrl!=null) {
             templateContext.put("VACATION_URL", vacationUrl);
         }
+
+      if(userName!=null) {
+        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userName, false);
+        templateContext.put("USER_NAME", id.getProfile().getFullName());
+      }
 
 
       //--- Get Date From :
