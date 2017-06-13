@@ -36,10 +36,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showLogs = false;
         $scope.showFullReq= false;
         $scope.showAlert = false;
+        $scope.showInfoBox = true;
         $scope.newVacationRequest = null;
         $scope.vacationsToVAlidateFilter = "active";
         $scope.myVacationsFilter = "active";
-
+        $scope.vrOwnerData = null;
         $scope.newComment = null;
 
 
@@ -162,6 +163,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                         $scope.setResultMessage($scope.i18n.requestNotFound, "error");
                     }else{
                         $scope.showVacationRequest(data.data);
+                        $scope.showInfoBox=false;
                         $scope.showFullReq = true;
                         $scope.showAlert = false;
                     }
@@ -322,6 +324,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.showVacationRequest = function(vacationRequest) {
             $scope.vacationRequesttoShow=vacationRequest;
+            $scope.loadVrOwnerData(vacationRequest);
             $scope.loadManagers(vacationRequest);
             $scope.loadSubstitues(vacationRequest);
             $scope.loadAttachments(vacationRequest);
@@ -357,6 +360,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
                 $scope.vacationRequesttoShow=data.data;
                 $scope.loadManagers(data.data);
+                $scope.loadVrOwnerData(data.data);
                 $scope.loadSubstitues(data.data);
                 $scope.loadComments(data.data);
                 $scope.loadHistory(data.data);
@@ -409,6 +413,23 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 url : rhContainer.jzURL('RHRequestManagementController.getValidatorsByRequestID')
             }).then(function successCallback(data) {
                 $scope.vrmanagers = data.data;
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        };
+
+
+        $scope.loadVrOwnerData = function(vacationRequest) {
+            $http({
+                data : vacationRequest,
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                url : rhContainer.jzURL('RHRequestManagementController.getVrOwnerData')
+            }).then(function successCallback(data) {
+                $scope.vrOwnerData = data.data;
                 $scope.showAlert = false;
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");

@@ -227,6 +227,38 @@ public class RHRequestManagementController {
     }
   }
 
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public EmployeesDTO getVrOwnerData(@Jackson VacationRequestDTO obj) {
+    try {
+
+      Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, obj.getUserId(), false);
+      Profile profile=id.getProfile();
+      EmployeesDTO employeesDTO=new EmployeesDTO();
+      employeesDTO.setId(obj.getId());
+      employeesDTO.setUserId(obj.getUserId());
+      employeesDTO.setName(profile.getFullName());
+      employeesDTO.setEmail(profile.getEmail());
+      employeesDTO.setJobTitle(profile.getPosition());
+      employeesDTO.setGender(profile.getGender());
+      if(profile.getAvatarUrl()!=null){
+        employeesDTO.setAvatar(profile.getAvatarUrl());
+      }else{
+        employeesDTO.setAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
+      }
+      employeesDTO.setHrData(userDataService.getUserRHDataByUserId(obj.getUserId())) ;
+      return employeesDTO;
+    } catch (Throwable e) {
+      log.error(e);
+      return null;
+    }
+  }
+
+
   @Ajax
   @juzu.Resource
   @MimeType.JSON
