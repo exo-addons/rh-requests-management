@@ -48,7 +48,7 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
 
     public  long getVacationRequestesCount() {
         try {
-            return getEntityManager().createNamedQuery("vacationRequestEntity.count", Long.class).getSingleResult();
+            return getEntityManager().createNamedQuery("vacatioRequestEntity.count", Long.class).getSingleResult();
         } catch (Exception e) {
             LOG.warn("Exception while attempting to get requests count.", e);
             throw e;
@@ -69,6 +69,17 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
             }
         } catch (Exception e) {
             LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+    public  long getActiveVacationRequestsCount() {
+        try {
+            return getEntityManager().createNamedQuery("vacatioRequestEntity.countActive", Long.class)
+                    .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
+                    .getSingleResult();
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests count.", e);
             throw e;
         }
     }

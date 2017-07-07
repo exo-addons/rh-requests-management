@@ -150,6 +150,11 @@ public class VacationRequestService {
   public long getVacationRequestesCount() {
     return vacationRequestDAO.getVacationRequestesCount();
   }
+
+  public long getActiveVacationRequestsCount() {
+    return vacationRequestDAO.getActiveVacationRequestsCount();
+  }
+
 /*
   public List<VacationRequestDTO> getVacationRequestById(long id) {
 
