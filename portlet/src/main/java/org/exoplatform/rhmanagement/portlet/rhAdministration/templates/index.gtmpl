@@ -16,7 +16,7 @@
 </li>
                 <li class="item" id="requestsTab" >
                     <a class=""
-                       ng-click="openTab('requests', 'employees'); loadVacationRequests('active')">
+                       ng-click="openTab('requests', 'employees'); loadVacationRequests('active',0,10)">
                         <i class="uiIconEcmsTemplateList"></i>
 <span id="forum" class="tabName show-calender">{{i18n.requestsList}}</span>
                     </a>
@@ -93,42 +93,42 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                                     <a class="actionIcon nameOpen" title=""  href=""
                                        data-ng-click="loadUserHRData(userRhData)"><span>{{userRhData.name}}</span></a>
 </td>
-                                <td>
-                                    <span>{{userRhData.hrData.cin}}</span>
+<td>
+<span>{{userRhData.hrData.cin}}</span>
 </td>
-                                <td>
-                                    <span>{{userRhData.hrData.socialSecNumber}}</span>
+<td>
+<span>{{userRhData.hrData.socialSecNumber}}</span>
 </td>
-                                <td>
-                                    <span>{{userRhData.hrData.holidaysBalance}}</span>
+<td>
+<span>{{userRhData.hrData.holidaysBalance}}</span>
 </td>
-                                <td>
-                                    <span>{{userRhData.hrData.sickdaysBalance}}</span>
+<td>
+<span>{{userRhData.hrData.sickdaysBalance}}</span>
 </td>
 
-                                <td>
-                                    <span>{{userRhData.phone}}</span>
+<td>
+<span>{{userRhData.phone}}</span>
 </td>
-                                <td>
-                                    <div class="center">
-                                        <a class="actionIcon" title=""  href=""
-                                           data-ng-click="loadUserHRData(userRhData)">
-                                            <i class="uiIconViewUserInfo uiIconLightGray"> </i>
+<td>
+<div class="center">
+<a class="actionIcon" title=""  href=""
+data-ng-click="loadUserHRData(userRhData)">
+<i class="uiIconViewUserInfo uiIconLightGray"> </i>
 </a>
 
-                                        <a class="actionIcon" title=""  href=""
-                                           data-ng-click="deleteUserHRData(userRhData)">
-                                            <i class="uiIconDeleteUser uiIconLightGray"> </i>
+<a class="actionIcon" title=""  href=""
+data-ng-click="deleteUserHRData(userRhData)">
+<i class="uiIconDeleteUser uiIconLightGray"> </i>
 </a>
 
-                                    </div>
+</div>
 </td>
-                            </tr>
+</tr>
 </tbody>
-                    </table>
+</table>
 </div>
 
-                </div>
+</div>
 
 <!-- User's requests -->
 <div id="requestsList" ng-show="showAddForm">
@@ -137,7 +137,7 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
 <div class="uiBox elementDetail">
 <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;" ng-click="closeFormAdd()">
 <i class="uiIconClose "></i>
-                        </a>
+</a>
 <div class="uiContentBox clearfix row-fluid formContainer">
 <div class="span4">
 <div class="ligne">
@@ -493,6 +493,25 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
                                 </td>
 </tr>
                         </tbody>
+
+<tfoot>
+<td colspan="3">
+<div class="pagination">
+<ul>
+<li ng-class="prevPageDisabled()">
+<a href ng-click="prevPage()">« Prev</a>
+              </li>
+<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+<a href="#">{{n+1}}</a>
+              </li>
+<li ng-class="nextPageDisabled()">
+<a href ng-click="nextPage()">Next »</a>
+              </li>
+</ul>
+          </div>
+</td>
+      </tfoot>
+
 </table>
                     </div>
 
@@ -513,33 +532,33 @@ data-placement="bottom">
                                 </a>
 <ul class="dropdown-menu">
 
-<li><a href="javascript:void(0)"ng-click="vrFilter='all';loadVacationRequests('all')">{{i18n.all}}</a>
+<li><a href="javascript:void(0)"ng-click="vrFilter='all';loadVacationRequests('all',0,10)">{{i18n.all}}</a>
                                     </li>
 
-<li><a href="javascript:void(0)" ng-click="vrFilter='active';loadVacationRequests('active')">{{i18n.active}}</a>
+<li><a href="javascript:void(0)" ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}</a>
                                     </li>
 </ul>
                             </div>
 </div>
 </div>
 
-                <div class="uiBox elementDetail" ng-show="showDetails">
-                    <a class="actionIcon " style="float: right;position: absolute;right: 0;"
-                       ng-click="CloseVacationRequest(vRequest)">
-                        <i class="uiIconClose "></i>
+<div class="uiBox elementDetail" ng-show="showDetails">
+<a class="actionIcon " style="float: right;position: absolute;right: 0;"
+ng-click="CloseVacationRequest(vRequest)">
+<i class="uiIconClose "></i>
 </a>
-                    <div id="left_col">
-                        <div class="uiContentBox">
-                            <div class="ligne">
-                                <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
-                            </div>
+<div id="left_col">
+<div class="uiContentBox">
+<div class="ligne">
+<b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
+</div>
 <div class="ligne">
 <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
 </div>
-                            <div class="ligne">
-                                <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.numberDays}}:</b>
+<div class="ligne">
+<b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.numberDays}}:</b>
 <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.numberHours}}:</b>
-                                <span>{{vacationRequesttoShow.daysNumber}}</span>
+<span>{{vacationRequesttoShow.daysNumber}}</span>
 <hr class="clearfix" />
 </div>
                             <div class="ligne">
@@ -807,6 +826,23 @@ ng-disabled="vRequest.status == 'canceled'">{{i18n.cancel}}
                             </td>
 </tr>
                     </tbody>
+<tfoot>
+<td colspan="3">
+<div class="pagination">
+<ul>
+<li ng-class="prevPageDisabled()">
+<a href ng-click="prevPage()">« Prev</a>
+              </li>
+<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+<a href="#">{{n+1}}</a>
+              </li>
+<li ng-class="nextPageDisabled()">
+<a href ng-click="nextPage()">Next »</a>
+              </li>
+</ul>
+          </div>
+</td>
+      </tfoot>
 </table>
                 </div>
 </div>

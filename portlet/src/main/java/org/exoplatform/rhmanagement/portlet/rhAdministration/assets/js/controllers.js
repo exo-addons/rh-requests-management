@@ -15,6 +15,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.vacationRequests = [];
         $scope.currentPage = 0;
         $scope.pageSize = 10;
+        $scope.vRCount=0;
         $scope.def = '';
         $scope.userDetails = {
             id: null
@@ -42,9 +43,9 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             validatorUserId: null
         };
 
-        $scope.vm = this;
-        $scope.vm.pager = {};
-        $scope.vm.setPage = setPage;
+        $scope.itemsPerPage = 10;
+        $scope.currentPage = 0;
+        $scope.pages=[];
 
         $scope.vrFilter="active";
         $scope.userVrFilter="active";
@@ -52,19 +53,6 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.initController = function () {
             // initialize to page 1
             $scope.vm.setPage(1);
-        }
-
-        function setPage(page) {
-            var rhEmployees = $filter('filter')($scope.rhEmployees, $scope.def)
-
-            // get pager object from service
-            $scope.vm.pager = PagerService.GetPager(rhEmployees.length, page);
-
-            if (page < 1 || page > $scope.vm.pager.totalPages) {
-                return;
-            }
-            // get current page of items
-            $scope.vm.items = rhEmployees.slice($scope.vm.pager.startIndex, $scope.vm.pager.endIndex + 1);
         }
 
         $scope.setResultMessage = function (text, type) {
@@ -215,16 +203,17 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         };
 
 
-        $scope.loadVacationRequests = function (vrFilter) {
+        $scope.loadVacationRequests = function (vrFilter,offset,limit) {
             var url="";
             if(status!=null){
                 url="&vrFilter="+vrFilter;
             }
             $http({
                 method: 'GET',
-                url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequests')+url
+                url: rhAdminContainer.jzURL('RhAdministrationController.getVacationRequests')+url+ "&offset="+offset+ "&limit="+limit
             }).then(function successCallback(data) {
-                $scope.allVacationRequests = data.data;
+                $scope.allVacationRequests = data.data.vacationRequests;
+                $scope.vRCount = data.data.size;
 //                $timeout(function() {
 //                    $scope.setResultMessage(data, "success")
 //                }, 1000);
@@ -329,7 +318,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 url: rhAdminContainer.jzURL('RhAdministrationController.validateRequest')
             }).then(function successCallback(data) {
                 if (user == null) {
-                    $scope.loadVacationRequests($scope.vrFilter);
+                    $scope.loadVacationRequests($scope.vrFilter,$scope.currentPage*$scope.itemsPerPage, $scope.itemsPerPage);
                 } else {
                     if (data.data != null) {
                         user.hrData = data.data;
@@ -352,7 +341,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 url: rhAdminContainer.jzURL('RhAdministrationController.cancelRequest')
             }).then(function successCallback(data) {
                 if (user == null) {
-                    $scope.loadVacationRequests($scope.vrFilter);
+                    $scope.loadVacationRequests($scope.vrFilter,$scope.currentPage*$scope.itemsPerPage, $scope.itemsPerPage);
                 } else {
                     if (data.data != null) {
                         user.hrData = data.data;
@@ -613,6 +602,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.currentUser = data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
                 $scope.currentUserName = data.data.currentUserName;
+               // $scope.vRCount = data.data.vRCount;
                 $scope.loadEmployees();
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
@@ -707,6 +697,60 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $("#requestsList .elementDetail input").attr("readonly", "true");
             $("#requestsList .elementDetail input[type=submit], #requestsList .elementDetail input[type=cancel]").removeAttr("readonly");
         }
+
+        $scope.range = function() {
+            var rangeSize = 10;
+            var ret = [];
+            var start=0;
+            var pgCount=$scope.pageCount();
+            if(pgCount>rangeSize){
+                var d = $scope.currentPage-Math.ceil(rangeSize/2);
+                if(d>0) start=d;
+            }
+            var end=start+rangeSize;
+            if(end>pgCount) end=pgCount;
+            for (var i=start; i<end; i++) {
+                ret.push(i);
+            }
+            return ret;
+        };
+
+        $scope.prevPage = function() {
+            if ($scope.currentPage > 0) {
+                $scope.currentPage--;
+                $scope.pages=$scope.range();
+                $scope.loadVacationRequests($scope.vrFilter,$scope.currentPage*$scope.itemsPerPage, $scope.itemsPerPage);
+            }
+        };
+
+        $scope.prevPageDisabled = function() {
+            return $scope.currentPage === 0 ? "disabled" : "";
+        };
+
+        $scope.nextPage = function() {
+            if ($scope.currentPage < $scope.pageCount() - 1) {
+                $scope.currentPage++;
+                $scope.pages=$scope.range();
+                $scope.loadVacationRequests($scope.vrFilter,$scope.currentPage*$scope.itemsPerPage, $scope.itemsPerPage);
+            }
+        };
+
+        $scope.nextPageDisabled = function() {
+            return $scope.currentPage === $scope.pageCount() - 1 ? "disabled" : "";
+        };
+
+        $scope.pageCount = function() {
+            return Math.ceil($scope.vRCount/$scope.itemsPerPage);
+        };
+
+        $scope.setPage = function(n) {
+            if (n > 0 && n < $scope.pageCount()) {
+                $scope.currentPage = n;
+                $scope.pages=$scope.range();
+                $scope.loadVacationRequests($scope.vrFilter,n*$scope.itemsPerPage, $scope.itemsPerPage)
+            }
+        };
+
 
         $scope.loadBundles();
         $scope.showRequestfromUrl();

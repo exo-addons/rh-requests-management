@@ -147,7 +147,7 @@ public class RequestRestService implements ResourceContainer {
                         event.put("id",requestDTO.getId());
                         event.put("title",requestDTO.getUserFullName());
                         event.put("start",dt1.format(requestDTO.getFromDate()));
-                        event.put("end",dt1.format(requestDTO.getFromDate()));
+                        event.put("end",dt1.format(requestDTO.getToDate()));
                         if (("validated").equals(requestDTO.getStatus()))event.put("backgroundColor","green");
                         if (("approved").equals(requestDTO.getStatus())) event.put("backgroundColor","blue");
                         if (("declined").equals(requestDTO.getStatus())||("canceled").equals(requestDTO.getStatus()))event.put("backgroundColor","red");

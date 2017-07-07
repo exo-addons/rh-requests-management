@@ -183,13 +183,17 @@ public class RhAdministrationController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getVacationRequests(String vrFilter) {
+  public VacationRequestsPageDTO getVacationRequests(String vrFilter, int offset, int limit) {
     try {
+      VacationRequestsPageDTO vacationRequestsPageDTO =new VacationRequestsPageDTO();
       if (vrFilter != null&&vrFilter.equals(Utils.ACTIVE)) {
-
-          return vacationRequestService.getActivVacationRequests(0,100);
+        vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getActivVacationRequests(offset,limit));
+        vacationRequestsPageDTO.setSize(vacationRequestService.getActiveVacationRequestsCount());
+          return vacationRequestsPageDTO;
         }else{
-          return vacationRequestService.getVacationRequests(0,100);
+        vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getVacationRequests(offset,limit));
+        vacationRequestsPageDTO.setSize(vacationRequestService.getVacationRequestesCount());
+        return vacationRequestsPageDTO;
       }
     } catch (Throwable e) {
       LOG.error(e);
@@ -346,6 +350,7 @@ public class RhAdministrationController {
         data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
       data.set("currentUserName",profile.getFullName());
+      data.set("vRCount",vacationRequestService.getVacationRequestesCount());
       return Response.ok(data.toString());
     } catch (Throwable e) {
       LOG.error("error while getting context", e);
