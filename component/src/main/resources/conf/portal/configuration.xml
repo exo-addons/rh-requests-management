@@ -44,6 +44,10 @@
   </component>
 
   <component>
+    <type>org.exoplatform.rhmanagement.services.BalanceHistoryService</type>
+  </component>
+
+  <component>
     <type>org.exoplatform.rhmanagement.services.rest.RequestRestService</type>
   </component>
 

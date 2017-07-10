@@ -1,7 +1,9 @@
 package org.exoplatform.rhmanagement.services.jobs;
 
 import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.rhmanagement.dto.BalanceHistoryDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
+import org.exoplatform.rhmanagement.services.BalanceHistoryService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -18,6 +20,7 @@ public class UpdateHolidaysBalanceJob implements Job {
 
     private static final Log LOG = ExoLogger.getLogger(UpdateHolidaysBalanceJob.class);
     private UserDataService userDataService= CommonsUtils.getService(UserDataService.class);
+    private BalanceHistoryService balanceHistoryService= CommonsUtils.getService(BalanceHistoryService.class);
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -30,6 +33,18 @@ public class UpdateHolidaysBalanceJob implements Job {
             float holidays=employee.getHolidaysBalance();
             employee.setHolidaysBalance(holidays+2);
             userDataService.save(employee);
+
+            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+            balanceHistoryDTO.setUserId(employee.getUserId());
+            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+            balanceHistoryDTO.setIntialSickBalance(employee.getSickdaysBalance());
+            balanceHistoryDTO.setHolidaysBalance(employee.getHolidaysBalance());
+            balanceHistoryDTO.setSickBalance(employee.getSickdaysBalance());
+            balanceHistoryDTO.setDaysNumber(2);
+            balanceHistoryDTO.setUpdateType("Monthly Holiday Update");
+
+            balanceHistoryService.save(balanceHistoryDTO);
+
         }
         LOG.info("=============================== Update Holidays Balance Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");
 

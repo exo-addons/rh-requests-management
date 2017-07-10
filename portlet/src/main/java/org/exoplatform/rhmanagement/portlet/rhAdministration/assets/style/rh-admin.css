@@ -463,3 +463,8 @@ h4.titleWithBorder {
         position: relative;
     }
 }
+
+
+selected-type{
+    color: red;
+}

@@ -90,10 +90,10 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 
 	});
 
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker();
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "changeYear", true );
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate" ).datepicker();
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate" ).datepicker( "option", "changeYear", true );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
 
 
     function getDate( element ) {
@@ -124,6 +124,15 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
     $( "#contractEndDate" ).on( "change", function() {
         $( "#contractStartDate" ).datepicker( "option", "maxDate", $("#contractEndDate").val() );
     });
+
+    $( "#fromDate" ).on( "change", function() {
+        $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
+    });
+    $( "#toDate" ).on( "change", function() {
+        $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
+    });
+
+
     /* -- / DATE PICKER CONFIG -- */
 
     /* -- USER AUTOCOMPLETE SEARCH -- */

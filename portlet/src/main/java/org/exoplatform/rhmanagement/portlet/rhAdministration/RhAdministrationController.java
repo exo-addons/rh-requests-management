@@ -69,6 +69,9 @@ public class RhAdministrationController {
   ListenerService listenerService;
 
   @Inject
+  BalanceHistoryService balanceHistoryService;
+
+  @Inject
   @Path("index.gtmpl")
   Template            indexTmpl;
 
@@ -139,6 +142,20 @@ public class RhAdministrationController {
         return vacationRequestService.getVacationRequestsByUserId(userId,0,100);
       }
 
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<BalanceHistoryDTO> getBalanceHistoryByUserId(String userId, Long from, Long to) {
+    try {
+        return balanceHistoryService.getBalanceHistoryByUserId(userId, from, to,0,100);
     } catch (Throwable e) {
       LOG.error(e);
       return null;
@@ -236,11 +253,40 @@ public class RhAdministrationController {
         float nbDays=obj.getDaysNumber();
         userRHDataDTO.setHolidaysBalance(holidays-nbDays);
         userDataService.save(userRHDataDTO);
+
+
+        BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+        balanceHistoryDTO.setUserId(obj.getUserId());
+        balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+        balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
+        balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+        balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+        balanceHistoryDTO.setVacationType(obj.getType());
+        balanceHistoryDTO.setVacationId(obj.getId());
+        balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+        balanceHistoryDTO.setUpdateType("holidayValidated");
+
+        balanceHistoryService.save(balanceHistoryDTO);
+
       }if(obj.getType().equals("sick")){
         float sickdays=userRHDataDTO.getSickdaysBalance();
         float nbDays=obj.getDaysNumber();
         userRHDataDTO.setSickdaysBalance(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
+
+        BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+        balanceHistoryDTO.setUserId(obj.getUserId());
+        balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+        balanceHistoryDTO.setIntialSickBalance(sickdays);
+        balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+        balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+        balanceHistoryDTO.setVacationType(obj.getType());
+        balanceHistoryDTO.setVacationId(obj.getId());
+        balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+        balanceHistoryDTO.setUpdateType("sickValidated");
+
+        balanceHistoryService.save(balanceHistoryDTO);
+
       }
       CommentDTO comment=new CommentDTO();
       comment.setRequestId(obj.getId());
@@ -274,10 +320,39 @@ public class RhAdministrationController {
           float nbDays = obj.getDaysNumber();
           userRHDataDTO.setHolidaysBalance(holidays + nbDays);
           userDataService.save(userRHDataDTO);
+
+          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(obj.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+          balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setVacationType(obj.getType());
+          balanceHistoryDTO.setVacationId(obj.getId());
+          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+          balanceHistoryDTO.setUpdateType("holidayCanceled");
+
+          balanceHistoryService.save(balanceHistoryDTO);
         }
         if (obj.getType().equals("sick")) {
-          userRHDataDTO.setSickdaysBalance(userRHDataDTO.getSickdaysBalance() + obj.getDaysNumber());
+          float sickdays=userRHDataDTO.getSickdaysBalance();
+          float nbDays=obj.getDaysNumber();
+          userRHDataDTO.setSickdaysBalance(sickdays+nbDays);
           userDataService.save(userRHDataDTO);
+
+          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(obj.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setIntialSickBalance(sickdays);
+          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setVacationType(obj.getType());
+          balanceHistoryDTO.setVacationId(obj.getId());
+          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+          balanceHistoryDTO.setUpdateType("sickCanceled");
+
+          balanceHistoryService.save(balanceHistoryDTO);
+
         }
       }
       obj.setStatus(CANCELED);
@@ -289,6 +364,8 @@ public class RhAdministrationController {
       comment.setPosterId(currentUser);
       comment.setCommentType(Utils.HISTORY);
       commentService.save(comment);
+
+
       try {
         listenerService.broadcast("exo.hrmanagement.requestUpadate", currentUser, obj);
       } catch (Exception e) {

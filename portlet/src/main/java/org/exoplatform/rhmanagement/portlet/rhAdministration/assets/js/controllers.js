@@ -23,6 +23,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.allVacationRequests = [];
         $scope.attachements = [];
         $scope.comments = [];
+        $scope.balanceHistory = [];
         $scope.history = [];
         $scope.orderByField = 'title';
         $scope.reverseSort = false;
@@ -49,6 +50,10 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
         $scope.vrFilter="active";
         $scope.userVrFilter="active";
+
+        $scope.bFromDate;
+        $scope.bToDate;
+        $scope.userBlanceId="";
 
         $scope.initController = function () {
             // initialize to page 1
@@ -355,11 +360,18 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
 
-        $scope.openTab = function (tabName, tabHide) {
+        $scope.openTab = function (tabName) {
+
+            $("#employees").css("display", "none");
+            $("#requests").css("display", "none");
+            $("#history").css("display", "none");
+
+            $("#employeesTab").removeClass("active");
+            $("#requestsTab").removeClass("active");
+            $("#historyTab").removeClass("active");
+
             $("#" + tabName).css("display", "block");
-            $("#" + tabHide).css("display", "none");
             $("#" + tabName + "Tab").addClass("active");
-            $("#" + tabHide + "Tab").removeClass("active");
             $scope.showDetails=false;
             $scope.showAddForm =false;
         }
@@ -611,7 +623,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             });
         }
 
-        $scope.getEmployees = function (currentUser, searchUser = null) {
+        $scope.getEmployees = function (currentUser, searchUser = null, searchType) {
             var rsetUrl = "/rest/rhrequest/users/find?currentUser=" + currentUser + "&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
 
             $http({
@@ -620,7 +632,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }).then(function successCallback(data) {
 
                 /* create a table of users IDs*/
-                $("#newUserName").autocomplete({
+                $(".newUserName").autocomplete({
                     source: function( request, response ) {
                         var users = [];
                         angular.forEach(data.data.options, function (value, key) {
@@ -633,13 +645,20 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     },
                     minLength: 3,
                     focus: function (event, ui) {
-                        $("#newUserName").val(ui.item.fullName);
-                        $scope.getUser(ui.item.value);
+                        $(".newUserName").val(ui.item.fullName);
+                        if(searchType=="employee"){
+                            $scope.getUser(ui.item.value);
+                        }
                         return false;
                     },
                     select: function (event, ui) {
-                        $("#newUserName").val(ui.item.fullName);
-                        $scope.getUser(ui.item.value);
+                        $(".newUserName").val(ui.item.fullName);
+                        if(searchType=="employee"){
+                            $scope.getUser(ui.item.value);
+                        }else if(searchType=="history"){
+                            $scope.userBlanceId=ui.item.value;
+                        }
+
                         return false;
                     }
                 }).autocomplete("instance")._renderItem = function (ul, item) {
@@ -687,6 +706,25 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
             }
+        }
+
+        $scope.loadBalanceHistory = function () {
+            if ($("#fromDate").val() !== "") {
+                var date = ($("#fromDate").val()).split("-");
+                $scope.bFromDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+            }
+            if ($("#toDate").val() !== "") {
+                var date = ($("#toDate").val()).split("-");
+                $scope.bToDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+            }
+            $http({
+                method: 'GET',
+                url: rhAdminContainer.jzURL('RhAdministrationController.getBalanceHistoryByUserId') + "&userId=" + $scope.userBlanceId  + "&from=" + $scope.bFromDate.getTime()  + "&to=" + $scope.bToDate.getTime()
+            }).then(function successCallback(data) {
+                $scope.balanceHistory = data.data;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
         }
 
 
@@ -744,7 +782,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         };
 
         $scope.setPage = function(n) {
-            if (n > 0 && n < $scope.pageCount()) {
+            if (n >= 0 && n < $scope.pageCount()) {
                 $scope.currentPage = n;
                 $scope.pages=$scope.range();
                 $scope.loadVacationRequests($scope.vrFilter,n*$scope.itemsPerPage, $scope.itemsPerPage)

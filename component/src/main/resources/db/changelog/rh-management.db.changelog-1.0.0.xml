@@ -126,4 +126,24 @@
   </changeSet>
 
 
+  <changeSet author="rh-management" id="1.0.0-4">
+    <createTable tableName="HR_BALANCE_HISTORY">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="USER_ID" type="NVARCHAR(50)"></column>
+      <column name="INITIAL_HOLIDAYS_BALANCE" type="FLOAT"></column>
+      <column name="INITIAL_SICK_DAYS_BALANCE" type="FLOAT"></column>
+      <column name="HOLIDAYS_BALANCE" type="FLOAT"></column>
+      <column name="SICK_DAYS_BALANCE" type="FLOAT"></column>
+      <column name="UPDATE_DATE" type="BIGINT"></column>
+      <column name="VACATION_TYPE" type="NVARCHAR(50)"></column>
+      <column name="VACATION_ID" type="BIGINT"></column>
+      <column name="DAYS_NUMBER" type="FLOAT"></column>
+      <column name="UPDATE_TYPE" type="NVARCHAR(100)"></column>
+
+    </createTable>
+  </changeSet>
+
+
 </databaseChangeLog>
