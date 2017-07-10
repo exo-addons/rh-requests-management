@@ -769,7 +769,7 @@ placeholder="{{i18n.serverUsername}}">
 
 <input type="submit" id="submit" class="btn btn-primary Submitbtn" value="Get history" data-ng-click="loadBalanceHistory()" />
 
-<div class="table-responsive">
+<div id="exportable" class="table-responsive">
 <table id="historyTable" class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
@@ -840,7 +840,7 @@ placeholder="{{i18n.serverUsername}}">
 </table>
 </div>
 
-
+<button ng-click="exportData()">Export</button>
 
 </div>
 

@@ -18,7 +18,8 @@
     // services and controllers js are AMD modules, required by controllers.js
         @Script(id = "ng-file-upload", value = "js/lib/ng-file-upload.js", depends = "angularjs"),
         @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
-    @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" }),
+        @Script(id = "fileSaver", value = "js/lib/FileSaver.js", depends = {"angularjs"}),
+    @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs","fileSaver" }),
     @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }) })
 
 @Stylesheets({

@@ -728,7 +728,12 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
 
-
+        $scope.exportData = function () {
+            var blob = new Blob([document.getElementById('exportable').innerHTML], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            saveAs(blob, "Report_"+$scope.userBlanceId+".xls");
+        };
 
         $scope.closeFormAdd = function () {
             $scope.showAddForm = false;
@@ -788,7 +793,6 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.loadVacationRequests($scope.vrFilter,n*$scope.itemsPerPage, $scope.itemsPerPage)
             }
         };
-
 
         $scope.loadBundles();
         $scope.showRequestfromUrl();
