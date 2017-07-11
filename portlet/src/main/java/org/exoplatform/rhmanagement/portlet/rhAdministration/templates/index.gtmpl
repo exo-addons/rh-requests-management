@@ -868,7 +868,7 @@
                     <input type="text" name="inputUsername" id="toDate"
                            placeholder="{{i18n.serverUsername}}">
 
-                    <input type="submit" id="submitHistory" class="btn btn-primary Submitbtn" value="Get history"
+                    <input type="submit" id="submitHistory" class="btn btn-primary Submitbtn" value="{{i18n.getHistory}}"
                            data-ng-click="loadBalanceHistory()"/>
                 </div>
                 <div id="exportable" class="table-responsive">
