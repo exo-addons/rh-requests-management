@@ -104,6 +104,51 @@ public class RhAdministrationController {
   public UserRHDataDTO saveUserRHData(@Jackson EmployeesDTO user) throws Exception {
     try {
 
+      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(user.getUserId());
+      float oldHolidayBalance=userRHDataDTO.getHolidaysBalance();
+      float newHolidayBalance=user.getHrData().getHolidaysBalance();
+       float oldSickBalance=userRHDataDTO.getSickdaysBalance();
+      float newSickBalance=user.getHrData().getSickdaysBalance();
+
+
+      if(oldHolidayBalance!=newHolidayBalance){
+        try {
+          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(user.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(oldHolidayBalance);
+          balanceHistoryDTO.setIntialSickBalance(oldSickBalance);
+          balanceHistoryDTO.setHolidaysBalance(newHolidayBalance);
+          balanceHistoryDTO.setSickBalance(oldSickBalance);
+          balanceHistoryDTO.setVacationType("holiday");
+          balanceHistoryDTO.setVacationId(-1);
+          balanceHistoryDTO.setDaysNumber(newHolidayBalance-oldHolidayBalance);
+          balanceHistoryDTO.setUpdateType("holidaysManualUpdate");
+
+          balanceHistoryService.save(balanceHistoryDTO);
+        } catch (Exception e) {
+          LOG.error("Error when adding history entry", e);
+        }
+      }
+       if(oldSickBalance!=newSickBalance){
+
+         try {
+           BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+           balanceHistoryDTO.setUserId(user.getUserId());
+           balanceHistoryDTO.setIntialHolidaysBalance(oldHolidayBalance);
+           balanceHistoryDTO.setIntialSickBalance(oldSickBalance);
+           balanceHistoryDTO.setHolidaysBalance(oldHolidayBalance);
+           balanceHistoryDTO.setSickBalance(newSickBalance);
+           balanceHistoryDTO.setVacationType("sick");
+           balanceHistoryDTO.setVacationId(-1);
+           balanceHistoryDTO.setDaysNumber(newSickBalance-oldSickBalance);
+           balanceHistoryDTO.setUpdateType("sicksManualUpdate");
+
+           balanceHistoryService.save(balanceHistoryDTO);
+         } catch (Exception e) {
+           LOG.error("Error when adding history entry", e);
+         }
+       }
+
         return userDataService.save(user.getHrData());
 
     } catch (Exception e) {
@@ -254,19 +299,22 @@ public class RhAdministrationController {
         userRHDataDTO.setHolidaysBalance(holidays-nbDays);
         userDataService.save(userRHDataDTO);
 
+        try {
+          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(obj.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+          balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setVacationType(obj.getType());
+          balanceHistoryDTO.setVacationId(obj.getId());
+          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+          balanceHistoryDTO.setUpdateType("holidayValidated");
 
-        BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-        balanceHistoryDTO.setUserId(obj.getUserId());
-        balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-        balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
-        balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-        balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-        balanceHistoryDTO.setVacationType(obj.getType());
-        balanceHistoryDTO.setVacationId(obj.getId());
-        balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-        balanceHistoryDTO.setUpdateType("holidayValidated");
-
-        balanceHistoryService.save(balanceHistoryDTO);
+          balanceHistoryService.save(balanceHistoryDTO);
+        } catch (Exception e) {
+          LOG.error("Error when adding history entry", e);
+        }
 
       }if(obj.getType().equals("sick")){
         float sickdays=userRHDataDTO.getSickdaysBalance();
@@ -274,18 +322,22 @@ public class RhAdministrationController {
         userRHDataDTO.setSickdaysBalance(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
 
-        BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-        balanceHistoryDTO.setUserId(obj.getUserId());
-        balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-        balanceHistoryDTO.setIntialSickBalance(sickdays);
-        balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-        balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-        balanceHistoryDTO.setVacationType(obj.getType());
-        balanceHistoryDTO.setVacationId(obj.getId());
-        balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-        balanceHistoryDTO.setUpdateType("sickValidated");
+        try {
+          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(obj.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setIntialSickBalance(sickdays);
+          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setVacationType(obj.getType());
+          balanceHistoryDTO.setVacationId(obj.getId());
+          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+          balanceHistoryDTO.setUpdateType("sickValidated");
 
-        balanceHistoryService.save(balanceHistoryDTO);
+          balanceHistoryService.save(balanceHistoryDTO);
+        } catch (Exception e) {
+          LOG.error("Error when adding history entry", e);
+        }
 
       }
       CommentDTO comment=new CommentDTO();
@@ -321,18 +373,22 @@ public class RhAdministrationController {
           userRHDataDTO.setHolidaysBalance(holidays + nbDays);
           userDataService.save(userRHDataDTO);
 
-          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-          balanceHistoryDTO.setUserId(obj.getUserId());
-          balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-          balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setVacationType(obj.getType());
-          balanceHistoryDTO.setVacationId(obj.getId());
-          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-          balanceHistoryDTO.setUpdateType("holidayCanceled");
+          try {
+            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+            balanceHistoryDTO.setUserId(obj.getUserId());
+            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+            balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setVacationType(obj.getType());
+            balanceHistoryDTO.setVacationId(obj.getId());
+            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+            balanceHistoryDTO.setUpdateType("holidayCanceled");
 
-          balanceHistoryService.save(balanceHistoryDTO);
+            balanceHistoryService.save(balanceHistoryDTO);
+          } catch (Exception e) {
+            LOG.error("Error when adding history entry", e);
+          }
         }
         if (obj.getType().equals("sick")) {
           float sickdays=userRHDataDTO.getSickdaysBalance();
@@ -340,18 +396,22 @@ public class RhAdministrationController {
           userRHDataDTO.setSickdaysBalance(sickdays+nbDays);
           userDataService.save(userRHDataDTO);
 
-          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-          balanceHistoryDTO.setUserId(obj.getUserId());
-          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setIntialSickBalance(sickdays);
-          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setVacationType(obj.getType());
-          balanceHistoryDTO.setVacationId(obj.getId());
-          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-          balanceHistoryDTO.setUpdateType("sickCanceled");
+          try {
+            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+            balanceHistoryDTO.setUserId(obj.getUserId());
+            balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+            balanceHistoryDTO.setIntialSickBalance(sickdays);
+            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setVacationType(obj.getType());
+            balanceHistoryDTO.setVacationId(obj.getId());
+            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+            balanceHistoryDTO.setUpdateType("sickCanceled");
 
-          balanceHistoryService.save(balanceHistoryDTO);
+            balanceHistoryService.save(balanceHistoryDTO);
+          } catch (Exception e) {
+            LOG.error("Error when adding history entry", e);
+          }
 
         }
       }

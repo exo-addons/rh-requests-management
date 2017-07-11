@@ -34,16 +34,21 @@ public class UpdateHolidaysBalanceJob implements Job {
             employee.setHolidaysBalance(holidays+2);
             userDataService.save(employee);
 
-            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-            balanceHistoryDTO.setUserId(employee.getUserId());
-            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-            balanceHistoryDTO.setIntialSickBalance(employee.getSickdaysBalance());
-            balanceHistoryDTO.setHolidaysBalance(employee.getHolidaysBalance());
-            balanceHistoryDTO.setSickBalance(employee.getSickdaysBalance());
-            balanceHistoryDTO.setDaysNumber(2);
-            balanceHistoryDTO.setUpdateType("Monthly Holiday Update");
+            try {
+                BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+                balanceHistoryDTO.setUserId(employee.getUserId());
+                balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+                balanceHistoryDTO.setIntialSickBalance(employee.getSickdaysBalance());
+                balanceHistoryDTO.setHolidaysBalance(employee.getHolidaysBalance());
+                balanceHistoryDTO.setSickBalance(employee.getSickdaysBalance());
+                balanceHistoryDTO.setVacationType("holiday");
+                balanceHistoryDTO.setDaysNumber(2);
+                balanceHistoryDTO.setUpdateType("monthlyHolidayUpdate");
 
-            balanceHistoryService.save(balanceHistoryDTO);
+                balanceHistoryService.save(balanceHistoryDTO);
+            } catch (Exception e) {
+                LOG.error("Error when adding history entry", e);
+            }
 
         }
         LOG.info("=============================== Update Holidays Balance Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");
