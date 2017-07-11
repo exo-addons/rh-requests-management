@@ -87,8 +87,8 @@
         <property name="jobName" value="UpdateHolidaysBalanceJob"/>
         <property name="groupName" value="group"/>
         <property name="job" value="org.exoplatform.rhmanagement.services.jobs.UpdateHolidaysBalanceJob"/>
-        <!--<property name="expression" value="0 0 0 1 * ?"/>-->
-        <property name="expression" value="0 */5 * ? * *"/>
+        <property name="expression" value="0 0 0 1 * ?"/>
+        <!--<property name="expression" value="0 */5 * ? * *"/>-->
       </properties-param>
     </init-params>
   </component-plugin>
@@ -108,8 +108,8 @@
           <property name="jobName" value="UpdateSickBalanceJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.UpdateSickBalanceJob"/>
-          <!--<property name="expression" value="0 0 0 1 JAN ? *"/>-->
-          <property name="expression" value="0 */5 * ? * *"/>
+          <property name="expression" value="0 0 0 1 JAN ? *"/>
+          <!--<property name="expression" value="0 */5 * ? * *"/>-->
         </properties-param>
       </init-params>
     </component-plugin>
