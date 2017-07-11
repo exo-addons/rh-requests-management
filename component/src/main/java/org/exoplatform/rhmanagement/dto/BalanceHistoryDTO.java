@@ -43,4 +43,6 @@ public class BalanceHistoryDTO {
 
   private String              updateType;
 
+  private String              updaterId;
+
 }

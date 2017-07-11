@@ -69,4 +69,7 @@ public class BalanceHistoryEntity {
   @Column(name = "UPDATE_TYPE")
   private String   updateType;
 
+  @Column(name = "UPDATERID")
+  private String   updaterId;
+
 }

@@ -145,5 +145,11 @@
     </createTable>
   </changeSet>
 
+  <changeSet author="customer_space" id="1.0.0-5">
+    <addColumn tableName="HR_BALANCE_HISTORY">
+      <column name="UPDATERID" type="NVARCHAR(50)"/>
+    </addColumn>
+  </changeSet>
+
 
 </databaseChangeLog>

@@ -44,6 +44,8 @@ public class UpdateHolidaysBalanceJob implements Job {
                 balanceHistoryDTO.setVacationType("holiday");
                 balanceHistoryDTO.setDaysNumber(2);
                 balanceHistoryDTO.setUpdateType("monthlyHolidayUpdate");
+                balanceHistoryDTO.setUpdaterId("System");
+
 
                 balanceHistoryService.save(balanceHistoryDTO);
             } catch (Exception e) {

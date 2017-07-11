@@ -45,6 +45,7 @@ public class UpdateSickBalanceJob implements Job {
                 balanceHistoryDTO.setVacationType("sick");
                 balanceHistoryDTO.setDaysNumber(10);
                 balanceHistoryDTO.setUpdateType("yearlySickBalanceUpdate");
+                balanceHistoryDTO.setUpdaterId("System");
 
                 balanceHistoryService.save(balanceHistoryDTO);
 

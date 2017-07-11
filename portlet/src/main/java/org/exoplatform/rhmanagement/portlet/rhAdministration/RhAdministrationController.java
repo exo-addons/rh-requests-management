@@ -123,6 +123,7 @@ public class RhAdministrationController {
           balanceHistoryDTO.setVacationId(-1);
           balanceHistoryDTO.setDaysNumber(newHolidayBalance-oldHolidayBalance);
           balanceHistoryDTO.setUpdateType("holidaysManualUpdate");
+          balanceHistoryDTO.setUpdaterId(currentUser);
 
           balanceHistoryService.save(balanceHistoryDTO);
         } catch (Exception e) {
@@ -142,6 +143,7 @@ public class RhAdministrationController {
            balanceHistoryDTO.setVacationId(-1);
            balanceHistoryDTO.setDaysNumber(newSickBalance-oldSickBalance);
            balanceHistoryDTO.setUpdateType("sicksManualUpdate");
+           balanceHistoryDTO.setUpdaterId(currentUser);
 
            balanceHistoryService.save(balanceHistoryDTO);
          } catch (Exception e) {
@@ -310,6 +312,7 @@ public class RhAdministrationController {
           balanceHistoryDTO.setVacationId(obj.getId());
           balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
           balanceHistoryDTO.setUpdateType("holidayValidated");
+          balanceHistoryDTO.setUpdaterId(currentUser);
 
           balanceHistoryService.save(balanceHistoryDTO);
         } catch (Exception e) {
@@ -333,6 +336,7 @@ public class RhAdministrationController {
           balanceHistoryDTO.setVacationId(obj.getId());
           balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
           balanceHistoryDTO.setUpdateType("sickValidated");
+          balanceHistoryDTO.setUpdaterId(currentUser);
 
           balanceHistoryService.save(balanceHistoryDTO);
         } catch (Exception e) {
@@ -384,6 +388,7 @@ public class RhAdministrationController {
             balanceHistoryDTO.setVacationId(obj.getId());
             balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
             balanceHistoryDTO.setUpdateType("holidayCanceled");
+            balanceHistoryDTO.setUpdaterId(currentUser);
 
             balanceHistoryService.save(balanceHistoryDTO);
           } catch (Exception e) {
@@ -407,6 +412,7 @@ public class RhAdministrationController {
             balanceHistoryDTO.setVacationId(obj.getId());
             balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
             balanceHistoryDTO.setUpdateType("sickCanceled");
+            balanceHistoryDTO.setUpdaterId(currentUser);
 
             balanceHistoryService.save(balanceHistoryDTO);
           } catch (Exception e) {

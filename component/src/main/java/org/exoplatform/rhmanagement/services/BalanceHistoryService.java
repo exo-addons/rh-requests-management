@@ -93,6 +93,8 @@ public class BalanceHistoryService {
     entity.setVacationId(dto.getVacationId());
     entity.setDaysNumber(dto.getDaysNumber());
     entity.setUpdateType(dto.getUpdateType());
+    entity.setUpdaterId(dto.getUpdaterId());
+
     return entity;
   }
 
@@ -109,6 +111,7 @@ public class BalanceHistoryService {
     dto.setVacationId(entity.getVacationId());
     dto.setDaysNumber(entity.getDaysNumber());
     dto.setUpdateType(entity.getUpdateType());
+    dto.setUpdaterId(entity.getUpdaterId());
     return dto;
   }
 
