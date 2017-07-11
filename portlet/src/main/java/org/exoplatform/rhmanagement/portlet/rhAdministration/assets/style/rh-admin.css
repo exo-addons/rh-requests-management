@@ -41,6 +41,7 @@ ul.tab li a:hover {background-color: #ddd;}
     padding: 6px 12px;
    /* border: 1px solid #ccc;*/
     border-top: none;
+    position: relative;
 }
 
 .tabcontent .ligne {
@@ -364,6 +365,7 @@ i.uiIconEcmsSearchMini.newUserId {
     top: 5px;
     right: 0;
     padding-left: 15px;
+    padding-right: 5px;
     background: #f2f2f2;
 }
 .table-responsive {
@@ -378,6 +380,7 @@ i.uiIconEcmsSearchMini.newUserId {
     min-width: 400px;
 }
 .actionIcon, .actionIconSmall{z-index: 1}
+#requests .actionIcon, #requests .actionIconSmall{margin-top: -2px;}
 .request_id{
     padding: 0!important;
     text-align: center!important;
@@ -392,13 +395,15 @@ i.uiIconEcmsSearchMini.newUserId {
 }
 .div_filter {
     position: absolute;
-    right: 15px;
+    right: 2px;
     background: #f2f2f2;
     margin-top: 15px;
     padding-left: 10px;
+    padding-right: 10px;
     font-weight: bold;
     font-size: 12px;
     margin-right: 10px;
+    top: 15px;
 }
 .commentItem {
     padding-top: 30px!important;
@@ -409,8 +414,6 @@ i.uiIconEcmsSearchMini.newUserId {
     padding: 10px 8px!important;}
 ul#addonMenu {
     background: #f8f8f8!important;
-    margin-left: -50px!important;
-    padding-left: 45px!important;
 }
 ul#addonMenu [class^="uiIcon"], .LeftNavigationTDContainer .uiPopup [class^="uiIcon"]{ color : #a8b3c5!important;}
 
@@ -435,13 +438,14 @@ ul#addonMenu li.active {
 }
 div#hrAdminApplication ul#addonMenu {
     background: #f8f8f8!important;
-    margin-left: -20px!important;
-    padding-left: 10px!important;
 }
 
 .tabcontent .ligne i.uiIconEdit{    top: 9px;!important}
 h4.titleWithBorder {
     margin-top: 15px;
+    background: #f2f2f2;
+    padding: 10px;
+    width: auto;
 }
 @media (max-width: 776px) {
     #left_col{width: 100%}
@@ -467,4 +471,20 @@ h4.titleWithBorder {
 
 selected-type{
     color: red;
+}
+/**/
+
+#rhAdminAddon label{display: inline-block}
+#rhAdminAddon .uiSearchInput label{margin-left: 15px}
+#rhAdminAddon .uiSearchInput {text-align: center}
+#submitHistory{
+    float: none;
+    display: inline-block;
+    margin: 0 0 0 15px;
+}
+#rhAdminAddon tfoot {border-top: 1px solid #ccc;}
+#rhAdminAddon .table-striped tbody tr:nth-child(odd) td.selected-type,
+#rhAdminAddon .table-striped tbody tr:nth-child(even) td.selected-type{
+    background-color: rgba(87, 141, 201, 0.9);
+    color: #FFF;
 }

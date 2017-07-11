@@ -259,7 +259,6 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <label class="control-label" for="daysNumberSick">{{i18n.numberDays}}:</label>
                                 <div class="controls">
                                     <input type="number" name="inputUsername" id="daysNumberSick" min="0"
-                                           max="{{sickBalance}}"
                                            placeholder="{{i18n.serverUsername}}"
                                            ng-model="newVacationRequest.daysNumber">
 
@@ -269,7 +268,6 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
                                 <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
 <input type="number" name="inputUsername" id="daysNumberHollidays" min="0"
-max="{{holidaysBalance}}"
 placeholder="{{i18n.serverUsername}}"
 ng-model="newVacationRequest.daysNumber">
 

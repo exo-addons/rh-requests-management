@@ -482,8 +482,6 @@ i.uiIconDeleteUser.uiIconLightGray,i.uiIconValidate.uiIconLightGray, i.uiIconEcm
     padding: 10px 8px!important;}
 ul#addonMenu {
     background: #f8f8f8!important;
-    margin-left: -50px!important;
-    padding-left: 45px!important;
 }
 ul#addonMenu [class^="uiIcon"], .LeftNavigationTDContainer .uiPopup [class^="uiIcon"]{ color : #a8b3c5!important;}
 
