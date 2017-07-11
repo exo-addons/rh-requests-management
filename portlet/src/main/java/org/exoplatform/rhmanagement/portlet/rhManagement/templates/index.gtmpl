@@ -563,7 +563,40 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
 href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a><hr class="clearfix" />
 </div>
 
+    <div class="ligne" style="overflow: auto">
+        <div class="managersTabs">
+            <div class="ligne">
+                <b>{{i18n.managers}}:</b>
+                <table id="managersTable" class="table uiGrid table-hover table-striped">
+                    <tbody>
+                    <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+                        <td>
+                            <a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
+                        </td>
+                        <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
+                            class="td-right-align">
+                            <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
+                                    ng-disabled="vrmanager.reply=='declined'"><i
+                                    class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+                            </button>
+                            <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
+                                    ng-disabled="vrmanager.reply=='approved'"><i
+                                    class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+                            </button>
 
+                        </td>
+                        <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
+                            class="td-right-align">
+                            <b>{{geti18n(vrmanager.reply)}}</b>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 <div class="ligne" style="overflow: auto">
 <fieldset class="StatusTable">
 
@@ -680,38 +713,7 @@ ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachem
 <i class="uiIconUpload uiIconLightGray"></i>
 </a>
 </div>
-<div class="managersTabs">
-<div class="ligne manager">
-<b>{{i18n.managers}}:</b>
-<table id="managersTable" class="table uiGrid table-hover table-striped">
-<tbody>
-<tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
-<td>
-<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
-</td>
-<td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
-class="td-right-align">
-<button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
-ng-disabled="vrmanager.reply=='declined'"><i
-class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-</button>
-<button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
-ng-disabled="vrmanager.reply=='approved'"><i
-class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-</button>
 
-</td>
-<td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
-class="td-right-align">
-<b>{{geti18n(vrmanager.reply)}}</b>
-</td>
-
-
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <!-- -->
 <div id="requestTabs" class="uiTabPane uiTabNormal">
 <ul id="myTab" class="nav nav-tabs">

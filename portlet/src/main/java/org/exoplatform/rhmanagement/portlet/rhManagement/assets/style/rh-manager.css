@@ -548,6 +548,8 @@ ul#addonMenu li.active {
         float: none;
     }
 }
+.managersTabs .ligne{line-height: 40px}
+table#managersTable{margin-bottom: 0; border: 1px solid #ccc;    width: initial;}
 /*
 .uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
     background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat left top;
