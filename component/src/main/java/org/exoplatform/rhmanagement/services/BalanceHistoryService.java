@@ -21,6 +21,9 @@ package org.exoplatform.rhmanagement.services;
 import org.exoplatform.rhmanagement.dao.BalanceHistoryDAO;
 import org.exoplatform.rhmanagement.dto.BalanceHistoryDTO;
 import org.exoplatform.rhmanagement.entity.BalanceHistoryEntity;
+import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +38,12 @@ public class BalanceHistoryService {
   private  final Logger LOG = LoggerFactory.getLogger(BalanceHistoryService.class);
 
   private BalanceHistoryDAO balanceHistoryDAO;
+  private IdentityManager identityManager;
 
 
-  public BalanceHistoryService() {
+  public BalanceHistoryService(IdentityManager identityManager) {
     this.balanceHistoryDAO = new BalanceHistoryDAO();
+    this.identityManager = identityManager;
   }
 
   public BalanceHistoryDTO save(BalanceHistoryDTO entity) {
@@ -70,6 +75,34 @@ public class BalanceHistoryService {
     List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByUserId(id, fromDate, toDate, offset, limit);
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
+      if(entity.getUpdaterId()!=null){
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
+        entity.setUpdaterId(profile.getFullName());
+      }
+      if(entity.getUserId()!=null) {
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+        entity.setUserId(profile.getFullName());
+      }
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
+  public List<BalanceHistoryDTO> getBalanceHistoryByDate(long fromDate, long toDate, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getCommentsByRequestID - Parameter 'offset' must be positive");
+    }
+    List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByDate(fromDate, toDate, offset, limit);
+    List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
+    for (BalanceHistoryEntity entity : entities) {
+      if(entity.getUpdaterId()!=null){
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
+        entity.setUpdaterId(profile.getFullName());
+      }
+      if(entity.getUserId()!=null) {
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+        entity.setUserId(profile.getFullName());
+      }
       dtos.add(convert(entity));
     }
     return dtos;

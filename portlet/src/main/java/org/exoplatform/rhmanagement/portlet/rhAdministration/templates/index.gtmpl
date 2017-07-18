@@ -876,87 +876,90 @@ placeholder="{{i18n.serverUsername}}">
                         <thead>
                         <tr>
                             <th>{{i18n.upadateDate}}</th>
+<th>{{i18n.name}}</th>
 <th>{{i18n.numberDays}}</th>
-                            <th>{{i18n.intialHolidaysBalance}}</th>
+<th>{{i18n.intialHolidaysBalance}}</th>
 <th>{{i18n.holidaysBalance}}</th>
-                            <th>{{i18n.intialSickBalance}}</th>
+<th>{{i18n.intialSickBalance}}</th>
 <th>{{i18n.sickBalance}}</th>
-                            <th>{{i18n.vacationType}}</th>
+<th>{{i18n.vacationType}}</th>
 <th>{{i18n.vacationId}}</th>
-                            <th>{{i18n.updateType}}</th>
+<th>{{i18n.updateType}}</th>
 <th>{{i18n.updaterId}}</th>
 
-                        </tr>
+</tr>
 </thead>
-                        <tbody>
-                        <tr ng-if="balanceHistory.length == 0">
+<tbody>
+<tr ng-if="balanceHistory.length == 0">
 
-                            <td colspan="9">
-                                <span> {{i18n.noResults}} </span>
+<td colspan="9">
+<span> {{i18n.noResults}} </span>
 </td>
 
-                        </tr>
+</tr>
 <tr ng-if="balanceHistory.length > 0" ng-repeat="bHistory in balanceHistory| orderBy:orderByField:reverseSort" class="request_{{bHistory.id}}">
 
 <td><span>{{bHistory.updateDate| date:'d MMM y HH:mm'}}</span>
-                            </td>
+</td>
+							<td><span>{{bHistory.userId}}</span>
+</td>
 <td>
 <span>{{bHistory.daysNumber}}</span>
-                            </td>
+</td>
 <td ng-class="{'selected-type': bHistory.vacationType == 'holiday'}" ng-if="bHistory.vacationType == 'holiday'">
 <span>{{bHistory.intialHolidaysBalance}}</span>
-                            </td>
+</td>
 
 <td  ng-class="{'selected-type': bHistory.vacationType == 'holiday'}" ng-if="bHistory.vacationType == 'holiday'">
 <span>{{bHistory.holidaysBalance}}</span>
-                            </td>
+</td>
 
 <td ng-if="bHistory.vacationType == 'sick'">
 <span>{{bHistory.intialHolidaysBalance}}</span>
-                            </td>
+</td>
 
 <td ng-if="bHistory.vacationType == 'sick'">
 <span>{{bHistory.holidaysBalance}}</span>
-                            </td>
+</td>
 
 
 <td ng-class="{'selected-type': bHistory.vacationType == 'sick'}" ng-if="bHistory.vacationType == 'sick'">
 <span>{{bHistory.intialSickBalance}}</span>
-                            </td>
+</td>
 <td ng-class="{'selected-type': bHistory.vacationType == 'sick'}" ng-if="bHistory.vacationType == 'sick'">
 <span>{{bHistory.sickBalance}}</span>
-                            </td>
+</td>
 
 <td ng-if="bHistory.vacationType == 'holiday'">
 <span>{{bHistory.intialSickBalance}}</span>
-                            </td>
+</td>
 <td ng-if="bHistory.vacationType == 'holiday'">
 <span>{{bHistory.sickBalance}}</span>
-                            </td>
+</td>
 
 <td><span>{{geti18n(bHistory.vacationType)}}</span>
-                            </td>
+</td>
 <td>
 <span>{{bHistory.vacationId}}</span>
-                            </td>
+</td>
 
 <td><span>{{geti18n(bHistory.updateType)}}</span>
-                            </td>
+</td>
 
-<td><span>{{geti18n(bHistory.updaterId)}}</span>
-                            </td>
+<td><span>{{bHistory.updaterId}}</span>
+</td>
 
 </tr>
-                        </tbody>
+</tbody>
 
 </table>
-                </div>
+</div>
 
 <button ng-if="balanceHistory.length > 0" ng-click="exportData()" class="btn">Export</button>
 
-            </div>
+</div>
 
 
 </div>
-    </div>
+</div>
 </div>

@@ -22,7 +22,7 @@
 			<outputDirectory>/${project.build.finalName}/lib</outputDirectory>
 			<includes>
 				<include>${project.groupId}:rh-management-*:jar</include>
-				<include>org.juzu:juzu-plugins-jackson:jar</include>
+				<!--<include>org.juzu:juzu-plugins-jackson:jar</include>-->
 			</includes>
 			<scope>provided</scope>
 			<outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.extension}</outputFileNameMapping>

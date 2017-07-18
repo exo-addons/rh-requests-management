@@ -202,7 +202,10 @@ public class RhAdministrationController {
   @Jackson
   public List<BalanceHistoryDTO> getBalanceHistoryByUserId(String userId, Long from, Long to) {
     try {
-        return balanceHistoryService.getBalanceHistoryByUserId(userId, from, to,0,100);
+      if(userId.equals("")){
+        return balanceHistoryService.getBalanceHistoryByDate(from, to,0,0);
+      }
+        return balanceHistoryService.getBalanceHistoryByUserId(userId, from, to,0,0);
     } catch (Throwable e) {
       LOG.error(e);
       return null;

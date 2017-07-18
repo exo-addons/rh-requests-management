@@ -652,9 +652,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         };
 
         $scope.loadData = function() {
+            var requestId = $scope.getUrlParameterByName('rid');
+
             $http({
                 method : 'GET',
-                url : rhContainer.jzURL('RHRequestManagementController.getData')
+                url : rhContainer.jzURL('RHRequestManagementController.getData')+ "&rid=" +requestId
             }).then(function successCallback(data) {
                 $scope.currentUser=data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
@@ -665,21 +667,29 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId = data.data.hrId;
                 $scope.insuranceId = data.data.insuranceId;
                 $scope.socialSecNumber = data.data.socialSecNumber;
+                if(data.data.vacationRequestsToShow!=null){
+                    $scope.showVacationRequest(data.data.vacationRequestsToShow);
+                    $scope.showInfoBox=false;
+                    $scope.showFullReq = true;
+                    $scope.showAlert = false;
+                }
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
                 $scope.loadUserCalendars();
+                calendar.build('myCalendar');
                 console.log(deferred.resolve(data));
                 $scope.showAlert = false;
                 deferred.resolve(data);
+                $('#rhAddon').css('visibility', 'visible');
+                $(".rhLoadingBar").remove()
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
         $scope.loadBundles();
-        $scope.showRequestfromUrl();
         $scope.refreshController = function() {
             try {
                 $scope.$digest()
@@ -687,9 +697,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 // No need to display errors in console
             }
         };
-        calendar.build('myCalendar');
-        $('#rhAddon').css('visibility', 'visible');
-        $(".rhLoadingBar").remove();
+;
     };
     return rhCtrl;
 

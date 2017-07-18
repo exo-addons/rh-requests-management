@@ -709,13 +709,18 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         }
 
         $scope.loadBalanceHistory = function () {
+            $scope.showAlert = false;
             if ($("#fromDate").val() !== "") {
                 var date = ($("#fromDate").val()).split("-");
                 $scope.bFromDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+            }else{
+                $scope.setResultMessage("Please define from date", "error");
             }
             if ($("#toDate").val() !== "") {
                 var date = ($("#toDate").val()).split("-");
                 $scope.bToDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+            }else{
+                $scope.setResultMessage("Please define to date", "error");
             }
             $http({
                 method: 'GET',
@@ -732,7 +737,9 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             var blob = new Blob([document.getElementById('exportable').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
             });
-            saveAs(blob, "Report_"+$scope.userBlanceId+".xls");
+            reportOwner="all";
+            if($scope.userBlanceId!="")reportOwner=$scope.userBlanceId;
+            saveAs(blob, "Report_"+reportOwner+".xls");
         };
 
         $scope.closeFormAdd = function () {

@@ -42,6 +42,30 @@ public class BalanceHistoryDAO extends GenericDAOJPAImpl<BalanceHistoryEntity, S
             } else {
                 return getEntityManager().createNamedQuery("balanceHistoryEntity.findByUserId", BalanceHistoryEntity.class)
                         .setParameter("userId", id)
+                        .setParameter("fromDate", fromDate)
+                        .setParameter("toDate", toDate)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get history with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+
+    public List<BalanceHistoryEntity> getBalanceHistoryByDate( long fromDate, long toDate, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("balanceHistoryEntity.findByDate", BalanceHistoryEntity.class)
+                        .setParameter("fromDate", fromDate)
+                        .setParameter("toDate", toDate)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("balanceHistoryEntity.findByDate", BalanceHistoryEntity.class)
+                        .setParameter("fromDate", fromDate)
+                        .setParameter("toDate", toDate)
                         .getResultList();
             }
         } catch (Exception e) {

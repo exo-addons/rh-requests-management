@@ -42,6 +42,8 @@ public class ContextDTO {
   private List<VacationRequestDTO> vacationRequestsToValidate;
   private List<VacationRequestDTO> myVacationRequests;
 
+  private VacationRequestDTO vacationRequestsToShow;
+
   public String getCurrentUser() {
     return currentUser;
   }
@@ -128,5 +130,13 @@ public class ContextDTO {
 
   public void setMyVacationRequests(List<VacationRequestDTO> myVacationRequests) {
     this.myVacationRequests = myVacationRequests;
+  }
+
+  public VacationRequestDTO getVacationRequestsToShow() {
+    return vacationRequestsToShow;
+  }
+
+  public void setVacationRequestsToShow(VacationRequestDTO vacationRequestsToShow) {
+    this.vacationRequestsToShow = vacationRequestsToShow;
   }
 }

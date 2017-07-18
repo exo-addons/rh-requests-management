@@ -687,7 +687,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
-  public ContextDTO  getData() {
+  public ContextDTO  getData(Long rid) {
 
 
 
@@ -730,6 +730,9 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     }
 
               data.setVacationRequestsToValidate(dtos);
+
+      if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
+
 
       return data;
 
