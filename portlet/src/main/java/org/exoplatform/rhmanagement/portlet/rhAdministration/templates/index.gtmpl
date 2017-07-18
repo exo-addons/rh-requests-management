@@ -20,7 +20,7 @@
 </li>
                 <li class="item" id="historyTab">
                     <a class="" ng-click="openTab('history')">
-                        <i class="uiIconEcmsTemplateList"></i>
+                        <i class="uiIconEcmsViewTimeline"></i>
 <span id="forum" class="tabName show-calender">History</span>
                     </a>
 </li>
@@ -892,7 +892,7 @@ placeholder="{{i18n.serverUsername}}">
 <tbody>
 <tr ng-if="balanceHistory.length == 0">
 
-<td colspan="9">
+<td colspan="11">
 <span> {{i18n.noResults}} </span>
 </td>
 

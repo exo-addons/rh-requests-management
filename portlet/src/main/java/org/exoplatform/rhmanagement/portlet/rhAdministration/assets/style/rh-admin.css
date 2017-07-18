@@ -373,6 +373,7 @@ i.uiIconEcmsSearchMini.newUserId {
     margin: 10px auto;
     width: 100%;
     max-width: 100%;
+    position: relative;
 }
 .table-responsive > table{
     margin: 10px auto;
@@ -399,10 +400,9 @@ i.uiIconEcmsSearchMini.newUserId {
     background: #f2f2f2;
     margin-top: 15px;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 20px;
     font-weight: bold;
     font-size: 12px;
-    margin-right: 10px;
     top: 15px;
 }
 .commentItem {
@@ -485,3 +485,8 @@ selected-type{
 #rhAdminAddon tfoot {border-top: 1px solid #ccc;}
 #rhAdminAddon .table-striped tbody tr:nth-child(odd) td.selected-type,
 #rhAdminAddon .table-striped tbody tr:nth-child(even) td.selected-type{color: #578dc9}
+
+#toDate, #fromDate, .newUserName{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
