@@ -119,13 +119,15 @@ public class RHRequestManagementController {
     try {
       CalendarQuery query = new CalendarQuery();
       query.setIdentity(ConversationState.getCurrent().getIdentity());
-      for (Calendar cal: xCalendarService.getCalendarHandler().findCalendars(query)){
+      List <Calendar> lCal=xCalendarService.getCalendarHandler().findCalendars(query);
+      lCal.sort((cal1,cal2) -> cal1.getName().compareTo(cal2.getName()));
+
+      for (Calendar cal: lCal){
         JSONObject data = new JSONObject();
         data.put("calId",cal.getId());
         data.put("calName",cal.getName());
         cals.put(data);
       }
-
       return Response.ok(cals.toString());
     } catch (Throwable e) {
       log.error("error while getting cals", e);
