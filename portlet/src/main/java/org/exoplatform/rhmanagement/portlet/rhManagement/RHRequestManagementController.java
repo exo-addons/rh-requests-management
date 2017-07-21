@@ -683,15 +683,19 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
     }
   }
 
-
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public ContextDTO  getData() {
+  return  getData(null);
+  }
 
   @Ajax
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
   public ContextDTO  getData(Long rid) {
-
-
 
     ContextDTO data = new ContextDTO();
 

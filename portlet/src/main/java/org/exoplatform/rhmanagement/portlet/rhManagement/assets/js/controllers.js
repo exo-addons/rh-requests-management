@@ -653,10 +653,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.loadData = function() {
             var requestId = $scope.getUrlParameterByName('rid');
+            var urlParam = "";
+            if (typeof requestId !== 'undefined' && requestId !==null) {
+                urlParam = "&rid=" +requestId ;
+            }
 
             $http({
                 method : 'GET',
-                url : rhContainer.jzURL('RHRequestManagementController.getData')+ "&rid=" +requestId
+                url : rhContainer.jzURL('RHRequestManagementController.getData')+ urlParam
             }).then(function successCallback(data) {
                 $scope.currentUser=data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
