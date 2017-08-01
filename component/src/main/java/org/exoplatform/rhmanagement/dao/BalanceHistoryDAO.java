@@ -29,11 +29,12 @@ import java.util.List;
 public class BalanceHistoryDAO extends GenericDAOJPAImpl<BalanceHistoryEntity, String> {
     private static final Logger LOG = LoggerFactory.getLogger(BalanceHistoryDAO.class);
 
-    public List<BalanceHistoryEntity> getBalanceHistoryByUserId(String id, long fromDate, long toDate, int offset, int limit) {
+    public List<BalanceHistoryEntity> getBalanceHistoryByUserId(String id, String name, long fromDate, long toDate, int offset, int limit) {
         try {
             if (offset >= 0 && limit > 0) {
                 return getEntityManager().createNamedQuery("balanceHistoryEntity.findByUserId", BalanceHistoryEntity.class)
                         .setParameter("userId", id)
+                        .setParameter("name", name)
                         .setParameter("fromDate", fromDate)
                         .setParameter("toDate", toDate)
                         .setFirstResult(offset)
@@ -42,6 +43,7 @@ public class BalanceHistoryDAO extends GenericDAOJPAImpl<BalanceHistoryEntity, S
             } else {
                 return getEntityManager().createNamedQuery("balanceHistoryEntity.findByUserId", BalanceHistoryEntity.class)
                         .setParameter("userId", id)
+                        .setParameter("name", name)
                         .setParameter("fromDate", fromDate)
                         .setParameter("toDate", toDate)
                         .getResultList();

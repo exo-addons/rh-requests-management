@@ -72,23 +72,23 @@ public class BalanceHistoryService {
     if (offset < 0) {
       throw new IllegalArgumentException("Method getCommentsByRequestID - Parameter 'offset' must be positive");
     }
-    List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByUserId(id, fromDate, toDate, offset, limit);
+    Profile userProfile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, id, false).getProfile();
+    List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByUserId(id, userProfile.getFullName(), fromDate, toDate, offset, limit);
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
-      if(entity.getUpdaterId()!=null){
+     if(entity.getUpdaterId()!=null){
         try {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          entity.setUpdaterId(entity.getUpdaterId());
+          LOG.debug("cannot get profile of"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
         try {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
-          entity.setUserId(profile.getFullName());
         } catch (Exception e) {
-          entity.setUserId(entity.getUserId());
+          LOG.debug("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));
@@ -108,7 +108,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          entity.setUpdaterId(entity.getUpdaterId());
+          LOG.debug("cannot get profile of"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
@@ -116,7 +116,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
           entity.setUserId(profile.getFullName());
         } catch (Exception e) {
-          entity.setUserId(entity.getUserId());
+          LOG.debug("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));
