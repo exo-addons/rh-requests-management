@@ -105,9 +105,16 @@ public class RhAdministrationController {
     try {
 
       UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(user.getUserId());
-      float oldHolidayBalance=userRHDataDTO.getHolidaysBalance();
+      float oldHolidayBalance=0;
+      float oldSickBalance=0;
+
+      if(userRHDataDTO!=null){
+        oldHolidayBalance=userRHDataDTO.getHolidaysBalance();
+        oldSickBalance=userRHDataDTO.getSickdaysBalance();
+      }
+
       float newHolidayBalance=user.getHrData().getHolidaysBalance();
-       float oldSickBalance=userRHDataDTO.getSickdaysBalance();
+
       float newSickBalance=user.getHrData().getSickdaysBalance();
 
 
