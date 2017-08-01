@@ -76,12 +76,20 @@ public class BalanceHistoryService {
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
       if(entity.getUpdaterId()!=null){
-        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
-        entity.setUpdaterId(profile.getFullName());
+        try {
+          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
+          entity.setUpdaterId(profile.getFullName());
+        } catch (Exception e) {
+          entity.setUpdaterId(entity.getUpdaterId());
+        }
       }
       if(entity.getUserId()!=null) {
-        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
-        entity.setUserId(profile.getFullName());
+        try {
+          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+          entity.setUserId(profile.getFullName());
+        } catch (Exception e) {
+          entity.setUserId(entity.getUserId());
+        }
       }
       dtos.add(convert(entity));
     }
@@ -96,12 +104,20 @@ public class BalanceHistoryService {
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
       if(entity.getUpdaterId()!=null){
-        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
-        entity.setUpdaterId(profile.getFullName());
+        try {
+          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
+          entity.setUpdaterId(profile.getFullName());
+        } catch (Exception e) {
+          entity.setUpdaterId(entity.getUpdaterId());
+        }
       }
       if(entity.getUserId()!=null) {
-        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
-        entity.setUserId(profile.getFullName());
+        try {
+          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+          entity.setUserId(profile.getFullName());
+        } catch (Exception e) {
+          entity.setUserId(entity.getUserId());
+        }
       }
       dtos.add(convert(entity));
     }
