@@ -195,20 +195,19 @@ input.requestEdit[readonly]{
 }
 
 #left_col {
-    float:left;
-    width:50%;
+    float:left;    width:50%;
     border-right: 1px solid #dadada;
-    height: 494px;
+    height: auto;
     margin-top: -35px;
-    overflow-y: overlay;
+    overflow-y: auto;
 }
 #left_col.no-border{border : 0!important}
 #right_col {
     float: left;
     position: relative;
     width: 48%;
-    height: 480px;
-    overflow-y: overlay;
+    height:auto;
+    overflow-y: auto;
     border-left: 1px solid #dadada;
     padding-left: 10px;
     padding-top: 10px;
@@ -216,6 +215,10 @@ input.requestEdit[readonly]{
     margin-top: -35px;
 }
 
+#hrAdminApplication #requests #right_col,
+#hrAdminApplication #requests #left_col{
+    margin-top: 0;
+}
 
 .commmentLeft {
     float: left;
@@ -411,7 +414,7 @@ i.uiIconEcmsSearchMini.newUserId {
     align-items: center!important;*/
 }
 .elementDetail .ligne {
-    padding: 10px 8px!important;}
+    padding: 8px!important;}
 ul#addonMenu {
     background: #f8f8f8!important;
 }
@@ -479,7 +482,7 @@ selected-type{
 #rhAdminAddon .uiSearchInput {text-align: center}
 #submitHistory{
     float: none;
-    display: inline-block;
+    display: inline-block;.lo
     margin: 0 0 0 15px;
 }
 #rhAdminAddon tfoot {border-top: 1px solid #ccc;}
@@ -489,4 +492,17 @@ selected-type{
 #toDate, #fromDate, .newUserName{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+#hrAdminApplication hr.clearfix {
+    margin: 0;
+    padding: 0;
+}
+
+.LoadingBar {
+    background: url("/rh-management-portlet/skin/images/loading-16x16.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
+    background-size: 25px;
+    padding: 10px 0px 10px 20px;
+    margin: 0 auto;
+    width: 80px;
+    height: 100px;
 }

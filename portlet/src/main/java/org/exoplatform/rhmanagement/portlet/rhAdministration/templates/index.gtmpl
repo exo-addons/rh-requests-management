@@ -483,10 +483,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                     <span>{{vacationRequest.daysNumber}}</span>
 </td>
                                 <td>
-                                    <span>{{getLocaleDate(vacationRequest.fromDate)| date:'d MMM y'}}</span>
+                                    <span>{{(vacationRequest.fromDate)| date:'d MMM y HH:mm'}}</span>
 </td>
                                 <td>
-                                    <span>{{getLocaleDate(vacationRequest.toDate)| date:'d MMM y'}}</span>
+                                    <span>{{(vacationRequest.toDate)| date:'d MMM y HH:mm'}}</span>
 </td>
                                 <td>
                                     <span>{{geti18n(vacationRequest.status)}}</span>
@@ -561,11 +561,11 @@ ng-click="CloseVacationRequest(vRequest)">
                             <div class="ligne">
                                 <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
-                                <span>{{getLocaleDate(vacationRequesttoShow.fromDate)| date:'d MMM y'}}</span>
+                                <span>{{(vacationRequesttoShow.fromDate)| date:'d MMM y HH:mm'}}</span>
 <hr class="clearfix"/>
 </div>
                             <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
-                                <b>{{i18n.toDate}}:</b> <span>{{getLocaleDate(vacationRequesttoShow.toDate)| date:'d MMM y'}}</span>
+                                <b>{{i18n.toDate}}:</b> <span>{{(vacationRequesttoShow.toDate)| date:'d MMM y HH:mm'}}</span>
                                 <hr class="clearfix"/>
 </div>
                             <div class="ligne">
@@ -808,10 +808,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                 <span>{{vRequest.daysNumber}}</span>
 </td>
                             <td>
-                                <span>{{getLocaleDate(vRequest.fromDate)| date:'d MMM y'}}</span>
+                                <span>{{(vRequest.fromDate)| date:'d MMM y HH:mm'}}</span>
 </td>
                             <td>
-                                <span>{{getLocaleDate(vRequest.toDate)| date:'d MMM y'}}</span>
+                                <span>{{(vRequest.toDate)| date:'d MMM y HH:mm'}}</span>
 </td>
                             <td>
                                 <span>{{geti18n(vRequest.status)}}</span>
@@ -872,6 +872,7 @@ placeholder="{{i18n.serverUsername}}">
                            data-ng-click="loadBalanceHistory()"/>
 </div>
                 <div id="exportable" class="table-responsive">
+                    <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
                     <table id="historyTable" class="table uiGrid table-hover table-striped ">
                         <thead>
                         <tr>

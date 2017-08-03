@@ -29,16 +29,31 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         }
 
         /* -- -- */
+        // $("#testDate").timepicker();
 
-        var dateFormat = "yy-mm-dd",
-        from = $( "#fromDate" ).datepicker({
+        var dateFormat = "dd-mm-yy";
+        from = $( "#fromDate" ).datetimepicker({
+            controlType: 'select',
+            oneLine: true,
             defaultDate: "+1w",
-            numberOfMonths: 1
-        }),
+            numberOfMonths: 1,
+            hourMin: 8,
+            hourMax: 18,
+            hour: 8,
+            minute: 00,
+            dateFormat : "dd-mm-yy",
+        });
 
-        to = $( "#toDate" ).datepicker({
+        to = $( "#toDate" ).datetimepicker({
+            controlType: 'select',
+            oneLine: true,
             defaultDate: "+1w",
-            numberOfMonths: 1
+            numberOfMonths: 1,
+            hourMin: 8,
+            hourMax: 18,
+            hour: 18,
+            minute: 00,
+            dateFormat: "dd-mm-yy",
         });
 
         $(".selectize-input.items.not-full.has-options.ng-invalid.has-items").removeClass("ng-invalid");
@@ -50,7 +65,7 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         var date;
         try {
 //            date = $.datepicker.parseDate( dateFormat, element );
-              date = new Date(element, 1 - 1, 1);
+            date = new Date(element, 1 - 1, 1);
         } catch( error ) {
             date = null;
         }
@@ -61,31 +76,33 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
     //$("#fromDate").val()
 
 //    $( "#fromDate, #toDate" ).datepicker();
-    $( "#fromDate, #toDate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+//     $( "#fromDate, #toDate" ).datetimepicker( "option", "dateFormat", "yy-mm-dd" );
     $( "#toDate" ).on( "change", function() {
         if($("#toDate").val() != ""){
             $("#toDate").removeClass("ng-invalid");
+
             $("#toDate").attr("value", $("#toDate").val());
-            $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
+            // $( "#fromDate" ).datetimepicker( "option", "maxDate", $("#toDate").val() );
         }else{
-        $("#toDate").addClass("ng-invalid");}
+            $("#toDate").addClass("ng-invalid");}
     });
     $( "#fromDate" ).on( "change", function() {
         if($("#fromDate").val() != ""){
             $("#fromDate").removeClass("ng-invalid");
+
             $("#fromDate").attr("value", $("#fromDate").val());
-            $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
+            // $( "#toDate" ).datetimepicker( "option", "minDate", $("#fromDate").val() );
         }else{
-        $("#fromDate").addClass("ng-invalid");}
+            $("#fromDate").addClass("ng-invalid");}
     });
 
 
     $( "#daysNumberHollidays, #daysNumberSick" ).on( "change", function() {
-            if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
-                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
-            }else{
-                $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
-            }
+        if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
+            $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+        }else{
+            $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
+        }
     });
 
 
@@ -100,7 +117,8 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         if($("#fromDate").val() != ""){
             $("#fromDate").removeClass("ng-invalid");
         }else{
-        $("#fromDate").addClass("ng-invalid");}
+            $("#fromDate").addClass("ng-invalid");}
+
 
         if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
             $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");

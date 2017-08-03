@@ -22,6 +22,11 @@
         @Script(id = "moment", value = "js/lib/moment.js"),
         @Script(id = "fullCalendar", value = "js/lib/fullcalendar.js", depends = "moment"),
         @Script(id = "calendar", value = "js/lib/calendar.js", depends = "moment"),
+
+        /* Time PICKER */
+//        @Script(id = "datetimePicker", value = "js/lib/datetimepicker-full.min.js", depends = "moment"),
+        @Script(id = "timepicker-addon", value = "js/lib/jquery-ui-timepicker-addon.js"),
+
         @Script(id = "ng-file-upload", value = "js/lib/ng-file-upload.js", depends = "angularjs"),
         @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs" , "calendar" }),

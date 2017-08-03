@@ -722,11 +722,18 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }else{
                 $scope.setResultMessage("Please define to date", "error");
             }
+
+            $('#historyTable').css('visibility', 'hidden');
+            $("#balanceLoadingBar").css('display', 'block');
+
             $http({
                 method: 'GET',
                 url: rhAdminContainer.jzURL('RhAdministrationController.getBalanceHistoryByUserId') + "&userId=" + $scope.userBlanceId  + "&from=" + $scope.bFromDate.getTime()  + "&to=" + $scope.bToDate.getTime()
             }).then(function successCallback(data) {
                 $scope.balanceHistory = data.data;
+                $("#balanceLoadingBar").css('display', 'none');
+                $('#historyTable').css('visibility', 'visible');
+
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
@@ -807,7 +814,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
        // $scope.loadEmployees();
 
         $('#rhAdminAddon').css('visibility', 'visible');
-        $(".rhLoadingBar").remove();
+        $("#rhLoadingBar").remove();
     };
     return rhAdminCtrl;
 

@@ -1,4 +1,4 @@
-define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar"], function($, jz,invite,calendar)  {
+define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar","timepicker-addon"], function($, jz,invite,calendar)  {
 
     var rhCtrl = function($scope, $q, $timeout, $http, $filter, Upload) {
         var rhContainer = $('#rhAddon');
@@ -47,23 +47,23 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.vacationRequesttoShow = null;
 
         $scope.showBalance= function(){
-           if( $scope.newVacationRequest.type == 'holiday'){
-               $scope.showSick=false;
-               $scope.showHollidays=true;
-               $scope.showLeave=false;
-           } else if( $scope.newVacationRequest.type == 'sick'){
-               $scope.showSick=true;
-               $scope.showHollidays=false;
-               $scope.showLeave=false;
-           } else if( $scope.newVacationRequest.type == 'leave'){
-               $scope.showSick=false;
-               $scope.showHollidays=false;
-               $scope.showLeave=true;
-           }else {
-               $scope.showSick=false;
-               $scope.showHollidays=false;
-               $scope.showLeave=false;
-           }
+            if( $scope.newVacationRequest.type == 'holiday'){
+                $scope.showSick=false;
+                $scope.showHollidays=true;
+                $scope.showLeave=false;
+            } else if( $scope.newVacationRequest.type == 'sick'){
+                $scope.showSick=true;
+                $scope.showHollidays=false;
+                $scope.showLeave=false;
+            } else if( $scope.newVacationRequest.type == 'leave'){
+                $scope.showSick=false;
+                $scope.showHollidays=false;
+                $scope.showLeave=true;
+            }else {
+                $scope.showSick=false;
+                $scope.showHollidays=false;
+                $scope.showLeave=false;
+            }
         }
 
         $scope.showFormFn = function(){
@@ -219,11 +219,16 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 //                return;
 //            }
 
+
+            var datefrom = $scope.updateDateFormat($("#fromDate").val());
+            var dateto = $scope.updateDateFormat($("#toDate").val());
+
+            console.log("to = " + to);
             if(($scope.newVacationRequest.type != "leave") && (!$scope.newVacationRequest.daysNumber)){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
-            }else if( ($scope.newVacationRequest.type != "leave") && (($("#toDate").val() == "") || ($("#fromDate").val() == ""))){
+            }else if( ($scope.newVacationRequest.type != "leave") && (($("#toDate").val() == "") || ($("#fromDate").val() == "") || (dateto == NaN) || (datefrom == NaN))){
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.fromToDate, "error");
                 $("#toDate, #fromDate").addClass("ng-invalid");
@@ -231,16 +236,26 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.leaveDateMsg, "error");
                 $("#toDate, #fromDate").addClass("ng-invalid");
-            }else if($scope.getUsers("managers")[0] == ""){
+            }else if(datefrom > dateto){
+
+                $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
+                $scope.setResultMessage($scope.i18n.fromToSup, "error");
+                $("#toDate, #fromDate").addClass("ng-invalid");
+
+            } else if($scope.getUsers("managers")[0] == ""){
                 $scope.setResultMessage($scope.i18n.manager, "error");
                 $(".managersInput .selectize-input").addClass("ng-invalid");
 
             }else{
+
+                console.log("fromDate ="+ datefrom);
+                console.log("toDate ="+ dateto);
+
                 $("#daysNumberHollidays, #daysNumberSick,.managersInput .selectize-input").removeClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
                 $scope.showAlert=false;
-                $scope.newVacationRequest.fromDate = new Date($("#fromDate").val()).getTime();
-                $scope.newVacationRequest.toDate = new Date($("#toDate").val()).getTime();
+                $scope.newVacationRequest.fromDate = (datefrom);
+                $scope.newVacationRequest.toDate = (dateto);
 
                 var managers= $scope.getUsers("managers");
                 var substitutes= $scope.getUsers("substitutes");
@@ -277,9 +292,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
         $scope.shareCalendar = function(vacationRequest) {
-           var vr = {
-               vacationRequestDTO : vacationRequest ,
-               exoCalendarId: $scope.managerCalendarId
+            var vr = {
+                vacationRequestDTO : vacationRequest ,
+                exoCalendarId: $scope.managerCalendarId
             };
             $http({
                 data : vr,
@@ -472,7 +487,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.saveComment = function() {
             if($scope.newComment.commentText){
-            $scope.showAlert = false;
+                $scope.showAlert = false;
                 $scope.setResultMessage($scope.i18n.savingVacationRequest, "info");
 
 
@@ -500,8 +515,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
             }else{
-                 $scope.setResultMessage($scope.i18n.emptyComment, "error");
-             }
+                $scope.setResultMessage($scope.i18n.emptyComment, "error");
+            }
         }
 
         $scope.approveRequest = function(vacationRequest) {
@@ -582,7 +597,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 file.upload = Upload.upload({
                     url: rhContainer.jzURL('RHRequestManagementController.uploadFile'),
                     data: {requestId: $scope.vacationRequesttoShow.id,
-                           file: file}
+                        file: file}
                 });
 
                 file.upload.then(function (response) {
@@ -643,11 +658,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         };
 
         $scope.getLocaleDate = function(date) {
-           if($scope.i18n&&$scope.i18n.offset){
-               return date+$scope.i18n.offset;
-           }else{
-               return  date;
-           }
+            if($scope.i18n&&$scope.i18n.offset){
+                return date+$scope.i18n.offset;
+            }else{
+                return  date;
+            }
 
         };
 
@@ -701,7 +716,14 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 // No need to display errors in console
             }
         };
-;
+
+
+        $scope.updateDateFormat = function(date) {
+            var dateSplit = date;
+            dateSplit = dateSplit.split("-");
+            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
+        };
+
     };
     return rhCtrl;
 
