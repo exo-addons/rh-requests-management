@@ -634,10 +634,12 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
 </div>
                             </div>
 
+<button class="btn btn-primary" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>			
+
 </div>
 
 
-                    </div>
+</div>
 <!--End Left column-->
 <div id="right_col">
 
@@ -646,12 +648,12 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
 <ul id="myTab" class="nav nav-tabs">
 <li class="active" ng-click="showLogs = false" ng-class="{ 'active': !showLogs }">
 <a href="#tab-home" data-toggle="tab">{{i18n.comments}}</a>
-                                </li>
+</li>
 <li ng-click="showLogs = true" ng-class="{ 'active': showLogs }">
 <a href="#tab-properties" data-toggle="tab">{{i18n.log}}</a>
-                                </li>
+</li>
 </ul>
-                        </div>
+</div>
 <!-- -->
 
 <div id="tab-comments" class="tab-pane fade in active" ng-show="!showLogs">
@@ -873,10 +875,10 @@ placeholder="{{i18n.serverUsername}}">
 </div>
                 <div id="exportable" class="table-responsive">
                     <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
-                    <table id="historyTable" class="table uiGrid table-hover table-striped ">
-                        <thead>
-                        <tr>
-                            <th>{{i18n.upadateDate}}</th>
+<table id="historyTable" class="table uiGrid table-hover table-striped ">
+<thead>
+<tr>
+<th>{{i18n.upadateDate}}</th>
 <th>{{i18n.name}}</th>
 <th>{{i18n.numberDays}}</th>
 <th>{{i18n.intialHolidaysBalance}}</th>
@@ -902,7 +904,7 @@ placeholder="{{i18n.serverUsername}}">
 
 <td><span>{{bHistory.updateDate| date:'d MMM y HH:mm'}}</span>
 </td>
-							<td><span>{{bHistory.userId}}</span>
+<td><span>{{bHistory.userId}}</span>
 </td>
 <td>
 <span>{{bHistory.daysNumber}}</span>

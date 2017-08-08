@@ -808,6 +808,27 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }
         };
 
+
+
+        $scope.saveVacationRequest = function (vacation) {
+
+
+            $http({
+                data: vacation,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
+            }).then(function successCallback(data) {
+
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        }
+
+
+
         $scope.loadBundles();
         $scope.showRequestfromUrl();
        // $scope.loadContext();

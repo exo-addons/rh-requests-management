@@ -760,16 +760,16 @@ public class RhAdministrationController {
   public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
     vacationRequestService.save(obj,false);
     CommentDTO comment=new CommentDTO();
-    comment.setRequestId(vr.getId());
+    comment.setRequestId(obj.getId());
     comment.setCommentText("requestUpdated");
     comment.setPosterId(currentUser);
     comment.setCommentType(Utils.HISTORY);
     commentService.save(comment);
-/*    try {
-      listenerService.broadcast("exo.hrmanagement.requestCreation", "", obj);
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestUpdated", "", obj);
     } catch (Exception e) {
-      log.error("Cannot broadcast request creation event");
-    }*/
+      LOG.error("Cannot broadcast request creation event");
+    }
 
   }
 
