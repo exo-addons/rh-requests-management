@@ -758,7 +758,7 @@ public class RhAdministrationController {
   @MimeType.JSON
   @Jackson
   public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
-    vacationRequestService.save(obj,true);
+    vacationRequestService.save(obj,false);
     CommentDTO comment=new CommentDTO();
     comment.setRequestId(vr.getId());
     comment.setCommentText("requestUpdated");
