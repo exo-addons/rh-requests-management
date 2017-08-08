@@ -219,7 +219,6 @@ public class RhAdministrationController {
     }
   }
 
-
   @Ajax
   @juzu.Resource
   @MimeType.JSON
@@ -751,6 +750,29 @@ public class RhAdministrationController {
       return null;
     }
   }
+
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
+    vacationRequestService.save(obj,true);
+    CommentDTO comment=new CommentDTO();
+    comment.setRequestId(vr.getId());
+    comment.setCommentText("requestUpdated");
+    comment.setPosterId(currentUser);
+    comment.setCommentType(Utils.HISTORY);
+    commentService.save(comment);
+/*    try {
+      listenerService.broadcast("exo.hrmanagement.requestCreation", "", obj);
+    } catch (Exception e) {
+      log.error("Cannot broadcast request creation event");
+    }*/
+
+  }
+
 
 
 }
