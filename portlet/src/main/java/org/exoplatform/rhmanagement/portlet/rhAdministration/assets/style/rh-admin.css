@@ -399,19 +399,17 @@ i.uiIconEcmsSearchMini.newUserId {
 }
 .div_filter {
     position: absolute;
-    right: 2px;
+    right: 12px;
     background: #f2f2f2;
     margin-top: 15px;
     padding-left: 10px;
-    padding-right: 20px;
+    padding-right: 15px;
     font-weight: bold;
     font-size: 12px;
     top: 15px;
 }
-.commentItem {
-    padding-top: 30px!important;
-   /* display: flex!important;
-    align-items: center!important;*/
+#rhAdminCtrl .commentItem {
+    padding: 30px 20px 10px 10px!important;
 }
 .elementDetail .ligne {
     padding: 8px!important;}
@@ -505,4 +503,7 @@ selected-type{
     margin: 0 auto;
     width: 80px;
     height: 100px;
+}
+.ui-timepicker-div * {
+    max-width: 99%;
 }

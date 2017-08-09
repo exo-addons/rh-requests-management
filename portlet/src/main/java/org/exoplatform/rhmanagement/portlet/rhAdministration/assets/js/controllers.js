@@ -43,6 +43,8 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.vacationRequesttoShow = {
             validatorUserId: null
         };
+        $scope.toDateShow;
+        $scope.fromDateShow;
 
         $scope.itemsPerPage = 10;
         $scope.currentPage = 0;
@@ -381,6 +383,9 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $("#submit").css("display", "block");
         }
 
+        $scope.disableInput = function (id) {
+            $(id).attr("readonly", "true");
+        }
 
         $scope.uploadFiles = function (file, errFiles) {
             $scope.f = file;
@@ -589,8 +594,18 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             });
         };
 
+        $scope.dateFormat = function (date) {
+            var newDate = new Date(date);
+            newDate = newDate.getDate() + "-" + (newDate.getMonth() + 1) +"-"+ newDate.getFullYear()+" "+newDate.getHours()+":"+newDate.getMinutes();
+            return newDate;
+        };
+
         $scope.showVacationRequest = function (vacationRequest) {
             $scope.vacationRequesttoShow = vacationRequest;
+
+            $scope.toDateShow = $scope.dateFormat(vacationRequest.toDate);
+            $scope.fromDateShow= $scope.dateFormat(vacationRequest.fromDate);
+
             $scope.loadManagers(vacationRequest);
             $scope.loadSubstitues(vacationRequest);
             $scope.loadRequestAttachments(vacationRequest);
@@ -808,11 +823,66 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }
         };
 
+        /**
+         *
+         * SCROLL TO TOP
+         */
+        // function currentYPosition() {
+        $scope.currentYPosition = function() {
+            // Firefox, Chrome, Opera, Safari
+            if (self.pageYOffset) return self.pageYOffset;
+            // Internet Explorer 6 - standards mode
+            if (document.documentElement && document.documentElement.scrollTop)
+                return document.documentElement.scrollTop;
+            // Internet Explorer 6, 7 and 8
+            if (document.body.scrollTop) return document.body.scrollTop;
+            return 0;
+        };
 
+        $scope.scrollTo = function() {
+
+            // This scrolling function
+            // is from http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript
+            var startY = $scope.currentYPosition();
+            var stopY = 0;
+            var distance = stopY > startY ? stopY - startY : startY - stopY;
+            if (distance < 100) {
+                scrollTo(0, stopY);
+                return;
+            }
+            var speed = Math.round(distance / 100);
+            if (speed >= 20) speed = 20;
+            var step = Math.round(distance / 25);
+            var leapY = stopY > startY ? startY + step : startY - step;
+            var timer = 0;
+            if (stopY > startY) {
+                for (var i = startY; i < stopY; i += step) {
+                    setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+                    leapY += step;
+                    if (leapY > stopY) leapY = stopY;
+                    timer++;
+                }
+                return;
+            }
+            for (var i = startY; i > stopY; i -= step) {
+                setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+                leapY -= step;
+                if (leapY < stopY) leapY = stopY;
+                timer++;
+            }
+        };
+
+        $scope.updateDateFormat = function(date) {
+            var dateSplit = date;
+            dateSplit = dateSplit.split("-");
+            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
+        };
 
         $scope.saveVacationRequest = function (vacation) {
-
-
+            var datefrom = $scope.updateDateFormat($("#fromDateAdmin").val());
+            var dateto = $scope.updateDateFormat($("#toDateAdmin").val());
+            vacation.fromDate = datefrom;
+            vacation.toDate = dateto;
             $http({
                 data: vacation,
                 method: 'POST',
@@ -821,12 +891,17 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 },
                 url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
             }).then(function successCallback(data) {
+                $scope.setResultMessage($scope.i18n.requestUpdated, "success");
+                $scope.disableInput("#daysNumber, #fromDateAdmin, #fromDateAdmin");
+                $scope.scrollTo();
 
+                $timeout(function () {
+                    $scope.showAlert = false;
+                }, 2000);
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
-        }
-
+        };
 
 
         $scope.loadBundles();

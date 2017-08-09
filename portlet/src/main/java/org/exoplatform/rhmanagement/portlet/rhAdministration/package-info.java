@@ -20,7 +20,13 @@
         @Script(id = "ng-file-upload-shim", value = "js/lib/ng-file-upload-shim.js", depends = "angularjs"),
         @Script(id = "fileSaver", value = "js/lib/FileSaver.js", depends = {"angularjs"}),
     @Script(id = "controllers", value = "js/controllers.js", depends = { "angularjs","fileSaver" }),
-    @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }) })
+    @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }),
+
+    /* Time PICKER */
+    @Script(id = "moment", value = "js/lib/moment.js"),
+    @Script(id = "timepicker-addon", value = "js/lib/jquery-ui-timepicker-addon.js"),
+
+})
 
 @Stylesheets({
         @Stylesheet(id = "jQueryUISkin", value = "style/jquery-ui.css") ,

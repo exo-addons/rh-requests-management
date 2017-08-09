@@ -565,8 +565,9 @@ href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{
 
     <div class="ligne" style="overflow: auto">
         <div class="managersTabs">
-            <div class="ligne">
+            <div class="">
                 <b>{{i18n.managers}}:</b>
+                <br/>
                 <table id="managersTable" class="table uiGrid table-hover table-striped">
                     <tbody>
                     <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
