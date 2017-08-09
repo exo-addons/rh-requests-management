@@ -155,4 +155,15 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 //        });
     /* -- / USER AUTOCOMPLETE SEARCH -- */
 
+
+    $( "#fromDateAdmin, #toDateAdmin" ).datetimepicker({
+        controlType: 'select',
+        defaultDate: "+1w",
+        numberOfMonths: 1,
+        hourMin: 8,
+        hourMax: 18,
+        dateFormat : "dd-mm-yy",
+        timeFormat : "H:m"
+    });
+
 });
