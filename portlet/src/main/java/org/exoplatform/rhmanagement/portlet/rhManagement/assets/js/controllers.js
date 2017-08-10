@@ -223,7 +223,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             var datefrom = $scope.updateDateFormat($("#fromDate").val());
             var dateto = $scope.updateDateFormat($("#toDate").val());
 
-            console.log("to = " + to);
             if(($scope.newVacationRequest.type != "leave") && (!$scope.newVacationRequest.daysNumber)){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
@@ -247,9 +246,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $(".managersInput .selectize-input").addClass("ng-invalid");
 
             }else{
-
-                console.log("fromDate ="+ datefrom);
-                console.log("toDate ="+ dateto);
 
                 $("#daysNumberHollidays, #daysNumberSick,.managersInput .selectize-input").removeClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");

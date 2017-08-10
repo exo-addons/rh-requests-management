@@ -565,7 +565,7 @@ ng-click="CloseVacationRequest(vRequest)">
     <div class="ligne">
         <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
         <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
-        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin')" ng-model="fromDateShow" value="" readonly="">
+        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow" value="" readonly="">
 
         <i class="uiIconEdit" ng-click="enableInput('#fromDateAdmin')"></i>
 
@@ -573,7 +573,7 @@ ng-click="CloseVacationRequest(vRequest)">
     </div>
     <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
         <b>{{i18n.toDate}}:</b>
-        <input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin')" ng-model="toDateShow" value="" readonly="">
+        <input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow" value="" readonly="">
 
         <i class="uiIconEdit" ng-click="enableInput('#toDateAdmin')"></i>
         <hr class="clearfix"/>
@@ -644,7 +644,7 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
 </div>
                             </div>
 
-<button class="btn btn-primary pull-right" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>
+<button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>
 <hr class="clearfix"/>
 </div>
 

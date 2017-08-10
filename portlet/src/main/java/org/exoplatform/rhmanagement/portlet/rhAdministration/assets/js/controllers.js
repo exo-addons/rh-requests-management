@@ -381,10 +381,12 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.enableInput = function (id) {
             $(id).removeAttr("readonly");
             $("#submit").css("display", "block");
+            $(".savebtnAdmin").removeClass("hidden");
         }
 
         $scope.disableInput = function (id) {
             $(id).attr("readonly", "true");
+            $(".savebtnAdmin").addClass("hidden");
         }
 
         $scope.uploadFiles = function (file, errFiles) {
@@ -881,26 +883,40 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.saveVacationRequest = function (vacation) {
             var datefrom = $scope.updateDateFormat($("#fromDateAdmin").val());
             var dateto = $scope.updateDateFormat($("#toDateAdmin").val());
-            vacation.fromDate = datefrom;
-            vacation.toDate = dateto;
-            $http({
-                data: vacation,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
-            }).then(function successCallback(data) {
-                $scope.setResultMessage($scope.i18n.requestUpdated, "success");
-                $scope.disableInput("#daysNumber, #fromDateAdmin, #fromDateAdmin");
-                $scope.scrollTo();
 
-                $timeout(function () {
-                    $scope.showAlert = false;
-                }, 2000);
-            }, function errorCallback(data) {
-                $scope.setResultMessage($scope.i18n.defaultError, "error");
-            });
+            if(vacation.daysNumber < 0){
+                $scope.setResultMessage($scope.i18n.nbrDate, "error");
+                $("#daysNumber").addClass("ng-invalid");
+                $scope.scrollTo();
+            }else if(datefrom > dateto){
+                $("#daysNumber").removeClass("ng-invalid");
+                $scope.setResultMessage($scope.i18n.fromToSup, "error");
+                $("#fromDateAdmin, #toDateAdmin").addClass("ng-invalid");
+                $scope.scrollTo();
+            }else {
+
+                $("#fromDateAdmin, #toDateAdmin").removeClass("ng-invalid");
+                vacation.fromDate = datefrom;
+                vacation.toDate = dateto;
+                $http({
+                    data: vacation,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
+                }).then(function successCallback(data) {
+                    $scope.setResultMessage($scope.i18n.requestUpdated, "success");
+                    $scope.disableInput("#daysNumber, #fromDateAdmin, #fromDateAdmin");
+                    $scope.scrollTo();
+
+                    $timeout(function () {
+                        $scope.showAlert = false;
+                    }, 2000);
+                }, function errorCallback(data) {
+                    $scope.setResultMessage($scope.i18n.defaultError, "error");
+                });
+            }
         };
 
 
