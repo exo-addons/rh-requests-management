@@ -504,6 +504,6 @@ selected-type{
     width: 80px;
     height: 100px;
 }
-#rhAdminCtrl .ui-timepicker-div * {
+.ui-timepicker-div * {
     max-width: 99%;
 }
