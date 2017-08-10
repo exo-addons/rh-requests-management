@@ -758,10 +758,73 @@ public class RhAdministrationController {
   @MimeType.JSON
   @Jackson
   public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
+
+
+
+    if(obj.getStatus().equals(VALIDATED)) {
+      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+      VacationRequestDTO oldVr = vacationRequestService.getVacationRequest(obj.getId());
+      if (obj.getType().equals("holiday")) {
+
+        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
+          float holidays = userRHDataDTO.getHolidaysBalance();
+          float oldNbDays = oldVr.getDaysNumber();
+          float newNbDays = obj.getDaysNumber();
+          userRHDataDTO.setHolidaysBalance(holidays + (oldNbDays-newNbDays));
+          userDataService.save(userRHDataDTO);
+
+          try {
+            BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
+            balanceHistoryDTO.setUserId(obj.getUserId());
+            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
+            balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setVacationType(obj.getType());
+            balanceHistoryDTO.setVacationId(obj.getId());
+            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+            balanceHistoryDTO.setUpdateType("holidayUpadated");
+            balanceHistoryDTO.setUpdaterId(currentUser);
+
+            balanceHistoryService.save(balanceHistoryDTO);
+          } catch (Exception e) {
+            LOG.error("Error when adding history entry", e);
+          }
+        }
+      }
+      if (obj.getType().equals("sick")) {
+        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
+        float sickDays = userRHDataDTO.getSickdaysBalance();
+        float oldNbDays = oldVr.getDaysNumber();
+        float newNbDays = obj.getDaysNumber();
+        userRHDataDTO.setSickdaysBalance(sickDays + (oldNbDays-newNbDays));
+        userDataService.save(userRHDataDTO);
+
+        try {
+          BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
+          balanceHistoryDTO.setUserId(obj.getUserId());
+          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setIntialSickBalance(sickDays);
+          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+          balanceHistoryDTO.setVacationType(obj.getType());
+          balanceHistoryDTO.setVacationId(obj.getId());
+          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
+          balanceHistoryDTO.setUpdateType("sickDaysUpdated");
+          balanceHistoryDTO.setUpdaterId(currentUser);
+
+          balanceHistoryService.save(balanceHistoryDTO);
+        } catch (Exception e) {
+          LOG.error("Error when adding history entry", e);
+        }
+      }
+      }
+    }
+
     vacationRequestService.save(obj,false);
     CommentDTO comment=new CommentDTO();
     comment.setRequestId(obj.getId());
-    comment.setCommentText("requestUpdated");
+    comment.setCommentText("requestDaysUpdated");
     comment.setPosterId(currentUser);
     comment.setCommentType(Utils.HISTORY);
     commentService.save(comment);
