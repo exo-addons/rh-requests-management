@@ -28,9 +28,9 @@ import javax.persistence.*;
 @ExoEntity
 @Table(name = "HR_BALANCE_HISTORY")
 @NamedQueries({
-        @NamedQuery(name = "balanceHistoryEntity.findByUserId", query = "SELECT a FROM HRBalanceHistoryEntity a where a.userId = :userId or a.userId = :name and a.updateDate > :fromDate and a.updateDate < :toDate"),
-        @NamedQuery(name = "balanceHistoryEntity.findByDate", query = "SELECT a FROM HRBalanceHistoryEntity a where  a.updateDate > :fromDate and a.updateDate < :toDate"),
-        @NamedQuery(name = "balanceHistoryEntity.count", query = "SELECT count(a.id) FROM HRBalanceHistoryEntity a  where a.userId = :userId") })
+        @NamedQuery(name = "balanceHistoryEntity.findByUserId", query = "SELECT a FROM HRBalanceHistoryEntity a where a.userId = :userId or a.userId = :name and a.updateDate > :fromDate and a.updateDate < :toDate  order by a.Id desc"),
+        @NamedQuery(name = "balanceHistoryEntity.findByDate", query = "SELECT a FROM HRBalanceHistoryEntity a where  a.updateDate > :fromDate and a.updateDate < :toDate  order by a.Id desc"),
+        @NamedQuery(name = "balanceHistoryEntity.count", query = "SELECT count(a.Id) FROM HRBalanceHistoryEntity a  where a.userId = :userId") })
 @Data
 public class BalanceHistoryEntity {
 

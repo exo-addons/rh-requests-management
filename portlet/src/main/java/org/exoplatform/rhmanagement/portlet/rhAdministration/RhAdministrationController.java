@@ -783,7 +783,7 @@ public class RhAdministrationController {
             balanceHistoryDTO.setVacationType(obj.getType());
             balanceHistoryDTO.setVacationId(obj.getId());
             balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-            balanceHistoryDTO.setUpdateType("holidayUpadated");
+            balanceHistoryDTO.setUpdateType("holidayUpdated");
             balanceHistoryDTO.setUpdaterId(currentUser);
 
             balanceHistoryService.save(balanceHistoryDTO);
