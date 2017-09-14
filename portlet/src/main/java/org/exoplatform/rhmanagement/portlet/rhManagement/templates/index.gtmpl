@@ -28,11 +28,11 @@
 <b>{{i18n.userFullName}}:</b> <span>{{currentUserName}}</span>
 <hr class="clearfix" />
 </div>
-                        <div class="ligne">
-                            <b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
-                            <hr class="clearfix" />
+<div class="ligne">
+<b>{{i18n.socialSecNumber}}:</b> <span>{{socialSecNumber}}</span>
+<hr class="clearfix" />
 </div>
-                    </div>
+</div>
 <div class="span4">
 <div class="ligne">
 <b>{{i18n.holidaysBalance}}:</b> <span>{{holidaysBalance}}</span>
@@ -48,11 +48,11 @@
 <b>{{i18n.hrId}}:</b> <span>{{hrId}}</span>
 <hr class="clearfix" />
 </div>
-                        <div class="ligne">
-                            <b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
-                            <hr class="clearfix" />
+<div class="ligne">
+<b>{{i18n.insuranceId}}:</b> <span>{{insuranceId}}</span>
+<hr class="clearfix" />
 </div>
-                    </div>
+</div>
 </div>
 </div>
 
@@ -102,7 +102,7 @@
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.date}}:</b>
- <span>{{(vacationRequesttoShow.fromDate) | date:'yyyy-MM-dd'}}</span>
+<span>{{(vacationRequesttoShow.fromDate) | date:'yyyy-MM-dd'}}</span>
 <hr class="clearfix" />
 </div>
                     <div class="ligne" ng-show="vacationRequesttoShow.type!='leave'">
@@ -237,34 +237,27 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <option value="holiday" ng-selected='true'>{{i18n.holiday}}</option>
 <option value="sick">{{i18n.sick}}</option>
 <option value="leave">{{i18n.leave}}</option>
-                                    </select>
+<option value="conventional">{{i18n.conventional}}</option>
+</select>
 </div>
-                            </div>
+</div>
 
 <div class="control-group" ng-show="showSick">
 <label class="control-label">{{i18n.sickBalance}}:</label>
-                                <div class="controls">
-                                    <span>{{sickBalance}}</span>
+<div class="controls">
+<span>{{sickBalance}}</span>
 </div>
-                            </div>
+</div>
 
 <div class="control-group" ng-show="showHollidays">
 <label class="control-label">{{i18n.holidaysBalance}}:</label>
-                                <div class="controls">
-                                    <span>{{holidaysBalance}}</span>
+<div class="controls">
+<span>{{holidaysBalance}}</span>
 </div>
-                            </div>
-
-<div class="control-group {{usernameClass}}" ng-show="showSick">
-<label class="control-label" for="daysNumberSick">{{i18n.numberDays}}:</label>
-                                <div class="controls">
-                                    <input type="number" name="inputUsername" id="daysNumberSick" min="0"
-                                           placeholder="{{i18n.serverUsername}}"
-                                           ng-model="newVacationRequest.daysNumber">
-
-                                </div>
 </div>
-                            <div class="control-group {{usernameClass}}" ng-show="showHollidays">
+
+
+                            <div class="control-group {{usernameClass}}" ng-show="!showLeave">
                                 <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
 <input type="number" name="inputUsername" id="daysNumberHollidays" min="0"
@@ -291,7 +284,7 @@ ng-model="newVacationRequest.daysNumber">
                                     <input type="text" name="inputUsername" id="fromDate"
                                            placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
                                 </div>
- </div>
+</div>
                             <div class="control-group {{usernameClass}}" ng-hide="showLeave">
                                 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
 <div class="controls">
@@ -541,10 +534,10 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
 <div class="ligne">
 <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span><hr class="clearfix" />
 </div>
-                    <div class="ligne">
-					                        <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.numberDays}}:</b>
+<div class="ligne">
+<b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.numberDays}}:</b>
 <b ng-show="vacationRequesttoShow.type=='leave'">{{i18n.numberHours}}:</b>
-                         <span>{{vacationRequesttoShow.daysNumber}}</span><hr class="clearfix" />
+<span>{{vacationRequesttoShow.daysNumber}}</span><hr class="clearfix" />
 </div>
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type!='leave'">{{i18n.fromDate}}:</b>
@@ -567,37 +560,37 @@ href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{
         <div class="managersTabs">
             <div class="">
                 <b>{{i18n.managers}}:</b>
-                <br/>
-                <table id="managersTable" class="table uiGrid table-hover table-striped">
-                    <tbody>
-                    <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
-                        <td>
-                            <a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
+<br/>
+<table id="managersTable" class="table uiGrid table-hover table-striped">
+<tbody>
+<tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+<td>
+<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
                         </td>
-                        <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
-                            class="td-right-align">
-                            <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
-                                    ng-disabled="vrmanager.reply=='declined'"><i
-                                    class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+<td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
+class="td-right-align">
+<button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
+ng-disabled="vrmanager.reply=='declined'"><i
+class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
                             </button>
-                            <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
-                                    ng-disabled="vrmanager.reply=='approved'"><i
-                                    class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+<button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
+ng-disabled="vrmanager.reply=='approved'"><i
+class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
                             </button>
 
-                        </td>
+</td>
                         <td ng-if="currentUser != vrmanager.validatorUserId  || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
                             class="td-right-align">
                             <b>{{geti18n(vrmanager.reply)}}</b>
-                        </td>
+</td>
 
 
                     </tr>
-                    </tbody>
+</tbody>
                 </table>
-            </div>
+</div>
         </div>
-    </div>
+</div>
 <div class="ligne" style="overflow: auto">
 <fieldset class="StatusTable">
 
