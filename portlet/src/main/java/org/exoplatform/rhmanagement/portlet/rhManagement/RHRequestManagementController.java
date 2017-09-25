@@ -45,8 +45,6 @@ import java.util.*;
 public class RHRequestManagementController {
   private static Log log = ExoLogger.getLogger(RHRequestManagementController.class);
 
-  // Don't use inject to not get the merge of all resource bundles
-  // @Inject
   ResourceBundle     bundle;
 
   @Inject

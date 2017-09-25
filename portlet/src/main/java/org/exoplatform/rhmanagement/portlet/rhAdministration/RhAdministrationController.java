@@ -34,8 +34,7 @@ import java.util.*;
  * Created by exo on 8/3/16.
  */
 public class RhAdministrationController {
-/*  private static final String SUPPORT_TEAM_NAME_DEFAULT = "support-team";
-  private static final String SUPPORT_GROUP_NAME_CONFIGURATION = "exo.addon.cs.support.group.name";*/
+
   private static Log  LOG = ExoLogger.getLogger(RhAdministrationController.class);
   private String     bundleString;
   ResourceBundle     bundle;
