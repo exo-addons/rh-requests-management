@@ -71,6 +71,10 @@ public class RhAdministrationController {
   BalanceHistoryService balanceHistoryService;
 
   @Inject
+  ConventionalVacationService conventionalVacationService;
+
+
+  @Inject
   @Path("index.gtmpl")
   Template            indexTmpl;
 
@@ -835,6 +839,68 @@ public class RhAdministrationController {
 
   }
 
+
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public ConventionalVacationDTO getConventionalVacationsById (Long id) {
+    try {
+      return conventionalVacationService.getConventionalVacationsById(id);
+
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<ConventionalVacationDTO> getConventionalVacations () {
+    try {
+      return conventionalVacationService.getConventionalVacations(0,0);
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveConventionalVacation(@Jackson ConventionalVacationDTO obj) {
+
+    conventionalVacationService.save(obj,true);
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void updateConventionalVacation(@Jackson ConventionalVacationDTO obj) {
+
+    conventionalVacationService.save(obj,false);
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public Response deleteConventionalVacation(@Jackson ConventionalVacationDTO obj) throws Exception {
+    try {
+      conventionalVacationService.remove(obj);
+      return Response.ok();
+    } catch (Exception e) {
+      LOG.error("Error when updating Conventional Vacation", e);
+      return Response.error("");
+    }
+  }
 
 
 }

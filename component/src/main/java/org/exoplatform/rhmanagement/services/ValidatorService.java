@@ -121,8 +121,4 @@ public class ValidatorService {
     return dto;
   }
 
-
-
-  private String              validatorMail;
-  private String              reply;
 }

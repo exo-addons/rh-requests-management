@@ -13,6 +13,10 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.getUserLigne = false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
+		$scope.cVacations = [];
+		$scope.newConventionalVacation = {
+            id: null
+        };
         $scope.currentPage = 0;
         $scope.pageSize = 10;
         $scope.vRCount=0;
@@ -83,6 +87,39 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
+        }
+
+
+		$scope.loadConventionalVacations = function () {
+            $http({
+                method: 'GET',
+                url: rhAdminContainer.jzURL('RhAdministrationController.getConventionalVacations')
+            }).then(function successCallback(data) {
+                $scope.cVacations = data.data;
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+
+        };
+
+
+		$scope.saveConventionalVacation = function () {
+
+                $http({
+                    data: $scope.newConventionalVacation,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    url: rhAdminContainer.jzURL('RhAdministrationController.saveConventionalVacation')
+                }).then(function successCallback(data) {
+					$scope.loadConventionalVacations();
+
+                }, function errorCallback(data) {
+                    $scope.setResultMessage($scope.i18n.defaultError, "error");
+                });
+
         }
 
 
@@ -367,10 +404,12 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $("#employees").css("display", "none");
             $("#requests").css("display", "none");
             $("#history").css("display", "none");
+			$("#settings").css("display", "none");
 
             $("#employeesTab").removeClass("active");
             $("#requestsTab").removeClass("active");
             $("#historyTab").removeClass("active");
+			$("#settingsTab").removeClass("active");
 
             $("#" + tabName).css("display", "block");
             $("#" + tabName + "Tab").addClass("active");
@@ -633,6 +672,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.currentUserName = data.data.currentUserName;
                // $scope.vRCount = data.data.vRCount;
                 $scope.loadEmployees();
+				$scope.loadConventionalVacations();
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {

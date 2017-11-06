@@ -151,5 +151,27 @@
     </addColumn>
   </changeSet>
 
+  <changeSet author="rh-management" id="1.0.0-6">
+    <createTable tableName="HR_CONVENTIONAL_VACATION">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="LABEL" type="NVARCHAR(50)"></column>
+      <column name="DAYS_NUMBER" type="INT"></column>
+      <column name="DESCRIPTION" type="NVARCHAR(250)"></column>
+    </createTable>
+
+    <createTable tableName="HR_OFFICIAL_VACATION">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="LABEL" type="NVARCHAR(50)"></column>
+      <column name="DAYS_NUMBER" type="INT"></column>
+      <column name="DESCRIPTION" type="NVARCHAR(250)"></column>
+      <column name="DATE" type="BIGINT"></column>
+      <column name="RECURRENT" type="BOOLEAN"></column>
+    </createTable>
+
+  </changeSet>
 
 </databaseChangeLog>
