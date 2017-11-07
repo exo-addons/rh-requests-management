@@ -82,6 +82,10 @@ public class RHRequestManagementController {
 
 
   @Inject
+  ConventionalVacationService conventionalVacationService;
+
+
+  @Inject
   @Path("index.gtmpl")
   Template           indexTmpl;
 
@@ -733,14 +737,18 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
 
     }
 
-              data.setVacationRequestsToValidate(dtos);
+      data.setVacationRequestsToValidate(dtos);
 
       if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
 
+      data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
 
       return data;
 
   }
+
+
+
 
 
 

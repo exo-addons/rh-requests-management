@@ -7,6 +7,7 @@
         @Binding(value = CalendarService.class),
         @Binding(value = RepositoryService.class),
         @Binding(value = ExtendedCalendarService.class),
+        @Binding(value = ConventionalVacationService.class),
         @Binding(value = ListenerService.class),
         @Binding(value = ActivityManager.class)
 })
@@ -52,6 +53,7 @@ import juzu.plugin.portlet.Portlet;
 
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.ExtendedCalendarService;
+import org.exoplatform.rhmanagement.services.ConventionalVacationService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.jcr.RepositoryService;

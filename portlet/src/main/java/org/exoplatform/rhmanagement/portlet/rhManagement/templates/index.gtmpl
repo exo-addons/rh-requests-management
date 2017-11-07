@@ -237,9 +237,18 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <option value="holiday" ng-selected='true'>{{i18n.holiday}}</option>
 <option value="sick">{{i18n.sick}}</option>
 <option value="leave">{{i18n.leave}}</option>
-<option value="conventional">{{i18n.conventional}}</option>
+<option value="conventional" ng-if="cVacations.length > 0">{{i18n.conventional}}</option>
 </select>
 </div>
+</div>
+
+<div class="control-group" ng-show="showConventional">
+      <label class="control-label" for="userCalendarId">{{i18n.conventional}}:</label>
+<div class="controls">
+                                                             <select name="conventionalVacation" id="conventionalVacation"
+                                ng-options="cv.label for cv in cVacations track by cv.id"
+                                ng-model="cVacation" ng-change="setConventional(cVacation.daysNumber)"></select>
+                                </div>
 </div>
 
 <div class="control-group" ng-show="showSick">

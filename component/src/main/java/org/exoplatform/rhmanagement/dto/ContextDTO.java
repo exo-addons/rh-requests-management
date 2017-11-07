@@ -38,11 +38,13 @@ public class ContextDTO {
 
   private String socialSecNumber;
 
-
   private List<VacationRequestDTO> vacationRequestsToValidate;
+
   private List<VacationRequestDTO> myVacationRequests;
 
   private VacationRequestDTO vacationRequestsToShow;
+
+  private List<ConventionalVacationDTO>  conventionalVacations;
 
   public String getCurrentUser() {
     return currentUser;
@@ -139,4 +141,14 @@ public class ContextDTO {
   public void setVacationRequestsToShow(VacationRequestDTO vacationRequestsToShow) {
     this.vacationRequestsToShow = vacationRequestsToShow;
   }
+
+
+  public List<ConventionalVacationDTO> getConventionalVacations() {
+    return conventionalVacations;
+  }
+
+  public void setConventionalVacations(List<ConventionalVacationDTO> conventionalVacations) {
+    this.conventionalVacations = conventionalVacations;
+  }
+
 }

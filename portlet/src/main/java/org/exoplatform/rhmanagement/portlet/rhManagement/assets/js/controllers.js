@@ -33,6 +33,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showSick = false;
         $scope.showHollidays = true;
         $scope.showLeave = false;
+        $scope.showConventional = false;
         $scope.showLogs = false;
         $scope.showFullReq= false;
         $scope.showAlert = false;
@@ -42,6 +43,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.myVacationsFilter = "active";
         $scope.vrOwnerData = null;
         $scope.newComment = null;
+        $scope.cVacations = [];
+        $scope.cVacation = null;
 
 
         $scope.vacationRequesttoShow = null;
@@ -51,20 +54,37 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.showSick=false;
                 $scope.showHollidays=true;
                 $scope.showLeave=false;
+                $scope.showConventional=false;
             } else if( $scope.newVacationRequest.type == 'sick'){
                 $scope.showSick=true;
                 $scope.showHollidays=false;
                 $scope.showLeave=false;
+                $scope.showConventional=false;
             } else if( $scope.newVacationRequest.type == 'leave'){
                 $scope.showSick=false;
                 $scope.showHollidays=false;
                 $scope.showLeave=true;
-            }else {
+                $scope.showConventional=false;
+            }else if( $scope.newVacationRequest.type == 'conventional'){
                 $scope.showSick=false;
                 $scope.showHollidays=false;
                 $scope.showLeave=false;
+                $scope.showConventional=true;
+                }
+            else {
+                $scope.showSick=false;
+                $scope.showHollidays=false;
+                $scope.showLeave=false;
+                $scope.showConventional=false;
             }
         }
+
+
+
+        $scope.setConventional = function(daysNumber){
+            $scope.newVacationRequest.daysNumber=daysNumber;
+         }
+
 
         $scope.showFormFn = function(){
             $scope.showForm = true;
@@ -690,6 +710,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
+                if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
