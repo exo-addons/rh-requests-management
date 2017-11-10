@@ -312,49 +312,13 @@ public class RhAdministrationController {
         float nbDays=obj.getDaysNumber();
         userRHDataDTO.setHolidaysBalance(holidays-nbDays);
         userDataService.save(userRHDataDTO);
-
-        try {
-          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-          balanceHistoryDTO.setUserId(obj.getUserId());
-          balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-          balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setVacationType(obj.getType());
-          balanceHistoryDTO.setVacationId(obj.getId());
-          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-          balanceHistoryDTO.setUpdateType("holidayValidated");
-          balanceHistoryDTO.setUpdaterId(currentUser);
-
-          balanceHistoryService.save(balanceHistoryDTO);
-        } catch (Exception e) {
-          LOG.error("Error when adding history entry", e);
-        }
-
+        Utils.addBalanceHistoryEntry(obj, userRHDataDTO,holidays, userRHDataDTO.getSickdaysBalance(),"holidayValidated",currentUser);
       }if(obj.getType().equals("sick")){
         float sickdays=userRHDataDTO.getSickdaysBalance();
         float nbDays=obj.getDaysNumber();
         userRHDataDTO.setSickdaysBalance(sickdays-nbDays);
         userDataService.save(userRHDataDTO);
-
-        try {
-          BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-          balanceHistoryDTO.setUserId(obj.getUserId());
-          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setIntialSickBalance(sickdays);
-          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setVacationType(obj.getType());
-          balanceHistoryDTO.setVacationId(obj.getId());
-          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-          balanceHistoryDTO.setUpdateType("sickValidated");
-          balanceHistoryDTO.setUpdaterId(currentUser);
-
-          balanceHistoryService.save(balanceHistoryDTO);
-        } catch (Exception e) {
-          LOG.error("Error when adding history entry", e);
-        }
-
+        Utils.addBalanceHistoryEntry(obj, userRHDataDTO,userRHDataDTO.getHolidaysBalance(), sickdays,"sickValidated",currentUser);
       }
       CommentDTO comment=new CommentDTO();
       comment.setRequestId(obj.getId());
@@ -388,49 +352,14 @@ public class RhAdministrationController {
           float nbDays = obj.getDaysNumber();
           userRHDataDTO.setHolidaysBalance(holidays + nbDays);
           userDataService.save(userRHDataDTO);
-
-          try {
-            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-            balanceHistoryDTO.setUserId(obj.getUserId());
-            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-            balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
-            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-            balanceHistoryDTO.setVacationType(obj.getType());
-            balanceHistoryDTO.setVacationId(obj.getId());
-            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-            balanceHistoryDTO.setUpdateType("holidayCanceled");
-            balanceHistoryDTO.setUpdaterId(currentUser);
-
-            balanceHistoryService.save(balanceHistoryDTO);
-          } catch (Exception e) {
-            LOG.error("Error when adding history entry", e);
-          }
+          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,holidays, userRHDataDTO.getSickdaysBalance(),"holidayCanceled",currentUser);
         }
         if (obj.getType().equals("sick")) {
           float sickdays=userRHDataDTO.getSickdaysBalance();
           float nbDays=obj.getDaysNumber();
           userRHDataDTO.setSickdaysBalance(sickdays+nbDays);
           userDataService.save(userRHDataDTO);
-
-          try {
-            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
-            balanceHistoryDTO.setUserId(obj.getUserId());
-            balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-            balanceHistoryDTO.setIntialSickBalance(sickdays);
-            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-            balanceHistoryDTO.setVacationType(obj.getType());
-            balanceHistoryDTO.setVacationId(obj.getId());
-            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-            balanceHistoryDTO.setUpdateType("sickCanceled");
-            balanceHistoryDTO.setUpdaterId(currentUser);
-
-            balanceHistoryService.save(balanceHistoryDTO);
-          } catch (Exception e) {
-            LOG.error("Error when adding history entry", e);
-          }
-
+          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,userRHDataDTO.getHolidaysBalance(), sickdays,"sickCanceled",currentUser);
         }
       }
       obj.setStatus(CANCELED);
@@ -775,24 +704,7 @@ public class RhAdministrationController {
           float newNbDays = obj.getDaysNumber();
           userRHDataDTO.setHolidaysBalance(holidays + (oldNbDays-newNbDays));
           userDataService.save(userRHDataDTO);
-
-          try {
-            BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
-            balanceHistoryDTO.setUserId(obj.getUserId());
-            balanceHistoryDTO.setIntialHolidaysBalance(holidays);
-            balanceHistoryDTO.setIntialSickBalance(userRHDataDTO.getSickdaysBalance());
-            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-            balanceHistoryDTO.setVacationType(obj.getType());
-            balanceHistoryDTO.setVacationId(obj.getId());
-            balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-            balanceHistoryDTO.setUpdateType("holidayUpdated");
-            balanceHistoryDTO.setUpdaterId(currentUser);
-
-            balanceHistoryService.save(balanceHistoryDTO);
-          } catch (Exception e) {
-            LOG.error("Error when adding history entry", e);
-          }
+          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,holidays, userRHDataDTO.getSickdaysBalance(),"holidayUpdated",currentUser);
         }
       }
       if (obj.getType().equals("sick")) {
@@ -802,24 +714,7 @@ public class RhAdministrationController {
         float newNbDays = obj.getDaysNumber();
         userRHDataDTO.setSickdaysBalance(sickDays + (oldNbDays-newNbDays));
         userDataService.save(userRHDataDTO);
-
-        try {
-          BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
-          balanceHistoryDTO.setUserId(obj.getUserId());
-          balanceHistoryDTO.setIntialHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setIntialSickBalance(sickDays);
-          balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
-          balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
-          balanceHistoryDTO.setVacationType(obj.getType());
-          balanceHistoryDTO.setVacationId(obj.getId());
-          balanceHistoryDTO.setDaysNumber(obj.getDaysNumber());
-          balanceHistoryDTO.setUpdateType("sickDaysUpdated");
-          balanceHistoryDTO.setUpdaterId(currentUser);
-
-          balanceHistoryService.save(balanceHistoryDTO);
-        } catch (Exception e) {
-          LOG.error("Error when adding history entry", e);
-        }
+        Utils.addBalanceHistoryEntry(obj, userRHDataDTO,userRHDataDTO.getHolidaysBalance(), sickDays,"sickDaysUpdated",currentUser);
       }
       }
     }
@@ -901,6 +796,4 @@ public class RhAdministrationController {
       return Response.error("");
     }
   }
-
-
 }

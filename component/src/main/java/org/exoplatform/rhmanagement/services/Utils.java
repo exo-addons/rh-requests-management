@@ -6,6 +6,8 @@ import org.exoplatform.calendar.service.CalendarSetting;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.container.PortalContainer;
+import org.exoplatform.rhmanagement.dto.BalanceHistoryDTO;
+import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.services.jcr.RepositoryService;
@@ -172,5 +174,25 @@ public class Utils {
         return false;
     }
 
+
+    public static void addBalanceHistoryEntry(VacationRequestDTO vReauqest, UserRHDataDTO userRHDataDTO, float intialHolidaysBalance, float intialSickBalance, String UpadateType, String upadater){
+        try {
+            BalanceHistoryDTO balanceHistoryDTO=new BalanceHistoryDTO();
+            balanceHistoryDTO.setUserId(vReauqest.getUserId());
+            balanceHistoryDTO.setIntialHolidaysBalance(intialHolidaysBalance);
+            balanceHistoryDTO.setIntialSickBalance(intialSickBalance);
+            balanceHistoryDTO.setHolidaysBalance(userRHDataDTO.getHolidaysBalance());
+            balanceHistoryDTO.setSickBalance(userRHDataDTO.getSickdaysBalance());
+            balanceHistoryDTO.setVacationType(vReauqest.getType());
+            balanceHistoryDTO.setVacationId(vReauqest.getId());
+            balanceHistoryDTO.setDaysNumber(vReauqest.getDaysNumber());
+            balanceHistoryDTO.setUpdateType(UpadateType);
+            balanceHistoryDTO.setUpdaterId(upadater);
+            BalanceHistoryService balanceHistoryService=CommonsUtils.getService(BalanceHistoryService.class);
+            balanceHistoryService.save(balanceHistoryDTO);
+        } catch (Exception e) {
+            log.error("Error when adding history entry", e);
+        }
+    }
 
 }

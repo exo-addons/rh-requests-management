@@ -238,6 +238,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <option value="sick">{{i18n.sick}}</option>
 <option value="leave">{{i18n.leave}}</option>
 <option value="conventional" ng-if="cVacations.length > 0">{{i18n.conventional}}</option>
+<option value="recovery">{{i18n.recovery}}</option>
 </select>
 </div>
 </div>
