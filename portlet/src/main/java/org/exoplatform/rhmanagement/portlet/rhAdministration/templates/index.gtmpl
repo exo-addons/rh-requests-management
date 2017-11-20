@@ -15,20 +15,20 @@
                 <li class="item" id="requestsTab">
                     <a class="" ng-click="openTab('requests'); loadVacationRequests('active',0,10)">
                         <i class="uiIconEcmsTemplateList"></i>
-<span id="forum" class="tabName show-calender">{{i18n.requestsList}}</span>
+<span class="tabName show-calender">{{i18n.requestsList}}</span>
                     </a>
 </li>
                 <li class="item" id="historyTab">
                     <a class="" ng-click="openTab('history')">
                         <i class="uiIconEcmsViewTimeline"></i>
-<span id="forum" class="tabName show-calender">History</span>
+<span class="tabName show-calender">{{i18n.balanceHistory}}</span>
                     </a>
 </li>
 
-                <li class="item" id="settingsTab">
+                <li class="item" id="settingsTab" style="float: right;"> 
                     <a class="" ng-click="openTab('settings')">
                         <i class="uiIconSetting"></i>
-<span id="forum" class="tabName show-calender">Setting</span>
+<span class="tabName show-calender">{{i18n.settings}}</span>
                     </a>
 </li>
 
@@ -439,6 +439,14 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                                 </th>
+<th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.creationDate}}<img
+ng-show="orderByField == 'severity' && !reverseSort"
+src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField == 'severity' && reverseSort"
+src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                                </th>
+
 <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">{{i18n.type}}
 <img ng-show="orderByField == 'title' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
@@ -482,6 +490,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 
                                 <td class="request_id">
                                     <a href="" data-ng-click="showRequest(vacationRequest)">{{vacationRequest.id}}</a>
+</td>
+                                <td>
+                                    <span>{{(vacationRequest.creationDate)| date:'d MMM y'}}</span>
 </td>
                                 <td>
                                     <span>{{geti18n(vacationRequest.type)}}</span>
@@ -767,6 +778,14 @@ ng-model="newComment.commentText" required>
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
+<th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.creationDate}}
+<img ng-show="orderByField == 'severity' && !reverseSort"
+src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+<img ng-show="orderByField == 'severity' && reverseSort"
+src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+</a>
+                                </th>
+
 <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">{{i18n.userFullName}}
 <img ng-show="orderByField == 'title' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
@@ -817,6 +836,9 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                             class="request_{{vRequest.id}}">
                             <td class="request_id">
                                 <a href="" data-ng-click="showVacationRequest(vRequest)">{{vRequest.id}}</a>
+</td>
+                                <td>
+                                    <span>{{(vRequest.creationDate)| date:'d MMM y'}}</span>
 </td>
                             <td><span>{{vRequest.userFullName}}</span>
 </td>

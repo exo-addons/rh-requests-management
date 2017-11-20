@@ -31,7 +31,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
-        $scope.showHollidays = true;
+        $scope.showHollidays = false;
         $scope.showLeave = false;
         $scope.showConventional = false;
         $scope.showLogs = false;

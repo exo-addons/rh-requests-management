@@ -272,7 +272,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <div class="controls">
 <input type="number" name="inputUsername" id="daysNumberHollidays" min="0"
 placeholder="{{i18n.serverUsername}}"
-ng-model="newVacationRequest.daysNumber">
+ng-model="newVacationRequest.daysNumber"  ng-disabled="showConventional">
 
 </div>
                             </div>
