@@ -174,4 +174,17 @@
 
   </changeSet>
 
+
+  <changeSet author="rh-management" id="1.0.0-7">
+    <addColumn tableName="HR_USER_DATA">
+      <column name="ACTIVE" type="BOOLEAN"/>
+    </addColumn>
+
+    <update tableName="HR_USER_DATA">
+      <column name="ACTIVE" value= "true" />
+      <where>ACTIVE IS NULL</where>
+    </update>
+
+  </changeSet>
+
 </databaseChangeLog>

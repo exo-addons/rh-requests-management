@@ -104,4 +104,7 @@ public class UserRHDataEntity {
   @Column(name = "CREATION_DATE")
   private Date creationDate;
 
+  @Column(name = "ACTIVE")
+  private Boolean active;
+
 }

@@ -69,4 +69,6 @@ import java.util.Date;
 
     private Date creationDate;
 
+    private Boolean active;
+
 }

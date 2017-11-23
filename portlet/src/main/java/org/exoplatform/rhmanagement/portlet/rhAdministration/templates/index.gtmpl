@@ -341,7 +341,15 @@ ng-click="enableInput('#insuranceId')"></i>
 </div>
 
                                 <div class="ligne">
-                                    <b>{{i18n.myeXoUrl}}:</b>
+                                    <b>{{i18n.active}}:</b>
+<input type="checkbox" ng-model="userDetails.hrData.active" [name="active"] >
+<hr class="clearfix"/>
+</div>
+
+
+
+<div class="ligne">
+<b>{{i18n.myeXoUrl}}:</b>
 <input type="text" name="myeXoUrl" class="requestEdit" id="myeXoUrl"
 ng-click="enableInput('#myeXoUrl')" ng-model="userDetails.hrData.myeXoUrl"
 value="{{userDetails.hrData.myeXoUrl}}" readonly/><i class="uiIconEdit"

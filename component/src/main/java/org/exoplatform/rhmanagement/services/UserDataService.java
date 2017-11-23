@@ -164,6 +164,7 @@ public class UserDataService {
     entity.setOthers(dto.getOthers());
     entity.setAddress(dto.getAddress());
     entity.setCreationDate(dto.getCreationDate());
+    entity.setActive(dto.getActive());
     return entity;
   }
 
@@ -191,6 +192,7 @@ public class UserDataService {
     dto.setAddress(entity.getAddress());
     dto.setOthers(entity.getOthers());
     dto.setCreationDate(entity.getCreationDate());
+    dto.setActive(entity.getActive());
     return dto;
   }
 
