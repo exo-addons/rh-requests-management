@@ -28,8 +28,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
             console.log(e);
         }
 
-        /* -- -- */
-        // $("#testDate").timepicker();
 
         var dateFormat = "dd-mm-yy";
         from = $( "#fromDate" ).datetimepicker({
@@ -64,7 +62,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         console.log(element);
         var date;
         try {
-//            date = $.datepicker.parseDate( dateFormat, element );
             date = new Date(element, 1 - 1, 1);
         } catch( error ) {
             date = null;
@@ -72,11 +69,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         return date;
     }
 
-    //$("#toDate").val()
-    //$("#fromDate").val()
-
-//    $( "#fromDate, #toDate" ).datepicker();
-//     $( "#fromDate, #toDate" ).datetimepicker( "option", "dateFormat", "yy-mm-dd" );
     $( "#toDate" ).on( "change", function() {
         if($("#toDate").val() != ""){
             $("#toDate").removeClass("ng-invalid");
@@ -86,6 +78,7 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         }else{
             $("#toDate").addClass("ng-invalid");}
     });
+
     $( "#fromDate" ).on( "change", function() {
         if($("#fromDate").val() != ""){
             $("#fromDate").removeClass("ng-invalid");
@@ -106,8 +99,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
     });
 
 
-
-
     $("#saveVacationRequest").click(function(){
         if($("#toDate").val() != ""){
             $("#toDate").removeClass("ng-invalid");
@@ -118,7 +109,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
             $("#fromDate").removeClass("ng-invalid");
         }else{
             $("#fromDate").addClass("ng-invalid");}
-
 
         if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
             $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");

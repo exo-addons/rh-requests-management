@@ -1013,8 +1013,8 @@ data-ng-click="loadBalanceHistory()"/>
 
 <div id="settings" class="tabcontent">
 
-
-                <h4 class="titleWithBorder">{{i18n.settings}}</h4>
+<div id="cVacations">
+                <h4 class="titleWithBorder">{{i18n.conventionalVacations}}</h4>
 
 <div>
 
@@ -1060,7 +1060,7 @@ ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
 
                 <div id="exportable" class="table-responsive">
                     <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
-<table id="historyTable" class="table uiGrid table-hover table-striped ">
+<table id="cVacationTable" class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
 <th>{{i18n.label}}</th>
@@ -1098,6 +1098,122 @@ ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
 
 </table>
 </div>
+</div>
+
+
+
+<div id="oVacations">
+<h4 class="titleWithBorder">{{i18n.officialVacations}}</h4>
+
+<div>
+
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="typeName">{{i18n.label}}:</label>
+<div class="controls">
+<input type="text" name="inputUsername" id="label"
+ng-model="newOfficialVacation.label">
+
+</div>
+</div>
+
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="beginDate">{{i18n.beginDate}}:</label>
+<div class="controls">
+<input type="text" name="inputUsername" id="beginDate"
+placeholder="{{i18n.serverUsername}}"
+ng-model="newOfficialVacation.beginDate">
+
+</div>
+</div>
+
+
+                            <div class="control-group {{usernameClass}}">
+                                <label class="control-label" for="question">{{i18n.daysNumber}}:</label>
+<div class="controls">
+<input type="text" name="inputUsername" id="daysNumber"
+placeholder="{{i18n.serverUsername}}"
+ng-model="newOfficialVacation.daysNumber">
+
+</div>
+                            </div>
+
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="question">{{i18n.description}}:</label>
+                                <div class="controls">
+                                    <input type="text" name="inputUsername" id="description"
+                                           placeholder="{{i18n.serverUsername}}"
+                                           ng-model="newOfficialVacation.description">
+
+                                </div>
+</div>
+
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="question">{{i18n.recurrent}}:</label>
+<div class="controls">
+<input type="checkbox" ng-model="newOfficialVacation.recurrent" [name="recurrent"] >
+</div>
+</div>
+
+<div class="uiAction uiActionBorder">
+<button type="button" class="btn" >{{i18n.cancel}}</button>
+<button type="button" class="btn btn-primary" id="saveType"
+ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}
+</button>
+</div>
+</div>
+
+
+
+<div id="exportable" class="table-responsive">
+<div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
+<table id="cVacationTable" class="table uiGrid table-hover table-striped ">
+<thead>
+<tr>
+<th>{{i18n.label}}</th>
+<th>{{i18n.beginDate}}</th>
+<th>{{i18n.daysNumber}}</th>
+<th>{{i18n.description}}</th>
+<th>{{i18n.recurrent}}</th>
+<th>{{i18n.actions}}</th>
+
+</tr>
+</thead>
+<tbody>
+<tr ng-if="oVacations.length == 0">
+
+<td colspan="11">
+<span> {{i18n.noResults}} </span>
+</td>
+
+</tr>
+<tr ng-if="oVacations.length > 0" ng-repeat="oVacation in oVacations| orderBy:orderByField:reverseSort" class="vacation_{{oVacation.id}}">
+
+
+<td><span>{{oVacation.label}}</span>
+</td>
+<td>
+<span>{{oVacation.beginDate | date:'d MMM y'}}</span>
+</td>
+<td>
+<span>{{oVacation.daysNumber}}</span>
+</td>
+<td>
+<span>{{oVacation.description}}</span>
+</td>
+<td>
+<span>{{oVacation.recurrent}}</span>
+</td>
+<td>
+<span></span>
+</td>
+
+</tr>
+</tbody>
+
+</table>
+</div>
+</div>
+
 
 
 </div>

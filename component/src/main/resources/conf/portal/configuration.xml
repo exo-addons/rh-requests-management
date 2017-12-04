@@ -52,6 +52,10 @@
   </component>
 
   <component>
+    <type>org.exoplatform.rhmanagement.services.OfficialVacationService</type>
+  </component>
+
+  <component>
     <type>org.exoplatform.rhmanagement.services.rest.RequestRestService</type>
   </component>
 

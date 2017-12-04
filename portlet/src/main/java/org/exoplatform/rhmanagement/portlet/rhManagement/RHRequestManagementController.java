@@ -84,6 +84,8 @@ public class RHRequestManagementController {
   @Inject
   ConventionalVacationService conventionalVacationService;
 
+  @Inject
+  OfficialVacationService officialVacationService;
 
   @Inject
   @Path("index.gtmpl")
@@ -724,32 +726,19 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       }
       data.setMyVacationRequests(vacationRequestService.getActiveVacationRequestsByUserId(currentUser,0,100));
       List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
-
       ObjectMapper mapper = new ObjectMapper();
       for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
         VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
         if(requestDTO!=null) {
           if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())||requestDTO.getToDate().before(new Date())) continue;
-
             dtos.add(requestDTO);
-
         }
-
     }
-
       data.setVacationRequestsToValidate(dtos);
-
       if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
-
       data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
-
-      return data;
-
+      data.setOfficialDays(officialVacationService.getOfficialVacationDays());
+    return data;
   }
-
-
-
-
-
 
 }

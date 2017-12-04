@@ -1,9 +1,11 @@
 package org.exoplatform.rhmanagement.services.rest;
 
 
+import org.exoplatform.rhmanagement.dto.OfficialVacationDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.services.OfficialVacationService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.rhmanagement.services.ValidatorService;
@@ -19,6 +21,7 @@ import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.social.service.rest.RestChecker;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.annotation.security.RolesAllowed;
@@ -30,6 +33,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,14 +54,16 @@ public class RequestRestService implements ResourceContainer {
     private ValidatorService validatorService;
     private OrganizationService organizationService;
     private UserDataService userDataService;
+    private OfficialVacationService officialVacationService;
 
-    public RequestRestService(IdentityManager identityManager,SpaceService spaceService, VacationRequestService vacationRequestService, ValidatorService validatorService, OrganizationService organizationService, UserDataService userDataService) {
+    public RequestRestService(IdentityManager identityManager,SpaceService spaceService, VacationRequestService vacationRequestService, ValidatorService validatorService, OrganizationService organizationService, UserDataService userDataService, OfficialVacationService officialVacationService) {
         this.identityManager=identityManager;
         this.spaceService=spaceService;
         this.vacationRequestService=vacationRequestService;
         this.validatorService=validatorService;
         this.organizationService=organizationService;
         this.userDataService=userDataService;
+        this.officialVacationService=officialVacationService;
     }
 
 
@@ -156,6 +163,27 @@ public class RequestRestService implements ResourceContainer {
                     }
                 }
             }
+
+            List<OfficialVacationDTO> oVacations= officialVacationService.getOfficialVacations(0,0);
+            if (oVacations.size() > 0) {
+                for (OfficialVacationDTO oVacation : oVacations) {
+
+                    try {
+                        JSONObject event = new JSONObject();
+                        event.put("id",oVacation.getId());
+                        event.put("title",oVacation.getLabel());
+                        event.put("start",dt1.format(oVacation.getBeginDate()));
+                        event.put("end",dt1.format(oVacation.getEndDate()));
+                        event.put("backgroundColor","grey");
+                        events.put(event);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+            officialVacationService.getOfficialVacationDays();
+
             return Response.ok(events.toString(), mediaType).build();
         } catch (Exception e) {
             LOG.error(e);

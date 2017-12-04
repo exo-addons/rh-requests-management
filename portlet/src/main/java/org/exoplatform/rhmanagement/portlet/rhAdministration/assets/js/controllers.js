@@ -17,6 +17,10 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 		$scope.newConventionalVacation = {
             id: null
         };
+		$scope.oVacations = [];
+		$scope.newOfficialVacation = {
+            id: null
+        };
         $scope.currentPage = 0;
         $scope.pageSize = 10;
         $scope.vRCount=0;
@@ -121,6 +125,46 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 });
 
         }
+
+
+
+		$scope.loadOfficialVacations = function () {
+            $http({
+                method: 'GET',
+                url: rhAdminContainer.jzURL('RhAdministrationController.getOfficialVacations')
+            }).then(function successCallback(data) {
+                $scope.oVacations = data.data;
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+
+        };
+
+
+		$scope.saveOfficialVacation = function () {
+
+		            if ($("#beginDate") !== "") {
+                        var date = ($("#beginDate").val()).split("-");
+                        $scope.newOfficialVacation.beginDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+                    }
+
+                $http({
+                    data: $scope.newOfficialVacation,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    url: rhAdminContainer.jzURL('RhAdministrationController.saveOfficialVacation')
+                }).then(function successCallback(data) {
+					$scope.loadOfficialVacations();
+
+                }, function errorCallback(data) {
+                    $scope.setResultMessage($scope.i18n.defaultError, "error");
+                });
+
+        }
+
 
 
         $scope.loadEmployees = function () {
@@ -673,6 +717,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                // $scope.vRCount = data.data.vRCount;
                 $scope.loadEmployees();
 				$scope.loadConventionalVacations();
+				$scope.loadOfficialVacations();
                 deferred.resolve(data);
 //                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {

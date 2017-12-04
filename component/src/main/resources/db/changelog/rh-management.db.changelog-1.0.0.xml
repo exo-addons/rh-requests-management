@@ -168,7 +168,8 @@
       <column name="LABEL" type="NVARCHAR(50)"></column>
       <column name="DAYS_NUMBER" type="INT"></column>
       <column name="DESCRIPTION" type="NVARCHAR(250)"></column>
-      <column name="DATE" type="BIGINT"></column>
+      <column name="BEGIN_DATE" type="DATE"></column>
+      <column name="END_DATE" type="DATE"></column>
       <column name="RECURRENT" type="BOOLEAN"></column>
     </createTable>
 

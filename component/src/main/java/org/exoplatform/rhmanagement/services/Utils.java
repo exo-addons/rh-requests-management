@@ -21,9 +21,7 @@ import org.exoplatform.services.organization.UserHandler;
 import javax.jcr.Node;
 import javax.jcr.Session;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Created by Medamine on 14/02/2017.
@@ -193,6 +191,33 @@ public class Utils {
         } catch (Exception e) {
             log.error("Error when adding history entry", e);
         }
+    }
+
+
+    public static List<Date> getDaysBetweenDates(Date startdate, Date enddate)
+    {
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+        List<Date> dates = new ArrayList<Date>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startdate);
+        Calendar endCalendar = new GregorianCalendar();
+        endCalendar.setTime(enddate);
+        endCalendar.add(Calendar.DATE, 1);
+        while (calendar.getTime().before(endCalendar.getTime()))
+        {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+            log.info("_____"+result.toString());
+        }
+        return dates;
+    }
+
+    public static float getVacationNumberOfDays(Date startdate, Date enddate){
+        float j=0;
+
+
+        return j;
     }
 
 }

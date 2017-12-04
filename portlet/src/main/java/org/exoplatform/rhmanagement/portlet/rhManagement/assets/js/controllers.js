@@ -31,19 +31,20 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
-        $scope.showHollidays = false;
+        $scope.showHollidays = true;
         $scope.showLeave = false;
         $scope.showConventional = false;
         $scope.showLogs = false;
         $scope.showFullReq= false;
         $scope.showAlert = false;
         $scope.showInfoBox = true;
-        $scope.newVacationRequest = null;
+        $scope.newVacationRequest = {id: null};
         $scope.vacationsToVAlidateFilter = "active";
         $scope.myVacationsFilter = "active";
         $scope.vrOwnerData = null;
         $scope.newComment = null;
         $scope.cVacations = [];
+        $scope.officialDays = [];
         $scope.cVacation = null;
 
 
@@ -147,6 +148,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId=data.data.hrId;
                 $scope.insuranceId=data.data.insuranceId;
                 $scope.socialSecNumber=data.data.socialSecNumber;
+                $scope.officialDays=data.data.officialDays;
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 console.log(invite.build('substitutes', rsetUrl,'choose user'));
@@ -711,6 +713,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
                 if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
+                $scope.officialDays=data.data.officialDays;
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
@@ -725,7 +728,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
-        $scope.loadBundles();
         $scope.refreshController = function() {
             try {
                 $scope.$digest()
@@ -734,12 +736,54 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }
         };
 
-
         $scope.updateDateFormat = function(date) {
             var dateSplit = date;
             dateSplit = dateSplit.split("-");
-            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
+            return Date.parse(dateSplit[1] + '-' + dateSplit[0] + '-' + dateSplit[2]);
         };
+
+        $scope.calculateDays = function(vr) {
+            var j = 0;
+            var datefrom = $scope.updateDateFormat($("#fromDate").val());
+            var dateto = $scope.updateDateFormat($("#toDate").val());
+            var dateArray = new Array();
+            var fromDate = new Date();
+            fromDate.setTime(datefrom);
+            var toDate = new Date();
+            toDate.setTime(dateto);
+            var currentDate = new Date();
+            currentDate.setTime(datefrom);
+            while (currentDate <= toDate) {
+                if (currentDate.getDay() != 6 && currentDate.getDay() != 0 && !isOffDay(currentDate)) {
+                    j++;
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            if (fromDate.getHours() > 12) j = j - 0.5;
+            if (toDate.getHours() < 15) j = j - 0.5;
+            $scope.newVacationRequest.daysNumber = j;
+        };
+
+        function isOffDay(date) {
+            if ($scope.officialDays.length == 0) {
+                return false;
+            } else {
+                for (i = 0; i < $scope.officialDays.length; i++) {
+                    var od = new Date();
+                    od.setTime($scope.officialDays[i]);
+                    if (sameDay(date, od)) return true;
+                }
+
+            }
+            return false;
+        }
+
+
+        function sameDay(d1, d2) {
+          return d1.getFullYear() === d2.getFullYear() &&  d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+        }
+
+        $scope.loadBundles();
 
     };
     return rhCtrl;

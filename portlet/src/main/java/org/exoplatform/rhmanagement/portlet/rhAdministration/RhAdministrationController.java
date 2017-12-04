@@ -73,6 +73,8 @@ public class RhAdministrationController {
   @Inject
   ConventionalVacationService conventionalVacationService;
 
+  @Inject
+  OfficialVacationService officialVacationService;
 
   @Inject
   @Path("index.gtmpl")
@@ -735,7 +737,7 @@ public class RhAdministrationController {
   }
 
 
-
+// Conventional Vacations
 
   @Ajax
   @juzu.Resource
@@ -796,4 +798,75 @@ public class RhAdministrationController {
       return Response.error("");
     }
   }
+
+
+  // Official vacations
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public OfficialVacationDTO getOfficialVacationsById (Long id) {
+    try {
+      return officialVacationService.getOfficialVacationsById(id);
+
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<OfficialVacationDTO> getOfficialVacations () {
+    try {
+      return officialVacationService.getOfficialVacations(0,0);
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveOfficialVacation(@Jackson OfficialVacationDTO obj) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(obj.getBeginDate());
+    c.add(Calendar.DATE, ((int)obj.getDaysNumber()));
+    obj.setEndDate(c.getTime());
+    officialVacationService.save(obj,true);
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void updateOfficialVacation(@Jackson OfficialVacationDTO obj) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(obj.getBeginDate());
+    c.add(Calendar.DATE, ((int)obj.getDaysNumber()));
+    obj.setEndDate(c.getTime());
+   officialVacationService.save(obj,false);
+  }
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public Response deleteOfficialVacation(@Jackson OfficialVacationDTO obj) throws Exception {
+    try {
+      officialVacationService.remove(obj);
+      return Response.ok();
+    } catch (Exception e) {
+      LOG.error("Error when updating Conventional Vacation", e);
+      return Response.error("");
+    }
+  }
+
 }

@@ -10,6 +10,7 @@
         @Binding(value = ListenerService.class),
         @Binding(value = BalanceHistoryService.class),
         @Binding(value = ConventionalVacationService.class),
+        @Binding(value = OfficialVacationService.class),
         @Binding(value = VacationRequestService.class)})
 @Scripts({
     @Script(id = "jQueryUI", value = "js/lib/jquery-ui.js"),

@@ -16,6 +16,7 @@
  */
 package org.exoplatform.rhmanagement.dto;
 
+import java.util.Date;
 import java.util.List;
 
 public class ContextDTO {
@@ -45,6 +46,8 @@ public class ContextDTO {
   private VacationRequestDTO vacationRequestsToShow;
 
   private List<ConventionalVacationDTO>  conventionalVacations;
+
+  private List<Date> officialDays;
 
   public String getCurrentUser() {
     return currentUser;
@@ -151,4 +154,11 @@ public class ContextDTO {
     this.conventionalVacations = conventionalVacations;
   }
 
+  public List<Date> getOfficialDays() {
+    return officialDays;
+  }
+
+  public void setOfficialDays(List<Date> officialDays) {
+    this.officialDays = officialDays;
+  }
 }

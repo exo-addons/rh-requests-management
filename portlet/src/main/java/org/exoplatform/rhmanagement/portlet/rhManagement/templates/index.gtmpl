@@ -244,12 +244,12 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 </div>
 
 <div class="control-group" ng-show="showConventional">
-      <label class="control-label" for="userCalendarId">{{i18n.conventional}}:</label>
+<label class="control-label" for="userCalendarId">{{i18n.conventional}}:</label>
 <div class="controls">
                                                              <select name="conventionalVacation" id="conventionalVacation"
                                 ng-options="cv.label for cv in cVacations track by cv.id"
                                 ng-model="cVacation" ng-change="setConventional(cVacation.daysNumber)"></select>
-                                </div>
+</div>
 </div>
 
 <div class="control-group" ng-show="showSick">
@@ -267,15 +267,36 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 </div>
 
 
-                            <div class="control-group {{usernameClass}}" ng-show="!showLeave">
-                                <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="fromDate" ng-show="!showLeave">{{i18n.fromDate}}:</label>
+<label class="control-label" for="fromDate" ng-show="showLeave">{{i18n.date}}:</label>
+<div class="controls">
+<input type="text" name="inputUsername" id="fromDate"
+placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
+</div>
+</div>
+<div class="control-group {{usernameClass}}" ng-hide="showLeave">
+<label class="control-label" for="toDate">{{i18n.toDate}}:</label>
+<div class="controls">
+<input type="text" name="inputUsername" id="toDate"
+placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
+</div>
+</div>
+							
+							<button type="button" class="btn btn-primary" id="calculateDays"
+ng-click="calculateDays(newVacationRequest)">Calculate days
+</button>
+
+
+<div class="control-group {{usernameClass}}" ng-show="!showLeave">
+<label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
 <input type="number" name="inputUsername" id="daysNumberHollidays" min="0"
 placeholder="{{i18n.serverUsername}}"
 ng-model="newVacationRequest.daysNumber"  ng-disabled="showConventional">
 
 </div>
-                            </div>
+</div>
 
 <div class="control-group {{usernameClass}}" ng-show="showLeave">
 <label class="control-label" for="daysNumberHollidays">{{i18n.numberHours}}:</label>
@@ -287,21 +308,7 @@ ng-model="newVacationRequest.daysNumber">
 
 </div>
 </div>
-<div class="control-group {{usernameClass}}">
-<label class="control-label" for="fromDate" ng-show="!showLeave">{{i18n.fromDate}}:</label>
-<label class="control-label" for="fromDate" ng-show="showLeave">{{i18n.date}}:</label>
-                                <div class="controls">
-                                    <input type="text" name="inputUsername" id="fromDate"
-                                           placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
-                                </div>
-</div>
-                            <div class="control-group {{usernameClass}}" ng-hide="showLeave">
-                                <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
-<div class="controls">
-<input type="text" name="inputUsername" id="toDate"
-placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
-</div>
-                            </div>
+
 <div class="control-group {{usernameClass}}">
 <label class="control-label" for="reason">{{i18n.reason}}:</label>
                                 <div class="controls">
@@ -756,7 +763,7 @@ href="/portal/intranet/profile/{{comment.posterId}}">
                                             <p class="contentComment">
                                                 {{comment.commentText}}
                                             </p>
-</div>
+</div>Fnew
                                         <!--end commentRight-->
                                     </div>
 </div>
