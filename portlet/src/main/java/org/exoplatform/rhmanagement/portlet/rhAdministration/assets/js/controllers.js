@@ -64,6 +64,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.bFromDate;
         $scope.bToDate;
         $scope.userBlanceId="";
+        $scope.emFilter="active";
 
         $scope.initController = function () {
             // initialize to page 1
@@ -167,10 +168,10 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
 
 
-        $scope.loadEmployees = function () {
+        $scope.loadEmployees = function (emFilter) {
             $http({
                 method: 'GET',
-                url: rhAdminContainer.jzURL('RhAdministrationController.getAllUsersRhData')
+                url: rhAdminContainer.jzURL('RhAdministrationController.getAllUsersRhData')+ "&emfilter=" + emFilter
             }).then(function successCallback(data) {
                 $scope.rhEmployees = data.data;
                 //$scope.vm.setPage(1);
@@ -370,7 +371,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $("#requestsList .elementDetail input[type=submit], #requestsList .elementDetail input[type=cancel]").removeAttr("readonly");
 
                 /* $scope.setResultMessage($scope.i18n.userUpdate, "success");*/
-                $scope.loadEmployees();
+                $scope.loadEmployees($scope.emFilter);
                 $scope.getUser(employee.id);
                 $scope.showAddForm = false;
 
@@ -389,7 +390,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 },
                 url: rhAdminContainer.jzURL('RhAdministrationController.deleteUserRHData')
             }).then(function successCallback(data) {
-                $scope.loadEmployees();
+                $scope.loadEmployees($scope.emFilter);
                 $scope.setResultMessage($scope.i18n.Userdelete, "success");
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
@@ -715,7 +716,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
                 $scope.currentUserName = data.data.currentUserName;
                // $scope.vRCount = data.data.vRCount;
-                $scope.loadEmployees();
+                $scope.loadEmployees('active');
 				$scope.loadConventionalVacations();
 				$scope.loadOfficialVacations();
                 deferred.resolve(data);

@@ -127,6 +127,45 @@ public class UserDataService {
 
 
 
+  public List<EmployeesDTO> getUsersRhDataByStatus(boolean active, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getAllUsersRhData - Parameter 'offset' must be positive");
+    }
+    List<UserRHDataEntity> entities = userRHDataDAO.getUsersRhDataByStatus(active, offset, limit);
+    List<EmployeesDTO> dtos = new ArrayList<EmployeesDTO>();
+    for (UserRHDataEntity entity : entities) {
+      Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false);
+      if(id!=null){
+        Profile profile=id.getProfile();
+        EmployeesDTO employeesDTO=new EmployeesDTO();
+        employeesDTO.setId(entity.getId());
+        employeesDTO.setUserId(entity.getUserId());
+        employeesDTO.setName(profile.getFullName());
+        employeesDTO.setAvatar(profile.getAvatarUrl());
+        employeesDTO.setEmail(profile.getEmail());
+        employeesDTO.setJobTitle(profile.getPosition());
+        employeesDTO.setGender(profile.getGender());
+        if (profile.getPhones()!=null && profile.getPhones().size()>0){
+          String phones="";
+          for (Map<String, String> map : profile.getPhones()) {
+            String phone="";
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+              phone= entry.getValue();
+              break;
+            }
+            phones= phones+phone+" , ";
+          }
+          employeesDTO.setPhone(phones);
+        }else employeesDTO.setPhone("");
+        employeesDTO.setHrData(convert(entity));
+        dtos.add(employeesDTO);
+      }
+    }
+    return dtos;
+  }
+
+
+
   public List<UserRHDataDTO> getAllRhData(int offset, int limit) {
     if (offset < 0) {
       throw new IllegalArgumentException("Method getAllUsersRhData - Parameter 'offset' must be positive");
@@ -138,6 +177,19 @@ public class UserDataService {
 
     return dtos;
   }
+
+  public List<UserRHDataDTO> getRhDataByStatus( boolean active, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getAllUsersRhData - Parameter 'offset' must be positive");
+    }
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getUsersRhDataByStatus(active ,offset, limit)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
 
 
   private UserRHDataEntity convert(UserRHDataDTO dto) {

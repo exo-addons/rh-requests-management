@@ -28,7 +28,7 @@ public class UpdateSickBalanceJob implements Job {
         LOG.info("==================Update Sick Balance Job started==================");
         Long start = System.currentTimeMillis();
         //userDataService = CommonsUtils.getService(UserDataService.class);
-        List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
+        List<UserRHDataDTO> employees = userDataService.getRhDataByStatus(true,0,0);
 
         for(UserRHDataDTO employee : employees){
             float sickBalance=employee.getSickdaysBalance();

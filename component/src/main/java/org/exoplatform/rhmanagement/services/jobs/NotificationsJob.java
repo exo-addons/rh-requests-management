@@ -32,7 +32,7 @@ public class NotificationsJob implements Job {
         LOG.info("==================Notifications Job started==================");
        Long start = System.currentTimeMillis();
          IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
-        List<UserRHDataDTO> employees = userDataService.getAllRhData(0,0);
+        List<UserRHDataDTO> employees = userDataService.getRhDataByStatus(true,0,0);
         Calendar now= Calendar.getInstance();
         for(UserRHDataDTO employee : employees){
             if(employee.getBirthDay()!=null){

@@ -40,9 +40,34 @@
 <div id="employeesList" ng-show="showEmployees">
 <div style="position: relative">
 <h4 class="titleWithBorder">{{i18n.employeesList}}</h4>
+                <div class="div_filter">
+                    <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
+<div class="header-right pull-right groupByOptions" style="">
+<!-- this is filter action-->
+<div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
+<a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+data-placement="bottom">
+<i class="uiIconFilter uiIconLightGray"></i>
+                            </a>
+<ul class="dropdown-menu">
 
-                        <div class="uiSearchInput">
-                            <!--<input type="hidden" id="newUserId" ng-change="getUser(newUserId)" ng-model="newUserId" name="newUserId" placeholder="{{i18n.searchUser}}"/>-->
+<li><a href="javascript:void(0)"
+ng-click="emFilter='all';loadEmployees('all')">{{i18n.all}}</a>
+                                </li>
+
+<li><a href="javascript:void(0)"
+ng-click="emFilter='former';loadEmployees('former')">{{i18n.former}}</a>
+                                </li>
+
+<li><a href="javascript:void(0)"
+ng-click="emFilter='active';loadEmployees('active')">{{i18n.active}}</a>
+                                </li>
+</ul>
+                        </div>
+</div>
+                </div>
+<div class="uiSearchInput">
+<!--<input type="hidden" id="newUserId" ng-change="getUser(newUserId)" ng-model="newUserId" name="newUserId" placeholder="{{i18n.searchUser}}"/>-->
 <input type="text" class="newUserName"
 ng-change="getEmployees($scope.currentUser, newUserId, 'employee')"
 ng-model="newUserId" ng-model="newUserId" name="newUserName"

@@ -44,7 +44,7 @@ public class UserRHDataDAO extends GenericDAOJPAImpl<UserRHDataEntity, String> {
         }
     }
 
-    public List<UserRHDataEntity> getAllUsersRhData(int offset, int limit) {
+    public List<UserRHDataEntity> getAllUsersRhData( int offset, int limit) {
         try {
             if (offset >= 0 && limit > 0) {
                 return getEntityManager().createNamedQuery("userRHDataEntity.findAll", UserRHDataEntity.class)
@@ -53,6 +53,25 @@ public class UserRHDataDAO extends GenericDAOJPAImpl<UserRHDataEntity, String> {
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("userRHDataEntity.findAll", UserRHDataEntity.class)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get rh data with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+    public List<UserRHDataEntity> getUsersRhDataByStatus(boolean active, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("userRHDataEntity.findByStatus", UserRHDataEntity.class)
+                        .setParameter("active", active)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("userRHDataEntity.findByStatus", UserRHDataEntity.class)
+                        .setParameter("active", active)
                         .getResultList();
             }
         } catch (Exception e) {

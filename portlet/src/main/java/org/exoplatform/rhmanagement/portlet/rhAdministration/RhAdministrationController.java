@@ -91,9 +91,14 @@ public class RhAdministrationController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<EmployeesDTO> getAllUsersRhData() {
+  public List<EmployeesDTO> getAllUsersRhData(String emfilter) {
     try {
-      return userDataService.getAllUsersRhData(0,100);
+      if(emfilter.equals("active")){
+        return userDataService.getUsersRhDataByStatus(true,0,0);
+      }else if(emfilter.equals("former")) {
+        return userDataService.getUsersRhDataByStatus(false, 0, 0);
+      } else return userDataService.getAllUsersRhData(0, 0);
+
 
     } catch (Throwable e) {
       LOG.error(e);
