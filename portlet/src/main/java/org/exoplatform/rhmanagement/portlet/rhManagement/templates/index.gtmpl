@@ -272,20 +272,20 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <label class="control-label" for="fromDate" ng-show="showLeave">{{i18n.date}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="fromDate"
-placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
+placeholder="{{i18n.serverUsername}}" ng-change="calculateDays(newVacationRequest)" ng-model="newVacationRequest.fromDate">
 </div>
 </div>
 <div class="control-group {{usernameClass}}" ng-hide="showLeave">
 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="toDate"
-placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
+placeholder="{{i18n.serverUsername}}" ng-change="calculateDays(newVacationRequest)" ng-model="newVacationRequest.toDate">
 </div>
 </div>
 							
-							<button type="button" class="btn btn-primary" id="calculateDays"
-ng-click="calculateDays(newVacationRequest)">Calculate days
-</button>
+<!--<button type="button" class="btn btn-primary" id="calculateDays"-->
+<!--ng-click="calculateDays(newVacationRequest)">Calculate days-->
+<!--</button>-->
 
 
 <div class="control-group {{usernameClass}}" ng-show="!showLeave">

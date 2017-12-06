@@ -11,6 +11,8 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.showEmployees = true;
         $scope.showElementDetail = false;
         $scope.getUserLigne = false;
+        $scope.showCvacations = false;
+        $scope.showOvacations = false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
 		$scope.cVacations = [];

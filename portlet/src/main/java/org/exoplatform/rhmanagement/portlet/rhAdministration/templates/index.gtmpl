@@ -38,7 +38,7 @@
 <div id="employees" class="tabcontent" style="display: block;">
 
 <div id="employeesList" ng-show="showEmployees">
-<div style="position: relative">
+<div class="filterBar">
 <h4 class="titleWithBorder">{{i18n.employeesList}}</h4>
                 <div class="div_filter">
                     <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
@@ -901,7 +901,7 @@ ng-disabled="vRequest.status == 'canceled'">{{i18n.cancel}}
 </tr>
                         </tbody>
 <tfoot>
-<td colspan="8">
+<td colspan="9">
 <div class="pagination">
 <ul>
 <li ng-class="prevPageDisabled()">
@@ -1039,11 +1039,11 @@ data-ng-click="loadBalanceHistory()"/>
 <div id="settings" class="tabcontent">
 
 <div id="cVacations">
-                <h4 class="titleWithBorder">{{i18n.conventionalVacations}}</h4>
+<h4 class="titleWithBorder" ng-click="showCvacations = !showCvacations; showOvacations = false">{{i18n.conventionalVacations}}</h4>
+<div class="description" ng-show="showCvacations && !showOvacations">
+<div class="row-fluid">
 
-<div>
-
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}} span4">
 <label class="control-label" for="typeName">{{i18n.label}}:</label>
                                 <div class="controls">
                                     <input type="text" name="inputUsername" id="label"
@@ -1053,7 +1053,7 @@ data-ng-click="loadBalanceHistory()"/>
 </div>
 
 
-                            <div class="control-group {{usernameClass}}">
+                            <div class="control-group {{usernameClass}}  span4">
                                 <label class="control-label" for="question">{{i18n.daysNumber}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="daysNumber"
@@ -1063,7 +1063,7 @@ ng-model="newConventionalVacation.daysNumber">
 </div>
                             </div>
 
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}}  span4">
 <label class="control-label" for="question">{{i18n.description}}:</label>
                                 <div class="controls">
                                     <input type="text" name="inputUsername" id="description"
@@ -1072,14 +1072,15 @@ ng-model="newConventionalVacation.daysNumber">
 
                                 </div>
 </div>
-
+    <hr class="clearfix"/>
+</div>
                             <div class="uiAction uiActionBorder">
                                 <button type="button" class="btn" >{{i18n.cancel}}</button>
 <button type="button" class="btn btn-primary" id="saveType"
 ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
 </button>
                             </div>
-</div>
+
 				
 				
 
@@ -1124,15 +1125,16 @@ ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
 </table>
 </div>
 </div>
-
+</div>
 
 
 <div id="oVacations">
-<h4 class="titleWithBorder">{{i18n.officialVacations}}</h4>
+<h4 class="titleWithBorder" ng-click="showCvacations = false; showOvacations = !showOvacations">{{i18n.officialVacations}}</h4>
 
-<div>
+<div class="description" ng-show="!showCvacations && showOvacations">
+<div class="row-fluid">
 
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}} span4">
 <label class="control-label" for="typeName">{{i18n.label}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="label"
@@ -1141,7 +1143,7 @@ ng-model="newOfficialVacation.label">
 </div>
 </div>
 
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}} span4">
 <label class="control-label" for="beginDate">{{i18n.beginDate}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="beginDate"
@@ -1152,7 +1154,7 @@ ng-model="newOfficialVacation.beginDate">
 </div>
 
 
-                            <div class="control-group {{usernameClass}}">
+                            <div class="control-group {{usernameClass}} span4">
                                 <label class="control-label" for="question">{{i18n.daysNumber}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="daysNumber"
@@ -1161,8 +1163,10 @@ ng-model="newOfficialVacation.daysNumber">
 
 </div>
                             </div>
-
-<div class="control-group {{usernameClass}}">
+    <hr class="clearfix"/>
+</div>
+    <div class="row-fluid">
+<div class="control-group {{usernameClass}} span6">
 <label class="control-label" for="question">{{i18n.description}}:</label>
                                 <div class="controls">
                                     <input type="text" name="inputUsername" id="description"
@@ -1172,20 +1176,22 @@ ng-model="newOfficialVacation.daysNumber">
                                 </div>
 </div>
 
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}} span6">
 <label class="control-label" for="question">{{i18n.recurrent}}:</label>
 <div class="controls">
 <input type="checkbox" ng-model="newOfficialVacation.recurrent" [name="recurrent"] >
 </div>
-</div>
 
+</div>
+        <hr class="clearfix"/>
+    </div>
 <div class="uiAction uiActionBorder">
 <button type="button" class="btn" >{{i18n.cancel}}</button>
 <button type="button" class="btn btn-primary" id="saveType"
 ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}
 </button>
 </div>
-</div>
+
 
 
 
@@ -1238,7 +1244,7 @@ ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}
 </table>
 </div>
 </div>
-
+</div>
 
 
 </div>

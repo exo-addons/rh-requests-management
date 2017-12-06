@@ -371,6 +371,17 @@ i.uiIconEcmsSearchMini.newUserId {
     padding-right: 5px;
     background: #f2f2f2;
 }
+
+#employeesList .filterBar{
+    position: relative;
+}
+#employeesList .filterBar .uiSearchInput{right: 70px;}
+#employeesList .filterBar .div_filter{
+    top: 0px;
+    padding: 0 15px;
+    margin-right: -15px;
+}
+
 .table-responsive {
     overflow: auto;
     margin: 10px auto;
@@ -408,6 +419,7 @@ i.uiIconEcmsSearchMini.newUserId {
     font-size: 12px;
     top: 15px;
 }
+
 #rhAdminCtrl .commentItem {
     padding: 30px 20px 10px 10px!important;
 }
@@ -447,6 +459,7 @@ h4.titleWithBorder {
     background: #f2f2f2;
     padding: 10px;
     width: auto;
+    cursor: pointer
 }
 @media (max-width: 776px) {
     #left_col{width: 100%}
@@ -507,3 +520,7 @@ selected-type{
 .ui-timepicker-div * {
     max-width: 99%;
 }
+
+/* SETTING STYLE */
+
+.settings .description {padding: 5px 12px;}
