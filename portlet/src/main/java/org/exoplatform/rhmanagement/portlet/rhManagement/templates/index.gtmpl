@@ -272,14 +272,14 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <label class="control-label" for="fromDate" ng-show="showLeave">{{i18n.date}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="fromDate"
-placeholder="{{i18n.serverUsername}}" ng-change="calculateDays(newVacationRequest)" ng-model="newVacationRequest.fromDate">
+placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
 </div>
 </div>
 <div class="control-group {{usernameClass}}" ng-hide="showLeave">
 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="toDate"
-placeholder="{{i18n.serverUsername}}" ng-change="calculateDays(newVacationRequest)" ng-model="newVacationRequest.toDate">
+placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
 </div>
 </div>
 							
@@ -291,10 +291,7 @@ placeholder="{{i18n.serverUsername}}" ng-change="calculateDays(newVacationReques
 <div class="control-group {{usernameClass}}" ng-show="!showLeave">
 <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
-<input type="number" name="inputUsername" id="daysNumberHollidays" min="0"
-placeholder="{{i18n.serverUsername}}"
-ng-model="newVacationRequest.daysNumber"  ng-disabled="showConventional">
-
+    <span class="ng-pristine ng-untouched ng-valid ng-valid-min ng-not-empty">{{newVacationRequest.daysNumber}}</span>
 </div>
 </div>
 

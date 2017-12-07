@@ -785,6 +785,12 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.loadBundles();
 
+        $( "#toDate" ).on( "change", function() {
+            if($("#toDate").val() != ""){$scope.calculateDays($scope.newVacationRequest);}
+        });
+        $( "#fromDate" ).on( "change", function() {
+            if($("#fromDate").val() != ""){$scope.calculateDays($scope.newVacationRequest);}
+        });
     };
     return rhCtrl;
 
