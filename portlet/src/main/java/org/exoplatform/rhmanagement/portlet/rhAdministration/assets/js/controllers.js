@@ -122,6 +122,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     url: rhAdminContainer.jzURL('RhAdministrationController.saveConventionalVacation')
                 }).then(function successCallback(data) {
 					$scope.loadConventionalVacations();
+					$scope.showCvacations = false;
 
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
@@ -161,6 +162,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     url: rhAdminContainer.jzURL('RhAdministrationController.saveOfficialVacation')
                 }).then(function successCallback(data) {
 					$scope.loadOfficialVacations();
+					$scope.showOvacations = false;
 
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");

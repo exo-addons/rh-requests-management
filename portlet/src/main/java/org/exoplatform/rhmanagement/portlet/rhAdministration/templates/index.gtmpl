@@ -1039,7 +1039,8 @@ data-ng-click="loadBalanceHistory()"/>
 <div id="settings" class="tabcontent">
 
 <div id="cVacations">
-<h4 class="titleWithBorder" ng-click="showCvacations = !showCvacations; showOvacations = false">{{i18n.conventionalVacations}}</h4>
+<h4 class="titleWithBorder">{{i18n.conventionalVacations}}</h4>
+<button class="btn btn-primary pull-right" ng-click="showCvacations = !showCvacations; showOvacations = false" ng-show="!showCvacations">Add New</button>
 <div class="description" ng-show="showCvacations && !showOvacations">
 <div class="row-fluid">
 
@@ -1074,15 +1075,14 @@ ng-model="newConventionalVacation.daysNumber">
 </div>
     <hr class="clearfix"/>
 </div>
-                            <div class="uiAction uiActionBorder">
-                                <button type="button" class="btn" >{{i18n.cancel}}</button>
-<button type="button" class="btn btn-primary" id="saveType"
-ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
-</button>
-                            </div>
+<div class="uiAction uiActionBorder">
+
+    <button type="button" class="btn btn-primary" id="saveType" ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}</button>
+    <button type="button" class="btn" ng-click="showCvacations = false">{{i18n.cancel}}</button>
+</div>
 
 				
-				
+</div>
 
                 <div id="exportable" class="table-responsive">
                     <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
@@ -1124,13 +1124,13 @@ ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}
 
 </table>
 </div>
-</div>
+
 </div>
 
 
 <div id="oVacations">
-<h4 class="titleWithBorder" ng-click="showCvacations = false; showOvacations = !showOvacations">{{i18n.officialVacations}}</h4>
-
+<h4 class="titleWithBorder" >{{i18n.officialVacations}}</h4>
+    <button class="btn btn-primary pull-right" ng-click="showCvacations = false; showOvacations = !showOvacations" ng-show="!showOvacations">Add New</button>
 <div class="description" ng-show="!showCvacations && showOvacations">
 <div class="row-fluid">
 
@@ -1186,12 +1186,10 @@ ng-model="newOfficialVacation.daysNumber">
         <hr class="clearfix"/>
     </div>
 <div class="uiAction uiActionBorder">
-<button type="button" class="btn" >{{i18n.cancel}}</button>
-<button type="button" class="btn btn-primary" id="saveType"
-ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}
-</button>
+<button type="button" class="btn btn-primary" id="saveType" ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}</button>
+<button type="button" class="btn" ng-click="showOvacations = false">{{i18n.cancel}}</button>
 </div>
-
+</div>
 
 
 
@@ -1242,7 +1240,6 @@ ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}
 </tbody>
 
 </table>
-</div>
 </div>
 </div>
 
