@@ -550,6 +550,12 @@ ul#addonMenu li.active {
 }
 .managersTabs .ligne{line-height: 40px}
 table#managersTable{margin-bottom: 0; border: 1px solid #ccc;    width: initial;}
+input {
+    height: 40px;
+    padding: 0 10px;
+    border: Solid 2px #e1e8ee;
+    border-radius: 4px;
+}
 /*
 .uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
     background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat left top;

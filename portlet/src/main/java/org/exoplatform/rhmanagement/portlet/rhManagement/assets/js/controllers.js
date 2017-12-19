@@ -50,6 +50,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.vacationRequesttoShow = null;
 
+        $scope.initModals= function(){
+            $(".nbrDays").text('');
+            $("#substitutes, #managers").val('');
+            $scope.newVacationRequest.type = '';
+            $scope.newVacationRequest.fromDate ='';
+            $scope.newVacationRequest.toDate = '';
+            $scope.newVacationRequest.reason = '';
+        }
+
         $scope.showBalance= function(){
             if( $scope.newVacationRequest.type == 'holiday'){
                 $scope.showSick=false;
@@ -302,6 +311,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     $("#userCalendar").val("");
                     $scope.showAlert = false;
                     calendar.refresh('myCalendar');
+
+                    $scope.initModals();
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
@@ -762,6 +773,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             if (fromDate.getHours() > 12) j = j - 0.5;
             if (toDate.getHours() < 15) j = j - 0.5;
             $scope.newVacationRequest.daysNumber = j;
+            $(".nbrDays").text(j);
         };
 
         function isOffDay(date) {
@@ -786,10 +798,17 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.loadBundles();
 
         $( "#toDate" ).on( "change", function() {
-            if($("#toDate").val() != ""){$scope.calculateDays($scope.newVacationRequest);}
+            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
         });
         $( "#fromDate" ).on( "change", function() {
-            if($("#fromDate").val() != ""){$scope.calculateDays($scope.newVacationRequest);}
+            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
+        });
+
+        $( ".ui-datepicker-buttonpane > .ui-datepicker-close" ).click(function(){
+            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
+        });
+        $( ".ui-datepicker-buttonpane > .ui-datepicker-close" ).click(function(){
+            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
         });
     };
     return rhCtrl;

@@ -291,7 +291,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
 <div class="control-group {{usernameClass}}" ng-show="!showLeave">
 <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
-    <span class="ng-pristine ng-untouched ng-valid ng-valid-min ng-not-empty">{{newVacationRequest.daysNumber}}</span>
+    <span class="ng-pristine ng-untouched ng-valid ng-valid-min ng-not-empty nbrDays">{{newVacationRequest.daysNumber}}</span>
 </div>
 </div>
 
@@ -343,7 +343,7 @@ placeholder="{{i18n.serverUsername}}">
 
 <div id="vacationRequestSaveAs"
 class="control-group form-horizontal {{vacationRequestNameClass}}">
-<button type="button" class="btn" ng-click="showForm = false">{{i18n.cancel}}</button>
+<button type="button" class="btn" ng-click="showForm = false; initModals()">{{i18n.cancel}}</button>
 <button type="button" class="btn btn-primary" id="saveVacationRequest"
 ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
 </button>

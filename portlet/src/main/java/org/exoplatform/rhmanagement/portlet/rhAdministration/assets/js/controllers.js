@@ -73,6 +73,21 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $scope.vm.setPage(1);
         }
 
+        $scope.initConventionalModels= function(){
+            $scope.newConventionalVacation.label = '';
+            $scope.newConventionalVacation.daysNumber ='';
+            $scope.newConventionalVacation.description = '';
+        }
+
+        $scope.initFerriesModels= function(){
+            $scope.newOfficialVacation.label = '';
+            $scope.newOfficialVacation.beginDate ='';
+            $scope.newOfficialVacation.daysNumber = '';
+            $scope.newOfficialVacation.description = '';
+
+            $("#beginDate").val('');
+        }
+
         $scope.setResultMessage = function (text, type) {
             $scope.resultMessageClass = "alert-" + type;
             $scope.resultMessageClassExt = "uiIcon" + type.charAt(0).toUpperCase()
@@ -123,7 +138,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 }).then(function successCallback(data) {
 					$scope.loadConventionalVacations();
 					$scope.showCvacations = false;
-
+                    $scope.initConventionalModels();
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
@@ -177,7 +192,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 }).then(function successCallback(data) {
 					$scope.loadOfficialVacations();
 					$scope.showOvacations = false;
-
+                    $scope.initFerriesModels();
                 }, function errorCallback(data) {
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });

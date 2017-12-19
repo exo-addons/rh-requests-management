@@ -1078,7 +1078,7 @@ ng-model="newConventionalVacation.description">
 <div class="uiAction uiActionBorder">
 
 <button type="button" class="btn btn-primary" id="saveType" ng-click="saveConventionalVacation(newConventionalVacation)">{{i18n.save}}</button>
-    <button type="button" class="btn" ng-click="showCvacations = false">{{i18n.cancel}}</button>
+    <button type="button" class="btn" ng-click="showCvacations = false; initConventionalModels()">{{i18n.cancel}}</button>
 </div>
 
 				
@@ -1194,7 +1194,7 @@ ng-model="newOfficialVacation.daysNumber">
     </div>
 <div class="uiAction uiActionBorder">
 <button type="button" class="btn btn-primary" id="saveType" ng-click="saveOfficialVacation(newOfficialVacation)">{{i18n.save}}</button>
-<button type="button" class="btn" ng-click="showOvacations = false">{{i18n.cancel}}</button>
+<button type="button" class="btn" ng-click="showOvacations = false; initFerriesModels()">{{i18n.cancel}}</button>
 </div>
 </div>
 
