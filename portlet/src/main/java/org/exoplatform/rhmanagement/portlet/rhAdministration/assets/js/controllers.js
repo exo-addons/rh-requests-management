@@ -130,7 +130,21 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
         }
 
-
+        $scope.deleteConventionalVacation = function (cVacation) {
+            $http({
+                data: cVacation,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: rhAdminContainer.jzURL('RhAdministrationController.deleteConventionalVacation')
+            }).then(function successCallback(data) {
+                $scope.loadConventionalVacations();
+                $scope.setResultMessage($scope.i18n.vacationdelete, "success");
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        }
 
 		$scope.loadOfficialVacations = function () {
             $http({
@@ -168,6 +182,22 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     $scope.setResultMessage($scope.i18n.defaultError, "error");
                 });
 
+        }
+
+        $scope.deleteOfficialVacation = function (oVacation) {
+            $http({
+                data: oVacation,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: rhAdminContainer.jzURL('RhAdministrationController.deleteOfficialVacation')
+            }).then(function successCallback(data) {
+                $scope.loadOfficialVacations();
+                $scope.setResultMessage($scope.i18n.vacationdelete, "success");
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
         }
 
 

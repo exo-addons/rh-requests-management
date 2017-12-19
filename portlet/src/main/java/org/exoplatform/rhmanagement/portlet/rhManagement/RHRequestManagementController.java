@@ -167,31 +167,22 @@ public class RHRequestManagementController {
   @MimeType.JSON
   @Jackson
   public List<VacationRequestDTO> getVacationRequestsForCurrentValidator(String status) {
-    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
     try {
-      if(status!=null){
-        for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,0)){
-          VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
-          if(requestDTO!=null) {
-            if(!status.equals(Utils.ALL)&&!status.equals(requestDTO.getStatus())) continue;
-            dtos.add(requestDTO);
-          }
+      if (status != null) {
+        if(status.equals(Utils.ALL)){
+          return vacationRequestService.getVacationRequestsByValidator(currentUser,0,100);
+        }else{
+          return vacationRequestService.getVacationRequestsByValidatorAndStatus(currentUser,status,0,100);
         }
+
       }else{
-        for(ValidatorDTO validator : validatorService.getValidatorsByValidatorUserId(currentUser,0,100)){
-          VacationRequestDTO requestDTO=vacationRequestService.getVacationRequest(validator.getRequestId());
-          if(requestDTO!=null) {
-            if(Utils.DECLINED.equals(requestDTO.getStatus())||Utils.CANCELED.equals(requestDTO.getStatus())) continue;
-            dtos.add(requestDTO);
-          }
-        }
+        return vacationRequestService.getActiveVacationRequestsByValidator(currentUser,0,100);
       }
 
     } catch (Throwable e) {
       log.error(e);
       return null;
     }
-    return dtos;
   }
 
 
@@ -348,7 +339,9 @@ public class RHRequestManagementController {
     vr.setSubstitute(substitutes);
     if(vr.getType()==null) vr.setType("holiday");
     if ("leave".equals(vr.getType())) vr.setToDate(vr.getFromDate());
-
+    if ("conventional".equals(vr.getType())) {
+      vr.setToDate(Utils.getTodate(vr.getFromDate(),(int)vr.getDaysNumber()));
+    }
     vr=vacationRequestService.save(vr,true);
 
     obj.setVacationRequestDTO(vr);

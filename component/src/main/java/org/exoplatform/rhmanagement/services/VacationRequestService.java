@@ -146,6 +146,43 @@ public class VacationRequestService {
   }
 
 
+  public List<VacationRequestDTO> getVacationRequestsByValidator(String userId,  int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getVacationRequests - Parameter 'offset' must be positive");
+    }
+    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequestsByValidator(userId,offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
+
+  public List<VacationRequestDTO> getVacationRequestsByValidatorAndStatus(String userId,String status, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getVacationRequests - Parameter 'offset' must be positive");
+    }
+    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequestsByValidatorAndStatus(userId,status,offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
+  public List<VacationRequestDTO> getActiveVacationRequestsByValidator(String userId, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getVacationRequests - Parameter 'offset' must be positive");
+    }
+    List<VacationRequestEntity> entities = vacationRequestDAO.getActiveVacationRequestsByValidator(userId,offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
 
   public long getVacationRequestesCount() {
     return vacationRequestDAO.getVacationRequestesCount();
@@ -155,16 +192,16 @@ public class VacationRequestService {
     return vacationRequestDAO.getActiveVacationRequestsCount();
   }
 
-/*
-  public List<VacationRequestDTO> getVacationRequestById(long id) {
 
-    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequests(offset, limit);
+  public List<VacationRequestDTO> getVacationRequestByDate(Date date) {
+
+    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequestsbyDate(date);
     List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
     for (VacationRequestEntity entity : entities) {
       dtos.add(convert(entity));
     }
     return dtos;
-  }*/
+  }
 
 
   private VacationRequestEntity convert(VacationRequestDTO dto) {

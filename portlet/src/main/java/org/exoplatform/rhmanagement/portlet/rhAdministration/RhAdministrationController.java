@@ -843,9 +843,10 @@ public class RhAdministrationController {
   public void saveOfficialVacation(@Jackson OfficialVacationDTO obj) {
     Calendar c = Calendar.getInstance();
     c.setTime(obj.getBeginDate());
-    c.add(Calendar.DATE, ((int)obj.getDaysNumber()));
+    c.add(Calendar.DATE, ((int)obj.getDaysNumber()-1));
     obj.setEndDate(c.getTime());
     officialVacationService.save(obj,true);
+    upadteNumberOfDays(obj.getBeginDate());
   }
 
   @Ajax
@@ -858,6 +859,7 @@ public class RhAdministrationController {
     c.add(Calendar.DATE, ((int)obj.getDaysNumber()));
     obj.setEndDate(c.getTime());
    officialVacationService.save(obj,false);
+    upadteNumberOfDays(obj.getBeginDate());
   }
 
   @Ajax
@@ -867,6 +869,7 @@ public class RhAdministrationController {
   public Response deleteOfficialVacation(@Jackson OfficialVacationDTO obj) throws Exception {
     try {
       officialVacationService.remove(obj);
+      upadteNumberOfDays(obj.getBeginDate());
       return Response.ok();
     } catch (Exception e) {
       LOG.error("Error when updating Conventional Vacation", e);
@@ -874,4 +877,34 @@ public class RhAdministrationController {
     }
   }
 
-}
+  public void upadteNumberOfDays(Date date){
+    List<VacationRequestDTO> vRequests = vacationRequestService.getVacationRequestByDate(date);
+    List<Date> oVacation = officialVacationService.getOfficialVacationDays();
+    for (VacationRequestDTO vr : vRequests){
+     float nb= calculateNumberOfDays(oVacation, vr.getFromDate(),vr.getToDate());
+     if(vr.getDaysNumber()!=nb){
+       vr.setDaysNumber(nb);
+       vacationRequestService.save(vr,false);
+     }
+    }
+  }
+
+  public float calculateNumberOfDays(List<Date> oVacation, Date from, Date to){
+    float nb=0;
+    Calendar cFrom = Calendar.getInstance();
+    cFrom.setTime(from);
+    Calendar cTo = Calendar.getInstance();
+    cTo.setTime(to);
+    Calendar c = cFrom;
+
+    while (c.before(cTo)) {
+      if (c.DAY_OF_WEEK != 6 && c.DAY_OF_WEEK != 0 && !Utils.isOffDay(c, oVacation)) {
+        nb++;
+      }
+      c.add(Calendar.DATE, 1);
+    }
+    if (cFrom.HOUR_OF_DAY > 12) nb = nb - (float) 0.5;
+    if (cTo.HOUR_OF_DAY < 15) nb = nb - (float) 0.5;
+    return nb;
+  }
+ }

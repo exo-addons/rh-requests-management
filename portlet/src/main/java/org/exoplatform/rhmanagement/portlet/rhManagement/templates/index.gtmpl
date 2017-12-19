@@ -275,7 +275,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
 </div>
 </div>
-<div class="control-group {{usernameClass}}" ng-hide="showLeave">
+<div class="control-group {{usernameClass}}" ng-hide="showLeave || showConventional">
 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
 <div class="controls">
 <input type="text" name="inputUsername" id="toDate"
@@ -308,57 +308,57 @@ ng-model="newVacationRequest.daysNumber">
 
 <div class="control-group {{usernameClass}}">
 <label class="control-label" for="reason">{{i18n.reason}}:</label>
-                                <div class="controls">
-                                    <input type="text" name="reason" id="reason" placeholder="{{i18n.serverUsername}}"
-                                           ng-model="newVacationRequest.reason">
-                                </div>
+<div class="controls">
+<input type="text" name="reason" id="reason" placeholder="{{i18n.serverUsername}}"
+ng-model="newVacationRequest.reason">
+</div>
 </div>
 
-                            <div class="control-group">
-                                <label class="control-label" for="substitutes">{{i18n.substitutes}}:</label>
+<div class="control-group">
+<label class="control-label" for="substitutes">{{i18n.substitutes}}:</label>
 <div class="controls {{usernameClass}}">
 <input type="text" name="substitutes" id="substitutes">
 </div>
-                            </div>
+</div>
 
 <div class="control-group">
 <label class="control-label" for="managers">{{i18n.managers}}:</label>
-                                <div class="controls managersInput {{usernameClass}}">
-                                    <input type="text" name="managers" id="managers">
-                                </div>
+<div class="controls managersInput {{usernameClass}}">
+<input type="text" name="managers" id="managers">
+</div>
 </div>
 
-                            <div class="control-group {{usernameClass}}">
-                                <label class="control-label" for="userCalendarId">{{i18n.eXoCalendar}}:</label>
+<div class="control-group {{usernameClass}}">
+<label class="control-label" for="userCalendarId">{{i18n.eXoCalendar}}:</label>
 <div class="controls">
 <select name="inputUsername" id="userCalendar" ng-model="userCalendarId"
 placeholder="{{i18n.serverUsername}}">
 <option value=""></option>
-                                        <option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
-                                        </option>
+<option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
+</option>
 
 </select>
-                                </div>
+</div>
 </div>
 
-                            <div id="vacationRequestSaveAs"
-                                 class="control-group form-horizontal {{vacationRequestNameClass}}">
-                                <button type="button" class="btn" ng-click="showForm = false">{{i18n.cancel}}</button>
+<div id="vacationRequestSaveAs"
+class="control-group form-horizontal {{vacationRequestNameClass}}">
+<button type="button" class="btn" ng-click="showForm = false">{{i18n.cancel}}</button>
 <button type="button" class="btn btn-primary" id="saveVacationRequest"
 ng-click="saveVacationRequest(newVacationRequest)">{{i18n.save}}
 </button>
 
-                            </div>
-</form>
-                        <!--End Request creation Form-->
-                    </div>
 </div>
-                <div>
+</form>
+<!--End Request creation Form-->
+</div>
+</div>
+<div>
 
 
-                    <!--My Requests-->
-                    <div ng-show="showList" style="padding: 20px;position: relative">
-                        <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.myRequests}}</h4>
+<!--My Requests-->
+<div ng-show="showList" style="padding: 20px;position: relative">
+<h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.myRequests}}</h4>
 <div class = "div_filter">
 <div class="header-right pull-right">{{geti18n(myVacationsFilter)}}</div>
 <div class="header-right pull-right groupByOptions" style="">
@@ -528,7 +528,7 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
 </a>
 <div class="uiContentBox">
 <div class="user_details row-fluid">
-            <a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge span4" style="padding-top: 15px; margin-bottom: 20px; margin-left: 20px;">
+<a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge span4" style="padding-top: 15px; margin-bottom: 20px; margin-left: 20px;">
 <img src="{{vrOwnerData.avatar}}" alt="{{vacationRequesttoShow.userFullName}}">
 </a>
             <div class="contentBox span8">

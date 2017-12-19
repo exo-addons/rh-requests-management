@@ -35,7 +35,11 @@ import java.util.Date;
         @NamedQuery(name = "vacatioRequestEntity.findByUserIdAndStatus", query = "SELECT a FROM HRVacatioRequestEntity a where a.userId = :userId and a.status = :status  order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.findActiveByUserId", query = "SELECT a FROM HRVacatioRequestEntity a where a.userId = :userId and a.toDate > :currentDate and a.status  not in ('canceled','declined') order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.findActive", query = "SELECT a FROM HRVacatioRequestEntity a where a.toDate > :currentDate and a.status  not in ('canceled','declined') order by a.id desc"),
+        @NamedQuery(name = "vacatioRequestEntity.findByValidator", query = "SELECT a FROM HRVacatioRequestEntity a, HRValidatorEntity b  where a.id=b.requestId and b.userId = :userId order by a.id desc"),
+        @NamedQuery(name = "vacatioRequestEntity.findByValidatorAndStatus", query = "SELECT a FROM HRVacatioRequestEntity a, HRValidatorEntity b   where a.id=b.requestId and b.userId = :userId and a.status = :status  order by a.id desc"),
+        @NamedQuery(name = "vacatioRequestEntity.findActiveByValidator", query = "SELECT a FROM HRVacatioRequestEntity a, HRValidatorEntity b  where a.id=b.requestId and b.userId = :userId and a.toDate > :currentDate and a.status  not in ('canceled','declined') order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.countActive", query = "SELECT count (a.id) FROM HRVacatioRequestEntity a where a.toDate > :currentDate and a.status not in ('canceled','declined')"),
+        @NamedQuery(name = "vacatioRequestEntity.findByDate", query = "SELECT a FROM HRVacatioRequestEntity a where a.fromDate <= :date and a.toDate >= :date order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.findById", query = "SELECT a FROM HRVacatioRequestEntity a where a.id = :id") })
 @Data
 public class VacationRequestEntity {

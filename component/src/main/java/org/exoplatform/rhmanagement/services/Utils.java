@@ -220,4 +220,40 @@ public class Utils {
         return j;
     }
 
+    public static Date getTodate(Date from, int nbr){
+        OfficialVacationService officialVacationService=CommonsUtils.getService(OfficialVacationService.class);
+        int i =0;
+        List<Date> oVacation=officialVacationService.getOfficialVacationDays();
+        Calendar date = Calendar.getInstance();
+        date.setTime(from);
+        while (i<nbr){
+           if  (date.DAY_OF_WEEK != 6 && date.DAY_OF_WEEK != 0 && !Utils.isOffDay(date, oVacation)){
+               date.add(Calendar.DATE, 1);
+               i++;
+           }
+        }
+       return date.getTime();
+    }
+
+
+
+
+    public static boolean isOffDay(Calendar date, List<Date> oVacation){
+        if (oVacation.size() == 0) {
+            return false;
+        } else {
+            for (Date oDate : oVacation) {
+                Calendar cDate = Calendar.getInstance();
+                cDate.setTime(oDate);
+                if (sameDay(date, cDate)) return true;
+            }
+
+        }
+        return false;
+    }
+    public static boolean sameDay(Calendar cal1, Calendar cal2){
+        return (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
+    }
+
+
 }

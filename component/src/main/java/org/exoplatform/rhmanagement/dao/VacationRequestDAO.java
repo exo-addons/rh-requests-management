@@ -146,10 +146,85 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
         }
     }
 
+
+
+    public List<VacationRequestEntity> getVacationRequestsByValidator(String userId, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByValidator", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("userId", userId)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByValidator", VacationRequestEntity.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+    public List<VacationRequestEntity> getActiveVacationRequestsByValidator(String userId, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByValidator", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("userId", userId)
+                        .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findActiveByValidator", VacationRequestEntity.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+
+    public List<VacationRequestEntity> getVacationRequestsByValidatorAndStatus(String userId,String status, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByValidatorAndStatus", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("userId", userId)
+                        .setParameter("status", status)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByValidatorAndStatus", VacationRequestEntity.class)
+                        .setParameter("userId", userId)
+                        .setParameter("status", status)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+
     public List<VacationRequestEntity> getVacationRequestbyId(long id) {
         try {
             return getEntityManager().createNamedQuery("vacatioRequestEntity.findById", VacationRequestEntity.class)
                     .setParameter("id", id)
+                    .getResultList();
+        }  catch (Exception e) {
+            LOG.warn("Exception while attempting to get request", e);
+            throw e;
+        }
+    }
+
+    public List<VacationRequestEntity>  getVacationRequestsbyDate (Date date){
+        try {
+            return getEntityManager().createNamedQuery("vacatioRequestEntity.findByDate", VacationRequestEntity.class)
+                    .setParameter("date", date)
                     .getResultList();
         }  catch (Exception e) {
             LOG.warn("Exception while attempting to get request", e);
