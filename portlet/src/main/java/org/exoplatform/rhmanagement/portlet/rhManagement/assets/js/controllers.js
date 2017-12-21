@@ -752,9 +752,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             dateSplit = dateSplit.split("-");
             return Date.parse(dateSplit[1] + '-' + dateSplit[0] + '-' + dateSplit[2]);
         };
+        $scope.formatDate = function(date) {
+         var day = date.getDate();
+          var monthIndex = date.getMonth();
 
+   return day + '/' + monthIndex;
+        };
         $scope.calculateDays = function(vr) {
             var j = 0;
+            var offDays="";
             var datefrom = $scope.updateDateFormat($("#fromDate").val());
             var dateto = $scope.updateDateFormat($("#toDate").val());
             var dateArray = new Array();
@@ -765,7 +771,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             var currentDate = new Date();
             currentDate.setTime(datefrom);
             while (currentDate <= toDate) {
-                if (currentDate.getDay() != 6 && currentDate.getDay() != 0 && !isOffDay(currentDate)) {
+                    var isOff=isOffDay(currentDate);
+                if(isOff){
+                offDays=offDays+' '+ $scope.formatDate(currentDate)+',';
+                }
+                if (currentDate.getDay() != 6 && currentDate.getDay() != 0 && !isOff) {
                     j++;
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
@@ -774,6 +784,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             if (toDate.getHours() < 15) j = j - 0.5;
             $scope.newVacationRequest.daysNumber = j;
             $(".nbrDays").text(j);
+           if(offDays!=""){
+           $(".oDays").text("( Official days: "+offDays+")");
+           } else $(".oDays").text("");
         };
 
         function isOffDay(date) {

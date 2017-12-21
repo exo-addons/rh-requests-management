@@ -292,6 +292,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
 <label class="control-label" for="daysNumberHollidays">{{i18n.numberDays}}:</label>
 <div class="controls">
     <span class="ng-pristine ng-untouched ng-valid ng-valid-min ng-not-empty nbrDays">{{newVacationRequest.daysNumber}}</span>
+	<span class="oDays"></span>
 </div>
 </div>
 

@@ -884,7 +884,7 @@ public class RhAdministrationController {
      float nb= calculateNumberOfDays(oVacation, vr.getFromDate(),vr.getToDate());
      if(vr.getDaysNumber()!=nb){
        vr.setDaysNumber(nb);
-       vacationRequestService.save(vr,false);
+       saveVacationRequest(vr);
      }
     }
   }
