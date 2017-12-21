@@ -780,8 +780,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
             }
-            if (fromDate.getHours() > 12) j = j - 0.5;
-            if (toDate.getHours() < 15) j = j - 0.5;
+            if (fromDate.getHours() > 12 && fromDate.getHours() < 19 ) j = j - 0.5;
+            if (toDate.getHours() > 7 && toDate.getHours() < 15) j = j - 0.5;
             $scope.newVacationRequest.daysNumber = j;
             $(".nbrDays").text(j);
            if(offDays!=""){

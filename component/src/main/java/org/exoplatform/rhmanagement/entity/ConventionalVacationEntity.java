@@ -51,4 +51,6 @@ public class ConventionalVacationEntity {
   @Column(name = "DESCRIPTION")
   private String   description;
 
+  @Column(name = "WORKING_DAYS")
+  private Boolean   workingDays;
 }

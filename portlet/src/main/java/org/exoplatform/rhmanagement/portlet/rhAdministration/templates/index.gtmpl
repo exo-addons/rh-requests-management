@@ -1072,6 +1072,13 @@ placeholder="{{i18n.serverUsername}}"
 ng-model="newConventionalVacation.description">
 
 </div>
+<div class="control-group {{usernameClass}} span6">
+<label class="control-label" for="question">{{i18n.workingDays}}:</label>
+<div class="controls">
+<input type="checkbox" ng-model="newConventionalVacation.workingDays" [name="workingDays"] >
+</div>
+
+</div>
 </div>
 <hr class="clearfix"/>
 </div>
@@ -1081,7 +1088,7 @@ ng-model="newConventionalVacation.description">
     <button type="button" class="btn" ng-click="showCvacations = false; initConventionalModels()">{{i18n.cancel}}</button>
 </div>
 
-				
+
 </div>
 
 <div id="exportable" class="table-responsive">
@@ -1209,7 +1216,6 @@ ng-model="newOfficialVacation.daysNumber">
 <th>{{i18n.beginDate}}</th>
 <th>{{i18n.daysNumber}}</th>
 <th>{{i18n.description}}</th>
-<th>{{i18n.recurrent}}</th>
 <th>{{i18n.actions}}</th>
 
 </tr>
@@ -1235,9 +1241,6 @@ ng-model="newOfficialVacation.daysNumber">
 </td>
 <td>
 <span>{{oVacation.description}}</span>
-</td>
-<td>
-<span>{{oVacation.recurrent}}</span>
 </td>
 <td>
 

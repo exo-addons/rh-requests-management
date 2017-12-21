@@ -898,13 +898,13 @@ public class RhAdministrationController {
     Calendar c = cFrom;
 
     while (c.before(cTo)) {
-      if (c.DAY_OF_WEEK != 6 && c.DAY_OF_WEEK != 0 && !Utils.isOffDay(c, oVacation)) {
+      if (Calendar.SUNDAY != c.get(Calendar.DAY_OF_WEEK) && Calendar.SATURDAY != c.get(Calendar.DAY_OF_WEEK) && !Utils.isOffDay(c, oVacation)) {
         nb++;
       }
       c.add(Calendar.DATE, 1);
     }
-    if (cFrom.HOUR_OF_DAY > 12) nb = nb - (float) 0.5;
-    if (cTo.HOUR_OF_DAY < 15) nb = nb - (float) 0.5;
+    if (cFrom.get(Calendar.HOUR_OF_DAY)> 12 && cFrom.get(Calendar.HOUR_OF_DAY)< 19 ) nb = nb - (float) 0.5;
+    if (cTo.get(Calendar.HOUR_OF_DAY) < 15 && cTo.get(Calendar.HOUR_OF_DAY) > 7) nb = nb - (float) 0.5;
     return nb;
   }
  }

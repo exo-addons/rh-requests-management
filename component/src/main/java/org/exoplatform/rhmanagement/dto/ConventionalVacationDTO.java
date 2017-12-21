@@ -24,4 +24,5 @@ public class ConventionalVacationDTO {
   private String              label;
   private int                 daysNumber;
   private String              description;
+  private Boolean             workingDays;
 }

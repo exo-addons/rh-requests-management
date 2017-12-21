@@ -188,4 +188,10 @@
 
   </changeSet>
 
+  <changeSet author="rh-management" id="1.0.0-8">
+    <addColumn tableName="HR_CONVENTIONAL_VACATION">
+      <column name="WORKING_DAYS" type="BOOLEAN"/>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>
