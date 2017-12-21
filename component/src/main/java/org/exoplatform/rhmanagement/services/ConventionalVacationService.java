@@ -89,7 +89,7 @@ public class ConventionalVacationService {
     entity.setLabel(dto.getLabel());
     entity.setDaysNumber(dto.getDaysNumber());
     entity.setDescription(dto.getDescription());
-    entity.setWorkingDays(entity.getWorkingDays());
+    entity.setWorkingDays(dto.getWorkingDays());
     return entity;
   }
 
