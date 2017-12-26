@@ -340,7 +340,15 @@ public class RHRequestManagementController {
     if(vr.getType()==null) vr.setType("holiday");
     if ("leave".equals(vr.getType())) vr.setToDate(vr.getFromDate());
     if ("conventional".equals(vr.getType())) {
-      vr.setToDate(Utils.getTodate(vr.getFromDate(),(int)vr.getDaysNumber()));
+      if(obj.getcVacation().getWorkingDays() ==null || obj.getcVacation().getWorkingDays()==true){
+        vr.setToDate(Utils.getTodate(vr.getFromDate(),(int)vr.getDaysNumber()));
+      }else{
+        java.util.Calendar date = java.util.Calendar.getInstance();
+        date.setTime(vr.getFromDate());
+        date.add(java.util.Calendar.DATE, (int)vr.getDaysNumber());
+        vr.setToDate(date.getTime());
+      }
+      vr.setReason(obj.getcVacation().getLabel());
     }
     vr=vacationRequestService.save(vr,true);
 

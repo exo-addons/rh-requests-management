@@ -26,6 +26,7 @@ public class VacationRequestWithManagersDTO {
   private ArrayList<String>         managers;
   private ArrayList<String>         substitutes;
   private String                    exoCalendarId;
+  private ConventionalVacationDTO   cVacation;
 
 
   public VacationRequestDTO getVacationRequestDTO() {
@@ -59,4 +60,12 @@ public class VacationRequestWithManagersDTO {
   public void setEXoCalendarId(String eXoCalendarId) {
     this.exoCalendarId = eXoCalendarId;
   }
+
+    public ConventionalVacationDTO getcVacation() {
+        return cVacation;
+    }
+
+    public void setcVacation(ConventionalVacationDTO cVacation) {
+        this.cVacation = cVacation;
+    }
 }

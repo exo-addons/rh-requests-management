@@ -881,30 +881,15 @@ public class RhAdministrationController {
     List<VacationRequestDTO> vRequests = vacationRequestService.getVacationRequestByDate(date);
     List<Date> oVacation = officialVacationService.getOfficialVacationDays();
     for (VacationRequestDTO vr : vRequests){
-     float nb= calculateNumberOfDays(oVacation, vr.getFromDate(),vr.getToDate());
-     if(vr.getDaysNumber()!=nb){
-       vr.setDaysNumber(nb);
-       saveVacationRequest(vr);
-     }
-    }
-  }
-
-  public float calculateNumberOfDays(List<Date> oVacation, Date from, Date to){
-    float nb=0;
-    Calendar cFrom = Calendar.getInstance();
-    cFrom.setTime(from);
-    Calendar cTo = Calendar.getInstance();
-    cTo.setTime(to);
-    Calendar c = cFrom;
-
-    while (c.before(cTo)) {
-      if (Calendar.SUNDAY != c.get(Calendar.DAY_OF_WEEK) && Calendar.SATURDAY != c.get(Calendar.DAY_OF_WEEK) && !Utils.isOffDay(c, oVacation)) {
-        nb++;
+      if(!("conventional".equals(vr.getType()))&&!("leave".equals(vr.getType()))){
+        float nb= Utils.calculateNumberOfDays(oVacation, vr.getFromDate(),vr.getToDate());
+        if(vr.getDaysNumber()!=nb){
+          vr.setDaysNumber(nb);
+          saveVacationRequest(vr);
+        }
       }
-      c.add(Calendar.DATE, 1);
     }
-    if (cFrom.get(Calendar.HOUR_OF_DAY)> 12 && cFrom.get(Calendar.HOUR_OF_DAY)< 19 ) nb = nb - (float) 0.5;
-    if (cTo.get(Calendar.HOUR_OF_DAY) < 15 && cTo.get(Calendar.HOUR_OF_DAY) > 7) nb = nb - (float) 0.5;
-    return nb;
   }
+
+
  }

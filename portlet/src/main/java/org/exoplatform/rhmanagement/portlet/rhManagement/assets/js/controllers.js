@@ -91,8 +91,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
 
 
-        $scope.setConventional = function(daysNumber){
-            $scope.newVacationRequest.daysNumber=daysNumber;
+        $scope.setConventional = function(cVacation){
+            $scope.cVacation=cVacation;
+            $scope.newVacationRequest.daysNumber=cVacation.daysNumber;
          }
 
 
@@ -254,11 +255,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             var datefrom = $scope.updateDateFormat($("#fromDate").val());
             var dateto = $scope.updateDateFormat($("#toDate").val());
 
-            if(($scope.newVacationRequest.type != "leave") && (!$scope.newVacationRequest.daysNumber)){
+            if(($scope.newVacationRequest.type != "leave") && ($scope.newVacationRequest.type != "conventional") && (!$scope.newVacationRequest.daysNumber)){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
-            }else if( ($scope.newVacationRequest.type != "leave") && (($("#toDate").val() == "") || ($("#fromDate").val() == "") || (dateto == NaN) || (datefrom == NaN))){
+            }else if( ($scope.newVacationRequest.type != "leave") && ($scope.newVacationRequest.type != "conventional") && (($("#toDate").val() == "") || ($("#fromDate").val() == "") || (dateto == NaN) || (datefrom == NaN))){
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.fromToDate, "error");
                 $("#toDate, #fromDate").addClass("ng-invalid");
@@ -276,7 +277,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.manager, "error");
                 $(".managersInput .selectize-input").addClass("ng-invalid");
 
-            }else{
+            }else if(($scope.newVacationRequest.type == "conventional") && (($("#fromDate").val() == ""))){
+                $scope.setResultMessage($scope.i18n.leaveDateMsg, "error");
+                $(".managersInput .selectize-input").addClass("ng-invalid");
+
+             }else{
 
                 $("#daysNumberHollidays, #daysNumberSick,.managersInput .selectize-input").removeClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
@@ -294,7 +299,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     exoCalendarId: $scope.userCalendarId
                 };
 
-
+                $scope.newVacationRequestWithManagers.cVacation=$scope.cVacation;
                 $http({
                     data : $scope.newVacationRequestWithManagers,
                     method : 'POST',

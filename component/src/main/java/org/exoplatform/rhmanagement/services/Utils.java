@@ -213,24 +213,36 @@ public class Utils {
         return dates;
     }
 
-    public static float getVacationNumberOfDays(Date startdate, Date enddate){
-        float j=0;
-
-
-        return j;
+    public static float calculateNumberOfDays(List<Date> oVacation, Date from, Date to){
+        float nb=0;
+        Calendar cFrom = Calendar.getInstance();
+        cFrom.setTime(from);
+        Calendar cTo = Calendar.getInstance();
+        cTo.setTime(to);
+        Calendar c = cFrom;
+        cTo.add(Calendar.DATE, 1);
+        while (c.before(cTo)) {
+            if (Calendar.SUNDAY != c.get(Calendar.DAY_OF_WEEK) && Calendar.SATURDAY != c.get(Calendar.DAY_OF_WEEK) && !Utils.isOffDay(c, oVacation)) {
+                nb++;
+            }
+            c.add(Calendar.DATE, 1);
+        }
+        if (cFrom.get(Calendar.HOUR_OF_DAY)> 12 && cFrom.get(Calendar.HOUR_OF_DAY)< 19 ) nb = nb - (float) 0.5;
+        if (cTo.get(Calendar.HOUR_OF_DAY) < 15 && cTo.get(Calendar.HOUR_OF_DAY) > 7) nb = nb - (float) 0.5;
+        return nb;
     }
 
     public static Date getTodate(Date from, int nbr){
         OfficialVacationService officialVacationService=CommonsUtils.getService(OfficialVacationService.class);
-        int i =0;
+        int i =1;
         List<Date> oVacation=officialVacationService.getOfficialVacationDays();
         Calendar date = Calendar.getInstance();
         date.setTime(from);
         while (i<nbr){
-           if  (date.DAY_OF_WEEK != 6 && date.DAY_OF_WEEK != 0 && !Utils.isOffDay(date, oVacation)){
-               date.add(Calendar.DATE, 1);
+           if  (Calendar.SUNDAY != date.get(Calendar.DAY_OF_WEEK) && Calendar.SATURDAY != date.get(Calendar.DAY_OF_WEEK)  && !Utils.isOffDay(date, oVacation)){
                i++;
            }
+            date.add(Calendar.DATE, 1);
         }
        return date.getTime();
     }

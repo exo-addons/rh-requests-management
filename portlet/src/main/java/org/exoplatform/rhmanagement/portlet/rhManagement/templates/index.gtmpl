@@ -248,7 +248,7 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <div class="controls">
                                                              <select name="conventionalVacation" id="conventionalVacation"
                                 ng-options="cv.label for cv in cVacations track by cv.id"
-                                ng-model="cVacation" ng-change="setConventional(cVacation.daysNumber)"></select>
+                                ng-model="cVacation" ng-change="setConventional(cVacation)"></select>
 </div>
 </div>
 
@@ -307,7 +307,7 @@ ng-model="newVacationRequest.daysNumber">
 </div>
 </div>
 
-<div class="control-group {{usernameClass}}">
+<div class="control-group {{usernameClass}}" ng-show="!showConventional">
 <label class="control-label" for="reason">{{i18n.reason}}:</label>
 <div class="controls">
 <input type="text" name="reason" id="reason" placeholder="{{i18n.serverUsername}}"

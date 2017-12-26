@@ -182,7 +182,7 @@
     </addColumn>
 
     <update tableName="HR_USER_DATA">
-      <column name="ACTIVE" value= "true" />
+      <column name="ACTIVE" value= "1" />
       <where>ACTIVE IS NULL</where>
     </update>
 
