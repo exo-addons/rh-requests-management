@@ -764,7 +764,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         };
         $scope.formatDate = function(date) {
          var day = date.getDate();
-          var monthIndex = date.getMonth();
+          var monthIndex = date.getMonth()+1;
 
    return day + '/' + monthIndex;
         };
