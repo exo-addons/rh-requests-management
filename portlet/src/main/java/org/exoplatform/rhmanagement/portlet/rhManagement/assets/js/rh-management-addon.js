@@ -30,27 +30,27 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
 
 
         var dateFormat = "dd-mm-yy";
-        from = $( "#fromDate" ).datetimepicker({
+        from = $( "#fromDate" ).datepicker({
             controlType: 'select',
             oneLine: true,
             defaultDate: "+1w",
             numberOfMonths: 1,
-            hourMin: 9,
+           /* hourMin: 9,
             hourMax: 18,
             hour: 9,
-            minute: 00,
+            minute: 00,*/
             dateFormat : "dd-mm-yy",
         });
 
-        to = $( "#toDate" ).datetimepicker({
+        to = $( "#toDate" ).datepicker({
             controlType: 'select',
             oneLine: true,
             defaultDate: "+1w",
             numberOfMonths: 1,
-            hourMin: 9,
+            /*hourMin: 9,
             hourMax: 18,
             hour: 18,
-            minute: 00,
+            minute: 00,*/
             dateFormat: "dd-mm-yy",
         });
 
@@ -89,6 +89,20 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
             $("#fromDate").addClass("ng-invalid");}
     });
 
+    $( "#toTime" ).on( "change", function() {
+        if($("#toTime option[value]:selected").text() != ""){
+            $("#toTime").removeClass("ng-invalid");
+        }else{
+            $("#toTime").addClass("ng-invalid");}
+    });
+
+    $( "#fromTime" ).on( "change", function() {
+        if($("#fromTime option[value]:selected").text() != ""){
+            $("#fromTime").removeClass("ng-invalid");
+        }else{
+            $("#fromTime").addClass("ng-invalid");}
+    });
+
 
     $( "#daysNumberHollidays, #daysNumberSick" ).on( "change", function() {
         if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
@@ -105,10 +119,20 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         }else{
             $("#toDate").addClass("ng-invalid");}
 
+        if($("#toTime option[value]:selected").text() != ""){
+            $("#toTime").removeClass("ng-invalid");
+        }else{
+            $("#toTime").addClass("ng-invalid");}
+
         if($("#fromDate").val() != ""){
             $("#fromDate").removeClass("ng-invalid");
         }else{
             $("#fromDate").addClass("ng-invalid");}
+
+        if($("#fromTime option[value]:selected").text() != ""){
+            $("#fromTime").removeClass("ng-invalid");
+        }else{
+            $("#fromTime").addClass("ng-invalid");}
 
         if(($("#daysNumberHollidays").val() != "") || ($("#daysNumberSick").val() != "")){
             $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");

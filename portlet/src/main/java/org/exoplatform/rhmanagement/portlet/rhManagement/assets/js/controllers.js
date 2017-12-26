@@ -1,4 +1,4 @@
-define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar","timepicker-addon"], function($, jz,invite,calendar)  {
+define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userInvitation","calendar"], function($, jz,invite,calendar)  {
 
     var rhCtrl = function($scope, $q, $timeout, $http, $filter, Upload) {
         var rhContainer = $('#rhAddon');
@@ -250,23 +250,23 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 //            if (!$scope.validateVacationRequestForm($scope.newVacationRequest)) {
 //                return;
 //            }
-
-
-            var datefrom = $scope.updateDateFormat($("#fromDate").val());
-            var dateto = $scope.updateDateFormat($("#toDate").val());
+            var datefrom = $scope.updateDateFormat($("#fromDate").val(), $("#fromTime option[value]:selected").text());
+            var dateto = $scope.updateDateFormat($("#toDate").val(), $("#toTime option[value]:selected").text());
 
             if(($scope.newVacationRequest.type != "leave") && ($scope.newVacationRequest.type != "conventional") && (!$scope.newVacationRequest.daysNumber)){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
                 $("#daysNumberHollidays, #daysNumberSick").addClass("ng-invalid");
                 $("#toDate, #fromDate").removeClass("ng-invalid");
-            }else if( ($scope.newVacationRequest.type != "leave") && ($scope.newVacationRequest.type != "conventional") && (($("#toDate").val() == "") || ($("#fromDate").val() == "") || (dateto == NaN) || (datefrom == NaN))){
+            }else if( ($scope.newVacationRequest.type != "leave") && ($scope.newVacationRequest.type != "conventional") && (($("#toDate").val() == "") || ($("#fromDate").val() == "")||
+            (($("#toTime option[value]:selected").text() == "") || ($("#toTime option[value]:selected").text() == "")) ||
+            (dateto == NaN) || (datefrom == NaN))){
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.fromToDate, "error");
-                $("#toDate, #fromDate").addClass("ng-invalid");
-            }else if(($scope.newVacationRequest.type == "leave") && ($("#fromDate").val() == "")){
+                $("#toDate, #fromDate, #toTime, #fromTime").addClass("ng-invalid");
+            }else if(($scope.newVacationRequest.type == "leave") && ($("#fromDate").val() == "") || (($scope.newVacationRequest.type == "leave") && ($("#fromTime option[value]:selected").text() == ""))){
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
                 $scope.setResultMessage($scope.i18n.leaveDateMsg, "error");
-                $("#toDate, #fromDate").addClass("ng-invalid");
+                $("#toDate, #fromDate, #toTime, #fromTime").addClass("ng-invalid");
             }else if(datefrom > dateto){
 
                 $("#daysNumberHollidays, #daysNumberSick").removeClass("ng-invalid");
@@ -752,10 +752,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }
         };
 
-        $scope.updateDateFormat = function(date) {
+        $scope.updateDateFormat = function(date, time) {
             var dateSplit = date;
             dateSplit = dateSplit.split("-");
-            return Date.parse(dateSplit[1] + '-' + dateSplit[0] + '-' + dateSplit[2]);
+//            return Date.parse(dateSplit[1] + '-' + dateSplit[0] + '-' + dateSplit[2]);
+            var test = (dateSplit[2] + '-' + dateSplit[1] + '-' + dateSplit[0] + ' '+ time);
+            dateSplit = moment(dateSplit[2] + '-' + dateSplit[1] + '-' + dateSplit[0] + ' '+ time);
+
+            return Date.parse(dateSplit);
+
         };
         $scope.formatDate = function(date) {
          var day = date.getDate();
@@ -766,8 +771,9 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.calculateDays = function(vr) {
             var j = 0;
             var offDays="";
-            var datefrom = $scope.updateDateFormat($("#fromDate").val());
-            var dateto = $scope.updateDateFormat($("#toDate").val());
+            var datefrom = $scope.updateDateFormat($("#fromDate").val(), $("#fromTime option[value]:selected").text());
+            var dateto = $scope.updateDateFormat($("#toDate").val(), $("#toTime option[value]:selected").text());
+
             var dateArray = new Array();
             var fromDate = new Date();
             fromDate.setTime(datefrom);
@@ -815,19 +821,11 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
 
         $scope.loadBundles();
 
-        $( "#toDate" ).on( "change", function() {
-            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
-        });
-        $( "#fromDate" ).on( "change", function() {
-            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
-        });
+        $( "#toDate, #fromDate, #fromTime, #toTime" ).on( "change", function() {
+            if(($("#toDate").val() != "") && ($("#fromDate").val() != "") &&
+            ($("#toTime option[value]:selected").text() != "") && ($("#toTime option[value]:selected").text() != "") ){$scope.calculateDays($scope.newVacationRequest);}
+       });
 
-        $( ".ui-datepicker-buttonpane > .ui-datepicker-close" ).click(function(){
-            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
-        });
-        $( ".ui-datepicker-buttonpane > .ui-datepicker-close" ).click(function(){
-            if(($("#toDate").val() != "") && ($("#fromDate").val() != "")){$scope.calculateDays($scope.newVacationRequest);}
-        });
     };
     return rhCtrl;
 

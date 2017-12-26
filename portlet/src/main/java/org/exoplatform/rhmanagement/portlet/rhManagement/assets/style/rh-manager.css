@@ -578,3 +578,5 @@ input {
     margin: 0 auto;
     cursor: pointer;
 }*/
+
+#vacationRequestForm .DateTimeInput > *{width: 49.5%!important}

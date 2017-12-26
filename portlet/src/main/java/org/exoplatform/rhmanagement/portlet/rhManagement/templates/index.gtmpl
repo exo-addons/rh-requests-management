@@ -234,11 +234,11 @@ ng-class="{ 'no-border': showCal, 'fullWidth' : !showDetails || vacationRequestt
 <div class="controls">
 <select name="inputUsername" id="type" ng-change="showBalance()"
 placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
-<option value="holiday" ng-selected='true'>{{i18n.holiday}}</option>
-<option value="sick">{{i18n.sick}}</option>
-<option value="leave">{{i18n.leave}}</option>
-<option value="conventional" ng-if="cVacations.length > 0">{{i18n.conventional}}</option>
-<option value="recovery">{{i18n.recovery}}</option>
+    <option value="holiday" ng-selected='true'>{{i18n.holiday}}</option>
+    <option value="sick">{{i18n.sick}}</option>
+    <option value="leave">{{i18n.leave}}</option>
+    <option value="conventional" ng-if="cVacations.length > 0">{{i18n.conventional}}</option>
+    <option value="recovery">{{i18n.recovery}}</option>
 </select>
 </div>
 </div>
@@ -270,16 +270,39 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
 <div class="control-group {{usernameClass}}">
 <label class="control-label" for="fromDate" ng-show="!showLeave">{{i18n.fromDate}}:</label>
 <label class="control-label" for="fromDate" ng-show="showLeave">{{i18n.date}}:</label>
-<div class="controls">
-<input type="text" name="inputUsername" id="fromDate"
-placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.fromDate">
+<div class="controls DateTimeInput">
+    <input type="text" name="userFromDate" id="fromDate"
+        ng-model="newVacationRequest.fromDate">
+
+    <select name="userFromTime" id="fromTime">
+        <option value="09:00">09:00</option>
+        <option value="10:00" ng-show="newVacationRequest.type =='leave'">10:00</option>
+        <option value="11:00" ng-show="newVacationRequest.type =='leave'">11:00</option>
+        <option value="12:00" ng-show="newVacationRequest.type =='leave'">12:00</option>
+        <option value="13:00" ng-show="!(newVacationRequest.type =='leave')">13:00</option>
+        <option value="14:00" ng-show="newVacationRequest.type =='leave'">14:00</option>
+        <option value="15:00" ng-show="newVacationRequest.type =='leave'">15:00</option>
+        <option value="16:00" ng-show="newVacationRequest.type =='leave'">16:00</option>
+        <option value="17:00" ng-show="newVacationRequest.type =='leave'">17:00</option>
+    </select>
 </div>
 </div>
 <div class="control-group {{usernameClass}}" ng-hide="showLeave || showConventional">
 <label class="control-label" for="toDate">{{i18n.toDate}}:</label>
-<div class="controls">
-<input type="text" name="inputUsername" id="toDate"
-placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.toDate">
+<div class="controls DateTimeInput">
+    <input type="text" name="userToDate" id="toDate"
+           ng-model="newVacationRequest.toDate">
+    <select name="userToTime" id="toTime">
+        <option value="10:00" ng-show="newVacationRequest.type =='leave'">10:00</option>
+        <option value="11:00" ng-show="newVacationRequest.type =='leave'">11:00</option>
+        <option value="12:00" ng-show="newVacationRequest.type =='leave'">12:00</option>
+        <option value="13:00" ng-show="newVacationRequest.type =='leave'">13:00</option>
+        <option value="14:00" ng-show="!(newVacationRequest.type =='leave')">14:00</option>
+        <option value="15:00" ng-show="newVacationRequest.type =='leave'">15:00</option>
+        <option value="16:00" ng-show="newVacationRequest.type =='leave'">16:00</option>
+        <option value="17:00" ng-show="newVacationRequest.type =='leave'">17:00</option>
+        <option value="18:00">18:00</option>
+    </select>
 </div>
 </div>
 							
