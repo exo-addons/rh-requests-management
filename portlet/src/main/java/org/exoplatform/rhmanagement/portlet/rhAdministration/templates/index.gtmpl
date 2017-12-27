@@ -129,8 +129,8 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                             <tbody>
                             <tr ng-repeat="userRhData in rhEmployees| orderBy:orderByField:reverseSort">
                                 <td>
-                                    <a class="actionIcon nameOpen" title="" href=""
-                                       data-ng-click="loadUserHRData(userRhData)"><span>{{userRhData.name}}</span></a>
+                                    <a class="actionIcon nameOpen" title="" href="" data-ng-click="loadUserPreview(userRhData)"><span>{{userRhData.name}}</span></a>
+                                    <!--data-ng-click="loadUserHRData(userRhData)-->
                                 </td>
 <td>
 <span>{{userRhData.hrData.cin}}</span>
@@ -562,6 +562,138 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
                     </div>
 
 </div>
+
+    <!------  Profil Quick Preview  ------>
+    <div class="profilPreviw" ng-show="profilPreview">
+        <div class="uiBox elementDetail">
+            <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;"
+               ng-click="profilPreview = false">
+                <i class="uiIconClose "></i>
+            </a>
+            <div class="uiContentBox clearfix row-fluid formContainer">
+                <div class="span4">
+                    <div class="ligne">
+                        <img src="{{userDetails.avatar}}" class="avatar" alt=""/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.userFullName}}:</b> {{userDetails.name}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.email}}:</b> {{userDetails.email}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.jobTitle}}:</b> {{userDetails.jobTitle}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.gender}}:</b> {{userDetails.gender}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>phone:</b> {{userDetails.phone}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+                <div class="span4">
+
+
+                    <div class="ligne">
+                        <b>{{i18n.cin}}:</b> {{userDetails.hrData.cin}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.holidaysBalance}}:</b> {{userDetails.hrData.holidaysBalance}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.sickBalance}}:</b> {{userDetails.hrData.sickdaysBalance}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.socialSecNumber}}:</b> {{userDetails.hrData.socialSecNumber}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.hrId}}:</b> {{userDetails.hrData.hrId}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.bDay}}:</b> <span id="birthDayPreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.situation}}:</b> {{userDetails.hrData.situation}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.nbChildren}}:</b> {{userDetails.hrData.nbChildren}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.team}}:</b> {{userDetails.hrData.team}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.address}}:</b> {{userDetails.hrData.address}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.bankId}}:</b> {{userDetails.hrData.bankId}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+                <div class="span4">
+
+                    <div class="ligne">
+                        <b>{{i18n.startDate}}:</b> <span id="startDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.leaveDate}}:</b> <span id="leaveDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contract}}:</b> {{userDetails.hrData.contract}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contractStartDate}}:</b> <span id="contractStartDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contractEndDate}}:</b> <span id="contractEndDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+
+
+                    <div class="ligne">
+                        <b>{{i18n.insuranceId}}:</b> {{userDetails.hrData.insuranceId}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>{{i18n.active}}:</b> {{userDetails.hrData.active}}
+                        <hr class="clearfix"/>
+                    </div>
+
+
+                    <div class="ligne">
+                        <b>{{i18n.myeXoUrl}}:</b> {{userDetails.hrData.myeXoUrl}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>{{i18n.others}}:</b> {{userDetails.hrData.others}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------  END Profil Quick Preview  ------>
             </div>
 
 <div id="requests" class="tabcontent">
@@ -590,7 +722,7 @@ ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}
 </div>
                 </div>
 
-<div class="uiBox elementDetail" ng-show="showDetails">
+<div class="uiBox elementDetail" ng-show="showDetails" id="detailRequests">
 <a class="actionIcon " style="float: right;position: absolute;right: 0;"
 ng-click="CloseVacationRequest(vRequest)">
 <i class="uiIconClose "></i>

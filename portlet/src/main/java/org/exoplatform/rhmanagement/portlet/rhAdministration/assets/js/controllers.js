@@ -13,6 +13,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.getUserLigne = false;
         $scope.showCvacations = false;
         $scope.showOvacations = false;
+        $scope.profilPreview = false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
 		$scope.cVacations = [];
@@ -306,6 +307,54 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
         };
 
+        $scope.loadUserPreview = function (userRhData) {
+            $scope.userDetails = userRhData;
+            if (!userRhData.avatar) {
+                $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
+            }
+
+            /*here*/
+            if($scope.userDetails.hrData.birthDay){
+                var birthDay = new Date($scope.getLocaleDate($scope.userDetails.hrData.birthDay));
+                birthDay = birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear() ;
+            }
+            if($scope.userDetails.hrData.startDate){
+                var startDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.startDate));
+                startDate = startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear();
+            }
+            if($scope.userDetails.hrData.leaveDate){
+                var leaveDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.leaveDate));
+                leaveDate = leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear();
+            }
+            if($scope.userDetails.hrData.contractStartDate){
+                var contractStartDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractStartDate));
+                contractStartDate = contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear();
+            }
+            if($scope.userDetails.hrData.contractEndDate){
+                var contractEndDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractEndDate));
+                contractEndDate = contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear();
+            }
+
+
+            /**/
+            if(birthDay == undefined) $( "#birthDayPreview" ).text("");
+            else $( "#birthDayPreview" ).text(birthDay);
+
+            if(startDate == undefined) $( "#startDatePreview" ).text("");
+            else $( "#startDatePreview" ).text(startDate);
+
+
+             if(leaveDate == undefined) $( "#leaveDatePreview" ).text("");
+             else $( "#leaveDatePreview" ).text(leaveDate);
+
+             if(contractStartDate == undefined) $( "#contractStartDatePreview" ).text("");
+             else $( "#contractStartDatePreview" ).text(contractStartDate);
+
+             if(contractEndDate == undefined) $( "#contractEndDatePreview" ).text("");
+             else $( "#contractEndDatePreview" ).text(contractEndDate);
+            /**/
+            $scope.profilPreview = true;
+        };
 
         $scope.loadVacationRequestsbyUserId = function (userId,userVrFilter) {
             $http({
@@ -760,6 +809,11 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             return newDate;
         };
 
+        $scope.showRequest = function (vacationRequest) {
+            $scope.loadVacationRequests('active',0,10);
+            $scope.openTab('requests');
+            $scope.showVacationRequest(vacationRequest);
+        };
         $scope.showVacationRequest = function (vacationRequest) {
             $scope.vacationRequesttoShow = vacationRequest;
 

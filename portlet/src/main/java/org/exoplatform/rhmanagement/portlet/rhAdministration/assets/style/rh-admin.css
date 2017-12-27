@@ -265,12 +265,25 @@ div#tab-comments, #tab-logs {
     left: 10px;
 }
 .commentList {
-    height: 285px;
+    /*height: 285px;*/
+    height: auto;
     overflow-x: auto;
 }
 select#managerCalendarId {
     width: 49%;
 }
+
+/* -- --*/
+#detailRequests{
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    right: 5px;
+    overflow: auto;
+    width: 50%;
+    z-index: 5;
+}
+#detailRequests #left_col, #detailRequests #right_col{width: 100%}
 /* -- -- ADDON MENU -- -- */
 ul#addonMenu {
     margin: 0;
@@ -540,3 +553,15 @@ input[readonly], select[readonly], textarea[readonly]{
     border: 0;
 }
 #fromDateAdmin, #toDateAdmin, #fromTime, #toTime{width: 24%;margin: 0 2px;}
+
+/* */
+/* Profil Quick Preview */
+/* */
+.profilPreviw {
+    position: fixed;
+    top: 70px;
+    bottom: 70px;
+    right: 5px;
+    width: 50%;
+    overflow: auto;
+}
