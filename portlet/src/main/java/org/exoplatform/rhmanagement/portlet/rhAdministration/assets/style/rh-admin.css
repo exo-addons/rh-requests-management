@@ -1,3 +1,13 @@
+input[type="number"]{
+    font-size: 15px;
+    height: 40px;
+    padding: 0 10px;
+    border: Solid 2px #e1e8ee;
+    border-radius: 5px;
+    box-shadow: none;
+    max-height: 40px;
+    text-overflow: ellipsis;
+}
 /* INVALID INPUT */
 input.ng-invalid {
     border-color: #f90000!important;
@@ -130,7 +140,7 @@ input.requestEdit{
     width: 50%;
     background: #FFF;
     float: left;
-    height: 20px;
+    height: 28px;
     margin-bottom: 0
 }
 textarea.requestEdit{max-width:100%;}
@@ -522,5 +532,11 @@ selected-type{
 }
 
 /* SETTING STYLE */
-
 #settings .description {padding: 5px 12px;}
+/**/
+
+input[readonly], select[readonly], textarea[readonly]{
+    background: #FFF;
+    border: 0;
+}
+#fromDateAdmin, #toDateAdmin, #fromTime, #toTime{width: 24%;margin: 0 2px;}

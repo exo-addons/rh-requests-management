@@ -25,7 +25,7 @@
     @Script(id = "rhAdminAddon", value = "js/rh-admin.js", depends = { "controllers","jQueryUI" }),
 
     /* Time PICKER */
-    @Script(id = "moment", value = "js/lib/moment.js"),
+    @Script(id = "moment", value = "js/lib/moment.js")
     /*@Script(id = "timepicker-addon", value = "js/lib/jquery-ui-timepicker-addon.js"),*/
 
 })

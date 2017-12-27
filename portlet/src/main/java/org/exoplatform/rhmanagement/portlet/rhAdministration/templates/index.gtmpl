@@ -616,7 +616,18 @@ ng-click="CloseVacationRequest(vRequest)">
 <div class="ligne">
 <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
         <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
-<input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow" value="" readonly="">
+        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow.date" value="" readonly="">
+        <select name="userFromTime" id="fromTime" readonly="" ng-click="enableInput('#fromTime');">
+            <option value="09:00" ng-selected="fromDateShow.time == '09:0'">09:00</option>
+            <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '10:0'">10:00</option>
+            <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+            <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+            <option value="13:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '13:0'">13:00</option>
+            <option value="14:00" ng-show="!(vacationRequesttoShow.type =='leave')" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+            <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+            <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+            <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+        </select>
 
 <i class="uiIconEdit" ng-click="enableInput('#fromDateAdmin')"></i>
 
@@ -624,8 +635,18 @@ ng-click="CloseVacationRequest(vRequest)">
 </div>
     <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
         <b>{{i18n.toDate}}:</b>
-<input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow" value="" readonly="">
-
+<input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow.date" value="" readonly="">
+<select name="userToTime" id="toTime" readonly="" ng-click="enableInput('#toTime');">
+    <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'"  ng-selected="fromDateShow.time == '10:0'">10:00</option>
+    <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+    <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+    <option value="13:00" ng-show="!(vacationRequesttoShow.type =='leave')"  ng-selected="fromDateShow.time == '13:0'">13:00</option>
+    <option value="14:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+    <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+    <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+    <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+    <option value="18:00" ng-selected="fromDateShow.time == '18:0'">18:00</option>
+</select>
 <i class="uiIconEdit" ng-click="enableInput('#toDateAdmin')"></i>
         <hr class="clearfix"/>
 </div>
@@ -1047,7 +1068,7 @@ data-ng-click="loadBalanceHistory()"/>
 <div class="control-group {{usernameClass}} span4">
 <label class="control-label" for="typeName">{{i18n.label}}:</label>
 <div class="controls">
-<input type="text" name="inputUsername" id="label"
+<input type="text" name="inputUsername" id="conventionalLabel"
 ng-model="newConventionalVacation.label">
 
 </div>
@@ -1057,7 +1078,7 @@ ng-model="newConventionalVacation.label">
 <div class="control-group {{usernameClass}}  span4">
 <label class="control-label" for="question">{{i18n.daysNumber}}:</label>
 <div class="controls">
-<input type="text" name="inputUsername" id="daysNumber"
+<input type="number" name="inputUsername" id="conventionalDaysNumber"
 placeholder="{{i18n.serverUsername}}"
 ng-model="newConventionalVacation.daysNumber">
 
@@ -1067,7 +1088,7 @@ ng-model="newConventionalVacation.daysNumber">
 <div class="control-group {{usernameClass}}  span4">
 <label class="control-label" for="question">{{i18n.description}}:</label>
 <div class="controls">
-<input type="text" name="inputUsername" id="description"
+<input type="text" name="inputUsername" id="conventionalDescription"
 placeholder="{{i18n.serverUsername}}"
 ng-model="newConventionalVacation.description">
 
@@ -1151,7 +1172,7 @@ data-ng-click="deleteConventionalVacation(cVacation)">
 <div class="control-group {{usernameClass}} span4">
 <label class="control-label" for="typeName">{{i18n.label}}:</label>
 <div class="controls">
-<input type="text" name="inputUsername" id="label"
+<input type="text" name="inputUsername" id="officialLabel"
 ng-model="newOfficialVacation.label">
 
 </div>
@@ -1171,7 +1192,7 @@ ng-model="newOfficialVacation.beginDate">
                             <div class="control-group {{usernameClass}} span4">
                                 <label class="control-label" for="question">{{i18n.daysNumber}}:</label>
 <div class="controls">
-<input type="text" name="inputUsername" id="daysNumber"
+<input type="number" name="inputUsername" id="officialDaysNumber"
 placeholder="{{i18n.serverUsername}}"
 ng-model="newOfficialVacation.daysNumber">
 
@@ -1183,7 +1204,7 @@ ng-model="newOfficialVacation.daysNumber">
 <div class="control-group {{usernameClass}} span6">
 <label class="control-label" for="question">{{i18n.description}}:</label>
                                 <div class="controls">
-                                    <input type="text" name="inputUsername" id="description"
+                                    <input type="text" name="inputUsername" id="officialDescription"
                                            placeholder="{{i18n.serverUsername}}"
                                            ng-model="newOfficialVacation.description">
 

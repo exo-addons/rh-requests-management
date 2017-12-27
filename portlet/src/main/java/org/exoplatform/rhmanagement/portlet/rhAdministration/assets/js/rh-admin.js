@@ -156,14 +156,15 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
     /* -- / USER AUTOCOMPLETE SEARCH -- */
 
 
-    $( "#fromDateAdmin, #toDateAdmin" ).datetimepicker({
+    $( "#fromDateAdmin, #toDateAdmin" ).datepicker({
         controlType: 'select',
         defaultDate: "+1w",
         numberOfMonths: 1,
-        hourMin: 8,
-        hourMax: 18,
         dateFormat : "dd-mm-yy",
-        timeFormat : "H:m",
+       /* hourMin: 8,
+        hourMax: 18,
+
+        timeFormat : "H:m",*/
         onClose: function() {
             $(".savebtnAdmin").removeClass("hidden");
         },

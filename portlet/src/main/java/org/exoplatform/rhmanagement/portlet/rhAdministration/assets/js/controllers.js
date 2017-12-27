@@ -1,4 +1,4 @@
-define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/userInvitation"], function ($, jz, invite, calendar) {
+define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/userInvitation", "moment"], function ($, jz, invite, moment) {
     var rhAdminCtrl = function ($scope, $q, $timeout, $http, $filter, PagerService, Upload) {
         var rhAdminContainer = $('#rhAdminAddon');
         var deferred = $q.defer();
@@ -127,22 +127,30 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
 
 		$scope.saveConventionalVacation = function () {
+                if(($scope.newConventionalVacation.label == "")  || ($scope.newConventionalVacation.label == undefined))
+                     $("#conventionalLabel").addClass("ng-invalid");
+                else $("#conventionalLabel").removeClass("ng-invalid");
 
-                $http({
-                    data: $scope.newConventionalVacation,
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    url: rhAdminContainer.jzURL('RhAdministrationController.saveConventionalVacation')
-                }).then(function successCallback(data) {
-					$scope.loadConventionalVacations();
-					$scope.showCvacations = false;
-                    $scope.initConventionalModels();
-                }, function errorCallback(data) {
-                    $scope.setResultMessage($scope.i18n.defaultError, "error");
-                });
+                if(($scope.newConventionalVacation.daysNumber == "")  || ($scope.newConventionalVacation.daysNumber == undefined))
+                     $("#conventionalDaysNumber").addClass("ng-invalid");
+                else $("#conventionalDaysNumber").removeClass("ng-invalid");
 
+                if((($scope.newConventionalVacation.label != "")  && ($scope.newConventionalVacation.label != undefined)) && (($scope.newConventionalVacation.daysNumber != "")  && ($scope.newConventionalVacation.daysNumber != undefined))){
+                    $http({
+                        data: $scope.newConventionalVacation,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        url: rhAdminContainer.jzURL('RhAdministrationController.saveConventionalVacation')
+                    }).then(function successCallback(data) {
+                        $scope.loadConventionalVacations();
+                        $scope.showCvacations = false;
+                        $scope.initConventionalModels();
+                    }, function errorCallback(data) {
+                        $scope.setResultMessage($scope.i18n.defaultError, "error");
+                    });
+                }
         }
 
         $scope.deleteConventionalVacation = function (cVacation) {
@@ -177,26 +185,40 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
 		$scope.saveOfficialVacation = function () {
 
-		            if ($("#beginDate") !== "") {
-                        var date = ($("#beginDate").val()).split("-");
-                        $scope.newOfficialVacation.beginDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
-                    }
+                if(($scope.newOfficialVacation.label == "") || ($scope.newOfficialVacation.label == undefined))
+                     $("#officialLabel").addClass("ng-invalid");
+                else $("#officialLabel").removeClass("ng-invalid");
 
-                $http({
-                    data: $scope.newOfficialVacation,
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    url: rhAdminContainer.jzURL('RhAdministrationController.saveOfficialVacation')
-                }).then(function successCallback(data) {
-					$scope.loadOfficialVacations();
-					$scope.showOvacations = false;
-                    $scope.initFerriesModels();
-                }, function errorCallback(data) {
-                    $scope.setResultMessage($scope.i18n.defaultError, "error");
-                });
+                if(($scope.newOfficialVacation.beginDate == "Invalid Date") || ($scope.newOfficialVacation.beginDate == ""))
+                     $("#beginDate").addClass("ng-invalid");
+                else $("#beginDate").removeClass("ng-invalid");
 
+                if(($scope.newOfficialVacation.daysNumber == "") || ($scope.newOfficialVacation.daysNumber == undefined))
+                     $("#officialDaysNumber").addClass("ng-invalid");
+                else $("#officialDaysNumber").removeClass("ng-invalid");
+
+
+                if ($("#beginDate") !== "") {
+                    var date = ($("#beginDate").val()).split("-");
+                    $scope.newOfficialVacation.beginDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
+                }
+                if((($scope.newOfficialVacation.label != "") && ($scope.newOfficialVacation.label != undefined)) && (($scope.newOfficialVacation.beginDate != "Invalid Date") && ($scope.newOfficialVacation.beginDate != ""))
+                    && (($scope.newOfficialVacation.daysNumber != "") && ($scope.newOfficialVacation.daysNumber != undefined))){
+                    $http({
+                        data: $scope.newOfficialVacation,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        url: rhAdminContainer.jzURL('RhAdministrationController.saveOfficialVacation')
+                    }).then(function successCallback(data) {
+                        $scope.loadOfficialVacations();
+                        $scope.showOvacations = false;
+                        $scope.initFerriesModels();
+                    }, function errorCallback(data) {
+                        $scope.setResultMessage($scope.i18n.defaultError, "error");
+                    });
+                }
         }
 
         $scope.deleteOfficialVacation = function (oVacation) {
@@ -731,7 +753,10 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
         $scope.dateFormat = function (date) {
             var newDate = new Date(date);
-            newDate = newDate.getDate() + "-" + (newDate.getMonth() + 1) +"-"+ newDate.getFullYear()+" "+newDate.getHours()+":"+newDate.getMinutes();
+            newDate = {
+                date: newDate.getDate() + "-" + (newDate.getMonth() + 1) +"-"+ newDate.getFullYear(),
+                time: newDate.getHours()+":"+newDate.getMinutes()
+            };
             return newDate;
         };
 
@@ -1009,15 +1034,18 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }
         };
 
-        $scope.updateDateFormat = function(date) {
+        $scope.updateDateFormat = function(date, time) {
             var dateSplit = date;
             dateSplit = dateSplit.split("-");
-            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
+//            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
+
+            dateSplit = moment(dateSplit[2] + '-' + dateSplit[1] + '-' + dateSplit[0] + ' '+ time);
+            return Date.parse(dateSplit);
         };
 
         $scope.saveVacationRequest = function (vacation) {
-            var datefrom = $scope.updateDateFormat($("#fromDateAdmin").val());
-            var dateto = $scope.updateDateFormat($("#toDateAdmin").val());
+            var datefrom = $scope.updateDateFormat($("#fromDateAdmin").val(), $("#fromTime option[value]:selected").text());
+            var dateto = $scope.updateDateFormat($("#toDateAdmin").val(), $("#toTime option[value]:selected").text());
 
             if(vacation.daysNumber < 0){
                 $scope.setResultMessage($scope.i18n.nbrDate, "error");
@@ -1054,9 +1082,14 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             }
         };
 
+        function sameDay(d1, d2) {
+          return d1.getFullYear() === d2.getFullYear() &&  d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+        }
 
         $scope.loadBundles();
         $scope.showRequestfromUrl();
+
+
        // $scope.loadContext();
        // $scope.loadEmployees();
 
