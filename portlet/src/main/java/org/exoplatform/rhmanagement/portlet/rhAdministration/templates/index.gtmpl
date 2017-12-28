@@ -127,9 +127,11 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                             </tr>
 </thead>
                             <tbody>
-                            <tr ng-repeat="userRhData in rhEmployees| orderBy:orderByField:reverseSort">
+                            <tr ng-repeat-start="userRhData in rhEmployees| orderBy:orderByField:reverseSort">
                                 <td>
-                                    <a class="actionIcon nameOpen" title="" href="" data-ng-click="loadUserPreview(userRhData)"><span>{{userRhData.name}}</span></a>
+
+								<a class="actionIcon nameOpen"  ng-if="userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = false">- {{userRhData.name}}</a>
+								<a class="actionIcon nameOpen"  ng-if="!userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = true">+ {{userRhData.name}}</a>
                                     <!--data-ng-click="loadUserHRData(userRhData)-->
                                 </td>
 <td>
@@ -163,6 +165,16 @@ data-ng-click="deleteUserHRData(userRhData)">
 </div>
                                 </td>
 </tr>
+<tr ng-if="userRhData.expanded" ng-repeat-end="">
+            <td colspan="9">
+
+<div ng-include src="templateUdata.url" onload='setRhData(userRhData)'></div>
+
+
+
+
+			</td>
+          </tr>
                             </tbody>
 </table>
                     </div>
@@ -519,11 +531,14 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                             </tr>
 </thead>
                             <tbody>
-                            <tr ng-repeat="vacationRequest in vacationRequests| orderBy:orderByField:reverseSort ">
+                            <tr ng-repeat-start="vacationRequest in vacationRequests| orderBy:orderByField:reverseSort ">
 
-                                <td class="request_id">
-                                    <a href="" data-ng-click="showRequest(vacationRequest)">{{vacationRequest.id}}</a>
+
+							 <td class="request_id">
+                                <a ng-if="vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = false">- {{vacationRequest.id}}</a>
+								<a ng-if="!vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = true">+ {{vacationRequest.id}}</a>
 </td>
+
                                 <td>
                                     <span>{{(vacationRequest.creationDate)| date:'d MMM y'}}</span>
 </td>
@@ -555,6 +570,17 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
 
                                 </td>
 </tr>
+<tr ng-if="vacationRequest.expanded" ng-repeat-end="">
+            <td colspan="9">
+
+<div ng-include src="templateVr.url" onload='setVr(vacationRequest)'></div>
+
+
+
+
+			</td>
+          </tr>
+
                             </tbody>
 
 
@@ -563,137 +589,7 @@ ng-disabled="vacationRequest.status == 'canceled'">{{i18n.cancel}}
 
 </div>
 
-    <!------  Profil Quick Preview  ------>
-    <div class="profilPreviw" ng-show="profilPreview">
-        <div class="uiBox elementDetail">
-            <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;"
-               ng-click="profilPreview = false">
-                <i class="uiIconClose "></i>
-            </a>
-            <div class="uiContentBox clearfix row-fluid formContainer">
-                <div class="span4">
-                    <div class="ligne">
-                        <img src="{{userDetails.avatar}}" class="avatar" alt=""/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.userFullName}}:</b> {{userDetails.name}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.email}}:</b> {{userDetails.email}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.jobTitle}}:</b> {{userDetails.jobTitle}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.gender}}:</b> {{userDetails.gender}}
-                        <hr class="clearfix"/>
-                    </div>
 
-                    <div class="ligne">
-                        <b>phone:</b> {{userDetails.phone}}
-                        <hr class="clearfix"/>
-                    </div>
-                </div>
-                <div class="span4">
-
-
-                    <div class="ligne">
-                        <b>{{i18n.cin}}:</b> {{userDetails.hrData.cin}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.holidaysBalance}}:</b> {{userDetails.hrData.holidaysBalance}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.sickBalance}}:</b> {{userDetails.hrData.sickdaysBalance}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.socialSecNumber}}:</b> {{userDetails.hrData.socialSecNumber}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.hrId}}:</b> {{userDetails.hrData.hrId}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.bDay}}:</b> <span id="birthDayPreview"></span>
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.situation}}:</b> {{userDetails.hrData.situation}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.nbChildren}}:</b> {{userDetails.hrData.nbChildren}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.team}}:</b> {{userDetails.hrData.team}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.address}}:</b> {{userDetails.hrData.address}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.bankId}}:</b> {{userDetails.hrData.bankId}}
-                        <hr class="clearfix"/>
-                    </div>
-                </div>
-                <div class="span4">
-
-                    <div class="ligne">
-                        <b>{{i18n.startDate}}:</b> <span id="startDatePreview"></span>
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.leaveDate}}:</b> <span id="leaveDatePreview"></span>
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.contract}}:</b> {{userDetails.hrData.contract}}
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.contractStartDate}}:</b> <span id="contractStartDatePreview"></span>
-                        <hr class="clearfix"/>
-                    </div>
-                    <div class="ligne">
-                        <b>{{i18n.contractEndDate}}:</b> <span id="contractEndDatePreview"></span>
-                        <hr class="clearfix"/>
-                    </div>
-
-
-                    <div class="ligne">
-                        <b>{{i18n.insuranceId}}:</b> {{userDetails.hrData.insuranceId}}
-                        <hr class="clearfix"/>
-                    </div>
-
-                    <div class="ligne">
-                        <b>{{i18n.active}}:</b> {{userDetails.hrData.active}}
-                        <hr class="clearfix"/>
-                    </div>
-
-
-                    <div class="ligne">
-                        <b>{{i18n.myeXoUrl}}:</b> {{userDetails.hrData.myeXoUrl}}
-                        <hr class="clearfix"/>
-                    </div>
-
-                    <div class="ligne">
-                        <b>{{i18n.others}}:</b> {{userDetails.hrData.others}}
-                        <hr class="clearfix"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!------  END Profil Quick Preview  ------>
             </div>
 
 <div id="requests" class="tabcontent">
@@ -722,236 +618,7 @@ ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}
 </div>
                 </div>
 
-<div class="uiBox elementDetail" ng-show="showDetails" id="detailRequests">
-<a class="actionIcon " style="float: right;position: absolute;right: 0;"
-ng-click="CloseVacationRequest(vRequest)">
-<i class="uiIconClose "></i>
-                    </a>
-<div id="left_col">
-<div class="uiContentBox">
-<div class="ligne">
-<b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.type}}:</b> <span>{{geti18n(vacationRequesttoShow.type)}}</span>
-                            </div>
-<div class="ligne">
-<b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.numberDays}}:</b>
-    <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.numberHours}}:</b>
-<span></span>
 
-    <input type="text" name="daysNumber" class="requestEdit" id="daysNumber" ng-click="enableInput('#daysNumber')" ng-model="vacationRequesttoShow.daysNumber" value="{{vacationRequesttoShow.daysNumber}}" readonly="">
-
-    <i class="uiIconEdit" ng-click="enableInput('#daysNumber')"></i>
-<hr class="clearfix"/>
-</div>
-<div class="ligne">
-<b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
-        <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
-        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow.date" value="" readonly="">
-        <select name="userFromTime" id="fromTime" readonly="" ng-click="enableInput('#fromTime');">
-            <option value="09:00" ng-selected="fromDateShow.time == '09:0'">09:00</option>
-            <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '10:0'">10:00</option>
-            <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
-            <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
-            <option value="13:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '13:0'">13:00</option>
-            <option value="14:00" ng-show="!(vacationRequesttoShow.type =='leave')" ng-selected="fromDateShow.time == '14:0'">14:00</option>
-            <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
-            <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
-            <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
-        </select>
-
-<i class="uiIconEdit" ng-click="enableInput('#fromDateAdmin')"></i>
-
-        <hr class="clearfix"/>
-</div>
-    <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
-        <b>{{i18n.toDate}}:</b>
-<input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow.date" value="" readonly="">
-<select name="userToTime" id="toTime" readonly="" ng-click="enableInput('#toTime');">
-    <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'"  ng-selected="fromDateShow.time == '10:0'">10:00</option>
-    <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
-    <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
-    <option value="13:00" ng-show="!(vacationRequesttoShow.type =='leave')"  ng-selected="fromDateShow.time == '13:0'">13:00</option>
-    <option value="14:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '14:0'">14:00</option>
-    <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
-    <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
-    <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
-    <option value="18:00" ng-selected="fromDateShow.time == '18:0'">18:00</option>
-</select>
-<i class="uiIconEdit" ng-click="enableInput('#toDateAdmin')"></i>
-        <hr class="clearfix"/>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
-                                <hr class="clearfix"/>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.substitutes}}:</b>
-<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}'
-style='padding-right: 10px;'>{{vrsub.name}}</a>
-                                <hr class="clearfix"/>
-</div>
-                            <div class="ligne">
-                                <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
-                                <hr class="clearfix"/>
-</div>
-
-                            <div class="ligne">
-                                <b>{{i18n.attacements}}:</b>
-
-
-<span ng-repeat="attachement in attachements" class="attachementName">
-<a class="column-item column-title" data-placement="bottom" target="_blank"
-href='{{attachement.url}}'><i
-class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0, 1).toUpperCase() + (attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
-<a class="inline-block-hide" data-placement="left" data-original-title="Delete "
-ng-click="deleteAttachement(attachement.name)">
-<i class="uiIconClose uiIconLightGray"></i>
-                                    </a>
-</span>
-                                <hr class="clearfix"/>
-</div>
-
-
-                            <div class="ligne manager">
-                                <b>{{i18n.managers}}: </b>
-<div class="table-responsive">
-<table id="managersTable" class="table uiGrid table-hover table-striped">
-<tbody>
-<tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
-<td>
-<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}'
-class="column-item column-title">{{vrmanager.validatorName}}</a>
-                                            </td>
-<td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
-class="td-right-align">
-<button class="btn btn-primary"
-ng-click="approveRequest(vacationRequesttoShow)"
-ng-disabled="vrmanager.reply == 'approved'"><i
-class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
-                                                </button>
-<button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
-ng-disabled="vrmanager.reply == 'declined'"><i
-class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
-                                                </button>
-</td>
-                                            <td ng-if="currentUser != vrmanager.validatorUserId || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
-                                                class="td-right-align">
-                                                <b>{{geti18n(vrmanager.reply)}}</b>
-</td>
-
-
-                                        </tr>
-</tbody>
-                                    </table>
-</div>
-                            </div>
-
-<button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>
-<hr class="clearfix"/>
-</div>
-
-
-</div>
-<!--End Left column-->
-<div id="right_col">
-
-<!-- -->
-<div id="requestTabs" class="uiTabPane uiTabNormal">
-<ul id="myTab" class="nav nav-tabs">
-<li class="active" ng-click="showLogs = false" ng-class="{ 'active': !showLogs }">
-<a href="#tab-home" data-toggle="tab">{{i18n.comments}}</a>
-</li>
-<li ng-click="showLogs = true" ng-class="{ 'active': showLogs }">
-<a href="#tab-properties" data-toggle="tab">{{i18n.log}}</a>
-</li>
-</ul>
-</div>
-<!-- -->
-
-<div id="tab-comments" class="tab-pane fade in active" ng-show="!showLogs">
-<div class="commentList">
-<div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
-<div class="commmentLeft">
-<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
-<img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
-</a>
-                                    </div>
-<!--end commentLeft-->
-<div class="commentRight">
-<div class="author">
-<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
-                                            <span class="date">
-                                                {{getLocaleDate(comment.postedTime)| date:'d MMM y HH:mm:ss'}}
-                                            </span>
-</div>
-                                        <p class="contentComment">
-                                            {{comment.commentText}}
-                                        </p>
-</div>
-                                    <!--end commentRight-->
-                                </div>
-</div>
-                            <div class="">
-                                <div class="commentItem commentFormBox">
-                                    <div class="clearfix">
-                                        <div class="commmentLeft pull-left">
-                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
-<img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
-</a>
-                                        </div>
-<!--end commentLeft-->
-<div class="commentRight">
-<div class="commentInputBox ">
-<div class="commentInput">
-<textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea"
-ng-model="newComment.commentText" required>
-</textarea>
-                                                </div>
-</div>
-                                        </div>
-<!--end commentRight-->
-</div>
-                                    <div class="clearfix">
-                                        <div class="pull-right">
-                                            <button id="commentButton" type="button" class="btn pull-right btn-primary"
-                                                    ng-click="saveComment()">{{i18n.comment}}
-                                            </button>
-</div>
-                                    </div>
-</div>
-                                <!--end commentItem-->
-                            </div>
-</div>
-                        <div id="tab-logs" class="tab-pane fade in active" ng-show="showLogs">
-                            <div class="commentList">
-                                <div ng-repeat="item in history" class="commentItem" data-commentid="item.id">
-                                    <div class="commmentLeft">
-                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{item.posterId}}">
-<img src="{{item.posterAvatar}}" alt="{{item.posterName}}">
-</a>
-                                    </div>
-<!--end commentLeft-->
-<div class="commentRight">
-<div class="author">
-<a href="/portal/intranet/profile/{{item.posterId}}">{{item.posterName}}</a>
-                                            <span class="date">
-                                                {{getLocaleDate(item.postedTime)| date:'d MMM y HH:mm:ss'}}
-                                            </span>
-</div>
-                                        <p class="contentComment">
-                                            {{geti18n(item.commentText)}}
-                                        </p>
-</div>
-                                    <!--end commentRight-->
-                                </div>
-</div>
-                        </div>
-</div>
-
-                    <hr class="clearfix"/>
-</div>
 
                 <div class="table-responsive">
                     <table id="requestsTable" class="table uiGrid table-hover table-striped ">
@@ -1018,10 +685,11 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                         </tr>
 </thead>
                         <tbody>
-                        <tr ng-repeat="vRequest in allVacationRequests| orderBy:orderByField:reverseSort"
+                        <tr ng-repeat-start="vRequest in allVacationRequests| orderBy:orderByField:reverseSort"
                             class="request_{{vRequest.id}}">
                             <td class="request_id">
-                                <a href="" data-ng-click="showVacationRequest(vRequest)">{{vRequest.id}}</a>
+                                <a ng-if="vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = false">- {{vRequest.id}}</a>
+								<a ng-if="!vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = true">+ {{vRequest.id}}</a>
 </td>
                                 <td>
                                     <span>{{(vRequest.creationDate)| date:'d MMM y'}}</span>
@@ -1052,6 +720,16 @@ ng-disabled="vRequest.status == 'canceled'">{{i18n.cancel}}
 </button>
                             </td>
 </tr>
+<tr ng-if="vRequest.expanded" ng-repeat-end="">
+            <td colspan="9">
+
+<div ng-include src="templateVr.url" onload='setVr(vRequest)'></div>
+
+
+
+
+			</td>
+          </tr>
                         </tbody>
 <tfoot>
 <td colspan="9">
@@ -1420,5 +1098,367 @@ data-ng-click="deleteOfficialVacation(oVacation)">
 
 </div>
 </div>
+
+
+<!-- template1.html -->
+<script type="text/ng-template" id="templateVr">
+
+<div class="uiBox elementDetail">
+<a class="actionIcon " style="float: right;position: absolute;right: 0;" ng-click="vacationRequesttoShow.expanded=false"> <i class="uiIconClose "></i>
+                    </a>
+<div id="left_col">
+<div class="uiContentBox">
+
+<div class="ligne">
+<b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.numberDays}}:</b>
+    <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.numberHours}}:</b>
+<span></span>
+
+    <input type="text" name="daysNumber" class="requestEdit" id="daysNumber" ng-click="enableInput('#daysNumber')" ng-model="vacationRequesttoShow.daysNumber" value="{{vacationRequesttoShow.daysNumber}}" readonly="">
+
+    <i class="uiIconEdit" ng-click="enableInput('#daysNumber')"></i>
+<hr class="clearfix"/>
+</div>
+<div class="ligne">
+<b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
+        <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
+        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow.date" value="" readonly="">
+        <select name="userFromTime" id="fromTime" readonly="" ng-click="enableInput('#fromTime');">
+            <option value="09:00" ng-selected="fromDateShow.time == '09:0'">09:00</option>
+            <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '10:0'">10:00</option>
+            <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+            <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+            <option value="13:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '13:0'">13:00</option>
+            <option value="14:00" ng-show="!(vacationRequesttoShow.type =='leave')" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+            <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+            <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+            <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+        </select>
+
+<i class="uiIconEdit" ng-click="enableInput('#fromDateAdmin')"></i>
+
+        <hr class="clearfix"/>
+</div>
+    <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
+        <b>{{i18n.toDate}}:</b>
+<input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow.date" value="" readonly="">
+<select name="userToTime" id="toTime" readonly="" ng-click="enableInput('#toTime');">
+    <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'"  ng-selected="fromDateShow.time == '10:0'">10:00</option>
+    <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+    <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+    <option value="13:00" ng-show="!(vacationRequesttoShow.type =='leave')"  ng-selected="fromDateShow.time == '13:0'">13:00</option>
+    <option value="14:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+    <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+    <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+    <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+    <option value="18:00" ng-selected="fromDateShow.time == '18:0'">18:00</option>
+</select>
+<i class="uiIconEdit" ng-click="enableInput('#toDateAdmin')"></i>
+        <hr class="clearfix"/>
+</div>
+                            <div class="ligne">
+                                <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+                                <hr class="clearfix"/>
+</div>
+                            <div class="ligne">
+                                <b>{{i18n.substitutes}}:</b>
+<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}'
+style='padding-right: 10px;'>{{vrsub.name}}</a>
+                                <hr class="clearfix"/>
+</div>
+                            <div class="ligne">
+                                <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
+                                <hr class="clearfix"/>
+</div>
+
+                            <div class="ligne">
+                                <b>{{i18n.attacements}}:</b>
+
+
+<span ng-repeat="attachement in attachements" class="attachementName">
+<a class="column-item column-title" data-placement="bottom" target="_blank"
+href='{{attachement.url}}'><i
+class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0, 1).toUpperCase() + (attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
+<a class="inline-block-hide" data-placement="left" data-original-title="Delete "
+ng-click="deleteAttachement(attachement.name)">
+<i class="uiIconClose uiIconLightGray"></i>
+                                    </a>
+</span>
+                                <hr class="clearfix"/>
+</div>
+
+
+                            <div class="ligne manager">
+                                <b>{{i18n.managers}}: </b>
+<div class="table-responsive">
+<table id="managersTable" class="table uiGrid table-hover table-striped">
+<tbody>
+<tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+<td>
+<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}'
+class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                            </td>
+<td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
+class="td-right-align">
+<button class="btn btn-primary"
+ng-click="approveRequest(vacationRequesttoShow)"
+ng-disabled="vrmanager.reply == 'approved'"><i
+class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+                                                </button>
+<button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
+ng-disabled="vrmanager.reply == 'declined'"><i
+class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+                                                </button>
+</td>
+                                            <td ng-if="currentUser != vrmanager.validatorUserId || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
+                                                class="td-right-align">
+                                                <b>{{geti18n(vrmanager.reply)}}</b>
+</td>
+
+
+                                        </tr>
+</tbody>
+                                    </table>
+</div>
+                            </div>
+
+<button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>
+<hr class="clearfix"/>
+</div>
+
+
+</div>
+<!--End Left column-->
+<div id="right_col">
+
+<!-- -->
+<div id="requestTabs" class="uiTabPane uiTabNormal">
+<ul id="myTab" class="nav nav-tabs">
+<li class="active" ng-click="showLogs = false" ng-class="{ 'active': !showLogs }">
+<a href="#tab-home" data-toggle="tab">{{i18n.comments}}</a>
+</li>
+<li ng-click="showLogs = true" ng-class="{ 'active': showLogs }">
+<a href="#tab-properties" data-toggle="tab">{{i18n.log}}</a>
+</li>
+</ul>
+</div>
+<!-- -->
+
+<div id="tab-comments" class="tab-pane fade in active" ng-show="!showLogs">
+<div class="commentList">
+<div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+<div class="commmentLeft">
+<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+<img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
+</a>
+                                    </div>
+<!--end commentLeft-->
+<div class="commentRight">
+<div class="author">
+<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
+                                            <span class="date">
+                                                {{getLocaleDate(comment.postedTime)| date:'d MMM y HH:mm:ss'}}
+                                            </span>
+</div>
+                                        <p class="contentComment">
+                                            {{comment.commentText}}
+                                        </p>
+</div>
+                                    <!--end commentRight-->
+                                </div>
+</div>
+                            <div class="">
+                                <div class="commentItem commentFormBox">
+                                    <div class="clearfix">
+                                        <div class="commmentLeft pull-left">
+                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+<img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
+</a>
+                                        </div>
+<!--end commentLeft-->
+<div class="commentRight">
+<div class="commentInputBox ">
+<div class="commentInput">
+<textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea"
+ng-model="newComment.commentText" required>
+</textarea>
+                                                </div>
+</div>
+                                        </div>
+<!--end commentRight-->
+</div>
+                                    <div class="clearfix">
+                                        <div class="pull-right">
+                                            <button id="commentButton" type="button" class="btn pull-right btn-primary"
+                                                    ng-click="saveComment()">{{i18n.comment}}
+                                            </button>
+</div>
+                                    </div>
+</div>
+                                <!--end commentItem-->
+                            </div>
+</div>
+                        <div id="tab-logs" class="tab-pane fade in active" ng-show="showLogs">
+                            <div class="commentList">
+                                <div ng-repeat="item in history" class="commentItem" data-commentid="item.id">
+                                    <div class="commmentLeft">
+                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{item.posterId}}">
+<img src="{{item.posterAvatar}}" alt="{{item.posterName}}">
+</a>
+                                    </div>
+<!--end commentLeft-->
+<div class="commentRight">
+<div class="author">
+<a href="/portal/intranet/profile/{{item.posterId}}">{{item.posterName}}</a>
+                                            <span class="date">
+                                                {{getLocaleDate(item.postedTime)| date:'d MMM y HH:mm:ss'}}
+                                            </span>
+</div>
+                                        <p class="contentComment">
+                                            {{geti18n(item.commentText)}}
+                                        </p>
+</div>
+                                    <!--end commentRight-->
+                                </div>
+</div>
+                        </div>
+</div>
+
+                    <hr class="clearfix"/>
+</div>
+</script>
+
+<script type="text/ng-template" id="templateUdata">
+    <div class="">
+        <div class="uiBox elementDetail">
+            <a class="actionIcon " style="right: 0;margin-right: 0;z-index: 10;position: absolute;"
+               ng-click="userDetails.expanded = false">
+                <i class="uiIconClose "></i>
+            </a>
+            <div class="uiContentBox clearfix row-fluid formContainer">
+                <div class="span4">
+                    <div class="ligne">
+                        <img src="{{userDetails.avatar}}" class="avatar" alt=""/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.userFullName}}:</b> {{userDetails.name}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.email}}:</b> {{userDetails.email}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.jobTitle}}:</b> {{userDetails.jobTitle}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.gender}}:</b> {{userDetails.gender}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>phone:</b> {{userDetails.phone}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+                <div class="span4">
+
+
+                    <div class="ligne">
+                        <b>{{i18n.cin}}:</b> {{userDetails.hrData.cin}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.holidaysBalance}}:</b> {{userDetails.hrData.holidaysBalance}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.sickBalance}}:</b> {{userDetails.hrData.sickdaysBalance}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.socialSecNumber}}:</b> {{userDetails.hrData.socialSecNumber}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.hrId}}:</b> {{userDetails.hrData.hrId}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.bDay}}:</b> <span id="birthDayPreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.situation}}:</b> {{userDetails.hrData.situation}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.nbChildren}}:</b> {{userDetails.hrData.nbChildren}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.team}}:</b> {{userDetails.hrData.team}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.address}}:</b> {{userDetails.hrData.address}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.bankId}}:</b> {{userDetails.hrData.bankId}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+                <div class="span4">
+
+                    <div class="ligne">
+                        <b>{{i18n.startDate}}:</b> <span id="startDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.leaveDate}}:</b> <span id="leaveDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contract}}:</b> {{userDetails.hrData.contract}}
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contractStartDate}}:</b> <span id="contractStartDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.contractEndDate}}:</b> <span id="contractEndDatePreview"></span>
+                        <hr class="clearfix"/>
+                    </div>
+
+
+                    <div class="ligne">
+                        <b>{{i18n.insuranceId}}:</b> {{userDetails.hrData.insuranceId}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>{{i18n.active}}:</b> {{userDetails.hrData.active}}
+                        <hr class="clearfix"/>
+                    </div>
+
+
+                    <div class="ligne">
+                        <b>{{i18n.myeXoUrl}}:</b> {{userDetails.hrData.myeXoUrl}}
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>{{i18n.others}}:</b> {{userDetails.hrData.others}}
+                        <hr class="clearfix"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 </div>
 </div>

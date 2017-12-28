@@ -471,7 +471,7 @@ data-placement="bottom">
 </a>
 <ul class="dropdown-menu">
 
-<li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='active';loadVacationRequestsToValidate('all')">{{i18n.active}}</a>
+<li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='active';loadVacationRequestsToValidate()">{{i18n.active}}</a>
 </li>
 
 <li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='all';loadVacationRequestsToValidate('all')">{{i18n.all}}</a>

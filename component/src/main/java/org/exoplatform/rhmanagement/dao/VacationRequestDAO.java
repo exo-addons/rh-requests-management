@@ -21,6 +21,7 @@ import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -223,8 +224,16 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
 
     public List<VacationRequestEntity>  getVacationRequestsbyDate (Date date){
         try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            Date minDate = cal.getTime();
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            Date maxDate = cal.getTime();
             return getEntityManager().createNamedQuery("vacatioRequestEntity.findByDate", VacationRequestEntity.class)
-                    .setParameter("date", date)
+                    .setParameter("minDate", minDate)
+                    .setParameter("maxDate", maxDate)
                     .getResultList();
         }  catch (Exception e) {
             LOG.warn("Exception while attempting to get request", e);

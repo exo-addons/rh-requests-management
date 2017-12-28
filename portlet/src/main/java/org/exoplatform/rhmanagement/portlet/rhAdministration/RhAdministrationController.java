@@ -93,13 +93,16 @@ public class RhAdministrationController {
   @Jackson
   public List<EmployeesDTO> getAllUsersRhData(String emfilter) {
     try {
+      List<EmployeesDTO>  uds=null;
       if(emfilter.equals("active")){
-        return userDataService.getUsersRhDataByStatus(true,0,0);
+        uds= userDataService.getUsersRhDataByStatus(true,0,0);
       }else if(emfilter.equals("former")) {
-        return userDataService.getUsersRhDataByStatus(false, 0, 0);
-      } else return userDataService.getAllUsersRhData(0, 0);
-
-
+        uds= userDataService.getUsersRhDataByStatus(false, 0, 0);
+      } else  uds= userDataService.getAllUsersRhData(0, 0);
+      for (EmployeesDTO ud : uds){
+        ud.setExpanded(false);
+      }
+      return uds;
     } catch (Throwable e) {
       LOG.error(e);
       return null;
@@ -291,9 +294,11 @@ public class RhAdministrationController {
   @Jackson
   public List<VacationRequestDTO> getActivVacationRequests() {
     try {
-
-      return vacationRequestService.getActivVacationRequests(0,100);
-
+      List<VacationRequestDTO> vrs = vacationRequestService.getActivVacationRequests(0,100);
+      for (VacationRequestDTO vr : vrs){
+        vr.setExpanded(false);
+      }
+      return vrs;
     } catch (Throwable e) {
       LOG.error(e);
       return null;
@@ -886,6 +891,7 @@ public class RhAdministrationController {
         if(vr.getDaysNumber()!=nb){
           vr.setDaysNumber(nb);
           saveVacationRequest(vr);
+          LOG.info("Number of days of the request "+vr.getId()+" is updated");
         }
       }
     }

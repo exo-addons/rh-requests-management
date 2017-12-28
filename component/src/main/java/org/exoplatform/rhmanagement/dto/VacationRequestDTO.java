@@ -48,6 +48,8 @@ public class VacationRequestDTO {
 
   private Date                creationDate;
 
+  private Boolean             expanded;
+
 
 
   /*  public boolean verifySaveConditions() {

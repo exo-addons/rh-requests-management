@@ -213,6 +213,8 @@ public class Utils {
         return dates;
     }
 
+
+
     public static float calculateNumberOfDays(List<Date> oVacation, Date from, Date to){
         float nb=0;
         Calendar cFrom = Calendar.getInstance();

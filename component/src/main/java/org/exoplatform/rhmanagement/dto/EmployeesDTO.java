@@ -34,7 +34,9 @@ public class EmployeesDTO {
 
   private  String phone;
 
-  private UserRHDataDTO hrData;
+  private UserRHDataDTO     hrData;
+
+  private Boolean             expanded;
 
     public long getId() {
       return id;
@@ -107,4 +109,12 @@ public class EmployeesDTO {
     public void setHrData(UserRHDataDTO hrData) {
       this.hrData = hrData;
     }
+
+  public Boolean getExpanded() {
+    return expanded;
   }
+
+  public void setExpanded(Boolean expanded) {
+    this.expanded = expanded;
+  }
+}

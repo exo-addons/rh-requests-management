@@ -5,6 +5,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
 
         $scope.currentUser = "";
+        $scope.vRequestdet = null;
         $scope.currentUserAvatar = "";
         $scope.currentUserName = "";
         $scope.showAddForm = false;
@@ -56,6 +57,15 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         };
         $scope.toDateShow;
         $scope.fromDateShow;
+
+
+        $scope.templateVr = { name: 'templateVr',
+                             url: 'templateVr'};
+
+        $scope.templateUdata = { name: 'templateUdata',
+                                  url: 'templateUdata'};
+
+
 
         $scope.itemsPerPage = 10;
         $scope.currentPage = 0;
@@ -353,7 +363,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
              if(contractEndDate == undefined) $( "#contractEndDatePreview" ).text("");
              else $( "#contractEndDatePreview" ).text(contractEndDate);
             /**/
-            $scope.profilPreview = true;
+          //  $scope.profilPreview = true;
         };
 
         $scope.loadVacationRequestsbyUserId = function (userId,userVrFilter) {
@@ -825,7 +835,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $scope.loadRequestAttachments(vacationRequest);
             $scope.loadComments(vacationRequest);
             $scope.loadHistory(vacationRequest);
-            $scope.showDetails = true;
+           // $scope.showDetails = true;
             $(".table-striped tbody tr").removeClass("selected");
             $(".request_"+vacationRequest.id).addClass("selected");
         };
@@ -1140,9 +1150,16 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
           return d1.getFullYear() === d2.getFullYear() &&  d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
         }
 
+    $scope.setVr = function(vRequest) {
+        $scope.vacationRequesttoShow = vRequest;
+    }
+
+        $scope.setRhData = function(userRhData) {
+            $scope.userDetails = userRhData;
+        }
+
         $scope.loadBundles();
         $scope.showRequestfromUrl();
-
 
        // $scope.loadContext();
        // $scope.loadEmployees();
