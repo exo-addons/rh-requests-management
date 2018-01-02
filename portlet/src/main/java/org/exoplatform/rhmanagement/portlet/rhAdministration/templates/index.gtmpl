@@ -130,8 +130,8 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
                             <tr ng-repeat-start="userRhData in rhEmployees| orderBy:orderByField:reverseSort">
                                 <td>
 
-								<a class="actionIcon nameOpen"  ng-if="userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = false">- {{userRhData.name}}</a>
-								<a class="actionIcon nameOpen"  ng-if="!userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = true">+ {{userRhData.name}}</a>
+								<a class="actionIcon nameOpen"  ng-if="userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = false"><span class="badgeDefault badgePrimary">-</span> {{userRhData.name}}</a>
+								<a class="actionIcon nameOpen"  ng-if="!userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = true"><span class="badgeDefault badgePrimary">+</span> {{userRhData.name}}</a>
                                     <!--data-ng-click="loadUserHRData(userRhData)-->
                                 </td>
 <td>
@@ -631,13 +631,7 @@ ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
-<th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.creationDate}}
-<img ng-show="orderByField == 'severity' && !reverseSort"
-src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
-<img ng-show="orderByField == 'severity' && reverseSort"
-src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
-</a>
-                                </th>
+
 
 <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">{{i18n.userFullName}}
 <img ng-show="orderByField == 'title' && !reverseSort"
@@ -681,6 +675,13 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 </a>
                             </th>
+                            <th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.creationDate}}
+                                <img ng-show="orderByField == 'severity' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'severity' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
 <th>{{i18n.actions}}</th>
                         </tr>
 </thead>
@@ -688,12 +689,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                         <tr ng-repeat-start="vRequest in allVacationRequests| orderBy:orderByField:reverseSort"
                             class="request_{{vRequest.id}}">
                             <td class="request_id">
-                                <a ng-if="vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = false">- {{vRequest.id}}</a>
-								<a ng-if="!vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = true">+ {{vRequest.id}}</a>
+                                <a ng-if="vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = false"> <span class="badgeDefault badgePrimary">-</span> </a>
+                                <a ng-if="!vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = true"><span class="badgeDefault badgePrimary">+</span></a>
 </td>
-                                <td>
-                                    <span>{{(vRequest.creationDate)| date:'d MMM y'}}</span>
-</td>
+
                             <td><span>{{vRequest.userFullName}}</span>
 </td>
                             <td>
@@ -712,11 +711,15 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
                                 <span>{{geti18n(vRequest.status)}}</span>
 </td>
                             <td>
+                                <span>{{(vRequest.creationDate)| date:'d MMM y'}}</span>
+                            </td>
+                            <td>
+
                                 <button class="btn btn-primary" ng-click="validateRequest(vRequest, null)"
-                                        ng-disabled="vRequest.status == 'validated'">{{i18n.validate}}
+                                        ng-disabled="vRequest.status == 'validated'"><i class="uiIconEcmsApprove"></i>
                                 </button>
 <button class="btn btn-default" ng-click="cancelRequest(vRequest, null)"
-ng-disabled="vRequest.status == 'canceled'">{{i18n.cancel}}
+ng-disabled="vRequest.status == 'canceled'"><i class="uiIconEcmsRemove"></i>
 </button>
                             </td>
 </tr>

@@ -93,11 +93,12 @@ img.avatar {
 
 .tabcontent .ligne > b{
     color :#2f5e92;
-    width: 45%;
+    width: 43%;
     margin-right: 4px;
     display: inline-block;
     overflow: hidden;
     float: left;
+    text-align: left;
 }
 .tabcontent .ligne::after{clear: both}
 .tabcontent .span3 .ligne > b{
@@ -235,6 +236,7 @@ input.requestEdit[readonly]{
 }
 .commentRight {
     margin-left: 45px;
+    text-align: justify;
 }
 .commentRight textarea{width: 100%}
 
@@ -565,3 +567,20 @@ input[readonly], select[readonly], textarea[readonly]{
     width: 50%;
     overflow: auto;
 }
+
+.badgeDefault.badgePrimary{
+    background-color: #578dc9;
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+    top: 0;
+    position: relative;
+    color: #FFF;
+    font-weight: bold;
+    width: 10px;
+    text-align: center;
+}
+table .uiBox{border-radius :0;    margin-top: 10px;}
+table .btn.btn-primary{padding: 10px 15px}
+table .btn.btn-default{padding: 8px 13px}

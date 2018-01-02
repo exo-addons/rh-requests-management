@@ -296,12 +296,12 @@ placeholder="{{i18n.serverUsername}}" ng-model="newVacationRequest.type">
         <option value="10:00" ng-show="newVacationRequest.type =='leave'">10:00</option>
         <option value="11:00" ng-show="newVacationRequest.type =='leave'">11:00</option>
         <option value="12:00" ng-show="newVacationRequest.type =='leave'">12:00</option>
-        <option value="13:00" ng-show="!(newVacationRequest.type =='leave')" selected>13:00</option>
+        <option value="13:00" ng-show="!(newVacationRequest.type =='leave')">13:00</option>
         <option value="14:00" ng-show="newVacationRequest.type =='leave'">14:00</option>
         <option value="15:00" ng-show="newVacationRequest.type =='leave'">15:00</option>
         <option value="16:00" ng-show="newVacationRequest.type =='leave'">16:00</option>
         <option value="17:00" ng-show="newVacationRequest.type =='leave'">17:00</option>
-        <option value="18:00">18:00</option>
+        <option value="18:00" selected>18:00</option>
     </select>
 </div>
 </div>

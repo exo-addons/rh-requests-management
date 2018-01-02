@@ -91,7 +91,7 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 	});
 
     $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate , #beginDate" ).datepicker();
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
+    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate, #toDateAdmin, #fromDateAdmin" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
     $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate" ).datepicker( "option", "changeYear", true );
     $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
 
@@ -160,14 +160,17 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
         controlType: 'select',
         defaultDate: "+1w",
         numberOfMonths: 1,
-        dateFormat : "dd-mm-yy",
-       /* hourMin: 8,
-        hourMax: 18,
-
-        timeFormat : "H:m",*/
         onClose: function() {
             $(".savebtnAdmin").removeClass("hidden");
         },
+    });
+
+    $( "#fromDateAdmin" ).on( "change", function() {
+        $( "#fromDateAdmin" ).datepicker( "option", "minDate", $("#fromDateAdmin").val() );
+    });
+
+    $( "#toDateAdmin" ).on( "change", function() {
+        $( "#toDateAdmin" ).datepicker( "option", "maxDate", $("#toDateAdmin").val() );
     });
 
 });
