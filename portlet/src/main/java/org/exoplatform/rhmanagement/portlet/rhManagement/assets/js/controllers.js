@@ -752,7 +752,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             }
         };
 
-        $scope.updateDateFormat = function(date, time) {
+
+		        $scope.updateDateFormat = function(date, time) {
             var dateSplit = date;
             dateSplit = dateSplit.split("-");
 //            return Date.parse(dateSplit[1] + '-' + dateSplit[0] + '-' + dateSplit[2]);
@@ -761,67 +762,15 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             return Date.parse(dateSplit);
 
         };
-        $scope.formatDate = function(date) {
-         var day = date.getDate();
-          var monthIndex = date.getMonth()+1;
 
-   return day + '/' + monthIndex;
-        };
-        $scope.calculateDays = function(vr) {
-            var j = 0;
-            var offDays="";
-            var datefrom = $scope.updateDateFormat($("#fromDate").val(), $("#fromTime option[value]:selected").text());
-            var dateto = $scope.updateDateFormat($("#toDate").val(), $("#toTime option[value]:selected").text());
-
-            var dateArray = new Array();
-            var fromDate = new Date();
-            fromDate.setTime(datefrom);
-            var toDate = new Date();
-            toDate.setTime(dateto);
-            var currentDate = new Date();
-            currentDate.setTime(datefrom);
-            while (currentDate <= toDate) {
-                    var isOff=isOffDay(currentDate);
-                if(isOff){
-                offDays=offDays+' '+ $scope.formatDate(currentDate)+',';
-                }
-                if (currentDate.getDay() != 6 && currentDate.getDay() != 0 && !isOff) {
-                    j++;
-                }
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-            if (fromDate.getHours() > 12 && fromDate.getHours() < 19 ) j = j - 0.5;
-            if (toDate.getHours() > 7 && toDate.getHours() < 15) j = j - 0.5;
-            $scope.newVacationRequest.daysNumber = j;
-            $(".nbrDays").text(j);
-           if(offDays!=""){
-           $(".oDays").text("( Official days: "+offDays+")");
-           } else $(".oDays").text("");
-        };
-
-        function isOffDay(date) {
-            if ($scope.officialDays.length == 0) {
-                return false;
-            } else {
-                for (i = 0; i < $scope.officialDays.length; i++) {
-                    var od = new Date();
-                    od.setTime($scope.officialDays[i]);
-                    if (sameDay(date, od)) return true;
-                }
-
-            }
-            return false;
-        }
-
-
-        function sameDay(d1, d2) {
-          return d1.getFullYear() === d2.getFullYear() &&  d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
-        }$scope.formatDate = function(date) {
+			$scope.formatDate = function(date) {
          var day = date.getDate();
           var monthIndex = date.getMonth();
-
-   return day + '/' + monthIndex;
+          monthIndex=monthIndex+1;
+          return day + '/' + monthIndex;
         };
+
+
         $scope.calculateDays = function(vr) {
             var j = 0;
             var offDays="";
