@@ -116,7 +116,7 @@
           <property name="jobName" value="UpdateSickBalanceJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.UpdateSickBalanceJob"/>
-          <property name="expression" value="0 0 0 1 JAN ? *"/>
+          <property name="expression" value="0 0 1 1 JAN ? *"/>
           <!--<property name="expression" value="0 */5 * ? * *"/>-->
         </properties-param>
       </init-params>
@@ -138,8 +138,8 @@
           <property name="jobName" value="NotificationsJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.NotificationsJob"/>
-          <property name="expression" value="0 0 0 ? * * *"/>
-          <!--<property name="expression" value="0 */2 * ? * *"/>-->
+          <!--<property name="expression" value="0 0 8 ? * * *"/>-->
+          <property name="expression" value="0 */2 * ? * *"/>
         </properties-param>
       </init-params>
     </component-plugin>

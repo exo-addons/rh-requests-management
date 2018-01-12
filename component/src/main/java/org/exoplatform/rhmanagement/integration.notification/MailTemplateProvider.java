@@ -51,7 +51,8 @@ import java.util.*;
     @TemplateConfig(pluginId = RequestRepliedPlugin.ID, template = "war:/notification/templates/mail/RequestReplyPlugin.gtmpl"),
     @TemplateConfig(pluginId = RequestStatusChangedPlugin.ID, template = "war:/notification/templates/mail/UpdateRequestPlugin.gtmpl"),
     @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl"),
-     @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl")
+     @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl"),
+        @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl")
 })
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
@@ -67,6 +68,7 @@ public class MailTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(RequestStatusChangedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestCreatedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID), new TemplateBuilder());
   }
   
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -138,6 +140,19 @@ public class MailTemplateProvider extends TemplateProvider {
 
         } catch (Exception e){
           log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
+        }
+      }
+
+      String contractAnnivDate = notification.getValueOwnerParameter(NotificationUtils.CONTRACT_ANNIV_DATE);
+      if (contractAnnivDate != null) {
+        Date theDate = new Date();
+        try {
+          theDate = (Date)formatter.parse(contractAnnivDate);
+          templateContext.put("CONTRACT_ANNIV_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+
+
+        } catch (Exception e){
+          log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate, e);
         }
       }
       templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
