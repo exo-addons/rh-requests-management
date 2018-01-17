@@ -95,8 +95,8 @@
         <property name="jobName" value="UpdateHolidaysBalanceJob"/>
         <property name="groupName" value="group"/>
         <property name="job" value="org.exoplatform.rhmanagement.services.jobs.UpdateHolidaysBalanceJob"/>
-        <property name="expression" value="0 0 0 1 * ?"/>
-        <!--<property name="expression" value="0 */5 * ? * *"/>-->
+        <!--<property name="expression" value="0 0 0 1 * ?"/>-->
+        <property name="expression" value="0 */2 * ? * *"/>
       </properties-param>
     </init-params>
   </component-plugin>
@@ -138,8 +138,8 @@
           <property name="jobName" value="NotificationsJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.NotificationsJob"/>
-          <!--<property name="expression" value="0 0 8 ? * * *"/>-->
-          <property name="expression" value="0 */2 * ? * *"/>
+          <property name="expression" value="0 0 2 ? * * *"/>
+          <!--<property name="expression" value="0 */2 * ? * *"/>-->
         </properties-param>
       </init-params>
     </component-plugin>
@@ -171,6 +171,15 @@
       <name>exo.hrmanagement.requestUpadate</name>
       <set-method>addListener</set-method>
       <type>org.exoplatform.rhmanagement.services.listener.UpdateRequestListener</type>
+    </component-plugin>
+  </external-component-plugins>
+
+  <external-component-plugins>
+    <target-component>org.exoplatform.services.listener.ListenerService</target-component>
+    <component-plugin>
+      <name>exo.hrmanagement.requestComment</name>
+      <set-method>addListener</set-method>
+      <type>org.exoplatform.rhmanagement.services.listener.CommentRequestListener</type>
     </component-plugin>
   </external-component-plugins>
 

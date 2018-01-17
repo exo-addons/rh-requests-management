@@ -16,6 +16,7 @@
  */
 package org.exoplatform.rhmanagement.integration.notification;
 
+import org.bouncycastle.ocsp.Req;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfig;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfigs;
@@ -52,7 +53,8 @@ import java.util.*;
     @TemplateConfig(pluginId = RequestStatusChangedPlugin.ID, template = "war:/notification/templates/mail/UpdateRequestPlugin.gtmpl"),
     @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl"),
      @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl"),
-        @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl")
+        @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl"),
+        @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/templates/mail/RequestCommentedPlugin.gtmpl")
 })
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
@@ -69,6 +71,7 @@ public class MailTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(RequestCreatedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(RequestCommentedPlugin.ID), new TemplateBuilder());
   }
   
   private class TemplateBuilder extends AbstractTemplateBuilder {

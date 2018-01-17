@@ -55,7 +55,8 @@ import java.util.Locale;
        @TemplateConfig( pluginId=RequestStatusChangedPlugin.ID, template="war:/notification/templates/web/UpdateRequestPlugin.gtmpl"),
        @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/templates/web/CreateRequestPlugin.gtmpl"),
            @TemplateConfig( pluginId=HRBirthdayNotificationPlugin.ID, template="war:/notification/templates/web/HRBirthdayNotificationPlugin.gtmpl"),
-           @TemplateConfig( pluginId=HRContractAnniversaryNotificationPlugin.ID, template="war:/notification/templates/web/HRContractAnniversaryNotificationPlugin.gtmpl")
+           @TemplateConfig( pluginId=HRContractAnniversaryNotificationPlugin.ID, template="war:/notification/templates/web/HRContractAnniversaryNotificationPlugin.gtmpl"),
+           @TemplateConfig( pluginId=RequestCommentedPlugin.ID, template="war:/notification/templates/web/RequestCommentedPlugin.gtmpl")
    }
 )
 public class WebTemplateProvider extends TemplateProvider {
@@ -72,6 +73,7 @@ public class WebTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(RequestCreatedPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(RequestCommentedPlugin.ID), new TemplateBuilder());
   }
 
   private class TemplateBuilder extends AbstractTemplateBuilder {

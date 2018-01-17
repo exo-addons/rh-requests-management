@@ -23,6 +23,7 @@ import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.rhmanagement.dto.CommentDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.rhmanagement.services.Utils;
@@ -37,18 +38,21 @@ import java.util.LinkedList;
 import java.util.Set;
 
 
-public class RequestRepliedPlugin extends BaseNotificationPlugin {
+public class RequestCommentedPlugin extends BaseNotificationPlugin {
 
-  public final static ArgumentLiteral<ValidatorDTO> VALIDATOR = new ArgumentLiteral<ValidatorDTO>(ValidatorDTO.class, "validator");
+
+  public final static ArgumentLiteral<CommentDTO> COMMENT = new ArgumentLiteral<CommentDTO>(CommentDTO.class, "comment");
   public static final ArgumentLiteral<Set> RECEIVERS = new ArgumentLiteral<Set>(Set.class, "receivers");
   public final static ArgumentLiteral<VacationRequestDTO> VACATION_REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "vacationRequest");
-  private static final Log LOG = ExoLogger.getLogger(RequestRepliedPlugin.class);
 
-  public final static String ID = "RequestRepliedPlugin";
+
+  private static final Log LOG = ExoLogger.getLogger(RequestCommentedPlugin.class);
+
+  public final static String ID = "RequestCommentedPlugin";
 
   IdentityManager identityManager;
 
-  public RequestRepliedPlugin(InitParams initParams,IdentityManager identityManager) {
+  public RequestCommentedPlugin(InitParams initParams, IdentityManager identityManager) {
 
     super(initParams);
     this.identityManager = identityManager;
@@ -81,13 +85,11 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
 
-    ValidatorDTO obj = ctx.value(VALIDATOR);
+    CommentDTO obj = ctx.value(COMMENT);
+    Set<String> receivers = ctx.value(RECEIVERS);
     VacationRequestDTO vacationRequest  = ctx.value(VACATION_REQUEST);
 
-    Set<String> receivers = ctx.value(RECEIVERS);
-
-
-    String userId=obj.getValidatorUserId();
+    String userId=obj.getPosterId();
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getRequestId());
     String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getRequestId();
@@ -101,8 +103,6 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, vacationRequest.getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, vacationRequest.getToDate().toString())
             .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())

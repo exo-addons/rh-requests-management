@@ -784,7 +784,7 @@ href="/portal/intranet/profile/{{comment.posterId}}">
                                             <p class="contentComment">
                                                 {{comment.commentText}}
                                             </p>
-</div>Fnew
+</div>
                                         <!--end commentRight-->
                                     </div>
 </div>

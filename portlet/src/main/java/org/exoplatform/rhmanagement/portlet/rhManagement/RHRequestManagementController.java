@@ -12,10 +12,14 @@ import org.exoplatform.calendar.model.Event;
 import org.exoplatform.calendar.model.query.CalendarQuery;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.ExtendedCalendarService;
+import org.exoplatform.commons.api.notification.NotificationContext;
+import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
+import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.rhmanagement.dto.*;
+import org.exoplatform.rhmanagement.integration.notification.RequestCommentedPlugin;
 import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
@@ -387,6 +391,11 @@ public class RHRequestManagementController {
     obj.setPosterId(currentUser);
     obj.setCommentType(Utils.COMMENT);
     commentService.save(obj);
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestComment", "", obj);
+    } catch (Exception e) {
+      log.error("Cannot broadcast request comment event");
+    }
   }
 
 

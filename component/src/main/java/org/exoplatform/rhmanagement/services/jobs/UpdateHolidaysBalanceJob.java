@@ -5,6 +5,7 @@ import org.exoplatform.rhmanagement.dto.BalanceHistoryDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.services.BalanceHistoryService;
 import org.exoplatform.rhmanagement.services.UserDataService;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.quartz.Job;
@@ -51,6 +52,9 @@ public class UpdateHolidaysBalanceJob implements Job {
             } catch (Exception e) {
                 LOG.error("Error when adding history entry", e);
             }
+           if (Utils.getEndYearBalance(employee.getHolidaysBalance())>24){
+                LOG.info("+++++++++++++++++++++++++ "+employee.getUserId()+"'s holidays balance will exceed the max++++++++++++++++++");
+           }
 
         }
         LOG.info("=============================== Update Holidays Balance Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms ===============================.");

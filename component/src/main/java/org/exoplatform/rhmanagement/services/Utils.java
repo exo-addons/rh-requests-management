@@ -270,4 +270,11 @@ public class Utils {
     }
 
 
+    public static float getEndYearBalance(float balance){
+        Calendar cDate = Calendar.getInstance();
+        float b=(12-cDate.get(Calendar.MONTH))*2;
+        b+=balance;
+        return b;
+    }
+
 }

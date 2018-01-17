@@ -584,6 +584,11 @@ public class RhAdministrationController {
     obj.setPosterId(currentUser);
     obj.setCommentType(Utils.COMMENT);
     commentService.save(obj);
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestComment", currentUser, obj);
+    } catch (Exception e) {
+      LOG.error("Cannot broadcast comment request event");
+    }
   }
 
 

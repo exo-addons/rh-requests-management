@@ -34,7 +34,7 @@ public class UpdateRequestListener extends Listener<Set<String>,VacationRequestD
         receivers.add(vr.getUserId());
         ValidatorService validatorService=CommonsUtils.getService(ValidatorService.class);
         for (ValidatorDTO validator :validatorService.getValidatorsByRequestId(vr.getId(),0,0)){
-            receivers.add(validator.getUserId());
+            receivers.add(validator.getValidatorUserId());
         }
         if( Utils.VALIDATED.equals(vr.getStatus())||Utils.CANCELED.equals(vr.getStatus())||Utils.APPROVED.equals(vr.getStatus()) ){
             try {

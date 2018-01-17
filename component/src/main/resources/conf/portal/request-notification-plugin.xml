@@ -252,7 +252,7 @@
     </component-plugin>
   </external-component-plugins>
 
-  <!-- <external-component-plugins>
+   <external-component-plugins>
      <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
      <component-plugin>
        <name>notification.plugins</name>
@@ -291,9 +291,10 @@
          </object-param>
        </init-params>
      </component-plugin>
-   </external-component-plugins>-->
-  <!-- template channel register -->
+   </external-component-plugins>
+
 <external-component-plugins>
+
     <target-component>org.exoplatform.commons.api.notification.channel.ChannelManager</target-component>
     <component-plugin>
       <name>mail.channel.request.template</name>
