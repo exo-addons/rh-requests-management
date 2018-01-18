@@ -56,7 +56,8 @@ import java.util.Locale;
        @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/templates/web/CreateRequestPlugin.gtmpl"),
            @TemplateConfig( pluginId=HRBirthdayNotificationPlugin.ID, template="war:/notification/templates/web/HRBirthdayNotificationPlugin.gtmpl"),
            @TemplateConfig( pluginId=HRContractAnniversaryNotificationPlugin.ID, template="war:/notification/templates/web/HRContractAnniversaryNotificationPlugin.gtmpl"),
-           @TemplateConfig( pluginId=RequestCommentedPlugin.ID, template="war:/notification/templates/web/RequestCommentedPlugin.gtmpl")
+           @TemplateConfig( pluginId=RequestCommentedPlugin.ID, template="war:/notification/templates/web/RequestCommentedPlugin.gtmpl"),
+           @TemplateConfig( pluginId=VacationBalanceNotificationPlugin.ID, template="war:/notification/templates/web/VacationBalanceNotificationPlugin.gtmpl")
    }
 )
 public class WebTemplateProvider extends TemplateProvider {
@@ -74,6 +75,7 @@ public class WebTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestCommentedPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(VacationBalanceNotificationPlugin.ID), new TemplateBuilder());
   }
 
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -154,6 +156,13 @@ public class WebTemplateProvider extends TemplateProvider {
           log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate, e);
         }
       }
+
+
+        String daysToConsume = notification.getValueOwnerParameter(NotificationUtils.DAYS_TO_CONSUME);
+        if (daysToConsume != null) {
+                templateContext.put("DAYS_TO_CONSUME", daysToConsume);
+        }
+
 
       templateContext.put("READ", Boolean.valueOf(notification.getValueOwnerParameter(NotificationMessageUtils.READ_PORPERTY.getKey())) ? "read" : "unread");
       templateContext.put("NOTIFICATION_ID", notification.getId());

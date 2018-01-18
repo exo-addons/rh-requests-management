@@ -37,5 +37,6 @@ public class NotificationUtils {
   public final static String BIRTHDAY_DATE = "birthdayDate";
   public final static String CONTRACT_ANNIV_DATE = "contractAnnivDate";
   public final static String ACTIVITY_ID = "activityId";
+  public final static String DAYS_TO_CONSUME ="daysToConsume";
 
 }

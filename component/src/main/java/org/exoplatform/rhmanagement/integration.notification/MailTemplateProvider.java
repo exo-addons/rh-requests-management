@@ -54,7 +54,8 @@ import java.util.*;
     @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl"),
      @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl"),
         @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl"),
-        @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/templates/mail/RequestCommentedPlugin.gtmpl")
+        @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/templates/mail/RequestCommentedPlugin.gtmpl"),
+        @TemplateConfig(pluginId = VacationBalanceNotificationPlugin.ID, template = "war:/notification/templates/mail/VacationBalanceNotificationPlugin.gtmpl")
 })
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
@@ -72,6 +73,7 @@ public class MailTemplateProvider extends TemplateProvider {
     this.templateBuilders.put(PluginKey.key(HRBirthdayNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID), new TemplateBuilder());
     this.templateBuilders.put(PluginKey.key(RequestCommentedPlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(VacationBalanceNotificationPlugin.ID), new TemplateBuilder());
   }
   
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -158,7 +160,13 @@ public class MailTemplateProvider extends TemplateProvider {
           log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate, e);
         }
       }
-      templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
+
+        String daysToConsume = notification.getValueOwnerParameter(NotificationUtils.DAYS_TO_CONSUME);
+        if (daysToConsume != null) {
+            templateContext.put("DAYS_TO_CONSUME", daysToConsume);
+        }
+
+        templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
       String subject = TemplateUtils.processSubject(templateContext);
 
       String body = TemplateUtils.processGroovy(templateContext);
