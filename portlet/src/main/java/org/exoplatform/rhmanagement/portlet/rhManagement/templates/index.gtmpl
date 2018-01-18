@@ -740,8 +740,7 @@ ng-bind="f.progress + '%'"></div>
 </div>
 
 <a class="actionIcon inline-block-hide uploadicon"
-ngf-select="uploadFiles($file, $invalidFiles) "
-ngf-max-height="1000 " ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
+ngf-select="uploadFiles($file, $invalidFiles)" ngf-max-size="25MB " ng-click="deleteAttachement(attachement.name)">
 <i class="uiIconUpload uiIconLightGray"></i>
 </a>
 </div>
