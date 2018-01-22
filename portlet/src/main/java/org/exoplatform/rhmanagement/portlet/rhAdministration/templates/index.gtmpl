@@ -976,7 +976,7 @@ data-ng-click="deleteConventionalVacation(cVacation)">
 
 
 <div id="oVacations">
-<h4 class="titleWithBorder" >{{i18n.officialVacations}}</h4>
+<h4 class="titleWithBorder" >{{i18n.bankHolidays}}</h4>
 <button class="btn btn-primary pull-right" ng-click="showCvacations = false; showOvacations = !showOvacations" ng-show="!showOvacations">Add New</button>
 <div class="description" ng-show="!showCvacations && showOvacations">
 <div class="row-fluid">

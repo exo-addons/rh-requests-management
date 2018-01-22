@@ -767,7 +767,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
          var day = date.getDate();
           var monthIndex = date.getMonth();
           monthIndex=monthIndex+1;
-          return day + '/' + monthIndex;
+          return day + '-' + monthIndex;
         };
 
 
@@ -799,7 +799,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
             $scope.newVacationRequest.daysNumber = j;
             $(".nbrDays").text(j);
            if(offDays!=""){
-           $(".oDays").text("( Official days: "+offDays+")");
+           $(".oDays").text("( "+$scope.i18n.bankHolidays+": "+offDays+")");
            } else $(".oDays").text("");
         };
 

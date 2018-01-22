@@ -559,6 +559,10 @@ input {
 .oDays {
     color: blue;
     }
+
+.eDays {
+    color: red;
+    }
 /*
 .uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
     background: url(/eXoSkin/skin/images/themes/default/ecms/skin/Publication/bgGray.png) no-repeat left top;
