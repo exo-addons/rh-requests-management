@@ -246,12 +246,21 @@ public class RHRequestManagementController {
       employeesDTO.setEmail(profile.getEmail());
       employeesDTO.setJobTitle(profile.getPosition());
       employeesDTO.setGender(profile.getGender());
+
       if(profile.getAvatarUrl()!=null){
         employeesDTO.setAvatar(profile.getAvatarUrl());
       }else{
         employeesDTO.setAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
-      employeesDTO.setHrData(userDataService.getUserRHDataByUserId(obj.getUserId())) ;
+      UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(obj.getUserId());
+      employeesDTO.setHrData(userRHDataDTO) ;
+      Float daysToConsume = Utils.getEndYearBalance(userRHDataDTO.getHolidaysBalance());
+      java.util.Calendar cDate = java.util.Calendar.getInstance();
+     // if(daysToConsume-24>0&&(cDate.get(java.util.Calendar.MONTH)==5 || cDate.get(java.util.Calendar.MONTH)>=8)){
+     if(daysToConsume-24>0){
+       employeesDTO.setDaysToConsume(daysToConsume-24);
+     }
+
       return employeesDTO;
     } catch (Throwable e) {
       log.error(e);

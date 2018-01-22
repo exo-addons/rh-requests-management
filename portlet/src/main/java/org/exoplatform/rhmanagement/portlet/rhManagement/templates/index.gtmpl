@@ -560,7 +560,7 @@ ng-click="showDetails=false; showList= true; showFullReq= false; showInfoBox=tru
                 <b>{{i18n.userFullName}}:</b> <span>{{vacationRequesttoShow.userFullName}}</span> <hr class="clearfix" />
 </div>
                     <div class="ligne">
-                <b>{{i18n.holidaysBalance}}:</b> <span>{{vrOwnerData.hrData.holidaysBalance}}</span> <hr class="clearfix" />
+                <b>{{i18n.holidaysBalance}}:</b> <span>{{vrOwnerData.hrData.holidaysBalance}}</span> <span ng-show="vrOwnerData.daysToConsume!=null"> Should take {{vrOwnerData.daysToConsume}} holidays before Dec 31</span> <hr class="clearfix" />
 </div>
                     <div class="ligne">
 				<b>{{i18n.sickBalance}}:</b> <span>{{vrOwnerData.hrData.sickdaysBalance}}</span><hr class="clearfix" />

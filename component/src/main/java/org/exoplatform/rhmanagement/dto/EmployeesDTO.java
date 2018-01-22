@@ -36,7 +36,9 @@ public class EmployeesDTO {
 
   private UserRHDataDTO     hrData;
 
-  private Boolean             expanded;
+  private Boolean           expanded;
+
+  private Float daysToConsume;
 
     public long getId() {
       return id;
@@ -116,5 +118,13 @@ public class EmployeesDTO {
 
   public void setExpanded(Boolean expanded) {
     this.expanded = expanded;
+  }
+
+  public Float getDaysToConsume() {
+    return daysToConsume;
+  }
+
+  public void setDaysToConsume(Float daysToConsume) {
+    this.daysToConsume = daysToConsume;
   }
 }
