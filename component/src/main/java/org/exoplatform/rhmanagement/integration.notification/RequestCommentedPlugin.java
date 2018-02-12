@@ -105,6 +105,7 @@ public class RequestCommentedPlugin extends BaseNotificationPlugin {
             .with(NotificationUtils.CREATOR, userId)
             .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
+            .with(NotificationUtils.COMMENT_TEXT, obj.getCommentText())
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

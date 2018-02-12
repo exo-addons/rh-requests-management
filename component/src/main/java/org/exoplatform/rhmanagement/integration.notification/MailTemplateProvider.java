@@ -166,6 +166,12 @@ public class MailTemplateProvider extends TemplateProvider {
             templateContext.put("DAYS_TO_CONSUME", daysToConsume);
         }
 
+
+      String commentText = notification.getValueOwnerParameter(NotificationUtils.COMMENT_TEXT);
+      if (commentText != null) {
+        templateContext.put("COMMENT_TEXT", commentText);
+      }
+
         templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
       String subject = TemplateUtils.processSubject(templateContext);
 

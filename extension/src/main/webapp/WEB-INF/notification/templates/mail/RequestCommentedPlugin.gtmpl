@@ -39,7 +39,7 @@
 <%
 String profileUrl = "<a style=\"text-decoration: none; color: #2f5e92; font-family: 'HelveticaNeue Bold', Helvetica, Arial, sans-serif\" href=\""+ PROFILE_URL + "\"><strong>" + USER + "</strong></a>";
 def msg = _ctx.appRes("Notification.message.email.RequestCommentedPlugin", profileUrl, USER_NAME);
-def description = _ctx.appRes("Notification.description.email.RequestCommentedPlugin",USER_NAME);
+def description = _ctx.appRes("Notification.description.email.RequestCommentedPlugin",COMMENT_TEXT);
 %>
 <%=msg%>:
 </p>

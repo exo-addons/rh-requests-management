@@ -53,7 +53,7 @@ public class NotificationsJob implements Job {
                 cal.setTime(employee.getContractStartDate());
                 cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
                 int rem=daysBetween(cal,now);
-            if(rem<10&&rem>=0){
+            if(rem==0){
                 LOG.info("=============contact annif for "+employee.getUserId() +"================== ");
                 Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
                 String message= "The Anniversary of contract of "+userProfile.getFullName()+"will be in "+rem+" days";

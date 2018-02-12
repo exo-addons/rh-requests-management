@@ -562,6 +562,7 @@ input {
 
 .eDays {
     color: red;
+    padding-left: 10px;
     }
 /*
 .uiPublicationPanel .statusAction .activeStatus, .uiPublicationPanel .statusAction .disableStatus, .uiPublicationPanel .statusAction .currentStatus {
