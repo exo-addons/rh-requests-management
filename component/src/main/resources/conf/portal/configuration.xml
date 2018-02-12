@@ -138,10 +138,8 @@
           <property name="jobName" value="NotificationsJob"/>
           <property name="groupName" value="group"/>
           <property name="job" value="org.exoplatform.rhmanagement.services.jobs.NotificationsJob"/>
-<!--
           <property name="expression" value="0 30 2 ? * * *"/>
--->
-          <property name="expression" value="0 */2 * ? * *"/>
+          <!--<property name="expression" value="0 */2 * ? * *"/>-->
         </properties-param>
       </init-params>
     </component-plugin>
