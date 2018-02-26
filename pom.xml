@@ -7,7 +7,7 @@
   </parent>
   <groupId>org.exoplatform.addons.rh-management</groupId>
   <artifactId>rh-management</artifactId>
-  <version>1.1.x-SNAPSHOT</version>
+  <version>1.1.0-M15</version>
   <packaging>pom</packaging>
   <name>RH Request Management Addon</name>
   <description>Simplify human resource requests (Holidays, sick and leave requests) management</description>
@@ -20,7 +20,7 @@
   <scm>
     <connection>scm:git:git://github.com/exo-addons/rh-requests-management.git</connection>
     <developerConnection>scm:git:git@github.com:exo-addons/rh-requests-management.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>1.1.0-M15</tag>
     <url>https://github.com/exo-addons/rh-requests-management</url>
   </scm>
   <properties>
