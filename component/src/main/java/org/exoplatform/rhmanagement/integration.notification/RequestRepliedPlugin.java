@@ -32,6 +32,8 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -81,6 +83,7 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
 
+    DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
     ValidatorDTO obj = ctx.value(VALIDATOR);
     VacationRequestDTO vacationRequest  = ctx.value(VACATION_REQUEST);
 
@@ -101,8 +104,8 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, vacationRequest.getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, vacationRequest.getToDate().toString())
+            .with(NotificationUtils.FROM_DATE, formatter.format(vacationRequest.getFromDate()))
+            .with(NotificationUtils.TO_DATE, formatter.format(vacationRequest.getToDate()))
             .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())

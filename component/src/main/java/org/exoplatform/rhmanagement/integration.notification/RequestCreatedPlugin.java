@@ -31,6 +31,8 @@ import org.exoplatform.services.organization.OrganizationConfig;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -79,10 +81,9 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
 
+    DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
     VacationRequestWithManagersDTO obj = ctx.value(REQUEST);
-
     Set<String> receivers = new HashSet<String>();
-
 
     try {
 
@@ -111,8 +112,8 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, obj.getVacationRequestDTO().getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, obj.getVacationRequestDTO().getToDate().toString())
+            .with(NotificationUtils.FROM_DATE, formatter.format(obj.getVacationRequestDTO().getFromDate()))
+            .with(NotificationUtils.TO_DATE, formatter.format(obj.getVacationRequestDTO().getToDate()))
             .with(NotificationUtils.VACATION_URL,vacationUrl )
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();

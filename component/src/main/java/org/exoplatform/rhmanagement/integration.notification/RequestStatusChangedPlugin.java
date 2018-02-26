@@ -29,6 +29,8 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.manager.IdentityManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -80,6 +82,8 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
 
+    DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+
     VacationRequestDTO obj = ctx.value(REQUEST);
 
     String currentUser = ctx.value(CURRENT_USER);
@@ -95,8 +99,8 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, obj.getFromDate().toString())
-            .with(NotificationUtils.TO_DATE, obj.getToDate().toString())
+            .with(NotificationUtils.FROM_DATE, formatter.format(obj.getFromDate()))
+            .with(NotificationUtils.TO_DATE, formatter.format(obj.getToDate()))
             .with(NotificationUtils.USER_NAME, obj.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())

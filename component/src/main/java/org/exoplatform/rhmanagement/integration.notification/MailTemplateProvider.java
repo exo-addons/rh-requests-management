@@ -84,7 +84,7 @@ public class MailTemplateProvider extends TemplateProvider {
       
       NotificationInfo notification = ctx.getNotificationInfo();
       String language = getLanguage(notification);
-
+      log.info("Prepare Mail notif for "+ notification.getKey().getId());
       String creator = notification.getValueOwnerParameter(NotificationUtils.CREATOR);
       String vacationUrl = notification.getValueOwnerParameter(NotificationUtils.VACATION_URL);
       String userName = notification.getValueOwnerParameter(NotificationUtils.USER_NAME);
@@ -113,7 +113,7 @@ public class MailTemplateProvider extends TemplateProvider {
 
       //--- Get Date From :
       String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
-      if (fromDate != null) {
+      if (fromDate != null && !fromDate.equals("")) {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(fromDate);
@@ -124,7 +124,7 @@ public class MailTemplateProvider extends TemplateProvider {
       }
       //--- Get Date To : underlying levels : Wed Mar 15 01:00:00 CET 2017
       String toDate = notification.getValueOwnerParameter(NotificationUtils.TO_DATE);
-      if (toDate != null) {
+      if (toDate != null && !toDate.equals("")) {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(toDate);
@@ -136,7 +136,7 @@ public class MailTemplateProvider extends TemplateProvider {
 
 
       String birthDate = notification.getValueOwnerParameter(NotificationUtils.BIRTHDAY_DATE);
-      if (birthDate != null) {
+      if (birthDate != null && !birthDate.equals("")) {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(birthDate);
@@ -149,7 +149,7 @@ public class MailTemplateProvider extends TemplateProvider {
       }
 
       String contractAnnivDate = notification.getValueOwnerParameter(NotificationUtils.CONTRACT_ANNIV_DATE);
-      if (contractAnnivDate != null) {
+      if (contractAnnivDate != null && !contractAnnivDate.equals("")) {
         Date theDate = new Date();
         try {
           theDate = (Date)formatter.parse(contractAnnivDate);
