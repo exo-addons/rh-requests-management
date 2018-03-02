@@ -584,3 +584,46 @@ input[readonly], select[readonly], textarea[readonly]{
 table .uiBox{border-radius :0;    margin-top: 10px;}
 table .btn.btn-primary{padding: 10px 15px}
 table .btn.btn-default{padding: 8px 13px}
+
+/* Add Admin Request */
+
+.adminAddReq.pull-right {
+    margin-top: -11px;
+}
+.newRequestPopup{
+    width: 45%; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;
+}
+.backpopup{
+    background: rgba(0, 0, 0, 0.41);
+    position: fixed;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index:1
+}
+#addNewRequestForm label{
+    display: inline-block;
+    width: 15%;
+    text-align: right;
+    padding-right: 3%;
+}
+#addNewRequestForm .controls{
+    display: inline-block;
+    width: 79%;
+}
+#addNewRequestForm .controls > select,
+#addNewRequestForm .controls > input{
+    width: 100%;
+    height: 38px;
+    border: solid 2px #d6dee8;
+}
+
+#addNewRequestForm .controls.DateTimeInput > select,
+#addNewRequestForm .controls.DateTimeInput > input{
+    width: 49.5%;
+}
+div#vacationRequestSaveAs {
+    text-align: right;
+    padding-right: 16px;
+}

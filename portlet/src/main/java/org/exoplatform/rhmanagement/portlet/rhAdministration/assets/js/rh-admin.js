@@ -87,6 +87,37 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
 
 
 
+        /**/
+        /* CREATE REQUEST FROM ADMIN */
+        /**/
+            var dateFormat = "dd-mm-yy";
+            from = $( "#fromDateRequest" ).datepicker({
+                controlType: 'select',
+                oneLine: true,
+                numberOfMonths: 1,
+               /* hourMin: 9,
+                hourMax: 18,
+                hour: 9,
+                minute: 00,*/
+                dateFormat : "dd-mm-yy",
+            });
+
+            to = $( "#toDateRequest" ).datepicker({
+                controlType: 'select',
+                oneLine: true,
+                defaultDate: "+1w",
+                numberOfMonths: 1,
+                /*hourMin: 9,
+                hourMax: 18,
+                hour: 18,
+                minute: 00,*/
+                dateFormat: "dd-mm-yy",
+            });
+
+            $(".selectize-input.items.not-full.has-options.ng-invalid.has-items").removeClass("ng-invalid");
+
+        /**/
+        /**/
 
 	});
 
@@ -172,5 +203,46 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
     $( "#toDateAdmin" ).on( "change", function() {
         $( "#toDateAdmin" ).datepicker( "option", "maxDate", $("#toDateAdmin").val() );
     });
+
+
+    /**/
+    /* CREATE REQUEST FROM ADMIN */
+    /**/
+
+    $( "#toDateRequest" ).on( "change", function() {
+        if($("#toDateRequest").val() != ""){
+            $("#toDateRequest").removeClass("ng-invalid");
+
+            $("#toDateRequest").attr("value", $("#toDateRequest").val());
+            // $( "#fromDate" ).datetimepicker( "option", "maxDate", $("#toDate").val() );
+        }else{
+            $("#toDateRequest").addClass("ng-invalid");}
+    });
+
+    $( "#fromDateRequest" ).on( "change", function() {
+        if($("#fromDateRequest").val() != ""){
+            $("#fromDateRequest").removeClass("ng-invalid");
+
+            $("#fromDateRequest").attr("value", $("#fromDateRequest").val());
+            // $( "#toDate" ).datetimepicker( "option", "minDate", $("#fromDate").val() );
+        }else{
+            $("#fromDateRequest").addClass("ng-invalid");}
+    });
+
+    $( "#toTimeRequest" ).on( "change", function() {
+        if($("#toTimeRequest option[value]:selected").text() != ""){
+            $("#toTimeRequest").removeClass("ng-invalid");
+        }else{
+            $("#toTimeRequest").addClass("ng-invalid");}
+    });
+
+    $( "#fromTimeRequest" ).on( "change", function() {
+        if($("#fromTimeRequest option[value]:selected").text() != ""){
+            $("#fromTimeRequest").removeClass("ng-invalid");
+        }else{
+            $("#fromTimeRequest").addClass("ng-invalid");}
+    });
+
+    /**/
 
 });

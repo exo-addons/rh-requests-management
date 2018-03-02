@@ -33,7 +33,6 @@ require( ["SHARED/jquery", "rhAddonControllers"], function ( $,  rhControllers)
         from = $( "#fromDate" ).datepicker({
             controlType: 'select',
             oneLine: true,
-            defaultDate: "+1w",
             numberOfMonths: 1,
            /* hourMin: 9,
             hourMax: 18,

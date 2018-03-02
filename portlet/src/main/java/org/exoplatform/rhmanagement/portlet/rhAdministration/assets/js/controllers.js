@@ -17,6 +17,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.profilPreview = false;
         $scope.rhEmployees = [];
         $scope.vacationRequests = [];
+        $scope.createNewRequest= false;
 		$scope.cVacations = [];
 		$scope.newConventionalVacation = {
             id: null

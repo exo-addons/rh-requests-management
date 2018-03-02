@@ -470,13 +470,88 @@ ng-click="userVrFilter='active';loadVacationRequestsbyUserId(userDetails.userId,
 </ul>
 </div>
 </div>
+    <div class="adminAddReq pull-right ng-binding">
+        <button class="btn btn-primary" ng-click="createNewRequest= true">add</button>
+    </div>
 </div>
+
+<!-- -->
+<!-- POPUP TO ADD NEW ADMIN REQUEST -->
+<!-- -->
+<div class="backpopup" ng-show="createNewRequest" id="addNewRequestForm">
+    <div class="UIPopupWindow uiPopup UIDragObject NormalStyle newRequestPopup">
+        <div class="popupHeader ClearFix">
+            <a class="uiIconClose pull-right" aria-hidden="true" data-dismiss="modal" ng-click="createNewRequest = false"></a>
+            <span class="PopupTitle popupTitle">Add Request</span>
+        </div>
+        <div class="PopupContent popupContent">
+            <form name="addRequest">
+                <div class="control-group ">
+                    <label class="control-label" for="daysNumber">Type:</label>
+                    <div class="controls">
+                        <select name="inputUsername" id="type" placeholder="">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="holiday" ng-selected="true" selected="selected">Conge</option>
+                            <option value="sick">Maladie</option>
+                            <option value="leave">Sortie</option>
+                            <!-- ngIf: cVacations.length > 0 -->
+                            <option value="recovery" class="ng-binding">Recuperation</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label" for="fromDateRequest">Allant de:</label>
+                    <div class="controls DateTimeInput">
+                        <input type="text" name="userFromDate" id="fromDateRequest" ng-model="newVacationRequest.fromDate" class="Datepicker ">
+
+                        <select name="userFromTime" id="fromTimeRequest">
+                            <option value="09:00" selected="">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label" for="toDateRequest">Au:</label>
+                    <div class="controls DateTimeInput">
+                        <input type="text" name="userToDate" id="toDateRequest" class="hasDatepicker">
+                        <select name="userToTime" id="toTimeRequest">
+                            <option value="10:00" >10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00" selected="">18:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="vacationRequestSaveAs" class="control-group form-horizontal ">
+                    <button type="button" class="btn" ng-click="createNewRequest = false">Annuler</button>
+                    <button type="button" class="btn btn-primary ng-binding" id="saveVacationRequest" ng-click="">Enregistrer
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- -->
+<!-- -->
 
 
 <table id="requestsTable" class="table uiGrid table-hover table-striped ">
 <thead>
 <tr>
-<th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">Id
+<th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">
 <img ng-show="orderByField == 'title' && !reverseSort"
 src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
 <img ng-show="orderByField == 'title' && reverseSort"
@@ -534,8 +609,10 @@ src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
 
 
 							 <td class="request_id">
-                                <a ng-if="vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = false">- {{vacationRequest.id}}</a>
-								<a ng-if="!vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = true">+ {{vacationRequest.id}}</a>
+                                 <!--{{vacationRequest.id}}-->
+                                 <!--{{vacationRequest.id}}-->
+                                <a ng-if="vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = false"><span class="badgeDefault badgePrimary">-</span></a>
+								<a ng-if="!vacationRequest.expanded" href="" data-ng-click="showVacationRequest(vacationRequest); vacationRequest.expanded = true"><span class="badgeDefault badgePrimary">+</span></a>
 </td>
 
                                 <td>
