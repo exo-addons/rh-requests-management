@@ -90,6 +90,7 @@ public class RequestCommentedPlugin extends BaseNotificationPlugin {
     VacationRequestDTO vacationRequest  = ctx.value(VACATION_REQUEST);
 
     String userId=obj.getPosterId();
+    receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getRequestId());
     String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getRequestId();

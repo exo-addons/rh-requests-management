@@ -91,6 +91,7 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
     Set<String> receivers =  ctx.value(RECEIVERS);
 
     String userId=currentUser;
+    receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getId());
     String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getId();
@@ -99,8 +100,8 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, formatter.format(obj.getFromDate()))
-            .with(NotificationUtils.TO_DATE, formatter.format(obj.getToDate()))
+            .with(NotificationUtils.FROM_DATE, String.valueOf(obj.getFromDate().getTime()))
+            .with(NotificationUtils.TO_DATE, String.valueOf(obj.getToDate().getTime()))
             .with(NotificationUtils.USER_NAME, obj.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())

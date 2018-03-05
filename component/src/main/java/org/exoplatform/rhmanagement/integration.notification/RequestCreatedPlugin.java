@@ -104,6 +104,7 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
 
     String userId=obj.getVacationRequestDTO().getUserId();
+    receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getVacationRequestDTO().getId());
     String vacationUrl =CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getVacationRequestDTO().getId();
@@ -112,8 +113,8 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, formatter.format(obj.getVacationRequestDTO().getFromDate()))
-            .with(NotificationUtils.TO_DATE, formatter.format(obj.getVacationRequestDTO().getToDate()))
+            .with(NotificationUtils.FROM_DATE, String.valueOf(obj.getVacationRequestDTO().getFromDate().getTime()))
+            .with(NotificationUtils.TO_DATE, String.valueOf(obj.getVacationRequestDTO().getToDate().getTime()))
             .with(NotificationUtils.VACATION_URL,vacationUrl )
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();

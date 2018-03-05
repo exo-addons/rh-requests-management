@@ -17,6 +17,8 @@
 package org.exoplatform.rhmanagement.integration.notification;
 
 import org.bouncycastle.ocsp.Req;
+import org.exoplatform.calendar.service.CalendarService;
+import org.exoplatform.calendar.service.CalendarSetting;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfig;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfigs;
@@ -114,50 +116,29 @@ public class MailTemplateProvider extends TemplateProvider {
       //--- Get Date From :
       String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
       if (fromDate != null && !fromDate.equals("")) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(fromDate);
-        } catch (Exception e){
-          log.error("Error when parsing FROM_DATE var {}",fromDate, e);
-        }
-        templateContext.put("FROM_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+        templateContext.put("FROM_DATE", Utils.formatDate(fromDate, Utils.getUserTimezone(notification.getTo())));
       }
-      //--- Get Date To : underlying levels : Wed Mar 15 01:00:00 CET 2017
       String toDate = notification.getValueOwnerParameter(NotificationUtils.TO_DATE);
       if (toDate != null && !toDate.equals("")) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(toDate);
-        } catch (Exception e){
-          log.error("Error when parsing TO_DATE var {}",fromDate, e);
-        }
-        templateContext.put("TO_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
+        templateContext.put("TO_DATE", Utils.formatDate(toDate, Utils.getUserTimezone(notification.getTo())));
       }
 
 
       String birthDate = notification.getValueOwnerParameter(NotificationUtils.BIRTHDAY_DATE);
       if (birthDate != null && !birthDate.equals("")) {
-        Date theDate = new Date();
         try {
-          theDate = (Date)formatter.parse(birthDate);
-          templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-
-
+          templateContext.put("BIRTHDAY_DATE", Utils.formatDate(birthDate, Utils.getUserTimezone(notification.getTo())));
         } catch (Exception e){
-          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e);
+          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate,  e.getMessage());
         }
       }
 
       String contractAnnivDate = notification.getValueOwnerParameter(NotificationUtils.CONTRACT_ANNIV_DATE);
       if (contractAnnivDate != null && !contractAnnivDate.equals("")) {
-        Date theDate = new Date();
         try {
-          theDate = (Date)formatter.parse(contractAnnivDate);
-          templateContext.put("CONTRACT_ANNIV_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-
-
+          templateContext.put("CONTRACT_ANNIV_DATE", Utils.formatDate(contractAnnivDate, Utils.getUserTimezone(notification.getTo())));
         } catch (Exception e){
-          log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate, e);
+          log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate,  e.getMessage());
         }
       }
 
@@ -249,6 +230,28 @@ public class MailTemplateProvider extends TemplateProvider {
     } else {
       return str;      
     }
+  }
+
+
+  protected String getDate(String date, String userName) {
+    if (date != null) {
+      Date date_ = new Date(Long.parseLong(date));
+      return org.exoplatform.rhmanagement.integration.notification.TemplateUtils.format(date_,getUserTimezone(userName));
+    } else {
+      return "";
+    }
+  }
+
+
+  public TimeZone getUserTimezone(String username) {
+    try {
+      CalendarService calService=  CommonsUtils.getService(CalendarService.class);
+      CalendarSetting setting = calService.getCalendarSetting(username);
+      return TimeZone.getTimeZone(setting.getTimeZone());
+    } catch (Exception e) {
+      log.error("Can't retrieve timezone", e);
+    }
+    return null;
   }
 
 }

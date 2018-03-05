@@ -91,6 +91,7 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
 
 
     String userId=obj.getValidatorUserId();
+    receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getRequestId());
     String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getRequestId();
@@ -104,8 +105,8 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, formatter.format(vacationRequest.getFromDate()))
-            .with(NotificationUtils.TO_DATE, formatter.format(vacationRequest.getToDate()))
+            .with(NotificationUtils.FROM_DATE, String.valueOf(vacationRequest.getFromDate().getTime()))
+            .with(NotificationUtils.TO_DATE, String.valueOf(vacationRequest.getToDate().getTime()))
             .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
             .with(NotificationUtils.VACATION_URL, vacationUrl)
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())

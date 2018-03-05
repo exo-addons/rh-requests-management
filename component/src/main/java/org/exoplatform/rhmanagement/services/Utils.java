@@ -132,21 +132,21 @@ public class Utils {
         }
     }
 
-    public static String formatDate(Date date, TimeZone timezone) {
+    public static String formatDate(String date, TimeZone timezone) {
         if (date == null) {
             return null;
         }
 
         Calendar today = Calendar.getInstance(timezone);
         Calendar cal = Calendar.getInstance(timezone);
-        cal.setTime(date);
+        cal.setTime(new Date(Long.parseLong(date)));
         String format = "MMM dd yyyy";
         if (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
             format = "MMM dd";
         }
         SimpleDateFormat df = new SimpleDateFormat(format);
         df.setTimeZone(timezone);
-        return df.format(date);
+        return df.format(cal.getTime());
     }
 
     public static TimeZone getUserTimezone(String username) {

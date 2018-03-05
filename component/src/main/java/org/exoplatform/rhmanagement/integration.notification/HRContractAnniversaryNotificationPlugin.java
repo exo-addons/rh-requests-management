@@ -107,7 +107,7 @@ public class HRContractAnniversaryNotificationPlugin extends BaseNotificationPlu
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.CONTRACT_ANNIV_DATE, formatter.format(obj.getContractStartDate()))
+            .with(NotificationUtils.CONTRACT_ANNIV_DATE, String.valueOf(obj.getContractStartDate().getTime()))
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

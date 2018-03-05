@@ -61,8 +61,7 @@ import java.util.Locale;
    }
 )
 public class WebTemplateProvider extends TemplateProvider {
-  //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
-  // --- Create formatter
+
   protected DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
   protected static Log log = ExoLogger.getLogger(MailTemplateProvider.class);
   
@@ -107,57 +106,6 @@ public class WebTemplateProvider extends TemplateProvider {
         Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userName, false);
         templateContext.put("USER_NAME", id.getProfile().getFullName());
       }
-
-
-      //--- Get Date From :
-      String fromDate = notification.getValueOwnerParameter(NotificationUtils.FROM_DATE);
-      if (fromDate != null) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(fromDate);
-        } catch (Exception e){
-          log.error("Error when parsing FROM_DATE var {}",fromDate, e);
-        }
-        templateContext.put("FROM_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-      }
-      //--- Get Date To : underlying levels : Wed Mar 15 01:00:00 CET 2017
-      String toDate = notification.getValueOwnerParameter(NotificationUtils.TO_DATE);
-      if (toDate != null) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(toDate);
-        } catch (Exception e){
-          log.error("Error when parsing TO_DATE var {}",fromDate, e);
-        }
-        templateContext.put("FROM_TO", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-      }
-
-      String birthDate = notification.getValueOwnerParameter(NotificationUtils.BIRTHDAY_DATE);
-      if (birthDate != null) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(birthDate);
-          templateContext.put("BIRTHDAY_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-
-        } catch (Exception e){
-          log.error("Error when parsing BIRTHDAY_DATE var {}",birthDate, e.getMessage());
-        }
-      }
-
-      String contractAnnivDate = notification.getValueOwnerParameter(NotificationUtils.CONTRACT_ANNIV_DATE);
-      if (contractAnnivDate != null) {
-        Date theDate = new Date();
-        try {
-          theDate = (Date)formatter.parse(contractAnnivDate);
-          templateContext.put("CONTRACT_ANNIV_DATE", Utils.formatDate(theDate, Utils.getUserTimezone(notification.getTo())));
-
-
-        } catch (Exception e){
-          log.error("Error when parsing CONTRACT_ANNIV_DATE var {}",contractAnnivDate, e);
-        }
-      }
-
-
         String daysToConsume = notification.getValueOwnerParameter(NotificationUtils.DAYS_TO_CONSUME);
         if (daysToConsume != null) {
                 templateContext.put("DAYS_TO_CONSUME", daysToConsume);
