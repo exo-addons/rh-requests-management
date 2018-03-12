@@ -34,6 +34,7 @@ public class Utils {
 
     public static final String ALL="all";
     public static final String ACTIVE="active";
+    public static final String WAITING="waiting";
     public static final String APPROVED="approved";
     public static final String DECLINED="declined";
     public static final String PENDING="pending";
