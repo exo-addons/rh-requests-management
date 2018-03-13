@@ -470,9 +470,9 @@ ng-click="userVrFilter='active';loadVacationRequestsbyUserId(userDetails.userId,
 </ul>
 </div>
 </div>
-    <div class="adminAddReq pull-right ng-binding">
+<!--    <div class="adminAddReq pull-right ng-binding">
         <button class="btn btn-primary" ng-click="createNewRequest= true">add</button>
-    </div>
+    </div>-->
 </div>
 
 <!-- -->
@@ -504,7 +504,7 @@ ng-click="userVrFilter='active';loadVacationRequestsbyUserId(userDetails.userId,
                     <div class="controls DateTimeInput">
                         <input type="text" name="userFromDate" id="fromDateRequest" ng-model="newVacationRequest.fromDate" class="Datepicker ">
 
-                        <select name="userFromTime" id="fromTimeRequest">
+                        <select name="userFromTimeuserFromTime" id="fromTimeRequest">
                             <option value="09:00" selected="">09:00</option>
                             <option value="10:00">10:00</option>
                             <option value="11:00">11:00</option>
@@ -689,6 +689,9 @@ ng-click="vrFilter='all';loadVacationRequests('all',0,10)">{{i18n.all}}</a>
 <li><a href="javascript:void(0)"
 ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}</a>
                                 </li>
+    <li><a href="javascript:void(0)"
+           ng-click="vrFilter='waiting';loadVacationRequests('waiting',0,10)">{{i18n.waiting}}</a>
+    </li>
 </ul>
                         </div>
 </div>
@@ -1301,7 +1304,7 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
 </div>
                             </div>
 
-<button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="saveVacationRequest(vacationRequesttoShow)"> Save</button>
+<button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="updateVacationRequest(vacationRequesttoShow)"> Update</button>
 <hr class="clearfix"/>
 </div>
 

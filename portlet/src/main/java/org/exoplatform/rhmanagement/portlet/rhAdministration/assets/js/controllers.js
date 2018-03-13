@@ -52,6 +52,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             id: null
         };
 
+        $scope.newVacationRequest = {id: null};
 
         $scope.vacationRequesttoShow = {
             validatorUserId: null
@@ -1108,7 +1109,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             return Date.parse(dateSplit);
         };
 
-        $scope.saveVacationRequest = function (vacation) {
+        $scope.updateVacationRequest = function (vacation) {
             var datefrom = $scope.updateDateFormat($("#fromDateAdmin").val(), $("#fromTime option[value]:selected").text());
             var dateto = $scope.updateDateFormat($("#toDateAdmin").val(), $("#toTime option[value]:selected").text());
 
@@ -1132,7 +1133,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
+                    url: rhAdminContainer.jzURL('RhAdministrationController.updateVacationRequest')
                 }).then(function successCallback(data) {
                     $scope.setResultMessage($scope.i18n.requestUpdated, "success");
                     $scope.disableInput("#daysNumber, #fromDateAdmin, #fromDateAdmin");
@@ -1146,6 +1147,50 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 });
             }
         };
+
+
+                $scope.saveVacationRequest = function (vacation) {
+                    var datefrom = $scope.updateDateFormat($("#fromDateRequest").val(), $("#fromTimeRequest option[value]:selected").text());
+                    var dateto = $scope.updateDateFormat($("#toDateRequest").val(), $("#toTimeRequest option[value]:selected").text());
+
+                    if(vacation.daysNumber < 0){
+                        $scope.setResultMessage($scope.i18n.nbrDate, "error");
+                        $("#daysNumber").addClass("ng-invalid");
+                        $scope.scrollTo();
+                    }else if(datefrom > dateto){
+                        $("#daysNumber").removeClass("ng-invalid");
+                        $scope.setResultMessage($scope.i18n.fromToSup, "error");
+                        $("#fromDateAdmin, #toDateAdmin").addClass("ng-invalid");
+                        $scope.scrollTo();
+                    }else {
+
+                        $("#fromDateRequest, #toDateRequest").removeClass("ng-invalid");
+                        vacation.fromDate = datefrom;
+                        vacation.toDate = dateto;
+
+                        vacation.userId=$scope.userDetails.userId;
+                        vacation.userFullName=$scope.userDetails.name
+                        $http({
+                            data: vacation,
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            url: rhAdminContainer.jzURL('RhAdministrationController.saveVacationRequest')
+                        }).then(function successCallback(data) {
+                            $scope.setResultMessage($scope.i18n.requestCreated, "success");
+                            $scope.disableInput("#daysNumber, #fromDateRequest, #fromDateRequest");
+                            $scope.scrollTo();
+
+                            $timeout(function () {
+                                $scope.showAlert = false;
+                            }, 2000);
+                        }, function errorCallback(data) {
+                            $scope.setResultMessage($scope.i18n.defaultError, "error");
+                        });
+                    }
+                };
+
 
         function sameDay(d1, d2) {
           return d1.getFullYear() === d2.getFullYear() &&  d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();

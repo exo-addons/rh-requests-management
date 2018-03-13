@@ -276,7 +276,11 @@ public class RhAdministrationController {
         vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getActivVacationRequests(offset,limit));
         vacationRequestsPageDTO.setSize(vacationRequestService.getActiveVacationRequestsCount());
           return vacationRequestsPageDTO;
-        }else{
+        }else if(vrFilter != null&&vrFilter.equals(Utils.WAITING)){
+        vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getWaitingVacationRequests(offset,limit));
+        vacationRequestsPageDTO.setSize(vacationRequestService.getWaitingVacationRequestsCount());
+        return vacationRequestsPageDTO;
+      }else{
         vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getVacationRequests(offset,limit));
         vacationRequestsPageDTO.setSize(vacationRequestService.getVacationRequestesCount());
         return vacationRequestsPageDTO;
@@ -305,6 +309,24 @@ public class RhAdministrationController {
     }
   }
 
+
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<VacationRequestDTO> getWaitingVacationRequests() {
+    try {
+      List<VacationRequestDTO> vrs = vacationRequestService.getWaitingVacationRequests(0,100);
+      for (VacationRequestDTO vr : vrs){
+        vr.setExpanded(false);
+      }
+      return vrs;
+    } catch (Throwable e) {
+      LOG.error(e);
+      return null;
+    }
+  }
 
 
 
@@ -706,7 +728,7 @@ public class RhAdministrationController {
   @Resource(method = HttpMethod.POST)
   @MimeType.JSON
   @Jackson
-  public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
+  public void updateVacationRequest(@Jackson VacationRequestDTO obj) {
 
 
 
@@ -745,6 +767,58 @@ public class RhAdministrationController {
     commentService.save(comment);
     try {
       listenerService.broadcast("exo.hrmanagement.requestUpdated", "", obj);
+    } catch (Exception e) {
+      LOG.error("Cannot broadcast request creation event");
+    }
+
+  }
+
+
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
+
+
+
+/*    if(obj.getStatus().equals(VALIDATED)) {
+      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
+      VacationRequestDTO oldVr = vacationRequestService.getVacationRequest(obj.getId());
+      if (obj.getType().equals("holiday")) {
+
+        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
+          float holidays = userRHDataDTO.getHolidaysBalance();
+          float oldNbDays = oldVr.getDaysNumber();
+          float newNbDays = obj.getDaysNumber();
+          userRHDataDTO.setHolidaysBalance(holidays + (oldNbDays-newNbDays));
+          userDataService.save(userRHDataDTO);
+          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,holidays, userRHDataDTO.getSickdaysBalance(),"holidayUpdated",currentUser);
+        }
+      }
+      if (obj.getType().equals("sick")) {
+        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
+          float sickDays = userRHDataDTO.getSickdaysBalance();
+          float oldNbDays = oldVr.getDaysNumber();
+          float newNbDays = obj.getDaysNumber();
+          userRHDataDTO.setSickdaysBalance(sickDays + (oldNbDays-newNbDays));
+          userDataService.save(userRHDataDTO);
+          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,userRHDataDTO.getHolidaysBalance(), sickDays,"sickDaysUpdated",currentUser);
+        }
+      }
+    }*/
+
+ /*
+    CommentDTO comment=new CommentDTO();
+    comment.setRequestId(obj.getId());
+    comment.setCommentText("requestDaysUpdated");
+    comment.setPosterId(currentUser);
+    comment.setCommentType(Utils.HISTORY);
+    commentService.save(comment);*/
+    vacationRequestService.save(obj,true);
+
+    try {
+      listenerService.broadcast("exo.hrmanagement.requestCreated", "", obj);
     } catch (Exception e) {
       LOG.error("Cannot broadcast request creation event");
     }
