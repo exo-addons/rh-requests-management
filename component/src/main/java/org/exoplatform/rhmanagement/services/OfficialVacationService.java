@@ -71,6 +71,13 @@ public class OfficialVacationService {
     List<OfficialVacationEntity> entities = officialVacationDAO.getOfficialVacations(offset, limit);
     List<OfficialVacationDTO> dtos = new ArrayList<OfficialVacationDTO>();
     for (OfficialVacationEntity entity : entities) {
+      Calendar calendar = new GregorianCalendar();
+      calendar.setTime(entity.getBeginDate());
+      calendar.set(Calendar.HOUR, 12);
+      entity.setBeginDate(calendar.getTime());
+      calendar.setTime(entity.getEndDate());
+      calendar.set(Calendar.HOUR, 12);
+      entity.setEndDate(calendar.getTime());
       dtos.add(convert(entity));
     }
     return dtos;
@@ -93,6 +100,7 @@ public class OfficialVacationService {
       if(((int)entity.getDaysNumber())==1){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(entity.getBeginDate());
+        calendar.set(Calendar.HOUR, 12);
         days.add(calendar.getTime());
         LOG.info("_____"+calendar.getTime().toString());
       }else if(((int)entity.getDaysNumber())>1){
