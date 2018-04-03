@@ -170,6 +170,7 @@ data-ng-click="deleteUserHRData(userRhData)">
 
 <div ng-include src="templateUdata.url" onload='setRhData(userRhData)'></div>
 
+              <!--  <my-todo details="userRhData"></my-todo>-->
 
 
 

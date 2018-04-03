@@ -65,7 +65,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                              url: 'templateVr'};
 
         $scope.templateUdata = { name: 'templateUdata',
-                                  url: 'templateUdata'};
+                                  url: '/rh-management-portlet/templates/template.html'};
 
 
 

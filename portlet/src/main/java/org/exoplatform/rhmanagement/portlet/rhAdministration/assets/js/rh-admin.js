@@ -13,6 +13,14 @@ require( ["SHARED/jquery", "rhAdminAddonControllers"], function ( $,  rhAdminCon
               start = +start; //parse to int
               return input.slice(start);
           }
+          rhAdminApp.directive('myTodo', function(){
+                        return {
+                          restrict: 'EA',
+                          templateUrl: '/rh-management-portlet/templates/template.html',
+                          scope: {
+                             details: '='
+                          }
+                        };
       });
       function PagerService() {
           // service definition
