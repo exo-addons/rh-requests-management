@@ -5,6 +5,7 @@ import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 import org.apache.commons.fileupload.FileItem;
+import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.juzu.ajax.Ajax;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.portal.application.PortalRequestContext;
@@ -22,6 +23,10 @@ import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.commons.api.settings.SettingService;
+import org.exoplatform.commons.api.settings.SettingValue;
+import org.exoplatform.commons.api.settings.data.Context;
+import org.exoplatform.commons.api.settings.data.Scope;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -41,6 +46,7 @@ public class RhAdministrationController {
   private final String APPROVED="approved";
   private final String VALIDATED="validated";
   private final String CANCELED="canceled";
+  private final String RH_MANAGER = "lastAccess";
 
   @Inject
   UserDataService userDataService;
@@ -75,6 +81,9 @@ public class RhAdministrationController {
 
   @Inject
   OfficialVacationService officialVacationService;
+
+  @Inject
+  SettingService settingService;
 
   @Inject
   @Path("index.gtmpl")
@@ -459,6 +468,7 @@ public class RhAdministrationController {
   @Jackson
   public Response getContext() {
     try {
+
       JSON data = new JSON();
       data.set("currentUser",currentUser);
       Profile profile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUser, false).getProfile();
@@ -469,6 +479,9 @@ public class RhAdministrationController {
       }
       data.set("currentUserName",profile.getFullName());
       data.set("vRCount",vacationRequestService.getVacationRequestesCount());
+      String rhManager="";
+      if(settingService.get(Context.GLOBAL, Scope.GLOBAL, RH_MANAGER)!=null) rhManager=settingService.get(Context.GLOBAL, Scope.GLOBAL, RH_MANAGER).getValue().toString();
+      data.set("rhManager",rhManager);
       return Response.ok(data.toString());
     } catch (Throwable e) {
       LOG.error("error while getting context", e);
@@ -477,7 +490,14 @@ public class RhAdministrationController {
   }
 
 
+  @Ajax
+  @Resource(method = HttpMethod.POST)
+  @MimeType.JSON
+  @Jackson
+  public void saveSettings(@Jackson SettingsDTO obj) {
 
+    settingService.set(Context.GLOBAL, Scope.GLOBAL, RH_MANAGER, SettingValue.create(obj.getRhManager()));
+  }
 
 
   private ResourceBundle getResourceBundle(Locale locale) {

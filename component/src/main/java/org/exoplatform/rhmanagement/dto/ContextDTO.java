@@ -47,6 +47,8 @@ public class ContextDTO {
 
   private List<ConventionalVacationDTO>  conventionalVacations;
 
+  private List<OfficialVacationDTO> officialVacations;
+
   private List<Date> officialDays;
 
   public String getCurrentUser() {
@@ -160,5 +162,13 @@ public class ContextDTO {
 
   public void setOfficialDays(List<Date> officialDays) {
     this.officialDays = officialDays;
+  }
+
+  public List<OfficialVacationDTO> getOfficialVacations() {
+    return officialVacations;
+  }
+
+  public void setOfficialVacations(List<OfficialVacationDTO> officialVacations) {
+    this.officialVacations = officialVacations;
   }
 }

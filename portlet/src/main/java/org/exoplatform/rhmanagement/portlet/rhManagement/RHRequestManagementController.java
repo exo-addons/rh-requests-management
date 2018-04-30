@@ -749,6 +749,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
       data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
       data.setOfficialDays(officialVacationService.getOfficialVacationDays());
+      data.setOfficialVacations(officialVacationService.getOfficialVacations(0,0));
     return data;
   }
 

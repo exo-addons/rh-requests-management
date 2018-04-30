@@ -5,6 +5,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
 
 
         $scope.currentUser = "";
+        $scope.settings = {};
         $scope.vRequestdet = null;
         $scope.currentUserAvatar = "";
         $scope.currentUserName = "";
@@ -855,6 +856,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 $scope.currentUser = data.data.currentUser;
                 $scope.currentUserAvatar = data.data.currentUserAvatar;
                 $scope.currentUserName = data.data.currentUserName;
+                $scope.settings.rhManager=data.data.rhManager;
                // $scope.vRCount = data.data.vRCount;
                 $scope.loadEmployees('active');
 				$scope.loadConventionalVacations();
@@ -1147,6 +1149,20 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
                 });
             }
         };
+
+                $scope.saveSettings = function (settings) {
+                    $http({
+                        data: settings,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        url: rhAdminContainer.jzURL('RhAdministrationController.saveSettings')
+                    }).then(function successCallback(data) {
+                    }, function errorCallback(data) {
+                        $scope.setResultMessage($scope.i18n.defaultError, "error");
+                    });
+                }
 
 
                 $scope.saveVacationRequest = function (vacation) {

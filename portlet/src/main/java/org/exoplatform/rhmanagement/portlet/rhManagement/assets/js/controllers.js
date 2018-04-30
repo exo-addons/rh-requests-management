@@ -31,6 +31,8 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
+        $scope.showInfoTab = false;
+        $scope.showRequestsTab = true;
         $scope.showHollidays = true;
         $scope.showLeave = false;
         $scope.showConventional = false;
@@ -46,6 +48,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.cVacations = [];
         $scope.officialDays = [];
         $scope.cVacation = null;
+        $scope.oVacations = [];
+
+
+
 
 
         $scope.vacationRequesttoShow = null;
@@ -97,16 +103,25 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
          }
 
 
+        $scope.showInfoTabFn = function(){
+            $scope.showRequestsTab=false;
+            $scope.showInfoTab = true;
+        }
+
         $scope.showFormFn = function(){
+            $scope.showInfoTab = false;
+            $scope.showRequestsTab=true;
             $scope.showForm = true;
             if($scope.getUrlParameterByName('rid')){
                 $scope.showDetails = true;
                 $scope.showFullReq = false;
-            }
+                }
 
-        }
+                }
 
         $scope.toggleView = function(){
+            $scope.showInfoTab = false;
+            $scope.showRequestsTab=true;
             $scope.showCal = !$scope.showCal;
             $text = $(".show-calender").text();
             if($text.indexOf($scope.i18n.showCalendar) >= 0){
@@ -729,6 +744,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
                 if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
+                if(data.data.officialVacations!=null) {$scope.oVacations = data.data.officialVacations;}
                 $scope.officialDays=data.data.officialDays;
                 var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
@@ -744,6 +760,10 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
+
+
+
+
         $scope.refreshController = function() {
             try {
                 $scope.$digest()

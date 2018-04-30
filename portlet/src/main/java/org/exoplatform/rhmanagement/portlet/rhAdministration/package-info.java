@@ -5,6 +5,7 @@
         @Binding(value = IdentityManager.class),
         @Binding(value = OrganizationService.class),
         @Binding(value = RepositoryService.class),
+        @Binding(value = SettingService.class),
         @Binding(value = ValidatorService.class),
         @Binding(value = CommentService.class),
         @Binding(value = ListenerService.class),
@@ -49,6 +50,7 @@ import juzu.plugin.binding.Bindings;
 import juzu.plugin.less.Less;
 import juzu.plugin.portlet.Portlet;
 
+import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.listener.ListenerService;
