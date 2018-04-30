@@ -2,7 +2,9 @@
 <div id="rhAddon" class="rhAddon" style="visibility: hidden;">
 
     <div ng-controller="rhCtrl" id="rhCtrl">
-        <ul class="nav nav-tabs addonMenu" id="addonMenu">
+        <ul class="nav nav-tabs addonMenu" id="addonMenu" >
+
+
             <li class="item" ng-class="{ 'active': showForm }">
                 <a class="" data-placement="right" data-original-title="Add"
                    ng-click="showFormFn()">
@@ -17,11 +19,18 @@
                     <span id="forum" class="tabName show-calender">{{i18n.showCalendar}}</span>
                 </a>
             </li>
-            <li class="item" ng-class="{ 'active': showInfoTab }" style="float: right;">
+            <li class="item" ng-class="{ 'active': showInfoTab }" style="float: right;" ng-show="showRequestsTab" >
                 <a class="" data-placement="left" data-original-title="Add"
                    ng-click="showInfoTabFn()">
                     <i class="uiIconInformation"></i>
                     <span id="forum" class="tabName">{{i18n.showInfo}}</span>
+                </a>
+            </li>
+            <li class="item" ng-show="!showRequestsTab" style="float: right;">
+                <a class="" data-placement="right" data-original-title="Add"
+                   ng-click="showInfoTab=false; showRequestsTab=true;">
+                    <i class="uiIconViewList"></i>
+                    <span class="tabName">{{i18n.vacationRequestList}}</span>
                 </a>
             </li>
 
