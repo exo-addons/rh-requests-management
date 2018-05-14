@@ -42,6 +42,9 @@ public class Utils {
     public static final String VALIDATED="validated";
     public static final String COMMENT="comment";
     public static final String HISTORY="history";
+    public static final String SICK="sick";
+    public static final String HOLIDAY="holiday";
+    public static final String LEAVE="leave";
     public final static String EMPLOYEES_SPACE = "exo.hrmanagement.employees.space";
     public final static String EMPLOYEES_SPACE_DEFAULT = "exo_employees";
 

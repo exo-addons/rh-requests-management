@@ -740,6 +740,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                     $scope.showInfoBox=false;
                     $scope.showFullReq = true;
                     $scope.showAlert = false;
+                    $scope.showRequestsTab = true;
                 }
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;

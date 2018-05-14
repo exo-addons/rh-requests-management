@@ -115,6 +115,17 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
         }
     }
 
+    public  long getVacationRequestsByTypeCount(String type) {
+        try {
+            return getEntityManager().createNamedQuery("vacatioRequestEntity.countByType", Long.class)
+                    .setParameter("type", type)
+                    .getSingleResult();
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests count.", e);
+            throw e;
+        }
+    }
+
     public List<VacationRequestEntity> getVacationRequestsByUserId(String userId, int offset, int limit) {
         try {
             if (offset >= 0 && limit > 0) {
@@ -126,6 +137,25 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
             } else {
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findByUserId", VacationRequestEntity.class)
                         .setParameter("userId", userId)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
+    public List<VacationRequestEntity> getVacationRequestsByType(String type, int offset, int limit) {
+        try {
+            if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByType", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("type", type)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByType", VacationRequestEntity.class)
+                        .setParameter("type", type)
                         .getResultList();
             }
         } catch (Exception e) {

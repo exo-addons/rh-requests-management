@@ -289,6 +289,10 @@ public class RhAdministrationController {
         vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getWaitingVacationRequests(offset,limit));
         vacationRequestsPageDTO.setSize(vacationRequestService.getWaitingVacationRequestsCount());
         return vacationRequestsPageDTO;
+      }else if(vrFilter != null&&(vrFilter.equals(Utils.SICK)||vrFilter.equals(Utils.HOLIDAY)||vrFilter.equals(Utils.LEAVE))){
+        vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getVacationRequestsByType(vrFilter,offset,limit));
+        vacationRequestsPageDTO.setSize(vacationRequestService.getVacationRequestsByTypeCount(vrFilter));
+        return vacationRequestsPageDTO;
       }else{
         vacationRequestsPageDTO.setVacationRequests(vacationRequestService.getVacationRequests(offset,limit));
         vacationRequestsPageDTO.setSize(vacationRequestService.getVacationRequestesCount());

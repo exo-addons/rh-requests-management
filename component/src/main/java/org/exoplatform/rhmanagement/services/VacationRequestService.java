@@ -111,6 +111,18 @@ public class VacationRequestService {
     return dtos;
   }
 
+  public List<VacationRequestDTO> getVacationRequestsByType(String type, int offset, int limit) {
+    if (offset < 0) {
+      throw new IllegalArgumentException("Method getVacationRequests - Parameter 'offset' must be positive");
+    }
+    List<VacationRequestEntity> entities = vacationRequestDAO.getVacationRequestsByType(type, offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
   public VacationRequestDTO getVacationRequest(long id) {
     List<VacationRequestEntity> entities=vacationRequestDAO.getVacationRequestbyId(id);
     if (entities.size()!=0){
@@ -203,6 +215,11 @@ public class VacationRequestService {
 
   public long getActiveVacationRequestsCount() {
     return vacationRequestDAO.getActiveVacationRequestsCount();
+  }
+
+
+  public long getVacationRequestsByTypeCount(String type) {
+    return vacationRequestDAO.getVacationRequestsByTypeCount(type);
   }
 
 

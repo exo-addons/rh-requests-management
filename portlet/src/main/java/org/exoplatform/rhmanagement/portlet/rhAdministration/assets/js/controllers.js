@@ -82,6 +82,7 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
         $scope.userBlanceId="";
         $scope.emFilter="active";
 
+
         $scope.initController = function () {
             // initialize to page 1
             $scope.vm.setPage(1);
@@ -998,6 +999,15 @@ define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/
             $scope.showAddForm = false;
             $("#requestsList .elementDetail input").attr("readonly", "true");
             $("#requestsList .elementDetail input[type=submit], #requestsList .elementDetail input[type=cancel]").removeAttr("readonly");
+        }
+
+        $scope.printDiv = function(iserId) {
+          var divName="userdet_"+iserId;
+          var printContents = document.getElementById(divName).innerHTML;
+          var popupWin = window.open('', '_blank', 'width=300,height=300');
+          popupWin.document.open();
+          popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+          popupWin.document.close();
         }
 
         $scope.range = function() {
