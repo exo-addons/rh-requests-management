@@ -1,0 +1,72 @@
+<div class="table-responsive">
+    <table id="employeesTable" class="table uiGrid table-hover table-striped"
+           ng-show="!showAddForm">
+        <thead>
+        <tr>
+            <th><a href="#" ng-click="reverseSort = !reverseSort">{{i18n.userFullName}}
+                <img ng-show="orderByField == 'name' && !reverseSort"
+                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif">
+                <img ng-show="orderByField == 'name' && reverseSort"
+                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif">
+            </a>
+            </th>
+            <th>{{i18n.cin}} </th>
+            <th>{{i18n.socialSecNumber}}</th>
+            <th>{{i18n.holidaysBalance}}</th>
+            <th>{{i18n.sickBalance}} </th>
+            <th>{{i18n.phone}} </th>
+            <th>{{i18n.actions}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat-start="userRhData in rhEmployees| orderBy:'name':reverseSort">
+            <td>
+
+                <a class="actionIcon nameOpen"  ng-if="userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = false"><span class="badgeDefault badgePrimary">-</span> {{userRhData.name}}</a>
+                <a class="actionIcon nameOpen"  ng-if="!userRhData.expanded" href="" data-ng-click="loadUserPreview(userRhData); userRhData.expanded = true"><span class="badgeDefault badgePrimary">+</span> {{userRhData.name}}</a>
+                <!--data-ng-click="loadUserHRData(userRhData)-->
+            </td>
+            <td>
+                <span>{{userRhData.hrData.cin}}</span>
+            </td>
+            <td>
+                <span>{{userRhData.hrData.socialSecNumber}}</span>
+            </td>
+            <td>
+                <span>{{userRhData.hrData.holidaysBalance}}</span>
+            </td>
+            <td>
+                <span>{{userRhData.hrData.sickdaysBalance}}</span>
+            </td>
+
+            <td>
+                <span>{{userRhData.phone}}</span>
+            </td>
+            <td>
+                <div class="center">
+                    <a class="actionIcon" title="" href=""
+                       data-ng-click="loadUserHRData(userRhData)">
+                        <i class="uiIconViewUserInfo uiIconLightGray"> </i>
+                    </a>
+
+                    <a class="actionIcon" title="" href=""
+                       data-ng-click="deleteUserHRData(userRhData)">
+                        <i class="uiIconDeleteUser uiIconLightGray"> </i>
+                    </a>
+
+                </div>
+            </td>
+        </tr>
+        <tr ng-if="userRhData.expanded" ng-repeat-end="">
+            <td colspan="9">
+
+                <div ng-include src="templateUdata.url" onload='setRhData(userRhData)'></div>
+
+
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

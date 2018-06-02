@@ -1,5 +1,5 @@
 define("rhAdminAddonControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/userInvitation", "moment"], function ($, jz, invite, moment) {
-    var rhAdminCtrl = function ($scope, $q, $timeout, $http, $filter, PagerService, Upload) {
+    var rhAdminCtrl = function ($scope, $q, $timeout, $http, $filter, Upload) {
         var rhAdminContainer = $('#rhAdminAddon');
         var deferred = $q.defer();
 
