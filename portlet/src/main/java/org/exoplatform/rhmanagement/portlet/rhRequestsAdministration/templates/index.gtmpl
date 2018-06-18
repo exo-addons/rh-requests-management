@@ -1,0 +1,422 @@
+<div id="rhLoadingBar" class="LoadingBar"></div>
+<div id="rhRequestAdmin" class="rhRequestAdmin" style="visibility: hidden;">
+    <div ng-controller="rhRequestAdminCtrl" id="rhRequestAdminCtrl">
+        <div id="resultMessage" ng-show="showAlert" class="result-message userSearch alert {{resultMessageClass}}">
+            <i class="{{resultMessageClassExt}}"></i> {{resultMessage}}
+        </div>
+        <div id="hrAdminApplication">
+
+            <div id="requests" class="tabcontent" style="display: block;>
+
+                <h4 class="titleWithBorder">{{i18n.requestsList}}</h4>
+                <div class="div_filter">
+                    <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
+                    <div class="header-right pull-right groupByOptions" style="">
+                        <!-- this is filter action-->
+                        <div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
+                            <a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+                               data-placement="bottom">
+                                <i class="uiIconFilter uiIconLightGray"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='all';loadVacationRequests('all',0,10)">{{i18n.all}}</a>
+                                </li>
+
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}</a>
+                                </li>
+
+
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='waiting';loadVacationRequests('waiting',0,10)">{{i18n.waiting}}</a>
+                                </li>
+
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='active';loadVacationRequests('holiday',0,10)">{{i18n.holiday}}</a>
+                                </li>
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='active';loadVacationRequests('sick',0,10)">{{i18n.sick}}</a>
+                                </li>
+                                <li><a href="javascript:void(0)"
+                                       ng-click="vrFilter='active';loadVacationRequests('leave',0,10)">{{i18n.leave}}</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="table-responsive">
+                    <table id="requestsTable" class="table uiGrid table-hover table-striped ">
+                        <thead>
+                        <tr>
+                            <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">Id
+                                <img ng-show="orderByField == 'title' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'title' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+
+
+                            <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">{{i18n.userFullName}}
+                                <img ng-show="orderByField == 'title' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'title' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'title'; reverseSort = !reverseSort">{{i18n.type}}
+                                <img ng-show="orderByField == 'title' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'title' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'type'; reverseSort = !reverseSort">{{i18n.numberDays}}
+                                <img ng-show="orderByField == 'type' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'type' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.fromDate}}<img
+                                    ng-show="orderByField == 'severity' && !reverseSort"
+                                    src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'severity' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'startDate'; reverseSort = !reverseSort">{{i18n.toDate}}
+                                <img ng-show="orderByField == 'startDate' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'startDate' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'assignee'; reverseSort = !reverseSort">{{i18n.status}}
+                                <img ng-show="orderByField == 'assignee' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'assignee' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th><a href="# " ng-click="orderByField = 'severity'; reverseSort = !reverseSort">{{i18n.creationDate}}
+                                <img ng-show="orderByField == 'severity' && !reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueDownArrow.gif ">
+                                <img ng-show="orderByField == 'severity' && reverseSort"
+                                     src="/eXoResources/skin/images/Icons/skinIcons/16x16/BlueUpArrow.gif ">
+                            </a>
+                            </th>
+                            <th>{{i18n.actions}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="vRequest in allVacationRequests| orderBy:orderByField:reverseSort"
+                            class="request_{{vRequest.id}}">
+                            <td class="request_id">
+                                <a ng-if="vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = false"> <span class="badgeDefault badgePrimary">-</span> </a>
+                                <a ng-if="!vRequest.expanded" href="" data-ng-click="showVacationRequest(vRequest); vRequest.expanded = true"><span class="badgeDefault badgePrimary">+</span></a>
+                            </td>
+
+                            <td><span>{{vRequest.userFullName}}</span>
+                            </td>
+                            <td>
+                                <span>{{geti18n(vRequest.type)}}</span>
+                            </td>
+                            <td>
+                                <span>{{vRequest.daysNumber}}</span>
+                            </td>
+                            <td>
+                                <span>{{(vRequest.fromDate)| date:'d MMM y HH:mm'}}</span>
+                            </td>
+                            <td>
+                                <span>{{(vRequest.toDate)| date:'d MMM y HH:mm'}}</span>
+                            </td>
+                            <td>
+                                <span>{{geti18n(vRequest.status)}}</span>
+                            </td>
+                            <td>
+                                <span>{{(vRequest.creationDate)| date:'d MMM y'}}</span>
+                            </td>
+                            <td>
+
+                                <button class="btn btn-primary" ng-click="validateRequest(vRequest, null)"
+                                        ng-disabled="vRequest.status == 'validated'"><i class="uiIconEcmsApprove"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="cancelRequest(vRequest, null)"
+                                        ng-disabled="vRequest.status == 'canceled'"><i class="uiIconEcmsRemove"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-if="vRequest.expanded" ng-repeat-end="">
+                            <td colspan="9">
+
+                                <div ng-include src="templateVr.url" onload='setVr(vRequest)'></div>
+
+
+
+
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <td colspan="9">
+                            <div class="pagination">
+                                <ul>
+                                    <li ng-class="prevPageDisabled()">
+                                        <a href ng-click="prevPage()"><i class="uiIconArrowLeft"></i> Prev</a>
+                                    </li>
+                                    <li ng-repeat="n in range()" ng-class="{active: n == currentPage}"
+                                        ng-click="setPage(n)">
+                                        <a href="#">{{n+1}}</a>
+                                    </li>
+                                    <li ng-class="nextPageDisabled()">
+                                        <a href ng-click="nextPage()">Next <i class="uiIconArrowRight"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- template1.html -->
+    <script type="text/ng-template" id="templateVr">
+
+        <div class="uiBox elementDetail">
+            <a class="actionIcon " style="float: right;position: absolute;right: 0;" ng-click="vacationRequesttoShow.expanded=false"> <i class="uiIconClose "></i>
+            </a>
+            <div id="left_col">
+                <div class="uiContentBox">
+
+                    <div class="ligne">
+                        <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.numberDays}}:</b>
+                        <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.numberHours}}:</b>
+                        <span></span>
+
+                        <input type="text" name="daysNumber" class="requestEdit" id="daysNumber" ng-click="enableInput('#daysNumber')" ng-model="vacationRequesttoShow.daysNumber" value="{{vacationRequesttoShow.daysNumber}}" readonly="">
+
+                        <i class="uiIconEdit" ng-click="enableInput('#daysNumber')"></i>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b ng-show="vacationRequesttoShow.type != 'leave'">{{i18n.fromDate}}:</b>
+                        <b ng-show="vacationRequesttoShow.type == 'leave'">{{i18n.date}}:</b>
+                        <input type="text" name="fromDateAdmin" class="requestEdit" id="fromDateAdmin" ng-click="enableInput('#fromDateAdmin');" ng-model="fromDateShow.date" value="" readonly="">
+                        <select name="userFromTime" id="fromTime" readonly="" ng-click="enableInput('#fromTime');">
+                            <option value="09:00" ng-selected="fromDateShow.time == '09:0'">09:00</option>
+                            <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '10:0'">10:00</option>
+                            <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+                            <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+                            <option value="13:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '13:0'">13:00</option>
+                            <option value="14:00" ng-show="!(vacationRequesttoShow.type =='leave')" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+                            <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+                            <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+                            <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+                        </select>
+
+                        <i class="uiIconEdit" ng-click="enableInput('#fromDateAdmin')"></i>
+
+                        <hr class="clearfix"/>
+                    </div>
+                    <div ng-show="vacationRequesttoShow.type != 'leave'" class="ligne">
+                        <b>{{i18n.toDate}}:</b>
+                        <input type="text" name="toDateAdmin" class="requestEdit" id="toDateAdmin" ng-click="enableInput('#toDateAdmin');" ng-model="toDateShow.date" value="" readonly="">
+                        <select name="userToTime" id="toTime" readonly="" ng-click="enableInput('#toTime');">
+                            <option value="10:00" ng-show="vacationRequesttoShow.type =='leave'"  ng-selected="fromDateShow.time == '10:0'">10:00</option>
+                            <option value="11:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '11:0'">11:00</option>
+                            <option value="12:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '12:0'">12:00</option>
+                            <option value="13:00" ng-show="!(vacationRequesttoShow.type =='leave')"  ng-selected="fromDateShow.time == '13:0'">13:00</option>
+                            <option value="14:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '14:0'">14:00</option>
+                            <option value="15:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '15:0'">15:00</option>
+                            <option value="16:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '16:0'">16:00</option>
+                            <option value="17:00" ng-show="vacationRequesttoShow.type =='leave'" ng-selected="fromDateShow.time == '17:0'">17:00</option>
+                            <option value="18:00" ng-selected="fromDateShow.time == '18:0'">18:00</option>
+                        </select>
+                        <i class="uiIconEdit" ng-click="enableInput('#toDateAdmin')"></i>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.reason}}:</b> <span>{{vacationRequesttoShow.reason}}</span>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.substitutes}}:</b>
+                        <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}'
+                           style='padding-right: 10px;'>{{vrsub.name}}</a>
+                        <hr class="clearfix"/>
+                    </div>
+                    <div class="ligne">
+                        <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
+                        <hr class="clearfix"/>
+                    </div>
+
+                    <div class="ligne">
+                        <b>{{i18n.attacements}}:</b>
+
+
+                        <span ng-repeat="attachement in attachements" class="attachementName">
+<a class="column-item column-title" data-placement="bottom" target="_blank"
+   href='{{attachement.url}}'><i
+        class="uiIcon16x16File{{(attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(0, 1).toUpperCase() + (attachement.name.substr(attachement.name.lastIndexOf('.') + 1).toLowerCase()).substring(1)}}"></i>{{attachement.name}}</a>
+<a class="inline-block-hide" data-placement="left" data-original-title="Delete "
+   ng-click="deleteAttachement(attachement.name)">
+<i class="uiIconClose uiIconLightGray"></i>
+                                    </a>
+</span>
+                        <hr class="clearfix"/>
+                    </div>
+
+
+                    <div class="ligne manager">
+                        <b>{{i18n.managers}}: </b>
+                        <div class="table-responsive">
+                            <table id="managersTable" class="table uiGrid table-hover table-striped">
+                                <tbody>
+                                <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
+                                    <td>
+                                        <a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}'
+                                           class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                    </td>
+                                    <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
+                                        class="td-right-align">
+                                        <button class="btn btn-primary"
+                                                ng-click="approveRequest(vacationRequesttoShow)"
+                                                ng-disabled="vrmanager.reply == 'approved'"><i
+                                                class="uiIconTick uiIconWhite"></i> {{i18n.approve}}
+                                        </button>
+                                        <button class="btn" ng-click="declineRequest(vacationRequesttoShow)"
+                                                ng-disabled="vrmanager.reply == 'declined'"><i
+                                                class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
+                                        </button>
+                                    </td>
+                                    <td ng-if="currentUser != vrmanager.validatorUserId || vacationRequesttoShow.status == 'validated' || vacationRequesttoShow.status == 'canceled'"
+                                        class="td-right-align">
+                                        <b>{{geti18n(vrmanager.reply)}}</b>
+                                    </td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary pull-right savebtnAdmin hidden" ng-click="updateVacationRequest(vacationRequesttoShow)"> Update</button>
+                    <hr class="clearfix"/>
+                </div>
+
+
+            </div>
+            <!--End Left column-->
+            <div id="right_col">
+
+                <!-- -->
+                <div id="requestTabs" class="uiTabPane uiTabNormal">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li class="active" ng-click="showLogs = false" ng-class="{ 'active': !showLogs }">
+                            <a href="#tab-home" data-toggle="tab">{{i18n.comments}}</a>
+                        </li>
+                        <li ng-click="showLogs = true" ng-class="{ 'active': showLogs }">
+                            <a href="#tab-properties" data-toggle="tab">{{i18n.log}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- -->
+
+                <div id="tab-comments" class="tab-pane fade in active" ng-show="!showLogs">
+                    <div class="commentList">
+                        <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
+                            <div class="commmentLeft">
+                                <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+                                    <img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
+                                </a>
+                            </div>
+                            <!--end commentLeft-->
+                            <div class="commentRight">
+                                <div class="author">
+                                    <a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
+                                    <span class="date">
+                                                {{getLocaleDate(comment.postedTime)| date:'d MMM y HH:mm:ss'}}
+                                            </span>
+                                </div>
+                                <p class="contentComment">
+                                    {{comment.commentText}}
+                                </p>
+                            </div>
+                            <!--end commentRight-->
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="commentItem commentFormBox">
+                            <div class="clearfix">
+                                <div class="commmentLeft pull-left">
+                                    <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+                                        <img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
+                                    </a>
+                                </div>
+                                <!--end commentLeft-->
+                                <div class="commentRight">
+                                    <div class="commentInputBox ">
+                                        <div class="commentInput">
+<textarea title="Add your comment..." name="comment" cols="30" rows="10" class="textarea"
+          ng-model="newComment.commentText" required>
+</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end commentRight-->
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <button id="commentButton" type="button" class="btn pull-right btn-primary"
+                                            ng-click="saveComment()">{{i18n.comment}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end commentItem-->
+                    </div>
+                </div>
+                <div id="tab-logs" class="tab-pane fade in active" ng-show="showLogs">
+                    <div class="commentList">
+                        <div ng-repeat="item in history" class="commentItem" data-commentid="item.id">
+                            <div class="commmentLeft">
+                                <a class="avatarXSmall" href="/portal/intranet/profile/{{item.posterId}}">
+                                    <img src="{{item.posterAvatar}}" alt="{{item.posterName}}">
+                                </a>
+                            </div>
+                            <!--end commentLeft-->
+                            <div class="commentRight">
+                                <div class="author">
+                                    <a href="/portal/intranet/profile/{{item.posterId}}">{{item.posterName}}</a>
+                                    <span class="date">
+                                                {{getLocaleDate(item.postedTime)| date:'d MMM y HH:mm:ss'}}
+                                            </span>
+                                </div>
+                                <p class="contentComment">
+                                    {{geti18n(item.commentText)}}
+                                </p>
+                            </div>
+                            <!--end commentRight-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="clearfix"/>
+        </div>
+    </script>
+
+</div>
+</div>

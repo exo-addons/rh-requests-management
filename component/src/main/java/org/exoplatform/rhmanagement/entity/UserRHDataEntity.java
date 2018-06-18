@@ -108,4 +108,10 @@ public class UserRHDataEntity {
   @Column(name = "ACTIVE")
   private Boolean active;
 
+  @Column(name = "HIERARCHICAL_MANAGER")
+  private String hierarchicalManager;
+
+  @Column(name = "FUNCTIONAL_MANAGER")
+  private String functionalManager;
+
 }

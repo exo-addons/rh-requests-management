@@ -1,0 +1,629 @@
+input[type="number"]{
+    font-size: 15px;
+    height: 40px;
+    padding: 0 10px;
+    border: Solid 2px #e1e8ee;
+    border-radius: 5px;
+    box-shadow: none;
+    max-height: 40px;
+    text-overflow: ellipsis;
+}
+/* INVALID INPUT */
+input.ng-invalid {
+    border-color: #f90000!important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #afc9f0!important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px #f90000!important;
+}
+/* Style the list */
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+/*ul.tab li a:focus, .active {background-color: #ccc;}*/
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+   /* border: 1px solid #ccc;*/
+    border-top: none;
+    position: relative;
+}
+
+.tabcontent .ligne {
+    position : relative;
+    padding: 2px 0;
+    min-height: 25px;
+    line-height: 25px;
+    padding: 1px 10px;
+}
+#left_col .uiContentBox .tabcontent .ligne{
+    padding: 2px 10px;
+}
+
+.tabcontent .ligne.getUserLigne {
+    padding: 15px 8px;
+    display: block;
+    width: auto;
+    margin: auto;
+    float: none;
+    background: #fbfbfb;
+    border: none;
+    text-align: center;
+}
+.tabcontent .ligne i.uiIconEdit{
+    position: absolute;
+    top: 5px;
+    right: 24px;
+    opacity : 0;
+    cursor: pointer;
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    transition-duration: .5s;
+}
+.tabcontent .ligne:hover i.uiIconEdit{opacity : 1;}
+img.avatar {
+    height: 112px;
+    margin-bottom: 18px;
+}
+
+.tabcontent .ligne > b{
+    color :#2f5e92;
+    width: 43%;
+    margin-right: 4px;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    text-align: left;
+}
+.tabcontent .ligne::after{clear: both}
+.tabcontent .span3 .ligne > b{
+    width: 40%;
+    margin-right: 4px;
+}
+.tabcontent .ligne > span{
+      overflow: hidden;
+      display: inline-flex;
+}
+.tabcontent .span3,.tabcontent .span4{overflow: hidden}
+
+.tabcontent .getUserLigne > b{
+    width: auto;
+    height: auto;
+    line-height: 28px;
+    padding-left: 20px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+.tabcontent input{ margin-bottom :0}
+
+.uiBox .uiContentBox.formContainer{
+    display: block;
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* Style of requests Table */
+#requestsTable tr > td:nth-last-child(1){
+    text-align: center;
+}
+
+/**/
+
+input.requestEdit{
+    display: inline-block;
+    width: 50%;
+    background: #FFF;
+    float: left;
+    height: 28px;
+    margin-bottom: 0
+}
+textarea.requestEdit{max-width:100%;}
+.span3 input.requestEdit{width: 54%}
+input.requestEdit[readonly]{
+    display: inline-block;
+        width: 50%;
+        background: #FFF;
+        border: 0;
+        box-shadow: none;
+        color: #333;
+        padding: 0;
+        cursor: pointer;
+}
+.Submitbtn {
+    float: right;
+    margin: 20px 20px 0 20px;
+}
+
+.addRequest{
+        float: right;
+        margin-top: -45px;
+}
+/* */
+/*  -- Date Pick --  */
+/* */
+
+.ui-widget-header{
+    background: #36669b;
+    border-color: #36669b;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #626262;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,
+ .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
+ .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus,
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+        background: rgb(54, 102, 155);
+        border-color: rgb(54, 102, 155);
+        color: #f8f8f8;
+}
+
+.ui-widget.ui-widget-content{background: #FFF}
+
+
+
+.attachementName {
+    background: none repeat scroll 0 0 #e2eafa;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    display: inline-block;
+    font-size: 11px;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+    max-width: 92%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#left_col {
+    float:left;    width:50%;
+    border-right: 1px solid #dadada;
+    height: auto;
+    margin-top: -35px;
+    overflow-y: auto;
+}
+#left_col.no-border{border : 0!important}
+#right_col {
+    float: left;
+    position: relative;
+    width: 48%;
+    height:auto;
+    overflow-y: auto;
+    border-left: 1px solid #dadada;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right:3px;
+    margin-top: -35px;
+}
+
+#hrAdminApplication #requests #right_col,
+#hrAdminApplication #requests #left_col{
+    margin-top: 0;
+}
+
+.commmentLeft {
+    float: left;
+}
+.commentRight {
+    margin-left: 45px;
+    text-align: justify;
+}
+.commentRight textarea{width: 100%}
+
+
+hr.clearfix {
+    clear: both;
+    opacity: 0;
+    margin: 0;
+}
+
+.uiBox.elementDetail {
+    position: relative;
+}
+div#tab-comments, #tab-logs {
+    padding: 25px 10px 0;
+    padding-right: 0;
+    border: 1px solid #ccc;
+    border-top: 0
+}
+.commentList.inputContainer {
+    position: absolute;
+    bottom: 0;
+}
+.inputContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 2px;
+    left: 10px;
+}
+.commentList {
+    /*height: 285px;*/
+    height: auto;
+    overflow-x: auto;
+}
+select#managerCalendarId {
+    width: 49%;
+}
+
+/* -- --*/
+#detailRequests{
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    right: 5px;
+    overflow: auto;
+    width: 50%;
+    z-index: 5;
+}
+#detailRequests #left_col, #detailRequests #right_col{width: 100%}
+/* -- -- ADDON MENU -- -- */
+ul#addonMenu {
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    background-image: -moz-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#f8f8f8),to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: -o-linear-gradient(top,#f8f8f8,#e6e6e6);
+    background-image: linear-gradient(to bottom,#f8f8f8,#e6e6e6);
+    background-repeat: repeat-x;
+    background-repeat-x: repeat;
+    background-repeat-y: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8',endColorstr='#ffe6e6e6',GradientType=0);
+    -webkit-box-shadow: inset;
+    -moz-box-shadow: inset;
+    box-shadow: inset;
+    height: 90px;
+}
+ul#addonMenu > .active > a{
+    background-color: #8f8f8f;
+    background-image: -moz-linear-gradient(top,#999,#808080);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#999),to(#808080));
+    background-image: -webkit-linear-gradient(top,#999,#808080);
+    background-image: -o-linear-gradient(top,#999,#808080);
+    background-image: linear-gradient(to bottom,#999,#808080);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff999999',endColorstr='#ff808080',GradientType=0);
+    -webkit-box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+    -moz-box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+    box-shadow: 1px 0 4px rgba(0,0,0,0.38) inset;
+}
+ul#addonMenu > li > a {
+    text-align: center;
+    border: none;
+    background: none;
+    height: 51px;
+    min-width: 45px;
+    margin: 10px 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    border: 1px solid transparent;
+        border-radius: 5px;
+}
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+ul#addonMenu > li > a > i{  font-size: 32px;}
+ul#addonMenu li > a > span {
+    display: block;
+    color: #333;
+}
+ul#addonMenu > .active> a > span,
+ul#addonMenu > .active> a > i{
+    color: #fff;
+    text-shadow: none;
+}
+.nav-tabs li, .nav li{cursor: pointer}
+
+.commentsBloc, .logsTabs{
+border: 1px solid #cccccc;
+border-top: 0;
+}
+a.actionIcon.inline-block-hide.uploadicon {
+    padding: 1px 5px;
+}
+a.actionIcon.inline-block-hide.attachement{
+    display: inline-flex;
+    margin-top: -2px;
+    padding: 2px 4px;
+}
+div#resultMessage {
+    margin-left: 5px;
+}
+#resultMessage.userSearch{
+    margin-left: 5px;
+    position: absolute;
+    width: 100%;
+}
+div#rhAdminCtrl{position: relative}
+.admin_getUser{
+    display: inline-block;
+    width: 250px;
+}
+.avataruser{width : 26px; height:26px; margin-right: 5px}
+
+i.uiIconEcmsSearchMini.newUserId {
+    font-size: 15px;
+    margin-left: -20px;
+    top: 3px;
+    cursor: pointer;
+}
+#employeesList .uiSearchInput{
+    position: absolute;
+    top: 5px;
+    right: 0;
+    padding-left: 15px;
+    padding-right: 5px;
+    background: #f2f2f2;
+}
+
+#employeesList .filterBar{
+    position: relative;
+}
+#employeesList .filterBar .uiSearchInput{right: 70px;}
+#employeesList .filterBar .div_filter{
+    top: 0px;
+    padding: 0 15px;
+    margin-right: -15px;
+}
+
+.table-responsive {
+    overflow: auto;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
+.table-responsive > table{
+    margin: 10px auto;
+    width: 100%;
+    min-width: 400px;
+}
+.actionIcon, .actionIconSmall{z-index: 1}
+#requests .actionIcon, #requests .actionIconSmall{margin-top: -2px;}
+.request_id{
+    padding: 0!important;
+    text-align: center!important;
+}
+.request_id > a{display: block}
+.nameOpen, .nameOpen *{
+    color: #476a9c;
+}
+.nameOpen:hover, .nameOpen:focus{border-color: transparent;background: none;}
+.table-striped tbody tr.selected td{
+    background: #8ebff5!important;
+}
+.div_filter {
+    position: absolute;
+    right: 12px;
+    background: #f2f2f2;
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-right: 15px;
+    font-weight: bold;
+    font-size: 12px;
+    top: 15px;
+}
+
+#rhAdminCtrl .commentItem {
+    padding: 30px 20px 10px 10px!important;
+}
+.elementDetail .ligne {
+    padding: 8px!important;}
+ul#addonMenu {
+    background: #f8f8f8!important;
+}
+ul#addonMenu [class^="uiIcon"], .LeftNavigationTDContainer .uiPopup [class^="uiIcon"]{ color : #a8b3c5!important;}
+
+ul#addonMenu > .active> a > span, ul#addonMenu > .active> a > i {
+    color: #578dc9!important;
+}
+ul#addonMenu > .active > a{background: none!important;box-shadow: none!important;}
+ul#addonMenu li {margin: 0 19px;}
+ul#addonMenu li.active {
+    cursor: pointer;
+    border-bottom: 4px solid #578dc9;
+    border-radius: 0;
+    height: 88px;
+    margin: 0 19px;
+}
+#requestResume {
+    top: 15%!important;
+    bottom: 15%!important;
+    left: 45%!important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+div#hrAdminApplication ul#addonMenu {
+    background: #f8f8f8!important;
+}
+
+.tabcontent .ligne i.uiIconEdit{    top: 9px;!important}
+h4.titleWithBorder {
+    margin-top: 15px;
+    background: #f2f2f2;
+    padding: 10px;
+    width: auto;
+    cursor: pointer
+}
+@media (max-width: 776px) {
+    #left_col{width: 100%}
+    #right_col{width: 100%; padding: 0; border: 0}
+    .commentRight textarea {
+        width: 100%;
+        height: 80px;
+    }
+    .commentList {height: 265px;}
+    .inputContainer {
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        left: 10px;
+    }
+}
+@media (max-width: 432px) {
+    #employeesList .uiSearchInput{
+        position: relative;
+    }
+}
+
+
+selected-type{
+    color: red;
+}
+/**/
+
+#rhEmployeesAdmin label{display: inline-block}
+#rhEmployeesAdmin .uiSearchInput label{margin-left: 15px}
+#rhEmployeesAdmin .uiSearchInput {text-align: center}
+#submitHistory{
+    float: none;
+    display: inline-block;.lo
+    margin: 0 0 0 15px;
+}
+#rhEmployeesAdmin tfoot {border-top: 1px solid #ccc;}
+#rhEmployeesAdmin .table-striped tbody tr:nth-child(odd) td.selected-type,
+#rhEmployeesAdmin .table-striped tbody tr:nth-child(even) td.selected-type{color: #578dc9}
+
+#toDate, #fromDate, .newUserName{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#hrAdminApplication hr.clearfix {
+    margin: 0;
+    padding: 0;
+}
+
+.LoadingBar {
+    background: url("/rh-management-portlet/skin/images/loading-16x16.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
+    background-size: 25px;
+    padding: 10px 0px 10px 20px;
+    margin: 0 auto;
+    width: 80px;
+    height: 100px;
+}
+.ui-timepicker-div * {
+    max-width: 99%;
+}
+
+/* SETTING STYLE */
+#settings .description {padding: 5px 12px;}
+/**/
+
+input[readonly], select[readonly], textarea[readonly]{
+    background: #FFF;
+    border: 0;
+}
+#fromDateAdmin, #toDateAdmin, #fromTime, #toTime{width: 24%;margin: 0 2px;}
+
+/* */
+/* Profil Quick Preview */
+/* */
+.profilPreviw {
+    position: fixed;
+    top: 70px;
+    bottom: 70px;
+    right: 5px;
+    width: 50%;
+    overflow: auto;
+}
+
+.badgeDefault.badgePrimary{
+    background-color: #578dc9;
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+    top: 0;
+    position: relative;
+    color: #FFF;
+    font-weight: bold;
+    width: 10px;
+    text-align: center;
+}
+table .uiBox{border-radius :0;    margin-top: 10px;}
+table .btn.btn-primary{padding: 10px 15px}
+table .btn.btn-default{padding: 8px 13px}
+
+/* Add Admin Request */
+
+.adminAddReq.pull-right {
+    margin-top: -11px;
+}
+.newRequestPopup{
+    width: 45%; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;
+}
+.backpopup{
+    background: rgba(0, 0, 0, 0.41);
+    position: fixed;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index:1
+}
+#addNewRequestForm label{
+    display: inline-block;
+    width: 15%;
+    text-align: right;
+    padding-right: 3%;
+}
+#addNewRequestForm .controls{
+    display: inline-block;
+    width: 79%;
+}
+#addNewRequestForm .controls > select,
+#addNewRequestForm .controls > input{
+    width: 100%;
+    height: 38px;
+    border: solid 2px #d6dee8;
+}
+
+#addNewRequestForm .controls.DateTimeInput > select,
+#addNewRequestForm .controls.DateTimeInput > input{
+    width: 49.5%;
+}
+div#vacationRequestSaveAs {
+    text-align: right;
+    padding-right: 16px;
+}

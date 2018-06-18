@@ -217,6 +217,8 @@ public class UserDataService {
     entity.setAddress(dto.getAddress());
     entity.setCreationDate(dto.getCreationDate());
     entity.setActive(dto.getActive());
+    entity.setHierarchicalManager(dto.getHierarchicalManager());
+    entity.setFunctionalManager(dto.getFunctionalManager());
     return entity;
   }
 
@@ -245,6 +247,8 @@ public class UserDataService {
     dto.setOthers(entity.getOthers());
     dto.setCreationDate(entity.getCreationDate());
     dto.setActive(entity.getActive());
+    dto.setHierarchicalManager(entity.getHierarchicalManager());
+    dto.setFunctionalManager(entity.getFunctionalManager());
     return dto;
   }
 

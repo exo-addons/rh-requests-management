@@ -1,0 +1,36 @@
+
+
+<div id="rhAdminMenu" class="rhAdminMenu">
+    <div ng-controller="rhAdminMenuCtrl" id="rhAdminMenuCtrl">
+        <div id="hrAdminApplication">
+            <ul class="nav nav-tabs addonMenu " id="addonMenu">
+                <li class="item active" id="employeesTab">
+                    <a href='{{employeesPageUrl}}'>
+                        <i class="uiIconSocConnectUser"></i>
+                        <span class="tabName">{{i18n.employeesList}}</span>
+                    </a>
+                </li>
+                <li class="item" id="requestsTab">
+                    <a href='{{requestsPageUrl}}'>
+                        <i class="uiIconEcmsTemplateList"></i>
+                        <span class="tabName show-calender">{{i18n.requestsList}}</span>
+                    </a>
+                </li>
+                <li class="item" id="historyTab">
+                    <a href='{{historyPageUrl}}'>
+                        <i class="uiIconEcmsViewTimeline"></i>
+                        <span class="tabName show-calender">{{i18n.balanceHistory}}</span>
+                    </a>
+                </li>
+
+                <li class="item" id="settingsTab" style="float: right;">
+                    <a href='{{settingsPageUrl}}'>
+                        <i class="uiIconSetting"></i>
+                        <span class="tabName show-calender">{{i18n.settings}}</span>
+                    </a>
+                </li>
+
+            </ul>
+ </div>
+    </div>
+</div>

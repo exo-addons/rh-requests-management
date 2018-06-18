@@ -195,4 +195,13 @@
     </update>
   </changeSet>
 
+
+  <changeSet author="rh-management" id="1.0.0-10">
+    <addColumn tableName="HR_USER_DATA">
+      <column name="HIERARCHICAL_MANAGER" type="NVARCHAR(50)"/>
+      <column name="FUNCTIONAL_MANAGER" type="NVARCHAR(50)"/>
+    </addColumn>
+  </changeSet>
+
+
 </databaseChangeLog>
