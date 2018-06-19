@@ -776,42 +776,6 @@ public class RhEmployeesAdministrationController {
   @MimeType.JSON
   @Jackson
   public void saveVacationRequest(@Jackson VacationRequestDTO obj) {
-
-
-
-/*    if(obj.getStatus().equals(VALIDATED)) {
-      UserRHDataDTO userRHDataDTO=userDataService.getUserRHDataByUserId(obj.getUserId());
-      VacationRequestDTO oldVr = vacationRequestService.getVacationRequest(obj.getId());
-      if (obj.getType().equals("holiday")) {
-
-        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
-          float holidays = userRHDataDTO.getHolidaysBalance();
-          float oldNbDays = oldVr.getDaysNumber();
-          float newNbDays = obj.getDaysNumber();
-          userRHDataDTO.setHolidaysBalance(holidays + (oldNbDays-newNbDays));
-          userDataService.save(userRHDataDTO);
-          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,holidays, userRHDataDTO.getSickdaysBalance(),"holidayUpdated",currentUser);
-        }
-      }
-      if (obj.getType().equals("sick")) {
-        if (oldVr.getDaysNumber() != obj.getDaysNumber()) {
-          float sickDays = userRHDataDTO.getSickdaysBalance();
-          float oldNbDays = oldVr.getDaysNumber();
-          float newNbDays = obj.getDaysNumber();
-          userRHDataDTO.setSickdaysBalance(sickDays + (oldNbDays-newNbDays));
-          userDataService.save(userRHDataDTO);
-          Utils.addBalanceHistoryEntry(obj, userRHDataDTO,userRHDataDTO.getHolidaysBalance(), sickDays,"sickDaysUpdated",currentUser);
-        }
-      }
-    }*/
-
- /*
-    CommentDTO comment=new CommentDTO();
-    comment.setRequestId(obj.getId());
-    comment.setCommentText("requestDaysUpdated");
-    comment.setPosterId(currentUser);
-    comment.setCommentType(Utils.HISTORY);
-    commentService.save(comment);*/
     vacationRequestService.save(obj,true);
 
     try {

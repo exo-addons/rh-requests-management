@@ -114,163 +114,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
         }
 
 
-
-        $scope.loadUserHRData = function (userRhData) {
-
-            $scope.userDetails = userRhData;
-            if (!userRhData.avatar) {
-                $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
-            }
-
-
-            /*here*/
-            if($scope.userDetails.hrData.birthDay){
-                var birthDay = new Date($scope.getLocaleDate($scope.userDetails.hrData.birthDay));
-                $( "#birthDay" ).datepicker( "option", "defaultDate", birthDay );
-                birthDay = birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear() ;
-            }
-            if($scope.userDetails.hrData.startDate){
-                var startDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.startDate));
-                $( "#startDate" ).datepicker( "option", "defaultDate", startDate );
-                startDate = startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.leaveDate){
-                var leaveDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.leaveDate));
-                $( "#leaveDate" ).datepicker( "option", "defaultDate", leaveDate );
-                leaveDate = leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.contractStartDate){
-                var contractStartDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractStartDate));
-                $( "#contractStartDate" ).datepicker( "option", "defaultDate", contractStartDate );
-                contractStartDate = contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.contractEndDate){
-                var contractEndDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractEndDate));
-                $( "#contractEndDate" ).datepicker( "option", "defaultDate", contractEndDate );
-                contractEndDate = contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear();
-            }
-
-
-            $scope.loadVacationRequestsbyUserId(userRhData.userId,$scope.userVrFilter);
-            $scope.loadAttachments(userRhData);
-
-
-            /**/
-
-                $( "#birthDay" ).val(birthDay);
-                $( "#startDate" ).val(startDate);
-                $( "#leaveDate" ).val(leaveDate);
-                $( "#contractStartDate" ).val(contractStartDate);
-                $( "#contractEndDate" ).val(contractEndDate);
-            /**/
-
-        };
-
-        $scope.loadUserPreview = function (userRhData) {
-            $scope.userDetails = userRhData;
-            if (!userRhData.avatar) {
-                $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
-            }
-
-            /*here*/
-            if($scope.userDetails.hrData.birthDay){
-                var birthDay = new Date($scope.getLocaleDate($scope.userDetails.hrData.birthDay));
-                birthDay = birthDay.getDate() + '-' + (birthDay.getMonth() + 1) + '-' +  birthDay.getFullYear() ;
-            }
-            if($scope.userDetails.hrData.startDate){
-                var startDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.startDate));
-                startDate = startDate.getDate() + '-' + (startDate.getMonth() + 1) + '-' +  startDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.leaveDate){
-                var leaveDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.leaveDate));
-                leaveDate = leaveDate.getDate() + '-' + (leaveDate.getMonth() + 1) + '-' +  leaveDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.contractStartDate){
-                var contractStartDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractStartDate));
-                contractStartDate = contractStartDate.getDate() + '-' + (contractStartDate.getMonth() + 1) + '-' +  contractStartDate.getFullYear();
-            }
-            if($scope.userDetails.hrData.contractEndDate){
-                var contractEndDate = new Date($scope.getLocaleDate($scope.userDetails.hrData.contractEndDate));
-                contractEndDate = contractEndDate.getDate() + '-' + (contractEndDate.getMonth() + 1) + '-' +  contractEndDate.getFullYear();
-            }
-
-
-            /**/
-            if(birthDay == undefined) $( "#birthDayPreview" ).text("");
-            else $( "#birthDayPreview" ).text(birthDay);
-
-            if(startDate == undefined) $( "#startDatePreview" ).text("");
-            else $( "#startDatePreview" ).text(startDate);
-
-
-             if(leaveDate == undefined) $( "#leaveDatePreview" ).text("");
-             else $( "#leaveDatePreview" ).text(leaveDate);
-
-             if(contractStartDate == undefined) $( "#contractStartDatePreview" ).text("");
-             else $( "#contractStartDatePreview" ).text(contractStartDate);
-
-             if(contractEndDate == undefined) $( "#contractEndDatePreview" ).text("");
-             else $( "#contractEndDatePreview" ).text(contractEndDate);
-            /**/
-          //  $scope.profilPreview = true;
-        };
-
-        $scope.loadVacationRequestsbyUserId = function (userId,userVrFilter) {
-            $http({
-                method: 'GET',
-                url: rhRequestAdminContainer.jzURL('RhRequestsAdministrationController.getVacationRequestsbyUserId') + "&userId=" + userId+ "&vrFilter=" + userVrFilter
-            }).then(function successCallback(data) {
-
-                $scope.vacationRequests = data.data;
-                $scope.showAddForm = true;
-
-
-            }, function errorCallback(data) {
-                $scope.showAddForm = false;
-                $scope.setResultMessage($scope.i18n.defaultError, "error");
-            });
-        }
-
-
-        $scope.getUser = function (newUserId) {
-
-            // $scope.getEmployees($scope.currentUser, newUserId);
-
-            if (newUserId) {
-                $("#getUser").removeClass("invalid");
-                $http({
-                    method: 'GET',
-                    url: rhRequestAdminContainer.jzURL('RhRequestsAdministrationController.getUser') + "&userId=" + newUserId
-                }).then(function successCallback(data) {
-                    $scope.userDetails = data.data;
-                    $scope.showAlert = false;
-
-
-                    if (data.data == "") {
-                        $scope.showAddForm = false;
-                        //    $scope.setResultMessage($scope.i18n.noUser, "info");
-                        $timeout(function () {
-                            $scope.showAlert = false;
-                        }, 2000);
-                    } else {
-
-                        $scope.loadUserHRData(data.data);
-                        $scope.showAddForm = true;
-                        if (!data.data.avatar) {
-                            $scope.userDetails.avatar = "/eXoSkin/skin/images/system/UserAvtDefault.png";
-                        }
-                    }
-
-                }, function errorCallback(data) {
-                    $scope.showAddForm = false;
-                    $scope.setResultMessage($scope.i18n.defaultError, "error");
-                });
-            } else {
-                $("#getUser").addClass("invalid").focus();
-            }
-        };
-
-
         $scope.loadVacationRequests = function (vrFilter,offset,limit) {
             var url="";
             if(status!=null){
@@ -290,9 +133,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
             });
         };
 
-        $scope.editUserRhData = function (modifiedEmplyee) {
-            $scope.rhEmployee = modifiedEmplyee;
-        }
 
         $scope.loadActivVacationRequests = function () {
             $http({
@@ -307,11 +147,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         };
-
-        $scope.editUserRhData = function (modifiedEmplyee) {
-            $scope.rhEmployee = modifiedEmplyee;
-        }
-
 
         $scope.validateRequest = function (vacationRequest, user) {
             $http({
@@ -360,24 +195,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
         }
 
 
-        $scope.openTab = function (tabName) {
-
-            $("#employees").css("display", "none");
-            $("#requests").css("display", "none");
-            $("#history").css("display", "none");
-			$("#settings").css("display", "none");
-
-            $("#employeesTab").removeClass("active");
-            $("#requestsTab").removeClass("active");
-            $("#historyTab").removeClass("active");
-			$("#settingsTab").removeClass("active");
-
-            $("#" + tabName).css("display", "block");
-            $("#" + tabName + "Tab").addClass("active");
-            $scope.showDetails=false;
-            $scope.showAddForm =false;
-        }
-
         $scope.enableInput = function (id) {
             $(id).removeAttr("readonly");
             $("#submit").css("display", "block");
@@ -417,32 +234,12 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
             }
         }
 
-        $scope.loadAttachments = function (userDetails) {
-            $http({
-                data: userDetails,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                url: rhRequestAdminContainer.jzURL('RhRequestsAdministrationController.getEmployeeAttachements')
-            }).then(function successCallback(data) {
-                $scope.attachements = data.data;
-//                $timeout(function() {
-//                    $scope.setResultMessage(data, "success")
-//                }, 1000);
-            }, function errorCallback(data) {
-                $scope.setResultMessage($scope.i18n.defaultError, "error");
-            });
-        };
 
         $scope.deleteAttachement = function (fileName) {
             $http({
                 url: rhRequestAdminContainer.jzURL('RhRequestsAdministrationController.deleteFile') + "&userId=" + $scope.userDetails.userId + "&fileName=" + fileName
             }).then(function successCallback(data) {
                 $scope.attachements = $scope.loadAttachments($scope.userDetails);
-//                $timeout(function() {
-//                    $scope.setResultMessage(data, "success")
-//                }, 1000);
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
@@ -651,57 +448,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
             });
         }
 
-        $scope.getEmployees = function (currentUser, searchUser = null, searchType) {
-            var rsetUrl = "/rest/rhrequest/users/find?currentUser=" + currentUser + "&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
-
-            $http({
-                method: 'GET',
-                url: rsetUrl
-            }).then(function successCallback(data) {
-
-                /* create a table of users IDs*/
-                $(".newUserName").autocomplete({
-                    source: function( request, response ) {
-                        var users = [];
-                        angular.forEach(data.data.options, function (value, key) {
-                            users[key] = [];
-                            users[key]['value'] = value.value;
-                            users[key]['fullName'] = value.text;
-                            users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
-                        });
-                        response( users );
-                    },
-                    minLength: 3,
-                    focus: function (event, ui) {
-                        $(".newUserName").val(ui.item.fullName);
-                        if(searchType=="employee"){
-                            $scope.getUser(ui.item.value);
-                        }
-                        return false;
-                    },
-                    select: function (event, ui) {
-                        $(".newUserName").val(ui.item.fullName);
-                        if(searchType=="employee"){
-                            $scope.getUser(ui.item.value);
-                        }else if(searchType=="history"){
-                            $scope.userBlanceId=ui.item.value;
-                        }
-
-                        return false;
-                    }
-                }).autocomplete("instance")._renderItem = function (ul, item) {
-
-                    return $("<li>")
-                        .append("<div> <img src='" + item.avatar + "' class='avataruser' /> " + item.fullName + "</div>")
-                        .appendTo(ul);
-                };
-
-            }, function errorCallback(data) {
-                console.log("error getEmployees");
-                $scope.setResultMessage($scope.i18n.defaultError, "error");
-            });
-        }
-
 
         $scope.getUrlParameterByName = function(name, url) {
             if (!url) {
@@ -713,27 +459,6 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-
-
-        $scope.showRequestfromUrl = function() {
-            var requestId = $scope.getUrlParameterByName('rid');
-            if (typeof requestId !== 'undefined' && requestId !==null) {
-                $http({
-                    method : 'GET',
-                    url : rhRequestAdminContainer.jzURL('RhRequestsAdministrationController.getVacationRequest')+ "&id=" +requestId
-                }).then(function successCallback(data) {
-                    if(data.data==""){
-                        $scope.setResultMessage($scope.i18n.requestNotFound, "error");
-                    }else{
-                        $scope.openTab('requests', 'employees')
-                        $scope.showVacationRequest(data.data);
-                    }
-                }, function errorCallback(data) {
-                    $scope.setResultMessage($scope.i18n.defaultError, "error");
-                });
-            }
         }
 
 
@@ -953,19 +678,11 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
         }
 
         $scope.loadBundles();
-        $scope.showRequestfromUrl();
-
-       // $scope.loadContext();
-       // $scope.loadEmployees();
 
         $('#rhRequestAdmin').css('visibility', 'visible');
         $("#rhLoadingBar").remove();
     };
     return rhRequestAdminCtrl;
 
-    /*
-     $timeout(function() {
-     $scope.showAlert = false;
-     }, 2000);
-     */
+
 });
