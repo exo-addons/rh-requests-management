@@ -1,4 +1,4 @@
-define("rhRequestHistoryControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/userInvitation"], function ($, jz, invite, moment) {
+define("rhRequestHistoryControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARED/userInvitation"], function ($, jz, invite) {
     var rhRequestHistoryCtrl = function ($scope, $q, $timeout, $http, $filter) {
         var rhRequestHistoryContainer = $('#rhRequestHistory');
         var deferred = $q.defer();

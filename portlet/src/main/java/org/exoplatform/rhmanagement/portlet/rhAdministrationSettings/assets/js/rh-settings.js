@@ -16,14 +16,14 @@ require( ["SHARED/jquery", "rhSettingsController"], function ( $,  rhSettingsCon
       }
 
 
-	});
-
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate , #beginDate" ).datepicker();
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate, #toDateAdmin, #fromDateAdmin" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate" ).datepicker( "option", "changeYear", true );
-    $( "#startDate, #birthDay, #leaveDate, #contractStartDate, #contractEndDate, #toDate, #fromDate, #beginDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
 
 
+    $( "#beginDate" ).datepicker();
+    $( "#beginDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
+    $( "#beginDate" ).datepicker( "option", "changeYear", true );
+    $( "#beginDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
+
+});
     function getDate( element ) {
        // console.log(element);
         var date;
@@ -36,69 +36,5 @@ require( ["SHARED/jquery", "rhSettingsController"], function ( $,  rhSettingsCon
         return date;
     }
 
-    /* -- DATE PICKER CONFIG -- */
-    $( "#startDate" ).on( "change", function() {
-        $( "#leaveDate" ).datepicker( "option", "minDate", $("#startDate").val() );
-    });
-    $( "#leaveDate" ).on( "change", function() {
-        $( "#startDate" ).datepicker( "option", "maxDate", $("#leaveDate").val() );
-    });
-
-
-    /**/
-    $( "#contractStartDate" ).on( "change", function() {
-        $( "#contractEndDate" ).datepicker( "option", "minDate", $("#contractStartDate").val() );
-    });
-    $( "#contractEndDate" ).on( "change", function() {
-        $( "#contractStartDate" ).datepicker( "option", "maxDate", $("#contractEndDate").val() );
-    });
-
-    $( "#fromDate" ).on( "change", function() {
-        $( "#toDate" ).datepicker( "option", "minDate", $("#fromDate").val() );
-    });
-    $( "#toDate" ).on( "change", function() {
-        $( "#fromDate" ).datepicker( "option", "maxDate", $("#toDate").val() );
-    });
-
-
-    /* -- / DATE PICKER CONFIG -- */
-
-    /* -- USER AUTOCOMPLETE SEARCH -- */
-//    $(function(){
-//        /**/
-//        /**/
-//           if( $(".selectize-control > .selectize-input").hasClass("has-items") ){
-//                alert("hi");
-//                $(".selectize-control > .selectize-dropdown").css("display", "none!important");
-//                $(".selectize-input.items.has-options").removeClass("not-full").addClass("full");
-//           }
-//           console.log($(".selectize-input").children().length);
-//        /**/
-//        /**/
-//    })
-
-//     $("input#newUserId").on( "change", function() {
-//        	alert("hello2");
-//        	$("input#newUserId").keypress();
-//        });
-    /* -- / USER AUTOCOMPLETE SEARCH -- */
-
-
-    $( "#fromDateAdmin, #toDateAdmin" ).datepicker({
-        controlType: 'select',
-        defaultDate: "+1w",
-        numberOfMonths: 1,
-        onClose: function() {
-            $(".savebtnAdmin").removeClass("hidden");
-        },
-    });
-
-    $( "#fromDateAdmin" ).on( "change", function() {
-        $( "#fromDateAdmin" ).datepicker( "option", "minDate", $("#fromDateAdmin").val() );
-    });
-
-    $( "#toDateAdmin" ).on( "change", function() {
-        $( "#toDateAdmin" ).datepicker( "option", "maxDate", $("#toDateAdmin").val() );
-    });
 
 });
