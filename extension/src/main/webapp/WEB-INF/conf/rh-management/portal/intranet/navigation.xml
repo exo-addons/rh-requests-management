@@ -9,18 +9,39 @@
 	  <uri>rh-management</uri>
 	  <name>rh-management</name>
 	  <label>#{rhAddon.intranet.rhManagement}</label>
-<!--
-      <visibility>HIDDEN</visibility>
--->
 	  <page-reference>portal::intranet::rh-management</page-reference>
     </node>
 
       <node>
-          <uri>rh-administration</uri>
-          <name>rh-administration</name>
-          <label>#{rhAddon.intranet.rhAdministration}</label>
+          <uri>rh-employees-admin</uri>
+          <name>rh-employees-admin</name>
+          <label>#{rhAddon.intranet.rhEmployeesAdmin}</label>
           <visibility>HIDDEN</visibility>
-          <page-reference>portal::intranet::rh-administration</page-reference>
+          <page-reference>portal::intranet::rh-employees-admin</page-reference>
+      </node>
+
+      <node>
+          <uri>rh-requests-admin</uri>
+          <name>rh-requests-admin</name>
+          <label>#{rhAddon.intranet.rhRequestsAdmin}</label>
+          <visibility>HIDDEN</visibility>
+          <page-reference>portal::intranet::rh-requests-admin</page-reference>
+      </node>
+
+      <node>
+          <uri>rh-history</uri>
+          <name>rh-history</name>
+          <label>#{rhAddon.intranet.rhHistory}</label>
+          <visibility>HIDDEN</visibility>
+          <page-reference>portal::intranet::rh-history</page-reference>
+      </node>
+
+      <node>
+          <uri>rh-settings</uri>
+          <name>rh-settings</name>
+          <label>#{rhAddon.intranet.rhSettings}</label>
+          <visibility>HIDDEN</visibility>
+          <page-reference>portal::intranet::rh-settings</page-reference>
       </node>
   </page-nodes>
 </node-navigation>

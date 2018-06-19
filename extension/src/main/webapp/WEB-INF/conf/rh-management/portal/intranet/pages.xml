@@ -21,19 +21,107 @@
   </page>
 
     <page>
-        <name>rh-administration</name>
-        <title>rh-administration</title>
+        <name>rh-employees-admin</name>
+        <title>HR Employees Administration</title>
         <access-permissions>*:/rh-managers</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
         <portlet-application>
             <portlet>
                 <application-ref>rh-management</application-ref>
-                <portlet-ref>RhAdministrationControllerPortlet</portlet-ref>
+                <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
             </portlet>
             <access-permissions>*:/rh-managers</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhEmployeesAdministrationPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+    </page>
+
+    <page>
+        <name>rh-requests-admin</name>
+        <title>HR Requests Administration</title>
+        <access-permissions>*:/rh-managers</access-permissions>
+        <edit-permission>*:/platform/administrators</edit-permission>
+        <show-max-window>false</show-max-window>
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhRequestAdministrationPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+    </page>
+
+    <page>
+        <name>rh-history</name>
+        <title>HR Requests History</title>
+        <access-permissions>*:/rh-managers</access-permissions>
+        <edit-permission>*:/platform/administrators</edit-permission>
+        <show-max-window>false</show-max-window>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhRequestsHistoryPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
+    </page>
+
+    <page>
+        <name>rh-settings</name>
+        <title>HR Settings</title>
+        <access-permissions>*:/rh-managers</access-permissions>
+        <edit-permission>*:/platform/administrators</edit-permission>
+        <show-max-window>false</show-max-window>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RhSettingsPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/rh-managers</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
     </page>
 
 </page-set>
