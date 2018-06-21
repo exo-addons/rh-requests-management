@@ -82,6 +82,8 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
         $scope.emFilter="active";
 
 
+
+
         $scope.initController = function () {
             // initialize to page 1
             $scope.vm.setPage(1);
@@ -745,7 +747,11 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                             $scope.getUser(ui.item.value);
                         }else if(searchType=="history"){
                             $scope.userBlanceId=ui.item.value;
-                        }
+                        }else if(searchType=="functionalManager"){
+                            $scope.userDetails.hrData.functionalManager=ui.item.value;
+                          }else if(searchType=="hierarchicalManager"){
+                            $scope.userDetails.hrData.hierarchicalManager=ui.item.value;
+                          }
 
                         return false;
                     }

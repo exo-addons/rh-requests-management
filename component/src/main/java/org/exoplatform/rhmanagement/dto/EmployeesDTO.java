@@ -40,6 +40,10 @@ public class EmployeesDTO {
 
   private Float daysToConsume;
 
+  private String functionalManagerName;
+
+  private String hierarchicalManagerName;
+
     public long getId() {
       return id;
     }
@@ -126,5 +130,21 @@ public class EmployeesDTO {
 
   public void setDaysToConsume(Float daysToConsume) {
     this.daysToConsume = daysToConsume;
+  }
+
+  public String getFunctionalManagerName() {
+    return functionalManagerName;
+  }
+
+  public void setFunctionalManagerName(String functionalManagerName) {
+    this.functionalManagerName = functionalManagerName;
+  }
+
+  public String getHierarchicalManagerName() {
+    return hierarchicalManagerName;
+  }
+
+  public void setHierarchicalManagerName(String hierarchicalManagerName) {
+    this.hierarchicalManagerName = hierarchicalManagerName;
   }
 }

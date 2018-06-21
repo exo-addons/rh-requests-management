@@ -338,10 +338,16 @@
 
                                 <div class="ligne">
                                     <b>{{i18n.functionalManager}}:</b>
-                                    <input type="text" name="functionalManager" class="requestEdit" id="functionalManager"
-                                           ng-click="enableInput('#functionalManager')" ng-model="userDetails.hrData.functionalManager"
-                                           value="{{userDetails.hrData.functionalManager}}" readonly/><i class="uiIconEdit"
-                                                                                                         ng-click="enableInput('#myeXoUrl')"></i>
+
+
+                                    <div class="uiSearchInput">
+                                        <input type="text" class="newUserName" id="functionalManager"
+                                               ng-change="getEmployees($scope.currentUser, newUserId, 'functionalManager')"
+                                               ng-model="userDetails.functionalManagerName"  name="functionalManager"
+                                               placeholder="{{i18n.searchUser}}"/><i class="uiIconEdit"ng-click="enableInput('#functionalManager')"></i></i>
+                                    </div>
+
+
                                     <hr class="clearfix"/>
                                 </div>
 
@@ -630,7 +636,7 @@
 
             </div>
 
-</div>
+        </div>
     </div>
 
 
@@ -984,7 +990,7 @@
                         </div>
 
                         <div class="ligne">
-                            <b>{{i18n.functionalManager}}:</b> {{userDetails.hrData.functionalManager}}
+                            <b>{{i18n.functionalManager}}:</b> {{userDetails.functionalManagerName}}
                             <hr class="clearfix"/>
                         </div>
 

@@ -107,6 +107,24 @@ public class RhEmployeesAdministrationController {
         uds= userDataService.getUsersRhDataByStatus(false, 0, 0);
       } else  uds= userDataService.getAllUsersRhData(0, 0);
       for (EmployeesDTO ud : uds){
+
+
+        try {
+          Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getHierarchicalManager(), false);
+          if(hManagerId!=null){
+            ud.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+          }
+        } catch (Exception e) {
+          LOG.warn("Can't find the Hierarchical Manager of "+ ud.getName());
+        }
+        try {
+          Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getFunctionalManager(), false);
+          if(fManagerId!=null){
+            ud.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+          }
+        } catch (Exception e) {
+          LOG.warn("Can't find the Functional Manager of "+ ud.getName());
+        }
         ud.setExpanded(false);
       }
       return uds;
@@ -249,6 +267,21 @@ public class RhEmployeesAdministrationController {
           userRHDataDTO.setUserId(userId);
         }
         employee.setHrData(userRHDataDTO);
+
+        if(uh.findUserByName(userRHDataDTO.getHierarchicalManager())!=null){
+          Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getHierarchicalManager(), false);
+          if(hManagerId!=null){
+            employee.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+          }
+        }
+
+        if(uh.findUserByName(userRHDataDTO.getFunctionalManager())!=null){
+          Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getFunctionalManager(), false);
+          if(fManagerId!=null){
+            employee.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+          }
+        }
+
         return employee;
       }
     } catch (Throwable e) {
