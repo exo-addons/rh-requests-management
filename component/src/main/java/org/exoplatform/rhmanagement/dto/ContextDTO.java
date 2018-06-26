@@ -43,6 +43,8 @@ public class ContextDTO {
 
   private List<VacationRequestDTO> myVacationRequests;
 
+  private List<VacationRequestDTO> vacationSubsRequests;
+
   private VacationRequestDTO vacationRequestsToShow;
 
   private List<ConventionalVacationDTO>  conventionalVacations;
@@ -137,6 +139,14 @@ public class ContextDTO {
 
   public void setMyVacationRequests(List<VacationRequestDTO> myVacationRequests) {
     this.myVacationRequests = myVacationRequests;
+  }
+
+  public List<VacationRequestDTO> getVacationSubsRequests() {
+    return vacationSubsRequests;
+  }
+
+  public void setVacationSubsRequests(List<VacationRequestDTO> vacationSubsRequests) {
+    this.vacationSubsRequests = vacationSubsRequests;
   }
 
   public VacationRequestDTO getVacationRequestsToShow() {

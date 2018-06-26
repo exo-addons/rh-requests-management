@@ -541,6 +541,77 @@
                             </li>
                         </ul>
                     </div>
+
+                    <!--Requests of teams-->
+                    <div ng-show="showList" style="padding: 20px;position: relative">
+                        <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.oterTeamsRequests}}</h4>
+                        <div class = "div_filter">
+                            <div class="header-right pull-right">{{geti18n(vacationsToVAlidateFilter)}}</div>
+                            <div class="header-right pull-right groupByOptions" style="">
+                                <!-- this is filter action-->
+                                <div class="action-bar  dropdown pull-right">
+                                    <a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+                                       data-placement="bottom">
+                                        <i class="uiIconFilter uiIconLightGray"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+
+                                        <li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='active';loadVacationRequestsToValidate()">{{i18n.active}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='all';loadVacationRequestsToValidate('all')">{{i18n.all}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)"
+                                               ng-click="vacationsToVAlidateFilter='approved';loadVacationRequestsToValidate('approved')">{{i18n.approved}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)"
+                                               ng-click="vacationsToVAlidateFilter='declined';loadVacationRequestsToValidate('declined')">{{i18n.declined}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)"
+                                               ng-click="vacationsToVAlidateFilter='pending';loadVacationRequestsToValidate('pending')">{{i18n.pending}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)"
+                                               ng-click="vacationsToVAlidateFilter='validated';loadVacationRequestsToValidate('validated')">{{i18n.validated}}</a>
+                                        </li>
+
+                                        <li><a href="javascript:void(0)"
+                                               ng-click="vacationsToVAlidateFilter='canceled';loadVacationRequestsToValidate('canceled')">{{i18n.canceled}}</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="table-project" ng-repeat="vRequest in vacationSubsRequests">
+                            <li class="row-item row-odd hover-action-reveal has-border has-background "
+                                data-id="{{vRequest.id}}">
+                                <div class="column-item column-checkbox" ng-switch="vRequest.status">
+                                    <span ng-switch-when="approved" class="uiIconColorValidate"></span>
+                                    <span ng-switch-when="declined" class="uiIconColorError"></span>
+                                    <span ng-switch-when="pending" class="uiIconClock"></span>
+                                    <span ng-switch-when="validated" class="uiIconColorValidate"></span>
+                                    <span ng-switch-when="canceled" class="uiIconColorError"></span>
+                                    <span ng-switch-default class="uiIconInformation"></span>
+                                    </span>
+                                </div>
+                                <a ng-if="vRequest.status != 'validated' && vRequest.status != 'canceled'"
+                                   class="column-item column-title" ng-click="showVacationRequest(vRequest)">{{vRequest.userFullName}}:
+                                    {{geti18n(vRequest.type)}} {{i18n.from}} {{(vRequest.fromDate) | date:'d MMM y HH:mm'}}
+                                    {{i18n.to}} {{(vRequest.toDate) | date:'d MMM y HH:mm'}}</a>
+                                <a ng-if="vRequest.status == 'validated' || vRequest.status == 'canceled'"
+                                   class="column-item column-title requestCompleted"
+                                   ng-click="showVacationRequest(vRequest)">{{vRequest.userFullName}}:
+                                    {{geti18n(vRequest.type)}} {{i18n.from}} {{(vRequest.fromDate) | date:'d MMM y HH:mm'}}
+                                    {{i18n.to}} {{(vRequest.toDate) | date:'d MMM y HH:mm'}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
             <!--End Left column-->

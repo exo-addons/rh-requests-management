@@ -144,6 +144,29 @@ public class RequestRestService implements ResourceContainer {
                     events.put(event);
                 }
             }
+
+            List <String> listEmployees = new ArrayList<String>();
+            listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+            if(listEmployees.size()>0){
+                vrs = vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,0,100);
+
+                if (vrs.size() > 0) {
+                    for (VacationRequestDTO vr : vrs) {
+                        JSONObject event = new JSONObject();
+                        event.put("id",vr.getId());
+                        event.put("title",vr.getUserFullName());
+                        event.put("start",dt1.format(vr.getFromDate()));
+                        event.put("end",dt1.format(vr.getToDate()));
+                        if (("validated").equals(vr.getStatus()))event.put("backgroundColor","green");
+                        if (("approved").equals(vr.getStatus())) event.put("backgroundColor","blue");
+                        if (("declined").equals(vr.getStatus())||("canceled").equals(vr.getStatus()))event.put("backgroundColor","red");
+                        if (("pending").equals(vr.getStatus()))event.put("backgroundColor","orange");
+                        events.put(event);
+                    }
+                }
+            }
+
+
             List<ValidatorDTO> validators= validatorService.getValidatorsByValidatorUserId(currentUser,0,100);
 
             if (validators.size() > 0) {

@@ -44,6 +44,7 @@ import java.util.Date;
         @NamedQuery(name = "vacatioRequestEntity.countWaiting", query = "SELECT count (a.id) FROM HRVacatioRequestEntity a where  a.status not in ('canceled','declined','validated')"),
         @NamedQuery(name = "vacatioRequestEntity.countByType", query = "SELECT count (a.id) FROM HRVacatioRequestEntity a where  a.type = :type"),
         @NamedQuery(name = "vacatioRequestEntity.findByDate", query = "SELECT a FROM HRVacatioRequestEntity a where a.fromDate <= :maxDate and a.toDate >= :minDate order by a.id desc"),
+        @NamedQuery(name = "vacatioRequestEntity.findByManager", query = "SELECT a FROM HRVacatioRequestEntity a, HRValidatorEntity b  where a.id=b.requestId and b.validatorUserId <> :managerId and a.userId in :listSubs order by a.id desc"),
         @NamedQuery(name = "vacatioRequestEntity.findById", query = "SELECT a FROM HRVacatioRequestEntity a where a.id = :id") })
 @Data
 public class VacationRequestEntity {

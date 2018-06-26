@@ -100,6 +100,7 @@ public class RhEmployeesAdministrationController {
   @Jackson
   public List<EmployeesDTO> getAllUsersRhData(String emfilter) {
     try {
+
       List<EmployeesDTO>  uds=null;
       if(emfilter.equals("active")){
         uds= userDataService.getUsersRhDataByStatus(true,0,0);
@@ -110,17 +111,21 @@ public class RhEmployeesAdministrationController {
 
 
         try {
-          Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getHierarchicalManager(), false);
-          if(hManagerId!=null){
-            ud.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+          if(ud.getHrData().getHierarchicalManager()!=null) {
+            Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getHierarchicalManager(), false);
+            if (hManagerId != null) {
+              ud.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+            }
           }
         } catch (Exception e) {
           LOG.warn("Can't find the Hierarchical Manager of "+ ud.getName());
         }
         try {
-          Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getFunctionalManager(), false);
-          if(fManagerId!=null){
-            ud.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+          if(ud.getHrData().getFunctionalManager()!=null) {
+            Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, ud.getHrData().getFunctionalManager(), false);
+            if (fManagerId != null) {
+              ud.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+            }
           }
         } catch (Exception e) {
           LOG.warn("Can't find the Functional Manager of "+ ud.getName());

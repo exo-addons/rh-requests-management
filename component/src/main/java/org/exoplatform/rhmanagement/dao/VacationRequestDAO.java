@@ -21,6 +21,7 @@ import org.exoplatform.rhmanagement.entity.VacationRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -300,5 +301,32 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
             throw e;
         }
     }
+
+
+    public List<VacationRequestEntity> getActiveVacationRequestsByManager(String managerId, List<String> listSubs, int offset, int limit) {
+        try {
+           // String listManagers = String.join(",", listSubs);
+            if(listSubs.size()==0){
+                return new ArrayList<VacationRequestEntity>();
+            }
+            else if (offset >= 0 && limit > 0) {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByManager", VacationRequestEntity.class)
+                        .setFirstResult(offset)
+                        .setMaxResults(limit)
+                        .setParameter("managerId", managerId)
+                        .setParameter("listSubs", listSubs)
+                        .getResultList();
+            } else {
+                return getEntityManager().createNamedQuery("vacatioRequestEntity.findByManager", VacationRequestEntity.class)
+                        .setParameter("managerId", managerId)
+                        .setParameter("listSubs", listSubs)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get requests with offset = '" + offset + "' and limit = '" + limit + "'.", e);
+            throw e;
+        }
+    }
+
 
 }

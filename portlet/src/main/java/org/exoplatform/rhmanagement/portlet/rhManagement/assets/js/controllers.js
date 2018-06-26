@@ -15,6 +15,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.insuranceId="";
         $scope.socialSecNumber="";
         $scope.vacationRequestsToValidate = [];
+        $scope.vacationSubsRequests = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
         $scope.history = [];
@@ -120,6 +121,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
 
         $scope.toggleView = function(){
+            calendar.refresh('myCalendar');
             $scope.showInfoTab = false;
             $scope.showRequestsTab=true;
             $scope.showCal = !$scope.showCal;
@@ -241,6 +243,25 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         };
+
+
+        $scope.loadSubordonateVacationRequests= function() {
+
+            $http({
+                method : 'GET',
+                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsForCurrentManager')
+            }).then(function successCallback(data) {
+                $scope.vacationSubsRequests = data.data;
+                if($scope.vacationSubsRequests.length>0){
+                    $scope.showList=true;
+                    $scope.showForm=false;
+                }
+                $scope.showAlert = false;
+            }, function errorCallback(data) {
+                $scope.setResultMessage($scope.i18n.defaultError, "error");
+            });
+        };
+
 
         $scope.loadMyVacationRequests = function(status) {
             var url="";
@@ -744,6 +765,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
+                $scope.vacationSubsRequests = data.data.vacationSubsRequests;
                 if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
                 if(data.data.officialVacations!=null) {$scope.oVacations = data.data.officialVacations;}
                 $scope.officialDays=data.data.officialDays;

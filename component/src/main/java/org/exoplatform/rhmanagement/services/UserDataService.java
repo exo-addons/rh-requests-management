@@ -191,6 +191,27 @@ public class UserDataService {
   }
 
 
+  public List<UserRHDataDTO> getSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
+
+  public List<String> createAllSubordonatesList (String userId, List<String> listUsers) {
+    List<UserRHDataDTO> listSubs = getSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub.getUserId());
+      LOG.info("============"+sub.getUserId());
+      listUsers = createAllSubordonatesList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
 
   private UserRHDataEntity convert(UserRHDataDTO dto) {
     UserRHDataEntity entity = new UserRHDataEntity();

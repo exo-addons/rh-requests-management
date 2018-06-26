@@ -239,6 +239,17 @@ public class VacationRequestService {
   }
 
 
+    public List<VacationRequestDTO> getVacationRequestByManager(String userId, List<String> listSubs, int offset, int limit ) {
+
+    List<VacationRequestEntity> entities = vacationRequestDAO.getActiveVacationRequestsByManager(userId,listSubs,offset, limit);
+    List<VacationRequestDTO> dtos = new ArrayList<VacationRequestDTO>();
+    for (VacationRequestEntity entity : entities) {
+      dtos.add(convert(entity));
+    }
+    return dtos;
+  }
+
+
   private VacationRequestEntity convert(VacationRequestDTO dto) {
     VacationRequestEntity entity = new VacationRequestEntity();
     entity.setId(dto.getId());

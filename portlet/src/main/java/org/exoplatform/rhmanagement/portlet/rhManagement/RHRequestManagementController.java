@@ -190,6 +190,20 @@ public class RHRequestManagementController {
   }
 
 
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public List<VacationRequestDTO> getVacationRequestsForCurrentManager() {
+    try {
+          return getVacationRequestByManager(currentUser,0,100);
+    } catch (Throwable e) {
+      log.error(e);
+      return null;
+    }
+  }
+
   @Ajax
   @juzu.Resource
   @MimeType.JSON
@@ -744,13 +758,22 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
         data.setSocialSecNumber(userRHDataDTO.getSocialSecNumber());
       }
       data.setMyVacationRequests(vacationRequestService.getActiveVacationRequestsByUserId(currentUser,0,100));
-
       data.setVacationRequestsToValidate(vacationRequestService.getActiveVacationRequestsByValidator(currentUser,0,100));
+      data.setVacationSubsRequests(getVacationRequestByManager(currentUser,0,100));
       if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
       data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
       data.setOfficialDays(officialVacationService.getOfficialVacationDays());
       data.setOfficialVacations(officialVacationService.getOfficialVacations(0,0));
     return data;
+  }
+
+  private List<VacationRequestDTO> getVacationRequestByManager(String userId, int offset, int limit ) {
+    List <String> listEmployees = new ArrayList<String>();
+    listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+    if(listEmployees.size()>0){
+      return vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,offset,limit);
+    }
+    return new ArrayList<VacationRequestDTO>();
   }
 
 }

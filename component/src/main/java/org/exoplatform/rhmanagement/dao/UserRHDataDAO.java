@@ -80,4 +80,19 @@ public class UserRHDataDAO extends GenericDAOJPAImpl<UserRHDataEntity, String> {
         }
     }
 
+    public List<UserRHDataEntity> getSubordonateByUserId(String userId) {
+        try {
+
+                return getEntityManager().createNamedQuery("userRHDataEntity.findSubordonateByUserId", UserRHDataEntity.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
+
+        } catch (Exception e) {
+            LOG.warn("Exception while attempting to get Subordonates", e);
+            throw e;
+        }
+    }
+
+
+
 }
