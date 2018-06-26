@@ -273,18 +273,25 @@ public class RhEmployeesAdministrationController {
         }
         employee.setHrData(userRHDataDTO);
 
-        if(uh.findUserByName(userRHDataDTO.getHierarchicalManager())!=null){
-          Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getHierarchicalManager(), false);
-          if(hManagerId!=null){
-            employee.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+        try {
+          if(userRHDataDTO.getHierarchicalManager()!=null) {
+            Identity hManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getHierarchicalManager(), false);
+            if (hManagerId != null) {
+              employee.setHierarchicalManagerName(hManagerId.getProfile().getFullName());
+            }
           }
+        } catch (Exception e) {
+          LOG.warn("Can't find the Hierarchical Manager of "+ userRHDataDTO.getUserId());
         }
-
-        if(uh.findUserByName(userRHDataDTO.getFunctionalManager())!=null){
-          Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getFunctionalManager(), false);
-          if(fManagerId!=null){
-            employee.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+        try {
+          if(userRHDataDTO.getFunctionalManager()!=null) {
+            Identity fManagerId = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userRHDataDTO.getFunctionalManager(), false);
+            if (fManagerId != null) {
+              employee.setFunctionalManagerName(fManagerId.getProfile().getFullName());
+            }
           }
+        } catch (Exception e) {
+          LOG.warn("Can't find the Functional Manager of "+ userRHDataDTO.getUserId());
         }
 
         return employee;
