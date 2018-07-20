@@ -8,45 +8,51 @@
 
             <div id="requests" class="tabcontent" style="display: block;>
 
-                <h4 class="titleWithBorder">{{i18n.requestsList}}</h4>
-                <div class="div_filter">
-                    <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
-                    <div class="header-right pull-right groupByOptions" style="">
-                        <!-- this is filter action-->
-                        <div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
-                            <a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
-                               data-placement="bottom">
-                                <i class="uiIconFilter uiIconLightGray"></i>
-                            </a>
-                            <ul class="dropdown-menu">
 
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='all';loadVacationRequests('all',0,10)">{{i18n.all}}</a>
-                                </li>
+      <div class="filterBar">
+                        <h4 class="titleWithBorder">{{i18n.requestsList}}</h4>
+                        <div class="div_filter">
+                                            <div class="header-right pull-right">{{geti18n(vrFilter)}}</div>
+                                            <div class="header-right pull-right groupByOptions" style="">
+                                                <!-- this is filter action-->
+                                                <div class="action-bar dropdown pull-right" data-currentorderby="dueDate">
+                                                    <a href="" class="actionIcon dropdown-toggle" data-toggle="dropdown"
+                                                       data-placement="bottom">
+                                                        <i class="uiIconFilter uiIconLightGray"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
 
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}</a>
-                                </li>
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='all';loadVacationRequests('all',0,10)">{{i18n.all}}</a>
+                                                        </li>
+
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='active';loadVacationRequests('active',0,10)">{{i18n.active}}</a>
+                                                        </li>
 
 
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='waiting';loadVacationRequests('waiting',0,10)">{{i18n.waiting}}</a>
-                                </li>
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='waiting';loadVacationRequests('waiting',0,10)">{{i18n.waiting}}</a>
+                                                        </li>
 
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='active';loadVacationRequests('holiday',0,10)">{{i18n.holiday}}</a>
-                                </li>
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='active';loadVacationRequests('sick',0,10)">{{i18n.sick}}</a>
-                                </li>
-                                <li><a href="javascript:void(0)"
-                                       ng-click="vrFilter='active';loadVacationRequests('leave',0,10)">{{i18n.leave}}</a>
-                                </li>
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='active';loadVacationRequests('holiday',0,10)">{{i18n.holiday}}</a>
+                                                        </li>
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='active';loadVacationRequests('sick',0,10)">{{i18n.sick}}</a>
+                                                        </li>
+                                                        <li><a href="javascript:void(0)"
+                                                               ng-click="vrFilter='active';loadVacationRequests('leave',0,10)">{{i18n.leave}}</a>
+                                                        </li>
 
-                            </ul>
-                        </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
                     </div>
-                </div>
+
+
+
 
 
 

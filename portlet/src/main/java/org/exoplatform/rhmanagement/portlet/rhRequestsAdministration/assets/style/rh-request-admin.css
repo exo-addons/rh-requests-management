@@ -136,6 +136,15 @@ img.avatar {
 
 /**/
 
+#rhRequestAdmin .uiSearchInput{
+    position: absolute;
+    top: 21px;
+    right: 88px;
+    padding-left: 15px;
+    padding-right: 5px;
+    background: #f2f2f2;
+}
+
 input.requestEdit{
     display: inline-block;
     width: 50%;

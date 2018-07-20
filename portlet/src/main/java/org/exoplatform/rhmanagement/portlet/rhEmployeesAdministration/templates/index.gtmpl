@@ -328,7 +328,8 @@
 
                                 <div class="ligne">
                                     <b>{{i18n.hierarchicalManager}}:</b>
-                                    <input type="text" name="hierarchicalManager" class="requestEdit" id="hierarchicalManager"
+                                    <input type="text" name="hierarchicalManager" class="hierarchicalManager requestEdit" id="hierarchicalManager"
+                                            ng-change="gethierarchicalManager(userDetails.hrData.hierarchicalManager, 'hierarchicalManager')"
                                            ng-click="enableInput('#hierarchicalManager')" ng-model="userDetails.hrData.hierarchicalManager"
                                            value="{{userDetails.hrData.hierarchicalManager}}" readonly/><i class="uiIconEdit"
                                                                                                            ng-click="enableInput('#hierarchicalManager')"></i>
@@ -341,10 +342,10 @@
 
 
                                     <div class="uiSearchInput">
-                                        <input type="text" class="newUserName" id="functionalManager"
-                                               ng-change="getEmployees($scope.currentUser, newUserId, 'functionalManager')"
-                                               ng-model="userDetails.functionalManagerName"  name="functionalManager"
-                                               placeholder="{{i18n.searchUser}}"/><i class="uiIconEdit"ng-click="enableInput('#functionalManager')"></i></i>
+                                        <input type="text" class="functionalManager requestEdit" id="functionalManager"
+                                               ng-change="getfunctionalManager(userDetails.functionalManagerName, 'functionalManager')"
+                                               ng-click="enableInput('#functionalManager')" ng-model="userDetails.functionalManagerName"  name="functionalManager"
+                                                value="{{userDetails.functionalManagerName}}" readonly/><i class="uiIconEdit" ng-click="enableInput('#functionalManager')"></i></i>
                                     </div>
 
 

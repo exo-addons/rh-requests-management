@@ -83,6 +83,10 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
 
 
 
+        $scope.closeFormAdd = function (){
+             $scope.showAddForm = false;
+        }
+
 
         $scope.initController = function () {
             // initialize to page 1
@@ -259,6 +263,8 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
+
+
 
 
                 $scope.loadHistory = function (vacationRequest) {
@@ -714,6 +720,7 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
         }
 
         $scope.getEmployees = function (currentUser, searchUser = null, searchType) {
+
             var rsetUrl = "/rest/rhrequest/users/find?currentUser=" + currentUser + "&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
 
             $http({
@@ -727,7 +734,7 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                         var users = [];
                         angular.forEach(data.data.options, function (value, key) {
                             users[key] = [];
-                            users[key]['value'] = value.value;
+                            users[key]['value']= value.value;
                             users[key]['fullName'] = value.text;
                             users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
                         });
@@ -735,13 +742,16 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                     },
                     minLength: 3,
                     focus: function (event, ui) {
+
                         $(".newUserName").val(ui.item.fullName);
                         if(searchType=="employee"){
                             $scope.getUser(ui.item.value);
                         }
                         return false;
+
                     },
                     select: function (event, ui) {
+
                         $(".newUserName").val(ui.item.fullName);
                         if(searchType=="employee"){
                             $scope.getUser(ui.item.value);
@@ -752,9 +762,13 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                           }else if(searchType=="hierarchicalManager"){
                             $scope.userDetails.hrData.hierarchicalManager=ui.item.value;
                           }
-
+$(".newUserName").val('');
                         return false;
+
                     }
+
+
+
                 }).autocomplete("instance")._renderItem = function (ul, item) {
 
                     return $("<li>")
@@ -762,12 +776,138 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                         .appendTo(ul);
                 };
 
+
+
             }, function errorCallback(data) {
                 console.log("error getEmployees");
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         }
 
+
+
+        $scope.getfunctionalManager = function (searchUser = null, searchType) {
+
+                    var rsetUrl = "/rest/rhrequest/users/find?&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
+
+                    $http({
+                        method: 'GET',
+                        url: rsetUrl
+                    }).then(function successCallback(data) {
+
+                        /* create a table of users IDs*/
+                        $(".functionalManager").autocomplete({
+                            source: function( request, response ) {
+                                var users = [];
+                                angular.forEach(data.data.options, function (value, key) {
+                                    users[key] = [];
+                                    users[key]['value']= value.value;
+                                    users[key]['fullName'] = value.text;
+                                    users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
+                                });
+                                response( users );
+                            },
+                            minLength: 3,
+                            focus: function (event, ui) {
+
+                                $(".functionalManager").val(ui.item.fullName);
+                                if(searchType=="employee"){
+                                    $scope.getUser(ui.item.value);
+                                }
+                                return false;
+
+                            },
+                            select: function (event, ui) {
+
+                                $(".functionalManager").val(ui.item.fullName);
+                                if(searchType=="employee"){
+                                    $scope.getUser(ui.item.value);
+                                }else if(searchType=="history"){
+                                    $scope.userBlanceId=ui.item.value;
+                                }else if(searchType=="functionalManager"){
+                                    $scope.userDetails.hrData.functionalManager=ui.item.value;
+                                  }else if(searchType=="hierarchicalManager"){
+                                    $scope.userDetails.hrData.hierarchicalManager=ui.item.value;
+                                  }
+
+                                return false;
+
+                            }
+                        }).autocomplete("instance")._renderItem = function (ul, item) {
+
+                            return $("<li>")
+                                .append("<div> <img src='" + item.avatar + "' class='avataruser' /> " + item.fullName + "</div>")
+                                .appendTo(ul);
+                        };
+
+
+
+                    }, function errorCallback(data) {
+                        console.log("error getfunctionalManager");
+                        $scope.setResultMessage($scope.i18n.defaultError, "error");
+                    });
+                }
+     $scope.gethierarchicalManager = function (searchUser = null, searchType) {
+
+                    var rsetUrl = "/rest/rhrequest/users/find?&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
+
+                    $http({
+                        method: 'GET',
+                        url: rsetUrl
+                    }).then(function successCallback(data) {
+
+                        /* create a table of users IDs*/
+                        $(".hierarchicalManager").autocomplete({
+                            source: function( request, response ) {
+                                var users = [];
+                                angular.forEach(data.data.options, function (value, key) {
+                                    users[key] = [];
+                                    users[key]['value']= value.value;
+                                    users[key]['fullName'] = value.text;
+                                    users[key]['avatar'] = value.avatarUrl || '/eXoSkin/skin/images/system/UserAvtDefault.png';
+                                });
+                                response( users );
+                            },
+                            minLength: 3,
+                            focus: function (event, ui) {
+
+                                $(".hierarchicalManager").val(ui.item.fullName);
+                                if(searchType=="employee"){
+                                    $scope.getUser(ui.item.value);
+                                }
+                                return false;
+
+                            },
+                            select: function (event, ui) {
+
+                               $(".functionalManager").val(ui.item.fullName);
+                               if(searchType=="employee"){
+                                   $scope.getUser(ui.item.value);
+                               }else if(searchType=="history"){
+                                   $scope.userBlanceId=ui.item.value;
+                               }else if(searchType=="functionalManager"){
+                                   $scope.userDetails.hrData.functionalManager=ui.item.value;
+                               }else if(searchType=="hierarchicalManager"){
+                                   $scope.userDetails.hrData.hierarchicalManager=ui.item.value;
+                               }
+
+                           return false;
+
+                       }
+                        }).autocomplete("instance")._renderItem = function (ul, item) {
+
+                            return $("<li>")
+                                .append("<div> <img src='" + item.avatar + "' class='avataruser' /> " + item.fullName + "</div>")
+                                .appendTo(ul);
+                        };
+
+
+
+                    }, function errorCallback(data) {
+                        console.log("error gethierarchicalManager");
+                        $scope.setResultMessage($scope.i18n.defaultError, "error");
+                    });
+                }
 
         $scope.getUrlParameterByName = function(name, url) {
             if (!url) {
