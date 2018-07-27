@@ -1,10 +1,7 @@
 package org.exoplatform.rhmanagement.services.rest;
 
 
-import org.exoplatform.rhmanagement.dto.OfficialVacationDTO;
-import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
-import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
-import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.dto.*;
 import org.exoplatform.rhmanagement.services.OfficialVacationService;
 import org.exoplatform.rhmanagement.services.UserDataService;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
@@ -248,4 +245,64 @@ private List<Profile> getSpaceMembersProfiles(Space space){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
         }
     }
+
+
+    @POST
+    @Path("updatemanagers")
+    @RolesAllowed("administrators")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createEmployees(@Context HttpServletRequest request,
+                                    @Context UriInfo uriInfo,
+                                    List<UserRHDataDTO> emloyees) throws Exception {
+
+        MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
+        try {
+            for(UserRHDataDTO emp:emloyees){
+                UserRHDataDTO user = userDataService.getUserRHDataByUserId(emp.getUserId);
+                if (user != null){
+                    user.setHierarchicalManager(emp.getHierarchicalManager());
+                    user.setFunctionalManager(emp.getFunctionalManager());
+                    userDataService.save(user);
+                }
+
+            }
+            return Response.ok().build();
+        } catch (Exception e) {
+            LOG.error(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
+        }
+    }
+
+
+
+    @GET
+    @Path("users/exportmanagers")
+    @RolesAllowed("users")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response find(@Context HttpServletRequest request,
+                         @Context UriInfo uriInfo) throws Exception {
+
+        MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
+        try {
+            JSONArray users = new JSONArray();
+
+            List<EmployeesDTO> usersDTO = userDataService.getAllUsersRhData(0, 0);
+                if (usersDTO.size() > 0) {
+                    for (EmployeesDTO userDTO : usersDTO) {
+                        JSONObject user = new JSONObject();
+                        user.put("userId",userDTO.getHrData().getUserId());
+                        user.put("hierarchicalManager",userDTO.getHrData().getHierarchicalManager());
+                        user.put("functionalManager",userDTO.getHrData().getFunctionalManager());
+                        users.put(user);
+                    }
+                }
+            JSONObject jsonGlobal = new JSONObject();
+            jsonGlobal.put("options",users);
+            return Response.ok(jsonGlobal.toString(), mediaType).build();
+        } catch (Exception e) {
+            LOG.error(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
+        }
+    }
+
 }
