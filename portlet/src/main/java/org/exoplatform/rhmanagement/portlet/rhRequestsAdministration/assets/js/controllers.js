@@ -104,7 +104,7 @@ define("rhRequestAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHARE
             }).then(function successCallback(data) {
                 $scope.i18n = data.data;
                // $scope.loadContext();
-               loadVacationRequests('active',0,10);
+                $scope.loadVacationRequests('active',0,10);
                 deferred.resolve(data);
                 /*$scope.setResultMessage(data, "success");*/
                 $scope.showAlert = false;

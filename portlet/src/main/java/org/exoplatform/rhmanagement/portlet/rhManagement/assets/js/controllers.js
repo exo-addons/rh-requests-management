@@ -121,7 +121,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
 
         $scope.toggleView = function(){
-            calendar.refresh('myCalendar');
             $scope.showInfoTab = false;
             $scope.showRequestsTab=true;
             $scope.showCal = !$scope.showCal;
@@ -756,6 +755,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId = data.data.hrId;
                 $scope.insuranceId = data.data.insuranceId;
                 $scope.socialSecNumber = data.data.socialSecNumber;
+                $scope.subNumber = data.data.subNumber;
                 if(data.data.vacationRequestsToShow!=null){
                     $scope.showVacationRequest(data.data.vacationRequestsToShow);
                     $scope.showInfoBox=false;

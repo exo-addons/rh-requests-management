@@ -203,6 +203,7 @@ public class UserDataService {
 
 
   public List<String> createAllSubordonatesList (String userId, List<String> listUsers) {
+    LOG.info("+++++++++++++++++++++createAllSubordonatesList++++++++++++++++++++++++++++++");
     List<UserRHDataDTO> listSubs = getSubordonateByUserId(userId);
     for (UserRHDataDTO sub : listSubs) {
       listUsers.add(sub.getUserId());
