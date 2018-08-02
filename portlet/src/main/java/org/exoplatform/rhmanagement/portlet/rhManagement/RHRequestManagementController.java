@@ -48,6 +48,7 @@ import java.util.*;
 @SessionScoped
 public class RHRequestManagementController {
   private static Log log = ExoLogger.getLogger(RHRequestManagementController.class);
+  private static List <String> listEmployees = null;
 
   ResourceBundle     bundle;
 
@@ -764,12 +765,19 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
       data.setOfficialDays(officialVacationService.getOfficialVacationDays());
       data.setOfficialVacations(officialVacationService.getOfficialVacations(0,0));
+    if(listEmployees == null){
+      listEmployees = new ArrayList<>();
+      listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+    }
+      data.setSubNumber(listEmployees.size());
     return data;
   }
 
   private List<VacationRequestDTO> getVacationRequestByManager(String userId, int offset, int limit ) {
-    List <String> listEmployees = new ArrayList<String>();
-    listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+    if(listEmployees == null){
+      listEmployees = new ArrayList<>();
+      listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+    }
     if(listEmployees.size()>0){
       return vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,offset,limit);
     }

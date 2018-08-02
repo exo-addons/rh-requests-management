@@ -213,6 +213,17 @@ public class UserDataService {
   }
 
 
+  public List<UserRHDataDTO> createAllSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
+    List<UserRHDataDTO> listSubs = getSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub);
+      listUsers = createAllSubordonatesDetailedList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
+
+
   private UserRHDataEntity convert(UserRHDataDTO dto) {
     UserRHDataEntity entity = new UserRHDataEntity();
     entity.setId(dto.getId());

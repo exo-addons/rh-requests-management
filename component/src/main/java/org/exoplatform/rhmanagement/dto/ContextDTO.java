@@ -53,6 +53,8 @@ public class ContextDTO {
 
   private List<Date> officialDays;
 
+  private int subNumber;
+
   public String getCurrentUser() {
     return currentUser;
   }
@@ -180,5 +182,13 @@ public class ContextDTO {
 
   public void setOfficialVacations(List<OfficialVacationDTO> officialVacations) {
     this.officialVacations = officialVacations;
+  }
+
+  public int getSubNumber() {
+    return subNumber;
+  }
+
+  public void setSubNumber(int subNumber) {
+    subNumber = subNumber;
   }
 }

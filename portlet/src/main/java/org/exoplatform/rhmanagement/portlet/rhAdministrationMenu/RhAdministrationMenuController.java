@@ -29,7 +29,6 @@ public class RhAdministrationMenuController {
   }
 
 
-
   @Ajax
   @juzu.Resource
   @MimeType.JSON
@@ -51,7 +50,7 @@ public class RhAdministrationMenuController {
         }
       }
       bundleString = data.toString();
-      return Response.ok(bundleString);
+      return Response.ok(bundleString).withHeader("Cache-Control", "max-age=864000");
     } catch (Throwable e) {
       LOG.error("error while getting categories", e);
       return Response.status(500);

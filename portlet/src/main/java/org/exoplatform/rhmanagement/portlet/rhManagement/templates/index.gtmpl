@@ -18,6 +18,13 @@
                 </a>
             </li>
 
+            <li class="item" ng-class="{ 'active': showInformations}" id="infoTab" style="float: right;">
+                <a href='{{infoPageUrl}}'>
+                    <i class="uiIconInformation"></i>
+                    <span class="tabName">{{i18n.informations}}</span>
+                </a>
+            </li>
+
         </ul>
         <div id="wrap">
 
@@ -543,7 +550,7 @@
                     </div>
 
                     <!--Requests of teams-->
-                    <div ng-show="showList" style="padding: 20px;position: relative">
+                    <div ng-show="showList && subNumber > 0" style="padding: 20px;position: relative">
                         <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.oterTeamsRequests}}</h4>
                         <div class = "div_filter">
                             <div class="header-right pull-right">{{geti18n(vacationsToVAlidateFilter)}}</div>

@@ -201,6 +201,13 @@ public class RhEmployeesAdministrationController {
          }
        }
 
+      if(user.getHrData().getHierarchicalManager() == null || identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, user.getHrData().getHierarchicalManager(), false)==null){
+        user.getHrData().setHierarchicalManager(null);
+      }
+      if(user.getHrData().getFunctionalManager() == null || identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, user.getHrData().getFunctionalManager(), false)==null){
+        user.getHrData().setFunctionalManager(null);
+      }
+
         return userDataService.save(user.getHrData());
 
     } catch (Exception e) {

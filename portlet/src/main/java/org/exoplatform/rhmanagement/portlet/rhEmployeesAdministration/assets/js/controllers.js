@@ -377,6 +377,15 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
                 employee.hrData.contractEndDate = new Date(date[2]+'-'+date[1]+'-'+date[0]);
             }
 
+            if($(".functionalManager").val()==""){
+            employee.hrData.functionalManager = "";
+            }
+
+
+            if($(".hierarchicalManager").val()==""){
+            employee.hrData.hierarchicalManager = "";
+            }
+
             $http({
                 data: employee,
                 method: 'POST',

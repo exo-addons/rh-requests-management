@@ -4,7 +4,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
 
-
+        $scope.infoPageUrl = "/portal/intranet/rh-info";
         $scope.currentUser="";
         $scope.employeesSpace="";
         $scope.currentUserAvatar="";
@@ -32,7 +32,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
-        $scope.showInfoTab = false;
         $scope.showRequestsTab = true;
         $scope.showHollidays = true;
         $scope.showLeave = false;
@@ -104,10 +103,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
          }
 
 
-        $scope.showInfoTabFn = function(){
-            $scope.showRequestsTab=false;
-            $scope.showInfoTab = true;
-        }
 
         $scope.showFormFn = function(){
             $scope.showInfoTab = false;
@@ -756,6 +751,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId = data.data.hrId;
                 $scope.insuranceId = data.data.insuranceId;
                 $scope.socialSecNumber = data.data.socialSecNumber;
+                $scope.subNumber = data.data.subNumber;
                 if(data.data.vacationRequestsToShow!=null){
                     $scope.showVacationRequest(data.data.vacationRequestsToShow);
                     $scope.showInfoBox=false;

@@ -1,0 +1,99 @@
+<div id="rhLoadingBar" class="rhLoadingBar"></div>
+<div id="rhUserInfo" class="rhUserInfo" style="visibility: hidden;">
+    <div ng-controller="rhUserInfoCtrl" id="rhUserInfoCtrl">
+        <div id="resultMessage" ng-show="(resultMessage.length > 0)" class="result-message alert {{resultMessageClass}}">
+            <i class="{{resultMessageClassExt}}"></i>{{resultMessage}}
+</div>
+        <h4 class="head-container">HR information</h4>
+        <div class="item" id="settingsTab" style="float: right;">
+            <a href='{{requestsPageUrl}}'>
+                <i class="uiIconEcmsViewList"></i>
+                <span class="tabName">{{i18n.requestList}}</span>
+            </a>
+        </div>
+		
+		
+            <h4 class="titleWithBorder">{{i18n.conventionalVacations}}</h4>
+            <div id="exportable" class="table-responsive">
+                <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
+                <table id="cVacationTable" class="table uiGrid table-hover table-striped ">
+                    <thead>
+                    <tr>
+                        <th>{{i18n.label}}</th>
+                        <th>{{i18n.daysNumber}}</th>
+                        <th>{{i18n.description}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-if="cVacations.length == 0">
+
+                        <td colspan="11">
+                            <span> {{i18n.noResults}} </span>
+                        </td>
+
+                    </tr>
+                    <tr ng-if="cVacations.length > 0" ng-repeat="cVacation in cVacations| orderBy:orderByField:reverseSort" class="vacation_{{cVacation.id}}">
+
+
+                        <td><span>{{cVacation.label}}</span>
+                        </td>
+                        <td>
+                            <span>{{cVacation.daysNumber}}</span>
+                        </td>
+                        <td>
+                            <span>{{cVacation.description}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <h4 class="titleWithBorder">{{i18n.bankHolidays}}</h4>
+
+            <div id="exportable" class="table-responsive">
+                <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
+                <table id="cVacationTable" class="table uiGrid table-hover table-striped ">
+                    <thead>
+                    <tr>
+                        <th>{{i18n.label}}</th>
+                        <th>{{i18n.beginDate}}</th>
+                        <th>{{i18n.daysNumber}}</th>
+                        <th>{{i18n.description}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-if="oVacations.length == 0">
+
+                        <td colspan="11">
+                            <span> {{i18n.noResults}} </span>
+                        </td>
+
+                    </tr>
+                    <tr ng-if="oVacations.length > 0" ng-repeat="oVacation in oVacations| orderBy:orderByField:reverseSort" class="vacation_{{oVacation.id}}">
+
+                        <td><span>{{oVacation.label}}</span>
+                        </td>
+                        <td>
+                            <span>{{oVacation.beginDate | date:'d MMM y'}}</span>
+                        </td>
+                        <td>
+                            <span>{{oVacation.daysNumber}}</span>
+                        </td>
+                        <td>
+                            <span>{{oVacation.description}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <h4 class="titleWithBorder">Org Chart</h4>
+
+            <div class="span10" style="float: none; margin: auto; height: auto">
+                <div google-chart class="" chart="orgChartObject"></div>
+            </div>
+
+</div>
+</div>

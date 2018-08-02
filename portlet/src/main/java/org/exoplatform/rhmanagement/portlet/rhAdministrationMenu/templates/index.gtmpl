@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="item" id="settingsTab" style="float: right;">
-                    <a href='{{settingsPageUrl}}'>
+                    <a href='{{infoPageUrl}}'>
                         <i class="uiIconSetting"></i>
                         <span class="tabName show-calender">{{i18n.settings}}</span>
                     </a>

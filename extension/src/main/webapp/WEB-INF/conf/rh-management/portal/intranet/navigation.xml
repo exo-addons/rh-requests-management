@@ -13,6 +13,14 @@
     </node>
 
       <node>
+          <uri>rh-info</uri>
+          <name>rh-info</name>
+          <label>#{rhAddon.intranet.rhInfo}</label>
+          <visibility>HIDDEN</visibility>
+          <page-reference>portal::intranet::rh-info</page-reference>
+      </node>
+
+      <node>
           <uri>rh-employees-admin</uri>
           <name>rh-employees-admin</name>
           <label>#{rhAddon.intranet.rhEmployeesAdmin}</label>

@@ -124,4 +124,22 @@
 
     </page>
 
+    <page>
+        <name>rh-info</name>
+        <title>HR User Information</title>
+        <access-permissions>*:/platform/users</access-permissions>
+        <edit-permission>*:/platform/administrators</edit-permission>
+        <show-max-window>false</show-max-window>
+
+        <portlet-application>
+            <portlet>
+                <application-ref>rh-management</application-ref>
+                <portlet-ref>RHUserInfoPortlet</portlet-ref>
+            </portlet>
+            <access-permissions>*:/platform/users</access-permissions>
+            <show-info-bar>false</show-info-bar>
+        </portlet-application>
+
+    </page>
+
 </page-set>
