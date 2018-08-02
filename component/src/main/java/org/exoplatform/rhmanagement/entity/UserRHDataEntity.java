@@ -30,7 +30,7 @@ import java.util.Date;
 @Table(name = "HR_USER_DATA")
 @NamedQueries({
         @NamedQuery(name = "userRHDataEntity.findByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.userId = :userId"),
-        @NamedQuery(name = "userRHDataEntity.findSubordonateByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.functionalManager = :userId"),
+        @NamedQuery(name = "userRHDataEntity.findSubordonateByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.functionalManager = :userId OR a.hierarchicalManager = :userId"),
         @NamedQuery(name = "userRHDataEntity.findByStatus", query = "SELECT a FROM HRUserRHDataEntity a where a.active = :active"),
         @NamedQuery(name = "userRHDataEntity.findAll", query = "SELECT a FROM HRUserRHDataEntity a")
 })

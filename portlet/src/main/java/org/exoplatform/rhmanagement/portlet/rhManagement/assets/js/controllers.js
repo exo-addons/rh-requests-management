@@ -116,7 +116,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
 
         $scope.toggleView = function(){
-            calendar.refresh('myCalendar');
             $scope.showInfoTab = false;
             $scope.showRequestsTab=true;
             $scope.showCal = !$scope.showCal;
