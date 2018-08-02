@@ -4,15 +4,37 @@
         <div id="resultMessage" ng-show="(resultMessage.length > 0)" class="result-message alert {{resultMessageClass}}">
             <i class="{{resultMessageClassExt}}"></i>{{resultMessage}}
 </div>
-        <h4 class="head-container">HR information</h4>
         <div class="item" id="settingsTab" style="float: right;">
+
+        </div>
+		
+		 <ul class="nav nav-tabs addonMenu " id="addonMenu">
+
+                <li class="item active" id="vacationsTab">
+                    <a class="" ng-click="openTab('vacations')">
+                        <i class="uiIconEcmsTemplateList"></i>
+                        <span class="tabName show-calender">{{i18n.vacations}}</span>
+                    </a>
+                </li>
+                <li class="item" id="chartsTab">
+                    <a class="" ng-click="openTab('charts')">
+                        <i class="uiIconEcmsViewTimeline"></i>
+                        <span class="tabName show-calender">{{i18n.charts}}</span>
+                    </a>
+                </li>
+
+                <li class="item" id="requestsPage" style="float: right;">
             <a href='{{requestsPageUrl}}'>
                 <i class="uiIconEcmsViewList"></i>
                 <span class="tabName">{{i18n.requestList}}</span>
             </a>
-        </div>
+                </li>
+
+            </ul>
 		
+
 		
+		<div id="vacations" class="tabcontent"  style="display: block;">
             <h4 class="titleWithBorder">{{i18n.conventionalVacations}}</h4>
             <div id="exportable" class="table-responsive">
                 <div id="balanceLoadingBar" class="LoadingBar" style="display: none;"></div>
@@ -88,7 +110,8 @@
 
                 </table>
             </div>
-
+</div>
+<div id="charts" class="tabcontent">
             <h4 class="titleWithBorder">Org Functional Chart</h4>
 
             <div class="span10" style="float: none; margin: auto; height: auto">
@@ -100,6 +123,7 @@
             <div class="span10" style="float: none; margin: auto; height: auto">
                 <div google-chart class="" chart="orgHChartObject" agc-on-select="setOrgHChartUser(selectedItem)"></div>
             </div>
+			</div>
 
 </div>
 </div>

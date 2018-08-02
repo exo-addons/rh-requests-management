@@ -6,6 +6,21 @@ define("rhUserInfoControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], function
             id : null
         };
 $scope.requestsPageUrl = "/portal/intranet/rh-management";
+$("#charts").css("display", "none");
+        $scope.openTab = function (tabName) {
+
+            $("#vacations").css("display", "none");
+            $("#charts").css("display", "none");
+
+            $("#vacationsTab").removeClass("active");
+            $("#chartsTab").removeClass("active");
+
+            $("#" + tabName).css("display", "block");
+            $("#" + tabName + "Tab").addClass("active");
+            $scope.showDetails=false;
+            $scope.showAddForm =false;
+        }
+
 
                 $scope.orgFChartObject = {};
                 $scope.orgFChartObject.options = {
