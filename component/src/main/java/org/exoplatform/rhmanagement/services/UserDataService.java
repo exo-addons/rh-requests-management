@@ -200,6 +200,26 @@ public class UserDataService {
 
     return dtos;
   }
+  public List<UserRHDataDTO> getFSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getFSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
+  public List<UserRHDataDTO> getHSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getHSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
 
 
   public List<String> createAllSubordonatesList (String userId, List<String> listUsers) {
@@ -214,14 +234,24 @@ public class UserDataService {
   }
 
 
-  public List<UserRHDataDTO> createAllSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
-    List<UserRHDataDTO> listSubs = getSubordonateByUserId(userId);
+  public List<UserRHDataDTO> createFSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
+    List<UserRHDataDTO> listSubs = getFSubordonateByUserId(userId);
     for (UserRHDataDTO sub : listSubs) {
       listUsers.add(sub);
-      listUsers = createAllSubordonatesDetailedList (sub.getUserId(), listUsers);
+      listUsers = createFSubordonatesDetailedList (sub.getUserId(), listUsers);
     }
     return listUsers;
   }
+
+  public List<UserRHDataDTO> createHSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
+    List<UserRHDataDTO> listSubs = getHSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub);
+      listUsers = createHSubordonatesDetailedList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
 
 
 

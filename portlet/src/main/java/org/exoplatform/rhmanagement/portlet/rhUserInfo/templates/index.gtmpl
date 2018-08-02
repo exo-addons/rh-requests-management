@@ -89,10 +89,16 @@
                 </table>
             </div>
 
-            <h4 class="titleWithBorder">Org Chart</h4>
+            <h4 class="titleWithBorder">Org Functional Chart</h4>
 
             <div class="span10" style="float: none; margin: auto; height: auto">
-                <div google-chart class="" chart="orgChartObject"></div>
+                <div google-chart class="" chart="orgFChartObject" agc-on-select="setOrgFChartUser(selectedItem)"></div>
+            </div>
+
+        <h4 class="titleWithBorder">Org Hierarchical Chart</h4>
+
+            <div class="span10" style="float: none; margin: auto; height: auto">
+                <div google-chart class="" chart="orgHChartObject" agc-on-select="setOrgHChartUser(selectedItem)"></div>
             </div>
 
 </div>

@@ -22,3 +22,32 @@ body {
 
 
 
+.exoer {
+	color: #4d5466;
+	width: 60px;
+	text-align: center;
+}
+
+.google-visualization-orgchart-lineleft {
+	border-left: 2px solid #333!important;
+}
+.google-visualization-orgchart-linebottom {
+	border-bottom: 2px solid #333!important;
+}
+.google-visualization-orgchart-lineright {
+	border-right: 2px solid #333!important;
+}
+
+.google-visualization-orgchart-nodesel {
+    border: none;!important;
+}
+
+
+.exoer img {
+	clear: both;
+	display: block;
+	margin: auto;
+	max-height: 70px;
+    max-width: 70px;
+	border-radius: 100px;
+}

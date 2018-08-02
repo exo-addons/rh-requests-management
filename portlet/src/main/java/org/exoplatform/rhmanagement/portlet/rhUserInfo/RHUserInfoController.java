@@ -17,6 +17,7 @@ import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -98,54 +99,171 @@ public class RHUserInfoController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public Response getFunctionalOrganization() {
+  public Response getFunctionalOrganization(String userId) {
     try {
-      JSONArray org=new JSONArray();
+      JSONArray orgf=new JSONArray();
 
-      UserRHDataDTO currentUserData = userDataService.getUserRHDataByUserId(currentUser);
-      if(currentUserData!=null){
+      UserRHDataDTO currentUserData = userDataService.getUserRHDataByUserId(userId);
+
 
         JSONObject current = new JSONObject();
-        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUserData.getUserId(), false);
-        if(id!=null) {
-          Profile profile = id.getProfile();
-          current.put("userId",currentUserData.getUserId());
-          current.put("fullName",profile.getFullName());
-          current.put("manager",currentUserData.getFunctionalManager());
-          current.put("job",profile.getPosition());
-          org.put(current);
-        }
-        id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUserData.getFunctionalManager(), false);
-        if(id!=null) {
-          Profile profile = id.getProfile();
-          JSONObject manager = new JSONObject();
-          manager.put("userId", currentUserData.getFunctionalManager());
-          manager.put("fullName", profile.getFullName());
-          manager.put("manager", "");
-          manager.put("job", profile.getPosition());
-          org.put(manager);
-        }
-      }
-
-      List<UserRHDataDTO> subsList = new ArrayList<UserRHDataDTO>();
-      subsList = userDataService.createAllSubordonatesDetailedList(currentUser,subsList);
-      if(subsList.size()>0){
-        for(UserRHDataDTO sub : subsList){
-          Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, sub.getUserId(), false);
+        Identity id= null;
+        try {
+          id = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
           if(id!=null) {
             Profile profile = id.getProfile();
-            JSONObject data = new JSONObject();
-            data.put("userId", sub.getUserId());
-            data.put("fullName", profile.getFullName());
-            data.put("manager", sub.getFunctionalManager());
-            data.put("job", profile.getPosition());
-            org.put(data);
+            current.put("userId",userId);
+            current.put("fullName",profile.getFullName());
+            current.put("manager", currentUserData!=null ? currentUserData.getFunctionalManager() : "");
+            current.put("job",profile.getPosition());
+              if (profile.getAvatarUrl() != null) {
+                  current.put("avatar",profile.getAvatarUrl());
+              } else {
+                  current.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+              }
+            orgf.put(current);
+          }
+        } catch (Exception e) {
+          log.warn("cannot get user "+currentUserData.getUserId()+" informations");
+        }
+        if (currentUserData!=null && currentUserData.getFunctionalManager()!=null) {
+        try {
+            id = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUserData.getFunctionalManager(), false);
+            if (id != null) {
+              Profile profile = id.getProfile();
+              JSONObject manager = new JSONObject();
+              manager.put("userId", currentUserData.getFunctionalManager());
+              manager.put("fullName", profile.getFullName());
+              manager.put("manager", "");
+              manager.put("job", profile.getPosition());
+                if (profile.getAvatarUrl() != null) {
+                    manager.put("avatar",profile.getAvatarUrl());
+                } else {
+                    manager.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+                }
+              orgf.put(manager);
+            }
+          } catch(Exception e){
+            log.warn("cannot get user " + currentUserData.getFunctionalManager() + " informations");
+          }
+        }
+
+
+      List<UserRHDataDTO> fsubsList = new ArrayList<UserRHDataDTO>();
+      fsubsList = userDataService.createFSubordonatesDetailedList(userId,fsubsList);
+      if(fsubsList.size()>0){
+        for(UserRHDataDTO sub : fsubsList){
+          try {
+            id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, sub.getUserId(), false);
+            if(id!=null) {
+              Profile profile = id.getProfile();
+              JSONObject data = new JSONObject();
+              data.put("userId", sub.getUserId());
+              data.put("fullName", profile.getFullName());
+              data.put("manager", sub.getFunctionalManager());
+              data.put("job", profile.getPosition());
+                if (profile.getAvatarUrl() != null) {
+                    data.put("avatar",profile.getAvatarUrl());
+                } else {
+                    data.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+                }
+              orgf.put(data);
+            }
+          } catch (Exception e) {
+            log.warn("cannot get user "+sub.getUserId()+" informations");
           }
         }
       }
 
 
-      return Response.ok(org.toString());
+      return Response.ok(orgf.toString());
+    } catch (Throwable e) {
+      log.error("error while getting chart", e);
+      return Response.status(500);
+    }
+  }
+
+  @Ajax
+  @juzu.Resource
+  @MimeType.JSON
+  @Jackson
+  public Response getHierarchicalOrganization(String userId) {
+    try {
+      JSONArray orgh=new JSONArray();
+
+      UserRHDataDTO currentUserData = userDataService.getUserRHDataByUserId(userId);
+
+
+        JSONObject current = new JSONObject();
+        Identity id= null;
+        try {
+          id = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
+          if(id!=null) {
+            Profile profile = id.getProfile();
+            current.put("userId",userId);
+            current.put("fullName",profile.getFullName());
+            current.put("manager", currentUserData!=null ? currentUserData.getHierarchicalManager() : "");
+            current.put("job",profile.getPosition());
+              if (profile.getAvatarUrl() != null) {
+                  current.put("avatar",profile.getAvatarUrl());
+              } else {
+                  current.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+              }
+            orgh.put(current);
+          }
+        } catch (Exception e) {
+          log.warn("cannot get user "+currentUserData.getUserId()+" informations");
+        }
+        if (currentUserData!=null && currentUserData.getHierarchicalManager()!=null) {
+        try {
+            id = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, currentUserData.getHierarchicalManager(), false);
+            if (id != null) {
+              Profile profile = id.getProfile();
+              JSONObject manager = new JSONObject();
+              manager.put("userId", currentUserData.getHierarchicalManager());
+              manager.put("fullName", profile.getFullName());
+              manager.put("manager", "");
+              manager.put("job", profile.getPosition());
+                if (profile.getAvatarUrl() != null) {
+                    manager.put("avatar",profile.getAvatarUrl());
+                } else {
+                    manager.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+                }
+              orgh.put(manager);
+            }
+          } catch(Exception e){
+            log.warn("cannot get user " + currentUserData.getHierarchicalManager() + " informations");
+          }
+        }
+
+
+      List<UserRHDataDTO> hsubsList = new ArrayList<UserRHDataDTO>();
+      hsubsList = userDataService.createHSubordonatesDetailedList(userId,hsubsList);
+      if(hsubsList.size()>0){
+        for(UserRHDataDTO sub : hsubsList){
+          try {
+            id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, sub.getUserId(), false);
+            if(id!=null) {
+              Profile profile = id.getProfile();
+              JSONObject data = new JSONObject();
+              data.put("userId", sub.getUserId());
+              data.put("fullName", profile.getFullName());
+              data.put("manager", sub.getHierarchicalManager());
+              data.put("job", profile.getPosition());
+              if (profile.getAvatarUrl() != null) {
+                data.put("avatar",profile.getAvatarUrl());
+              } else {
+                data.put("avatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
+              }
+              orgh.put(data);
+            }
+          } catch (Exception e) {
+            log.warn("cannot get user "+sub.getUserId()+" informations");
+          }
+        }
+      }
+
+      return Response.ok(orgh.toString());
     } catch (Throwable e) {
       log.error("error while getting chart", e);
       return Response.status(500);
