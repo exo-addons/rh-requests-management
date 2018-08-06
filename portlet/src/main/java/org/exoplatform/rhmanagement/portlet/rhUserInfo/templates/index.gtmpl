@@ -70,7 +70,7 @@
 
                 </table>
             </div>
-
+<hr>
             <h4 class="titleWithBorder">{{i18n.bankHolidays}}</h4>
 
             <div id="exportable" class="table-responsive">
