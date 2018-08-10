@@ -198,7 +198,7 @@ ul#addonMenu li.active {
 }
 #exportable table {
     max-width: 100%;
-    background-color: transparent;
+    background-color: #fff;
     border-collapse: collapse;
     border-spacing: 0px !important;
     border: none !important;
@@ -213,12 +213,14 @@ ul#addonMenu li.active {
 }
 #exportable .uiGrid.table tr th{
     background:none;
+        border-bottom: 2px solid #c2cfda;
 }
 #exportable .uiGrid.table tr td{
         background: none;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #cadaea;
     font-size: 14px;
     color: #333;
+        padding: 10px 15px;
 }
 #exportable .uiGrid.table thead tr{
     box-shadow:none;

@@ -196,19 +196,6 @@ public class RHRequestManagementController {
   @juzu.Resource
   @MimeType.JSON
   @Jackson
-  public List<VacationRequestDTO> getVacationRequestsForCurrentManager() {
-    try {
-          return getVacationRequestByManager(currentUser,0,100);
-    } catch (Throwable e) {
-      log.error(e);
-      return null;
-    }
-  }
-
-  @Ajax
-  @juzu.Resource
-  @MimeType.JSON
-  @Jackson
   public VacationRequestDTO getVacationRequest (Long id) {
     try {
       VacationRequestDTO vr=vacationRequestService.getVacationRequest(id);
@@ -760,28 +747,15 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
       }
       data.setMyVacationRequests(vacationRequestService.getActiveVacationRequestsByUserId(currentUser,0,100));
       data.setVacationRequestsToValidate(vacationRequestService.getActiveVacationRequestsByValidator(currentUser,0,100));
-      data.setVacationSubsRequests(getVacationRequestByManager(currentUser,0,100));
+       List <String> listEmployees = new ArrayList<String>();
+      listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+      data.setVacationSubsRequests(vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,0,100));
       if(rid!=null) data.setVacationRequestsToShow(getVacationRequest(rid));
       data.setConventionalVacations(conventionalVacationService.getConventionalVacations(0,0));
       data.setOfficialDays(officialVacationService.getOfficialVacationDays());
       data.setOfficialVacations(officialVacationService.getOfficialVacations(0,0));
-    if(listEmployees == null){
-      listEmployees = new ArrayList<>();
-      listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
-    }
-      data.setSubNumber(listEmployees.size());
     return data;
   }
 
-  private List<VacationRequestDTO> getVacationRequestByManager(String userId, int offset, int limit ) {
-    if(listEmployees == null){
-      listEmployees = new ArrayList<>();
-      listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
-    }
-    if(listEmployees.size()>0){
-      return vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,offset,limit);
-    }
-    return new ArrayList<VacationRequestDTO>();
-  }
 
 }

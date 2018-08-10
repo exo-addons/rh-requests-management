@@ -239,24 +239,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         };
 
 
-        $scope.loadSubordonateVacationRequests= function() {
-
-            $http({
-                method : 'GET',
-                url : rhContainer.jzURL('RHRequestManagementController.getVacationRequestsForCurrentManager')
-            }).then(function successCallback(data) {
-                $scope.vacationSubsRequests = data.data;
-                if($scope.vacationSubsRequests.length>0){
-                    $scope.showList=true;
-                    $scope.showForm=false;
-                }
-                $scope.showAlert = false;
-            }, function errorCallback(data) {
-                $scope.setResultMessage($scope.i18n.defaultError, "error");
-            });
-        };
-
-
         $scope.loadMyVacationRequests = function(status) {
             var url="";
             if(status!=null){
@@ -750,7 +732,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.hrId = data.data.hrId;
                 $scope.insuranceId = data.data.insuranceId;
                 $scope.socialSecNumber = data.data.socialSecNumber;
-                $scope.subNumber = data.data.subNumber;
                 if(data.data.vacationRequestsToShow!=null){
                     $scope.showVacationRequest(data.data.vacationRequestsToShow);
                     $scope.showInfoBox=false;

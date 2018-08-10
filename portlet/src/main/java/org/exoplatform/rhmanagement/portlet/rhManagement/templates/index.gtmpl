@@ -550,7 +550,7 @@
                     </div>
 
                     <!--Requests of teams-->
-                    <div ng-show="showList && subNumber > 0" style="padding: 20px;position: relative">
+                    <div ng-show="showList && vacationSubsRequests.length > 0" style="padding: 20px;position: relative">
                         <h4 class="titleWithBorder pull-left" style="width: 94%">{{i18n.oterTeamsRequests}}</h4>
                         <div class = "div_filter">
                             <div class="header-right pull-right">{{geti18n(vacationsToVAlidateFilter)}}</div>
@@ -563,32 +563,8 @@
                                     </a>
                                     <ul class="dropdown-menu">
 
-                                        <li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='active';loadVacationRequestsToValidate()">{{i18n.active}}</a>
+                                        <li><a href="">{{i18n.active}}</a>
                                         </li>
-
-                                        <li><a href="javascript:void(0)" ng-click="vacationsToVAlidateFilter='all';loadVacationRequestsToValidate('all')">{{i18n.all}}</a>
-                                        </li>
-
-                                        <li><a href="javascript:void(0)"
-                                               ng-click="vacationsToVAlidateFilter='approved';loadVacationRequestsToValidate('approved')">{{i18n.approved}}</a>
-                                        </li>
-
-                                        <li><a href="javascript:void(0)"
-                                               ng-click="vacationsToVAlidateFilter='declined';loadVacationRequestsToValidate('declined')">{{i18n.declined}}</a>
-                                        </li>
-
-                                        <li><a href="javascript:void(0)"
-                                               ng-click="vacationsToVAlidateFilter='pending';loadVacationRequestsToValidate('pending')">{{i18n.pending}}</a>
-                                        </li>
-
-                                        <li><a href="javascript:void(0)"
-                                               ng-click="vacationsToVAlidateFilter='validated';loadVacationRequestsToValidate('validated')">{{i18n.validated}}</a>
-                                        </li>
-
-                                        <li><a href="javascript:void(0)"
-                                               ng-click="vacationsToVAlidateFilter='canceled';loadVacationRequestsToValidate('canceled')">{{i18n.canceled}}</a>
-                                        </li>
-
 
                                     </ul>
                                 </div>

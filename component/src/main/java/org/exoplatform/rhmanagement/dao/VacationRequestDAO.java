@@ -315,11 +315,13 @@ public class VacationRequestDAO extends GenericDAOJPAImpl<VacationRequestEntity,
                         .setMaxResults(limit)
                         .setParameter("managerId", managerId)
                         .setParameter("listSubs", listSubs)
+                        .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
                         .getResultList();
             } else {
                 return getEntityManager().createNamedQuery("vacatioRequestEntity.findByManager", VacationRequestEntity.class)
                         .setParameter("managerId", managerId)
                         .setParameter("listSubs", listSubs)
+                        .setParameter("currentDate", new Date(System.currentTimeMillis()-24*60*60*1000))
                         .getResultList();
             }
         } catch (Exception e) {
