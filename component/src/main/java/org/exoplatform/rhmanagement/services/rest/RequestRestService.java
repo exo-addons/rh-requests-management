@@ -144,6 +144,29 @@ public class RequestRestService implements ResourceContainer {
                     events.put(event);
                 }
             }
+
+            List <String> listEmployees = new ArrayList<String>();
+            listEmployees = userDataService.createAllSubordonatesList(currentUser,listEmployees);
+            if(listEmployees.size()>0){
+                vrs = vacationRequestService.getVacationRequestByManager(currentUser,listEmployees,0,100);
+
+                if (vrs.size() > 0) {
+                    for (VacationRequestDTO vr : vrs) {
+                        JSONObject event = new JSONObject();
+                        event.put("id",vr.getId());
+                        event.put("title",vr.getUserFullName());
+                        event.put("start",dt1.format(vr.getFromDate()));
+                        event.put("end",dt1.format(vr.getToDate()));
+                        if (("validated").equals(vr.getStatus()))event.put("backgroundColor","green");
+                        if (("approved").equals(vr.getStatus())) event.put("backgroundColor","blue");
+                        if (("declined").equals(vr.getStatus())||("canceled").equals(vr.getStatus()))event.put("backgroundColor","red");
+                        if (("pending").equals(vr.getStatus()))event.put("backgroundColor","orange");
+                        events.put(event);
+                    }
+                }
+            }
+
+
             List<ValidatorDTO> validators= validatorService.getValidatorsByValidatorUserId(currentUser,0,100);
 
             if (validators.size() > 0) {
@@ -225,4 +248,64 @@ private List<Profile> getSpaceMembersProfiles(Space space){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
         }
     }
+
+
+    @POST
+    @Path("updatemanagers")
+    @RolesAllowed("administrators")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateManagers(@Context HttpServletRequest request,
+                                    @Context UriInfo uriInfo,
+                                    List<UserRHDataDTO> emloyees) throws Exception {
+
+        MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
+        try {
+            for(UserRHDataDTO emp:emloyees){
+                UserRHDataDTO user = userDataService.getUserRHDataByUserId(emp.getUserId());
+                if (user != null){
+                    user.setHierarchicalManager(emp.getHierarchicalManager());
+                    user.setFunctionalManager(emp.getFunctionalManager());
+                    userDataService.save(user);
+                }
+
+            }
+            return Response.ok().build();
+        } catch (Exception e) {
+            LOG.error(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
+        }
+    }
+
+
+
+    @GET
+    @Path("users/exportmanagers")
+    @RolesAllowed("users")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response exportManagers(@Context HttpServletRequest request,
+                         @Context UriInfo uriInfo) throws Exception {
+
+        MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
+        try {
+            JSONArray users = new JSONArray();
+
+            List<UserRHDataDTO> usersDTO = userDataService.getRhDataByStatus(true, 0, 0);
+                if (usersDTO.size() > 0) {
+                    for (UserRHDataDTO userDTO : usersDTO) {
+                        JSONObject user = new JSONObject();
+                        user.put("userId",userDTO.getUserId());
+                        user.put("hierarchicalManager",userDTO.getHierarchicalManager()!=null ? userDTO.getHierarchicalManager() : "");
+                        user.put("functionalManager",userDTO.getFunctionalManager()!=null ? userDTO.getFunctionalManager() : "");
+                        users.put(user);
+                    }
+                }
+            JSONObject jsonGlobal = new JSONObject();
+            jsonGlobal.put("options",users);
+            return Response.ok(jsonGlobal.toString(), mediaType).build();
+        } catch (Exception e) {
+            LOG.error(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An internal error has occured").build();
+        }
+    }
+
 }

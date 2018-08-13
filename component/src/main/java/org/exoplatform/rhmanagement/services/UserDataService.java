@@ -191,6 +191,67 @@ public class UserDataService {
   }
 
 
+  public List<UserRHDataDTO> getSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+  public List<UserRHDataDTO> getFSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getFSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
+  public List<UserRHDataDTO> getHSubordonateByUserId( String userId) {
+
+    List<UserRHDataDTO> dtos = new ArrayList<UserRHDataDTO>();
+    for (UserRHDataEntity entity : userRHDataDAO.getHSubordonateByUserId(userId)) {
+      dtos.add(convert(entity));
+    }
+
+    return dtos;
+  }
+
+
+
+  public List<String> createAllSubordonatesList (String userId, List<String> listUsers) {
+    List<UserRHDataDTO> listSubs = getSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub.getUserId());
+      listUsers = createAllSubordonatesList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
+
+  public List<UserRHDataDTO> createFSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
+    List<UserRHDataDTO> listSubs = getFSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub);
+      listUsers = createFSubordonatesDetailedList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
+  public List<UserRHDataDTO> createHSubordonatesDetailedList (String userId, List<UserRHDataDTO> listUsers) {
+    List<UserRHDataDTO> listSubs = getHSubordonateByUserId(userId);
+    for (UserRHDataDTO sub : listSubs) {
+      listUsers.add(sub);
+      listUsers = createHSubordonatesDetailedList (sub.getUserId(), listUsers);
+    }
+    return listUsers;
+  }
+
+
+
 
   private UserRHDataEntity convert(UserRHDataDTO dto) {
     UserRHDataEntity entity = new UserRHDataEntity();
@@ -217,6 +278,8 @@ public class UserDataService {
     entity.setAddress(dto.getAddress());
     entity.setCreationDate(dto.getCreationDate());
     entity.setActive(dto.getActive());
+    entity.setHierarchicalManager(dto.getHierarchicalManager());
+    entity.setFunctionalManager(dto.getFunctionalManager());
     return entity;
   }
 
@@ -245,6 +308,8 @@ public class UserDataService {
     dto.setOthers(entity.getOthers());
     dto.setCreationDate(entity.getCreationDate());
     dto.setActive(entity.getActive());
+    dto.setHierarchicalManager(entity.getHierarchicalManager());
+    dto.setFunctionalManager(entity.getFunctionalManager());
     return dto;
   }
 

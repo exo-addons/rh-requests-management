@@ -30,6 +30,9 @@ import java.util.Date;
 @Table(name = "HR_USER_DATA")
 @NamedQueries({
         @NamedQuery(name = "userRHDataEntity.findByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.userId = :userId"),
+        @NamedQuery(name = "userRHDataEntity.findSubordonateByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.functionalManager = :userId OR a.hierarchicalManager = :userId"),
+        @NamedQuery(name = "userRHDataEntity.findFSubordonateByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.functionalManager = :userId"),
+        @NamedQuery(name = "userRHDataEntity.findHSubordonateByUserId", query = "SELECT a FROM HRUserRHDataEntity a where a.hierarchicalManager = :userId"),
         @NamedQuery(name = "userRHDataEntity.findByStatus", query = "SELECT a FROM HRUserRHDataEntity a where a.active = :active"),
         @NamedQuery(name = "userRHDataEntity.findAll", query = "SELECT a FROM HRUserRHDataEntity a")
 })
@@ -107,5 +110,11 @@ public class UserRHDataEntity {
 
   @Column(name = "ACTIVE")
   private Boolean active;
+
+  @Column(name = "HIERARCHICAL_MANAGER")
+  private String hierarchicalManager;
+
+  @Column(name = "FUNCTIONAL_MANAGER")
+  private String functionalManager;
 
 }

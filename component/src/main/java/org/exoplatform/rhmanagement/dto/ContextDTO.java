@@ -43,6 +43,8 @@ public class ContextDTO {
 
   private List<VacationRequestDTO> myVacationRequests;
 
+  private List<VacationRequestDTO> vacationSubsRequests;
+
   private VacationRequestDTO vacationRequestsToShow;
 
   private List<ConventionalVacationDTO>  conventionalVacations;
@@ -50,6 +52,8 @@ public class ContextDTO {
   private List<OfficialVacationDTO> officialVacations;
 
   private List<Date> officialDays;
+
+  private int subNumber;
 
   public String getCurrentUser() {
     return currentUser;
@@ -139,6 +143,14 @@ public class ContextDTO {
     this.myVacationRequests = myVacationRequests;
   }
 
+  public List<VacationRequestDTO> getVacationSubsRequests() {
+    return vacationSubsRequests;
+  }
+
+  public void setVacationSubsRequests(List<VacationRequestDTO> vacationSubsRequests) {
+    this.vacationSubsRequests = vacationSubsRequests;
+  }
+
   public VacationRequestDTO getVacationRequestsToShow() {
     return vacationRequestsToShow;
   }
@@ -170,5 +182,13 @@ public class ContextDTO {
 
   public void setOfficialVacations(List<OfficialVacationDTO> officialVacations) {
     this.officialVacations = officialVacations;
+  }
+
+  public int getSubNumber() {
+    return subNumber;
+  }
+
+  public void setSubNumber(int subNumber) {
+    subNumber = subNumber;
   }
 }

@@ -4,7 +4,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
 
-
+        $scope.infoPageUrl = "/portal/intranet/rh-info";
         $scope.currentUser="";
         $scope.employeesSpace="";
         $scope.currentUserAvatar="";
@@ -15,6 +15,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.insuranceId="";
         $scope.socialSecNumber="";
         $scope.vacationRequestsToValidate = [];
+        $scope.vacationSubsRequests = [];
         $scope.myVacationRequests = [];
         $scope.comments = [];
         $scope.history = [];
@@ -31,7 +32,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         $scope.showList = true;
         $scope.showCal = false;
         $scope.showSick = false;
-        $scope.showInfoTab = false;
         $scope.showRequestsTab = true;
         $scope.showHollidays = true;
         $scope.showLeave = false;
@@ -103,10 +103,6 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
          }
 
 
-        $scope.showInfoTabFn = function(){
-            $scope.showRequestsTab=false;
-            $scope.showInfoTab = true;
-        }
 
         $scope.showFormFn = function(){
             $scope.showInfoTab = false;
@@ -241,6 +237,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
         };
+
 
         $scope.loadMyVacationRequests = function(status) {
             var url="";
@@ -744,6 +741,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 }
                 $scope.myVacationRequests = data.data.myVacationRequests;
                 $scope.vacationRequestsToValidate = data.data.vacationRequestsToValidate;
+                $scope.vacationSubsRequests = data.data.vacationSubsRequests;
                 if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
                 if(data.data.officialVacations!=null) {$scope.oVacations = data.data.officialVacations;}
                 $scope.officialDays=data.data.officialDays;

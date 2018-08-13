@@ -102,7 +102,6 @@ public class OfficialVacationService {
         calendar.setTime(entity.getBeginDate());
         calendar.set(Calendar.HOUR, 12);
         days.add(calendar.getTime());
-        LOG.info("_____"+calendar.getTime().toString());
       }else if(((int)entity.getDaysNumber())>1){
         days.addAll(Utils.getDaysBetweenDates(entity.getBeginDate(), entity.getEndDate())) ;
       }

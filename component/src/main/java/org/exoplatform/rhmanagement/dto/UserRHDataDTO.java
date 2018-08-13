@@ -71,4 +71,7 @@ import java.util.Date;
 
     private Boolean active;
 
+    private String hierarchicalManager;
+
+    private String functionalManager;
 }

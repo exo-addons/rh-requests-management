@@ -21,9 +21,9 @@
 	</portlet>
 
 	<portlet>
-		<portlet-name>RHProfileControllerPortlet</portlet-name>
+		<portlet-name>RHUserInfoPortlet</portlet-name>
 		<display-name xml:lang="EN">RH User Profile Portlet</display-name>
-		<portlet-class>org.exoplatform.rhmanagement.portlet.rhProfileInfo.RHProfileControllerPortlet</portlet-class>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhUserInfo.RHUserInfoControllerPortlet</portlet-class>
 		<init-param>
 			<name>juzu.run_mode</name>
 			<value>${juzu.run_mode:prod}</value>
@@ -32,7 +32,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>RH User Data Profile</title>
+			<title>RH User Information</title>
 			<keywords>rh-management</keywords>
 		</portlet-info>
 	</portlet>
@@ -53,4 +53,92 @@
 			<keywords>rh-management</keywords>
 		</portlet-info>
 	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>RhAdministrationMenuPortlet</portlet-name>
+		<display-name xml:lang="EN">RH  Admin Menu Portlet</display-name>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhAdministrationMenu.RhAdministrationMenuControllerPortlet</portlet-class>
+		<init-param>
+			<name>juzu.run_mode</name>
+			<value>${juzu.run_mode:prod}</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>RH Administration</title>
+			<keywords>rh-management</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>RhEmployeesAdministrationPortlet</portlet-name>
+		<display-name xml:lang="EN">RH Employees Admin Portlet</display-name>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhEmployeesAdministration.RhEmployeesAdministrationControllerPortlet</portlet-class>
+		<init-param>
+			<name>juzu.run_mode</name>
+			<value>${juzu.run_mode:prod}</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>RH Administration</title>
+			<keywords>rh-management</keywords>
+		</portlet-info>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>RhRequestsHistoryPortlet</portlet-name>
+		<display-name xml:lang="EN">RH Requests History Portlet</display-name>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhRequestsHistory.RhRequestsHistoryControllerPortlet</portlet-class>
+		<init-param>
+			<name>juzu.run_mode</name>
+			<value>${juzu.run_mode:prod}</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>RH Administration</title>
+			<keywords>rh-management</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>RhSettingsPortlet</portlet-name>
+		<display-name xml:lang="EN">RH Settings Portlet</display-name>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhAdministrationSettings.RhAdministrationSettingsControllerPortlet</portlet-class>
+		<init-param>
+			<name>juzu.run_mode</name>
+			<value>${juzu.run_mode:prod}</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>RH Administration</title>
+			<keywords>rh-management</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>RhRequestAdministrationPortlet</portlet-name>
+		<display-name xml:lang="EN">RH Requests Admin Portlet</display-name>
+		<portlet-class>org.exoplatform.rhmanagement.portlet.rhRequestsAdministration.RhRequestsAdministrationControllerPortlet</portlet-class>
+		<init-param>
+			<name>juzu.run_mode</name>
+			<value>${juzu.run_mode:prod}</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>RH Administration</title>
+			<keywords>rh-management</keywords>
+		</portlet-info>
+	</portlet>
+
 </portlet-app>
