@@ -16,6 +16,7 @@
 
 
   <changeSet author="rh-management" id="1.0.0-1">
+    <validCheckSum>7:b6566144384a3ba372acb4e1505ee7cf</validCheckSum>
     <createTable tableName="HR_VACATION_REQUEST">
       <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"/>
@@ -23,14 +24,14 @@
       <column name="USER_ID" type="NVARCHAR(50)"></column>
       <column name="USER_FULL_NAME" type="NVARCHAR(100)"></column>
       <column name="DAYS_NUMBER" type="FLOAT"></column>
-      <column name="FROM_DATE" type="DATE"></column>
-      <column name="TO_DATE" type="DATE"></column>
+      <column name="FROM_DATE" type="TIMESTAMP" defaultValueDate="${now}"></column>
+      <column name="TO_DATE" type="TIMESTAMP" defaultValueDate="${now}"></column>
       <column name="REASON" type="NVARCHAR(550)"></column>
       <column name="VACATION_TYPE" type="NVARCHAR(50)"></column>
       <column name="SUBSTITUTE" type="NVARCHAR(100)"></column>
       <column name="STATUS" type="NVARCHAR(100)" defaultValue="pending"></column>
       <column name="TYPE" type="NVARCHAR(100)"></column>
-      <column name="CREATION_DATE" type="DATE"></column>
+      <column name="CREATION_DATE" type="TIMESTAMP" defaultValueDate="${now}"></column>
 
     </createTable>
 
@@ -114,17 +115,6 @@
                     newDataType="NVARCHAR(50)"
                     tableName="HR_USER_DATA"/>
   </changeSet>
-
-  <changeSet author="rh-management" id="1.0.0-3">
-    <modifyDataType columnName="FROM_DATE"
-                    newDataType="TIMESTAMP"
-                    tableName="HR_VACATION_REQUEST"/>
-
-    <modifyDataType columnName="TO_DATE"
-                    newDataType="TIMESTAMP"
-                    tableName="HR_VACATION_REQUEST"/>
-  </changeSet>
-
 
   <changeSet author="rh-management" id="1.0.0-4">
     <createTable tableName="HR_BALANCE_HISTORY">
