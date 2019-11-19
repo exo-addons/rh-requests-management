@@ -21,7 +21,7 @@ require( ["SHARED/jquery", "rhSettingsController"], function ( $,  rhSettingsCon
     $( "#beginDate" ).datepicker();
     $( "#beginDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
     $( "#beginDate" ).datepicker( "option", "changeYear", true );
-    $( "#beginDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
+    $( "#beginDate" ).datepicker( "option", "yearRange", "1970:c+10" );
 
 });
     function getDate( element ) {
