@@ -22,7 +22,6 @@ require( ["SHARED/jquery", "rhRequestHistoryControllers"], function ( $,  rhRequ
     $( "#toDate, #fromDate" ).datepicker();
     $( "#toDate, #fromDate" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
     $( "#toDate, #fromDate" ).datepicker( "option", "changeYear", true );
-    $( "#toDate, #fromDate" ).datepicker( "option", "yearRange", "1970:c+nn" );
 
 
     function getDate( element ) {
