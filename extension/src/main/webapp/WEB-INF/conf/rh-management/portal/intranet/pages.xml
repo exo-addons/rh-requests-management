@@ -23,7 +23,7 @@
     <page>
         <name>rh-employees-admin</name>
         <title>HR Employees Administration</title>
-        <access-permissions>*:/rh-managers</access-permissions>
+        <access-permissions>*:/platform/administrators</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
         <portlet-application>
@@ -31,7 +31,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
@@ -40,7 +40,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhEmployeesAdministrationPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
     </page>
@@ -48,7 +48,7 @@
     <page>
         <name>rh-requests-admin</name>
         <title>HR Requests Administration</title>
-        <access-permissions>*:/rh-managers</access-permissions>
+        <access-permissions>*:/platform/administrators</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
         <portlet-application>
@@ -56,7 +56,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
@@ -65,7 +65,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhRequestAdministrationPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
     </page>
@@ -73,7 +73,7 @@
     <page>
         <name>rh-history</name>
         <title>HR Requests History</title>
-        <access-permissions>*:/rh-managers</access-permissions>
+        <access-permissions>*:/platform/administrators</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
 
@@ -82,7 +82,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
@@ -91,7 +91,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhRequestsHistoryPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
@@ -100,7 +100,7 @@
     <page>
         <name>rh-settings</name>
         <title>HR Settings</title>
-        <access-permissions>*:/rh-managers</access-permissions>
+        <access-permissions>*:/platform/administrators</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <show-max-window>false</show-max-window>
 
@@ -109,7 +109,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhAdministrationMenuPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
@@ -118,7 +118,7 @@
                 <application-ref>rh-management</application-ref>
                 <portlet-ref>RhSettingsPortlet</portlet-ref>
             </portlet>
-            <access-permissions>*:/rh-managers</access-permissions>
+            <access-permissions>*:/platform/administrators</access-permissions>
             <show-info-bar>false</show-info-bar>
         </portlet-application>
 
