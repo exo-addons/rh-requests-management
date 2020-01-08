@@ -5,10 +5,7 @@ import org.exoplatform.rhmanagement.dto.OfficialVacationDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
-import org.exoplatform.rhmanagement.services.OfficialVacationService;
-import org.exoplatform.rhmanagement.services.UserDataService;
-import org.exoplatform.rhmanagement.services.VacationRequestService;
-import org.exoplatform.rhmanagement.services.ValidatorService;
+import org.exoplatform.rhmanagement.services.*;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -74,14 +71,13 @@ public class RequestRestService implements ResourceContainer {
     public Response find(@Context HttpServletRequest request,
                          @Context UriInfo uriInfo,
                          @QueryParam("nameToSearch") String nameToSearch,
-                         @QueryParam("spaceURL") String spaceURL,
                          @QueryParam("currentUser") String currentUser) throws Exception {
 
         MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
         try {
             JSONArray users = new JSONArray();
-
-            Space space = spaceService.getSpaceByUrl(spaceURL);
+            String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
+            Space space = spaceService.getSpaceByGroupId("/spaces/" + employeesSpace);
             if(space!=null){
                 List<Profile> profiles = getSpaceMembersProfiles(space).stream()
                         .filter(a -> a.getFullName().toLowerCase().contains(nameToSearch.toLowerCase()))

@@ -4,12 +4,14 @@ import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.rhmanagement.dto.OfficialVacationDTO;
 import org.exoplatform.rhmanagement.dto.UserRHDataDTO;
 import org.exoplatform.rhmanagement.integration.notification.HRBirthdayNotificationPlugin;
 import org.exoplatform.rhmanagement.integration.notification.HRContractAnniversaryNotificationPlugin;
 import org.exoplatform.rhmanagement.services.OfficialVacationService;
 import org.exoplatform.rhmanagement.services.UserDataService;
+import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.activity.model.ExoSocialActivity;
@@ -96,11 +98,10 @@ public class NotificationsJob implements Job {
             }
         }*/
 
-        LOG.info("Notifications Job ended in " + String.valueOf(System.currentTimeMillis() - start) + " ms");
+        LOG.info("Notifications Job ended in " + (System.currentTimeMillis() - start) + " ms");
 
     }
     public long daysBetween(Calendar d1, Calendar d2){
-        long diffInMillies = Math.abs(d2.getTime().getTime() - d1.getTime().getTime());
         return Math.round((((float)d2.getTime().getTime() - (float)d1.getTime().getTime())/(60*60*24*1000)));
     }
 
@@ -110,7 +111,8 @@ public class NotificationsJob implements Job {
                 IdentityManager identityManager= CommonsUtils.getService(IdentityManager.class);
                 ActivityManager activityManager= CommonsUtils.getService(ActivityManager.class);
                 String userId="root";
-                Space space = spaceService.getSpaceByPrettyName("exo_employees");
+                String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
+                Space space = spaceService.getSpaceByGroupId(employeesSpace);
                 String dates="";
                 Calendar from=Calendar.getInstance();
                 from.setTime(oVacation.getBeginDate());
