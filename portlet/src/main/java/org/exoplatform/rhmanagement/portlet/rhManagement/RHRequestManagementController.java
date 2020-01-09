@@ -576,10 +576,7 @@ public class RHRequestManagementController {
         data.set("currentUserAvatar","/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
       data.set("currentUserName",profile.getFullName());
-      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
-      if(employeesSpace==null){
-        employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
-      }
+      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
       data.set("employeesSpace",employeesSpace);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
       if (userRHDataDTO != null) {
@@ -732,10 +729,7 @@ private void shareCalendar_(VacationRequestDTO obj, String calId){
         data.setCurrentUserAvatar("/eXoSkin/skin/images/system/UserAvtDefault.png");
       }
       data.setCurrentUserName(profile.getFullName());
-      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
-      if(employeesSpace==null){
-        employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
-      }
+      String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
       data.setEmployeesSpace(employeesSpace);
       UserRHDataDTO userRHDataDTO = userDataService.getUserRHDataByUserId(currentUser);
       if (userRHDataDTO != null) {

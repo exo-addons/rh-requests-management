@@ -730,7 +730,7 @@ define("rhEmployeesAdminControllers", ["SHARED/jquery", "SHARED/juzu-ajax", "SHA
 
         $scope.getEmployees = function (currentUser, searchUser = null, searchType) {
 
-            var rsetUrl = "/rest/rhrequest/users/find?currentUser=" + currentUser + "&spaceURL=exo_employees&nameToSearch=" + searchUser;//+$scope.employeesSpace;
+            var rsetUrl = "/rest/rhrequest/users/find?currentUser=" + currentUser + "&nameToSearch=" + searchUser;
 
             $http({
                 method: 'GET',

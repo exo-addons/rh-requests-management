@@ -101,7 +101,7 @@ public class RhEmployeesAdministrationController {
   public List<EmployeesDTO> getAllUsersRhData(String emfilter) {
     try {
 
-      List<EmployeesDTO>  uds=null;
+      List<EmployeesDTO>  uds = null;
       if(emfilter.equals("active")){
         uds= userDataService.getUsersRhDataByStatus(true,0,0);
       }else if(emfilter.equals("former")) {

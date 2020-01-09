@@ -50,10 +50,7 @@ public class UpdateRequestListener extends Listener<Set<String>,VacationRequestD
 
         if (Utils.VALIDATED.equals(vr.getStatus())){
             ExtendedCalendarService  xCalendarService=CommonsUtils.getService(ExtendedCalendarService.class);
-            String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
-            if(employeesSpace==null){
-                employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
-            }
+            String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
             String calId=(employeesSpace + "_space_calendar");
             org.exoplatform.calendar.model.Event calendarEvent = new org.exoplatform.calendar.model.Event();
             calendarEvent.setId(calId+"_"+vr.getUserId()+"_"+vr.getId());
@@ -70,10 +67,7 @@ public class UpdateRequestListener extends Listener<Set<String>,VacationRequestD
 
         if (Utils.CANCELED.equals(vr.getStatus())){
             ExtendedCalendarService  xCalendarService=CommonsUtils.getService(ExtendedCalendarService.class);
-            String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE);
-            if(employeesSpace==null){
-                employeesSpace =Utils.EMPLOYEES_SPACE_DEFAULT;
-            }
+            String employeesSpace = System.getProperty(Utils.EMPLOYEES_SPACE, Utils.EMPLOYEES_SPACE_DEFAULT);
             String calId=(employeesSpace + "_space_calendar");
             xCalendarService.getEventHandler().removeEvent(calId+"_"+vr.getUserId()+"_"+vr.getId());
         }
