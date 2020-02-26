@@ -229,13 +229,13 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                               @Context UriInfo uriInfo,
                               List<UserRHDataDTO> emloyees      ) throws Exception {
 
-                if (emloyees == null || emloyees.size() ==0) {
-                    return Response.status(Response.Status.BAD_REQUEST).build();
-                }
+        if (emloyees == null || emloyees.size() ==0) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
-                if (!request.isUserInRole("administrators")) {
-                    return Response.status(Response.Status.UNAUTHORIZED).build();
-                }
+        if (!request.isUserInRole("administrators")) {
+           return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
         MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
         UserHandler uh = organizationService.getUserHandler();
         try {
@@ -261,13 +261,12 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                                     @Context UriInfo uriInfo,
                                     List<UserRHDataDTO> emloyees) throws Exception {
 
-            if (!request.isUserInRole("administrators")) {
-                return Response.status(Response.Status.UNAUTHORIZED).build();
-            }
-                if (emloyees.size() == 0|| emloyees == null ) {
-                    return Response.status(Response.Status.BAD_REQUEST).build();
-                }
-
+        if (!request.isUserInRole("administrators")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        if (emloyees.size() == 0|| emloyees == null ) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
         try {
             for(UserRHDataDTO emp:emloyees){

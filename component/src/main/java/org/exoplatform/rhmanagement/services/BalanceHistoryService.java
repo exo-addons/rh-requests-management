@@ -88,7 +88,7 @@ public class BalanceHistoryService {
         try {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUserId());
+          LOG.error("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));
@@ -108,7 +108,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUpdaterId());
+          LOG.error("cannot get profile of"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
@@ -116,7 +116,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
           entity.setUserId(profile.getFullName());
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUserId());
+          LOG.error("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));
