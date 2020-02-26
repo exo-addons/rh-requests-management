@@ -94,7 +94,7 @@ public class HRContractAnniversaryNotificationPlugin extends BaseNotificationPlu
 
     } catch (Exception ex) {
 
-      LOG.error(ex.getMessage(), ex);
+      LOG.error("Error when add receivers NotificationInfo user",ex.getMessage(), ex);
 
     }
 

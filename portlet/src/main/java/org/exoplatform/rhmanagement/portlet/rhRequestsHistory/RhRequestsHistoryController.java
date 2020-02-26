@@ -97,7 +97,7 @@ public class RhRequestsHistoryController {
       if(uh.findUserByName(userId)==null){
         return null;
       } else {
-        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false).getProfile();
+        Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId).getProfile();
         EmployeesDTO employee = new EmployeesDTO();
         employee.setName(profile.getFullName());
         employee.setUserId(userId);

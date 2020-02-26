@@ -42,6 +42,7 @@ public class UpdateRequestListener extends Listener<Set<String>,VacationRequestD
                     if(!rh.getUserName().equals(currentUser)) receivers.add(rh.getUserName());
                 }
             } catch (Exception e) {
+                LOG.error("Error when add receivers user",e.getMessage(), e);
 
             }
         }
