@@ -81,7 +81,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId()).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          LOG.error("cannot set profile of {}"+ entity.getUpdaterId(),e.getMessage());
+          LOG.error("cannot get profile of {}"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
