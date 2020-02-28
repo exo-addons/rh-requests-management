@@ -17,12 +17,14 @@
   
 package org.exoplatform.rhmanagement.integration.notification;
 
+import org.exoplatform.commons.notification.template.TemplateUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class TemplateUtils {
+class TemplateUtil extends TemplateUtils {
   public static String format(Date date, TimeZone timezone) { 
     if (date == null) {
       return null;

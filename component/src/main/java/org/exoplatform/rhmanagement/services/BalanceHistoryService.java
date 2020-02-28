@@ -76,9 +76,10 @@ public class BalanceHistoryService {
     List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByUserId(id, userProfile.getFullName(), fromDate, toDate, offset, limit);
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
+      Profile profile ;
      if(entity.getUpdaterId()!=null){
         try {
-          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId()).getProfile();
+          profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId()).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
           LOG.error("cannot get profile of {}"+ entity.getUpdaterId());
@@ -86,7 +87,7 @@ public class BalanceHistoryService {
       }
       if(entity.getUserId()!=null) {
         try {
-          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+          profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
         } catch (Exception e) {
           LOG.error("cannot get profile of"+ entity.getUserId());
         }

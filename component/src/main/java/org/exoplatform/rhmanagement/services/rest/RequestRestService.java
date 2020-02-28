@@ -242,6 +242,7 @@ private List<Profile> getSpaceMembersProfiles(Space space){
             for(UserRHDataDTO emp:emloyees){
                if (uh.findUserByName(emp.getUserId()) != null){
                     userDataService.save(emp);
+                   LOG.info("Employee created"+uh.findUserByName(emp.getUserId()));
                 }
 
             }
@@ -275,6 +276,7 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                     user.setHierarchicalManager(emp.getHierarchicalManager());
                     user.setFunctionalManager(emp.getFunctionalManager());
                     userDataService.save(user);
+                    LOG.info("Manager update"+emp.getFunctionalManager());
                 }
 
             }
@@ -306,6 +308,7 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                         user.put("hierarchicalManager",userDTO.getHierarchicalManager()!=null ? userDTO.getHierarchicalManager() : "");
                         user.put("functionalManager",userDTO.getFunctionalManager()!=null ? userDTO.getFunctionalManager() : "");
                         users.put(user);
+                        LOG.info("Managers export"+userDTO.getFunctionalManager());
                     }
                 }
             JSONObject jsonGlobal = new JSONObject();
