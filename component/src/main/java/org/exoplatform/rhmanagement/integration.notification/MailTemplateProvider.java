@@ -236,7 +236,7 @@ public class MailTemplateProvider extends TemplateProvider {
   protected String getDate(String date, String userName) {
     if (date != null) {
       Date date_ = new Date(Long.parseLong(date));
-      return org.exoplatform.rhmanagement.integration.notification.TemplateUtil.format(date_,getUserTimezone(userName));
+      return TemplateUtil.format(date_,getUserTimezone(userName));
     } else {
       return "";
     }
