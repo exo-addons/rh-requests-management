@@ -82,7 +82,7 @@ public class BalanceHistoryService {
           profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId()).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          LOG.error("cannot get profile of {}"+ entity.getUpdaterId());
+          LOG.debug("cannot get profile of {}"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
