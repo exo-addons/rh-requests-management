@@ -89,7 +89,7 @@ public class BalanceHistoryService {
         try {
           profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
         } catch (Exception e) {
-          LOG.error("cannot get profile of"+ entity.getUserId());
+          LOG.debug("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));
