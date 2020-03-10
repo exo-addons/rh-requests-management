@@ -79,37 +79,33 @@ public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
   @Override
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
-
-    UserRHDataDTO obj = ctx.value(EMPLOYEE);
-    String notifType = ctx.value(NOTIF_TYPE);
-    DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-
-    Set<String> receivers = new HashSet<String>();
-
+    NotificationInfo notif = NotificationInfo.instance();
 
     try {
+      UserRHDataDTO obj = ctx.value(EMPLOYEE);
+      String notifType = ctx.value(NOTIF_TYPE);
+      DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+
+      Set<String> receivers = new HashSet<String>();
       for (User rh : Utils.getRhManagers()){
         receivers.add(rh.getUserName());
       }
+      String userId=obj.getUserId();
+      StringBuilder activityId = new StringBuilder(userId);
+      activityId.append("-").append(obj.getUserId());
+      notif.setFrom(userId)
+              .to(new LinkedList<String>(receivers))
+              .with(NotificationUtils.CREATOR, userId)
+              .with(NotificationUtils.BIRTHDAY_DATE, String.valueOf(obj.getBirthDay().getTime()))
+              .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
+              .key(getKey()).end();
+
 
     } catch (Exception ex) {
-
-      LOG.error(ex.getMessage(), ex);
-
+      LOG.error("Error when add receivers NotificationInfo user ",ex.getMessage(), ex);
     }
 
-
-    String userId=obj.getUserId();
-    StringBuilder activityId = new StringBuilder(userId);
-    activityId.append("-").append(obj.getUserId());
-    return NotificationInfo.instance()
-
-            .setFrom(userId)
-            .to(new LinkedList<String>(receivers))
-            .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.BIRTHDAY_DATE, String.valueOf(obj.getBirthDay().getTime()))
-            .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
-            .key(getKey()).end();
+    return notif;
 
   }
 }

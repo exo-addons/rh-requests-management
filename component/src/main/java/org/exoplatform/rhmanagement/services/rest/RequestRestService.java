@@ -229,12 +229,20 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                               @Context UriInfo uriInfo,
                               List<UserRHDataDTO> emloyees      ) throws Exception {
 
+        if (emloyees == null || emloyees.size() ==0) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        if (!request.isUserInRole("administrators")) {
+           return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
         MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
         UserHandler uh = organizationService.getUserHandler();
         try {
             for(UserRHDataDTO emp:emloyees){
                if (uh.findUserByName(emp.getUserId()) != null){
                     userDataService.save(emp);
+                   LOG.info("Employee created"+uh.findUserByName(emp.getUserId()));
                 }
 
             }
@@ -254,6 +262,12 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                                     @Context UriInfo uriInfo,
                                     List<UserRHDataDTO> emloyees) throws Exception {
 
+        if (!request.isUserInRole("administrators")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        if (emloyees.size() == 0|| emloyees == null ) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         MediaType mediaType = RestChecker.checkSupportedFormat("json", SUPPORTED_FORMATS);
         try {
             for(UserRHDataDTO emp:emloyees){
@@ -262,6 +276,7 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                     user.setHierarchicalManager(emp.getHierarchicalManager());
                     user.setFunctionalManager(emp.getFunctionalManager());
                     userDataService.save(user);
+                    LOG.info("Manager update"+emp.getFunctionalManager());
                 }
 
             }
@@ -293,6 +308,7 @@ private List<Profile> getSpaceMembersProfiles(Space space){
                         user.put("hierarchicalManager",userDTO.getHierarchicalManager()!=null ? userDTO.getHierarchicalManager() : "");
                         user.put("functionalManager",userDTO.getFunctionalManager()!=null ? userDTO.getFunctionalManager() : "");
                         users.put(user);
+                        LOG.info("Managers export"+userDTO.getFunctionalManager());
                     }
                 }
             JSONObject jsonGlobal = new JSONObject();

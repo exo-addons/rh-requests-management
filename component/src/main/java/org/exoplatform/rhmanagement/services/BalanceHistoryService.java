@@ -76,17 +76,18 @@ public class BalanceHistoryService {
     List<BalanceHistoryEntity> entities = balanceHistoryDAO.getBalanceHistoryByUserId(id, userProfile.getFullName(), fromDate, toDate, offset, limit);
     List<BalanceHistoryDTO> dtos = new ArrayList<BalanceHistoryDTO>();
     for (BalanceHistoryEntity entity : entities) {
+      Profile profile ;
      if(entity.getUpdaterId()!=null){
         try {
-          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
+          profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId()).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUpdaterId());
+          LOG.debug("cannot get profile of {}"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
         try {
-          Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
+          profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
         } catch (Exception e) {
           LOG.debug("cannot get profile of"+ entity.getUserId());
         }
@@ -108,7 +109,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUpdaterId(), false).getProfile();
           entity.setUpdaterId(profile.getFullName());
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUpdaterId());
+          LOG.error("cannot get profile of"+ entity.getUpdaterId());
         }
       }
       if(entity.getUserId()!=null) {
@@ -116,7 +117,7 @@ public class BalanceHistoryService {
           Profile profile = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, entity.getUserId(), false).getProfile();
           entity.setUserId(profile.getFullName());
         } catch (Exception e) {
-          LOG.debug("cannot get profile of"+ entity.getUserId());
+          LOG.error("cannot get profile of"+ entity.getUserId());
         }
       }
       dtos.add(convert(entity));

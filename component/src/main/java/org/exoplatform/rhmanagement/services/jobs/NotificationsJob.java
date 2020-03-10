@@ -58,7 +58,7 @@ public class NotificationsJob implements Job {
             cal.set(Calendar.YEAR, now.get(Calendar.YEAR));
                 long rem=daysBetween(cal,now);
                 if(rem==0){
-                    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
+                    Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId()).getProfile();
                     String message= "The Birthday of "+userProfile.getFullName()+"will be in "+rem+" days";
                     NotificationContext ctx = NotificationContextImpl.cloneInstance().append(HRBirthdayNotificationPlugin.EMPLOYEE, employee).append(HRBirthdayNotificationPlugin.NOTIF_TYPE, message);
                     ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(HRBirthdayNotificationPlugin.ID))).execute(ctx);
@@ -71,7 +71,7 @@ public class NotificationsJob implements Job {
                 long rem=daysBetween(cal,now);
             if(rem==0){
                 LOG.info("contact annif for "+employee.getUserId() );
-                Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId(), false).getProfile();
+                Profile userProfile=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, employee.getUserId()).getProfile();
                 String message= "The Anniversary of contract of "+userProfile.getFullName()+"will be in "+rem+" days";
                 NotificationContext ctx = NotificationContextImpl.cloneInstance().append(HRContractAnniversaryNotificationPlugin.EMPLOYEE, employee).append(HRContractAnniversaryNotificationPlugin.NOTIF_TYPE, message);
                 ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(HRContractAnniversaryNotificationPlugin.ID))).execute(ctx);

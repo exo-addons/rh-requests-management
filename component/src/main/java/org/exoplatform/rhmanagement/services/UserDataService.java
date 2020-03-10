@@ -64,8 +64,7 @@ public class UserDataService {
           userRHDataEntity = userRHDataDAO.create(convert(entity));
         }
       } catch (Exception e) {
-        entity.setCreationDate(new Date());
-        userRHDataEntity = userRHDataDAO.create(convert(entity));
+        LOG.error("An exception occurred when create convert entity: ",e.getMessage());
       }
 
     return convert(userRHDataEntity);

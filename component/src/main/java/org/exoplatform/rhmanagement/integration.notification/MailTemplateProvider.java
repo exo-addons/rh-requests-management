@@ -108,7 +108,7 @@ public class MailTemplateProvider extends TemplateProvider {
         }
 
       if(userName!=null) {
-        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userName, false);
+        Identity id=identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userName);
         templateContext.put("USER_NAME", id.getProfile().getFullName());
       }
 
@@ -173,7 +173,7 @@ public class MailTemplateProvider extends TemplateProvider {
       String language = getLanguage(first);
       TemplateContext templateContext = new TemplateContext(first.getKey().getId(), language);
       //
-      Identity receiver = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, first.getTo(), true);
+      Identity receiver = CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity(OrganizationIdentityProvider.NAME, first.getTo());
       templateContext.put("FIRST_NAME", encoder.encode(receiver.getProfile().getProperty(Profile.FIRST_NAME).toString()));
       templateContext.put("FOOTER_LINK", LinkProviderUtils.getRedirectUrl("notification_settings", receiver.getRemoteId()));
       
@@ -236,7 +236,7 @@ public class MailTemplateProvider extends TemplateProvider {
   protected String getDate(String date, String userName) {
     if (date != null) {
       Date date_ = new Date(Long.parseLong(date));
-      return org.exoplatform.rhmanagement.integration.notification.TemplateUtils.format(date_,getUserTimezone(userName));
+      return TemplateUtil.format(date_,getUserTimezone(userName));
     } else {
       return "";
     }
