@@ -24,7 +24,7 @@
     <url>https://github.com/exo-addons/rh-requests-management</url>
   </scm>
   <properties>
-    <juzu.jackson.version>1.1.0</juzu.jackson.version>
+    <juzu.jackson.version>1.2.0</juzu.jackson.version>
     <org.exoplatform.commons.version>6.0.x-SNAPSHOT</org.exoplatform.commons.version>
     <org.exoplatform.social.version>6.0.x-SNAPSHOT</org.exoplatform.social.version>
     <org.exoplatform.calendar.version>6.0.x-SNAPSHOT</org.exoplatform.calendar.version>
