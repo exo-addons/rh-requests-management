@@ -24,16 +24,46 @@
     <url>https://github.com/exo-addons/rh-requests-management</url>
   </scm>
   <properties>
-    <juzu.jackson.version>1.1.0</juzu.jackson.version>
-    <org.exoplatform.platform.version>6.0.x-SNAPSHOT</org.exoplatform.platform.version>
+    <juzu.jackson.version>1.2.0</juzu.jackson.version>
+    <org.exoplatform.commons.version>6.0.x-SNAPSHOT</org.exoplatform.commons.version>
+    <org.exoplatform.social.version>6.0.x-SNAPSHOT</org.exoplatform.social.version>
+    <org.exoplatform.calendar.version>6.0.x-SNAPSHOT</org.exoplatform.calendar.version>
   </properties>
   <dependencyManagement>
     <dependencies>
       <!-- Import versions from platform project -->
       <dependency>
-        <groupId>org.exoplatform.platform</groupId>
-        <artifactId>platform</artifactId>
-        <version>${org.exoplatform.platform.version}</version>
+        <groupId>org.exoplatform.commons</groupId>
+        <artifactId>commons-api</artifactId>
+        <version>${org.exoplatform.commons.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.commons</groupId>
+        <artifactId>commons-component-common</artifactId>
+        <version>${org.exoplatform.commons.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.social</groupId>
+        <artifactId>social-component-core</artifactId>
+        <version>${org.exoplatform.social.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.social</groupId>
+        <artifactId>social-component-notification</artifactId>
+        <version>${org.exoplatform.social.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.calendar</groupId>
+        <artifactId>calendar-service</artifactId>
+        <version>${org.exoplatform.calendar.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
