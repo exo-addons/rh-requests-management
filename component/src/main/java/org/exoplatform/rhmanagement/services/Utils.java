@@ -1,8 +1,15 @@
 package org.exoplatform.rhmanagement.services;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import javax.jcr.Node;
+import javax.jcr.Session;
+
 import org.apache.commons.fileupload.FileItem;
-import org.exoplatform.calendar.service.CalendarService;
-import org.exoplatform.calendar.service.CalendarSetting;
+
+import org.exoplatform.agenda.model.AgendaUserSettings;
+import org.exoplatform.agenda.service.AgendaUserSettingsService;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.container.PortalContainer;
@@ -17,11 +24,8 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.services.organization.UserHandler;
-
-import javax.jcr.Node;
-import javax.jcr.Session;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 /**
  * Created by Medamine on 14/02/2017.
@@ -154,14 +158,18 @@ public class Utils {
     }
 
     public static TimeZone getUserTimezone(String username) {
-        try {
-            CalendarService calService=CommonsUtils.getService(CalendarService.class);
-            CalendarSetting setting = calService.getCalendarSetting(username);
-            return TimeZone.getTimeZone(setting.getTimeZone());
-        } catch (Exception e) {
-            log.error("Can't retrieve timezone", e);
-        }
-        return null;
+      try {
+        AgendaUserSettingsService agendaUserSettingsService = CommonsUtils.getService(AgendaUserSettingsService.class);
+        IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
+        org.exoplatform.social.core.identity.model.Identity user =
+                                                                 identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME,
+                                                                                                     username);
+        AgendaUserSettings agendaUserSettings = agendaUserSettingsService.getAgendaUserSettings(Long.parseLong(user.getId()));
+        return TimeZone.getTimeZone(agendaUserSettings.getTimeZoneId());
+      } catch (Exception e) {
+        log.error("Can't retrieve timezone", e);
+      }
+      return null;
     }
 
     public static Boolean canView(VacationRequestDTO vr, String user){

@@ -3,11 +3,11 @@
   <parent>
     <artifactId>addons-parent-pom</artifactId>
     <groupId>org.exoplatform.addons</groupId>
-    <version>7</version>
+    <version>14-M04</version>
   </parent>
   <groupId>org.exoplatform.addons.rh-management</groupId>
   <artifactId>rh-management</artifactId>
-  <version>1.2.x-SNAPSHOT</version>
+  <version>1.3.x-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>RH Request Management Addon</name>
   <description>Simplify human resource requests (Holidays, sick and leave requests) management</description>
@@ -25,9 +25,10 @@
   </scm>
   <properties>
     <juzu.jackson.version>1.2.0</juzu.jackson.version>
-    <org.exoplatform.commons.version>6.0.x-SNAPSHOT</org.exoplatform.commons.version>
-    <org.exoplatform.social.version>6.0.x-SNAPSHOT</org.exoplatform.social.version>
-    <org.exoplatform.calendar.version>6.0.x-SNAPSHOT</org.exoplatform.calendar.version>
+    <org.exoplatform.commons.version>6.2.x-SNAPSHOT</org.exoplatform.commons.version>
+    <org.exoplatform.social.version>6.2.x-SNAPSHOT</org.exoplatform.social.version>
+    <addon.exo.jcr.version>6.2.x-SNAPSHOT</addon.exo.jcr.version>
+    <addon.exo.agenda.version>1.1.x-SNAPSHOT</addon.exo.agenda.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -61,13 +62,6 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.calendar</groupId>
-        <artifactId>calendar-service</artifactId>
-        <version>${org.exoplatform.calendar.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.juzu</groupId>
         <artifactId>juzu-plugins-jackson</artifactId>
         <version>${juzu.jackson.version}</version>
@@ -85,6 +79,20 @@
         <version>${project.version}</version>
         <type>war</type>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.jcr</groupId>
+        <artifactId>jcr-parent</artifactId>
+        <version>${addon.exo.jcr.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.agenda</groupId>
+        <artifactId>agenda-parent</artifactId>
+        <version>${addon.exo.agenda.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>

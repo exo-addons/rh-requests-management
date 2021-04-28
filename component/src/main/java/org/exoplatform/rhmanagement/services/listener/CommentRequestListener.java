@@ -1,6 +1,5 @@
 package org.exoplatform.rhmanagement.services.listener;
 
-import org.exoplatform.calendar.service.ExtendedCalendarService;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.notification.impl.NotificationContextImpl;
@@ -9,7 +8,6 @@ import org.exoplatform.rhmanagement.dto.CommentDTO;
 import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 import org.exoplatform.rhmanagement.dto.ValidatorDTO;
 import org.exoplatform.rhmanagement.integration.notification.RequestCommentedPlugin;
-import org.exoplatform.rhmanagement.integration.notification.RequestStatusChangedPlugin;
 import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.rhmanagement.services.ValidatorService;

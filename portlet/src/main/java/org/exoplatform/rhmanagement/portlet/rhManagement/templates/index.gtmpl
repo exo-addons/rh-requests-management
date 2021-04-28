@@ -358,20 +358,6 @@
                                     <input type="text" name="managers" id="managers">
                                 </div>
                             </div>
-
-                            <div class="control-group {{usernameClass}}">
-                                <label class="control-label" for="userCalendarId">{{i18n.eXoCalendar}}:</label>
-                                <div class="controls">
-                                    <select name="inputUsername" id="userCalendar" ng-model="userCalendarId"
-                                            placeholder="{{i18n.serverUsername}}">
-                                        <option value=""></option>
-                                        <option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
-                                        </option>
-
-                                    </select>
-                                </div>
-                            </div>
-
                             <div id="vacationRequestSaveAs"
                                  class="control-group form-horizontal {{vacationRequestNameClass}}">
                                 <button type="button" class="btn" ng-click="showForm = false; initModals()">{{i18n.cancel}}</button>
@@ -757,20 +743,6 @@
                         </fieldset>
                     </div>
 
-
-
-                    <div class="ligne manager">
-                        <b>{{i18n.eXoCalendar}}:</b>
-                        <select name="inputUsername" id="managerCalendarId" ng-model="managerCalendarId"
-                                placeholder="{{i18n.serverUsername}}">
-                            <option value=""></option>
-                            <option ng-repeat="cal in userCalendars" value="{{cal.calId}}">{{cal.calName}}
-                            </option>
-                        </select>
-                        <button id="calSaveButton" type="button" class="btn pull-right btn-primary"
-                                ng-click="shareCalendar(vacationRequesttoShow)">{{i18n.share}}
-                        </button>
-                    </div>
 
 
                     <div class="ligne manager">
