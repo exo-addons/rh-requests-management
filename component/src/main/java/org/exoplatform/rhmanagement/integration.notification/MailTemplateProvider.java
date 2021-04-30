@@ -16,9 +16,16 @@
  */
 package org.exoplatform.rhmanagement.integration.notification;
 
-import org.bouncycastle.ocsp.Req;
-import org.exoplatform.calendar.service.CalendarService;
-import org.exoplatform.calendar.service.CalendarSetting;
+import java.io.IOException;
+import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.gatein.common.text.EntityEncoder;
+
+import org.exoplatform.agenda.model.AgendaUserSettings;
+import org.exoplatform.agenda.service.AgendaUserSettingsService;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfig;
 import org.exoplatform.commons.api.notification.annotation.TemplateConfigs;
@@ -41,13 +48,6 @@ import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.social.notification.LinkProviderUtils;
-import org.gatein.common.text.EntityEncoder;
-
-import java.io.IOException;
-import java.io.Writer;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @TemplateConfigs(templates = {
 
@@ -245,9 +245,13 @@ public class MailTemplateProvider extends TemplateProvider {
 
   public TimeZone getUserTimezone(String username) {
     try {
-      CalendarService calService=  CommonsUtils.getService(CalendarService.class);
-      CalendarSetting setting = calService.getCalendarSetting(username);
-      return TimeZone.getTimeZone(setting.getTimeZone());
+      AgendaUserSettingsService agendaUserSettingsService = CommonsUtils.getService(AgendaUserSettingsService.class);
+      IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
+      org.exoplatform.social.core.identity.model.Identity user =
+                                                               identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME,
+                                                                                                   username);
+      AgendaUserSettings agendaUserSettings = agendaUserSettingsService.getAgendaUserSettings(Long.parseLong(user.getId()));
+      return TimeZone.getTimeZone(agendaUserSettings.getTimeZoneId());
     } catch (Exception e) {
       log.error("Can't retrieve timezone", e);
     }

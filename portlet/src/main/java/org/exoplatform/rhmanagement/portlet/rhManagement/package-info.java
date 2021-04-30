@@ -4,9 +4,7 @@
         @Binding(value = SpaceService.class),
         @Binding(value = IdentityManager.class),
         @Binding(value = UserDataService.class),
-        @Binding(value = CalendarService.class),
         @Binding(value = RepositoryService.class),
-        @Binding(value = ExtendedCalendarService.class),
         @Binding(value = ConventionalVacationService.class),
         @Binding(value = OfficialVacationService.class),
         @Binding(value = ListenerService.class),
@@ -52,8 +50,6 @@ import juzu.plugin.binding.Bindings;
 import juzu.plugin.less.Less;
 import juzu.plugin.portlet.Portlet;
 
-import org.exoplatform.calendar.service.CalendarService;
-import org.exoplatform.calendar.service.ExtendedCalendarService;
 import org.exoplatform.rhmanagement.services.ConventionalVacationService;
 import org.exoplatform.rhmanagement.services.OfficialVacationService;
 import org.exoplatform.rhmanagement.services.UserDataService;

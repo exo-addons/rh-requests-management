@@ -7,11 +7,6 @@ import juzu.impl.common.JSON;
 import juzu.plugin.jackson.Jackson;
 import juzu.template.Template;
 import org.apache.commons.fileupload.FileItem;
-import org.exoplatform.calendar.model.Calendar;
-import org.exoplatform.calendar.model.Event;
-import org.exoplatform.calendar.model.query.CalendarQuery;
-import org.exoplatform.calendar.service.CalendarService;
-import org.exoplatform.calendar.service.ExtendedCalendarService;
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.juzu.ajax.Ajax;
@@ -74,12 +69,6 @@ public class RHRequestManagementController {
   UserDataService userDataService;
 
   @Inject
-  ExtendedCalendarService xCalendarService;
-
-  @Inject
-  CalendarService calendarService;
-
-  @Inject
   RepositoryService repositoryService;
 
   @Inject
@@ -115,32 +104,6 @@ public class RHRequestManagementController {
     } catch (Throwable e) {
       log.error(e);
       return null;
-    }
-  }
-
-
-  @Ajax
-  @juzu.Resource
-  @MimeType.JSON
-  @Jackson
-  public Response getUserCalendars() {
-    JSONArray cals=new JSONArray();
-    try {
-      CalendarQuery query = new CalendarQuery();
-      query.setIdentity(ConversationState.getCurrent().getIdentity());
-      List <Calendar> lCal=xCalendarService.getCalendarHandler().findCalendars(query);
-      lCal.sort((cal1,cal2) -> cal1.getName().compareTo(cal2.getName()));
-
-      for (Calendar cal: lCal){
-        JSONObject data = new JSONObject();
-        data.put("calId",cal.getId());
-        data.put("calName",cal.getName());
-        cals.put(data);
-      }
-      return Response.ok(cals.toString());
-    } catch (Throwable e) {
-      log.error("error while getting cals", e);
-      return Response.status(500);
     }
   }
 
@@ -376,9 +339,6 @@ public class RHRequestManagementController {
       val_.setReply(Utils.PENDING);
      validatorService.save(val_);
     }
-    if (obj.getEXoCalendarId()!=""){
-      shareCalendar_(vr,obj.getEXoCalendarId());
-    }
     CommentDTO comment=new CommentDTO();
     comment.setRequestId(vr.getId());
     comment.setCommentText("requestCreated");
@@ -418,13 +378,6 @@ public class RHRequestManagementController {
     validatorService.save(obj);
   }
 
-  @Ajax
-  @Resource(method = HttpMethod.POST)
-  @MimeType.JSON
-  @Jackson
-  public void shareCalendar(@Jackson VacationRequestWithManagersDTO obj) {
-    shareCalendar_(obj.getVacationRequestDTO(),obj.getEXoCalendarId());
-  }
 
   @Ajax
   @Resource(method = HttpMethod.POST)
@@ -603,29 +556,6 @@ public class RHRequestManagementController {
     }
     return bundle;
   }
-
-
-private void shareCalendar_(VacationRequestDTO obj, String calId){
-  try {
-    Calendar cal=calendarService.getCalendarById(calId);
-    if(cal!=null){
-      Event calendarEvent = new Event();
-      calendarEvent.setId(calId+"_"+currentUser+"_"+obj.getId());
-      calendarEvent.setEventCategoryId("defaultEventCategoryIdHoliday");
-      calendarEvent.setEventCategoryName("defaultEventCategoryNameHoliday");
-      calendarEvent.setSummary(obj.getUserFullName()+" Off");
-      calendarEvent.setFromDateTime(obj.getFromDate());
-      calendarEvent.setToDateTime(obj.getToDate());
-      calendarEvent.setEventType(Event.TYPE_EVENT) ;
-      calendarEvent.setParticipant(new String[]{currentUser}) ;
-      calendarEvent.setParticipantStatus(new String[] {currentUser + ":"});
-      calendarEvent.setCalendarId(calId);
-      xCalendarService.getEventHandler().saveEvent(calendarEvent) ;
-    }
-  } catch (Exception e) {
-    log.error("Exception while create user event", e);
-  }
-}
 
 
   @Ajax
