@@ -94,7 +94,7 @@ public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
     receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getId());
-    String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/intranet/rh-management?rid="+obj.getId();
+    String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/dw/rh-management?rid="+obj.getId();
     return NotificationInfo.instance()
 
             .setFrom(userId)

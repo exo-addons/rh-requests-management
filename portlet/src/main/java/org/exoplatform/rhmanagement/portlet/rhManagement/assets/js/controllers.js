@@ -4,7 +4,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
         var rhContainer = $('#rhAddon');
         var deferred = $q.defer();
 
-        $scope.infoPageUrl = "/portal/intranet/rh-info";
+        $scope.infoPageUrl = "/portal/dw/rh-info";
         $scope.currentUser="";
         $scope.employeesSpace="";
         $scope.currentUserAvatar="";

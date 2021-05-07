@@ -5,7 +5,7 @@ define("rhUserInfoControllers", [ "SHARED/jquery", "SHARED/juzu-ajax"], function
         $scope.userData = {
             id : null
         };
-$scope.requestsPageUrl = "/portal/intranet/rh-management";
+$scope.requestsPageUrl = "/portal/dw/rh-management";
 $("#charts").css("display", "none");
         $scope.openTab = function (tabName) {
 

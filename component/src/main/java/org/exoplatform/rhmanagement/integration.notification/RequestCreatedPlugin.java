@@ -107,7 +107,7 @@ public class RequestCreatedPlugin extends BaseNotificationPlugin {
     receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
     activityId.append("-").append(obj.getVacationRequestDTO().getId());
-    String vacationUrl = CommonsUtils.getCurrentDomain() + CommonsUtils.getPortalName() + CommonsUtils.getCurrentSite() + "/rh-management?rid=" +obj.getVacationRequestDTO().getId();
+    String vacationUrl =CommonsUtils.getCurrentDomain()+"/portal/dw/rh-management?rid="+obj.getVacationRequestDTO().getId();
     return NotificationInfo.instance()
 
             .setFrom(userId)
