@@ -1229,7 +1229,7 @@ data-ng-click="deleteOfficialVacation(oVacation)">
 </div>
                             <div class="ligne">
                                 <b>{{i18n.substitutes}}:</b>
-<a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}'
+<a ng-repeat="vrsub in vrsubs" href='/portal/dw/profile/{{vrsub.userId}}'
 style='padding-right: 10px;'>{{vrsub.name}}</a>
                                 <hr class="clearfix"/>
 </div>
@@ -1262,7 +1262,7 @@ ng-click="deleteAttachement(attachement.name)">
 <tbody>
 <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
 <td>
-<a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}'
+<a href='/portal/dw/profile/{{vrmanager.validatorUserId}}'
 class="column-item column-title">{{vrmanager.validatorName}}</a>
                                             </td>
 <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
@@ -1315,14 +1315,14 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
 <div class="commentList">
 <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
 <div class="commmentLeft">
-<a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+<a class="avatarXSmall" href="/portal/dw/profile/{{comment.posterId}}">
 <img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
 </a>
                                     </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
-<a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
+<a href="/portal/dw/profile/{{comment.posterId}}">{{comment.posterName}}</a>
                                             <span class="date">
                                                 {{getLocaleDate(comment.postedTime)| date:'d MMM y HH:mm:ss'}}
                                             </span>
@@ -1338,7 +1338,7 @@ class="uiIconClose uiIconDarkGray"></i> {{i18n.decline}}
                                 <div class="commentItem commentFormBox">
                                     <div class="clearfix">
                                         <div class="commmentLeft pull-left">
-                                            <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+                                            <a class="avatarXSmall" href="/portal/dw/profile/{{currentUser}}">
 <img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
 </a>
                                         </div>
@@ -1369,14 +1369,14 @@ ng-model="newComment.commentText" required>
                             <div class="commentList">
                                 <div ng-repeat="item in history" class="commentItem" data-commentid="item.id">
                                     <div class="commmentLeft">
-                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{item.posterId}}">
+                                        <a class="avatarXSmall" href="/portal/dw/profile/{{item.posterId}}">
 <img src="{{item.posterAvatar}}" alt="{{item.posterName}}">
 </a>
                                     </div>
 <!--end commentLeft-->
 <div class="commentRight">
 <div class="author">
-<a href="/portal/intranet/profile/{{item.posterId}}">{{item.posterName}}</a>
+<a href="/portal/dw/profile/{{item.posterId}}">{{item.posterName}}</a>
                                             <span class="date">
                                                 {{getLocaleDate(item.postedTime)| date:'d MMM y HH:mm:ss'}}
                                             </span>

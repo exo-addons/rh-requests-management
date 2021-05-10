@@ -77,7 +77,7 @@
                 <div class="uiContentBox">
 
                     <div class="" style="margin-right: 10px;">
-                        <a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge pull-left">
+                        <a href="/portal/dw/profile/{{vrOwnerData.userId}}" class="avatarLarge pull-left">
                             <img src="{{vrOwnerData.avatar}}" alt="{{vacationRequesttoShow.userFullName}}">
                         </a>
                         <div class="contentBox">
@@ -122,7 +122,7 @@
                     </div>
                     <div class="ligne">
                         <b>{{i18n.substitutes}}:</b>
-                        <a ng-repeat="vrsub in vrsubs" href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
+                        <a ng-repeat="vrsub in vrsubs" href='/portal/dw/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a>
                         <hr class="clearfix" /></div>
                     <div class="ligne">
                         <b>{{i18n.status}}:</b> <span>{{geti18n(vacationRequesttoShow.status)}}</span>
@@ -134,7 +134,7 @@
                             <tbody>
                             <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
                                 <td>
-                                    <a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                    <a href='/portal/dw/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
                                 </td>
                                 <td ng-if="currentUser == vrmanager.validatorUserId" class="td-right-align">
                                     <button class="btn btn-primary" ng-click="approveRequest(vacationRequesttoShow)"
@@ -156,14 +156,14 @@
                             <div class="commentList">
                                 <div ng-repeat="comment in comments" class="commentItem" data-commentid="comment.id">
                                     <div class="commmentLeft">
-                                        <a class="avatarXSmall" href="/portal/intranet/profile/{{comment.posterId}}">
+                                        <a class="avatarXSmall" href="/portal/dw/profile/{{comment.posterId}}">
                                             <img src="/eXoSkin/skin/images/system/UserAvtDefault.png" alt="">
                                         </a>
                                     </div>
                                     <!--end commentLeft-->
                                     <div class="commentRight">
                                         <div class="author">
-                                            <a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterId}}</a>
+                                            <a href="/portal/dw/profile/{{comment.posterId}}">{{comment.posterId}}</a>
                                             <span class="date">
                         {{comment.postedTime | date:'yyyy-MM-dd HH:mm:ss'}}
                         </span>
@@ -181,7 +181,7 @@
                                     <div class="clearfix">
                                         <div class="commmentLeft pull-left">
                                             <a class="avatarXSmall"
-                                               href="/portal/intranet/profile/{{comment.posterId}}">
+                                               href="/portal/dw/profile/{{comment.posterId}}">
                                                 <img src="/eXoSkin/skin/images/system/UserAvtDefault.png"
                                                      alt="Root Root">
                                             </a>
@@ -592,7 +592,7 @@
                 </a>
                 <div class="uiContentBox">
                     <div class="user_details row-fluid">
-                        <a href="/portal/intranet/profile/{{vrOwnerData.userId}}" class="avatarLarge span4" style="padding-top: 15px; margin-bottom: 20px; margin-left: 20px;">
+                        <a href="/portal/dw/profile/{{vrOwnerData.userId}}" class="avatarLarge span4" style="padding-top: 15px; margin-bottom: 20px; margin-left: 20px;">
                             <img src="{{vrOwnerData.avatar}}" alt="{{vacationRequesttoShow.userFullName}}">
                         </a>
                         <div class="contentBox span8">
@@ -631,7 +631,7 @@
                     <div class="ligne">
                         <b>{{i18n.substitutes}}:</b>
                         <a ng-repeat="vrsub in vrsubs"
-                           href='/portal/intranet/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a><hr class="clearfix" />
+                           href='/portal/dw/profile/{{vrsub.userId}}' style='padding-right: 10px;'>{{vrsub.name}}</a><hr class="clearfix" />
                     </div>
 
                     <div class="ligne" style="overflow: auto">
@@ -643,7 +643,7 @@
                                     <tbody>
                                     <tr ng-repeat="vrmanager in vrmanagers" class="hover-action">
                                         <td>
-                                            <a href='/portal/intranet/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
+                                            <a href='/portal/dw/profile/{{vrmanager.validatorUserId}}' class="column-item column-title">{{vrmanager.validatorName}}</a>
                                         </td>
                                         <td ng-if="currentUser == vrmanager.validatorUserId && vacationRequesttoShow.status != 'validated' && vacationRequesttoShow.status != 'canceled'"
                                             class="td-right-align">
@@ -794,14 +794,14 @@
                                          data-commentid="comment.id">
                                         <div class="commmentLeft">
                                             <a class="avatarXSmall"
-                                               href="/portal/intranet/profile/{{comment.posterId}}">
+                                               href="/portal/dw/profile/{{comment.posterId}}">
                                                 <img src="{{comment.posterAvatar}}" alt="{{comment.posterName}}">
                                             </a>
                                         </div>
                                         <!--end commentLeft-->
                                         <div class="commentRight">
                                             <div class="author">
-                                                <a href="/portal/intranet/profile/{{comment.posterId}}">{{comment.posterName}}</a>
+                                                <a href="/portal/dw/profile/{{comment.posterId}}">{{comment.posterName}}</a>
                                                 <span class="date">
                         {{comment.postedTime | date:'d MMM y HH:mm:ss'}}
                         </span>
@@ -817,7 +817,7 @@
                                     <div class="commentItem commentFormBox">
                                         <div class="clearfix">
                                             <div class="commmentLeft pull-left">
-                                                <a class="avatarXSmall" href="/portal/intranet/profile/{{currentUser}}">
+                                                <a class="avatarXSmall" href="/portal/dw/profile/{{currentUser}}">
                                                     <img src="{{currentUserAvatar}}" alt="{{currentUserName}}">
                                                 </a>
                                             </div>
@@ -852,14 +852,14 @@
                         <div class="commentList">
                             <div ng-repeat="item in history" class="commentItem" data-commentid="item.id">
                                 <div class="commmentLeft">
-                                    <a class="avatarXSmall" href="/portal/intranet/profile/{{item.posterId}}">
+                                    <a class="avatarXSmall" href="/portal/dw/profile/{{item.posterId}}">
                                         <img src="{{item.posterAvatar}}" alt="{{item.posterName}}">
                                     </a>
                                 </div>
                                 <!--end commentLeft-->
                                 <div class="commentRight">
                                     <div class="author">
-                                        <a href="/portal/intranet/profile/{{item.posterId}}">{{item.posterName}}</a>
+                                        <a href="/portal/dw/profile/{{item.posterId}}">{{item.posterName}}</a>
                                         <span class="date">
                         {{item.postedTime | date:'d MMM y HH:mm:ss'}}
                         </span>

@@ -6,10 +6,10 @@ define("rhAdminMenuControllers", ["SHARED/jquery", "SHARED/juzu-ajax"], function
 
 		var currentLocation = window.location.href;
 
-		$scope.employeesPageUrl = "/portal/intranet/rh-employees-admin";
-		$scope.requestsPageUrl = "/portal/intranet/rh-requests-admin";
-		$scope.historyPageUrl = "/portal/intranet/rh-history";
-		$scope.settingsPageUrl = "/portal/intranet/rh-settings";
+		$scope.employeesPageUrl = "/portal/dw/rh-employees-admin";
+		$scope.requestsPageUrl = "/portal/dw/rh-requests-admin";
+		$scope.historyPageUrl = "/portal/dw/rh-history";
+		$scope.settingsPageUrl = "/portal/dw/rh-settings";
 
         $scope.openTab = function (tabName) {
             $("#employeesTab").removeClass("active");
