@@ -30,7 +30,7 @@
 		<target-component>org.exoplatform.services.resources.ResourceBundleService</target-component>
 		<component-plugin>
 			<!-- The name of the plugin -->
-			<name>intranet ResourceBundle Plugin</name>
+			<name>dw ResourceBundle Plugin</name>
 			<!-- The name of the method to call on the ResourceBundleService in order to register the ResourceBundles -->
 			<set-method>addResourceBundle</set-method>
 			<!-- The full qualified name of the BaseResourceBundlePlugin -->
@@ -38,11 +38,11 @@
 			<init-params>
 				<values-param>
 					<name>init.resources</name>
-        			<value>locale.navigation.portal.intranet</value>
+        			<value>locale.navigation.portal.dw</value>
 				</values-param>
 				<values-param>
 					<name>portal.resource.names</name>
-			        <value>locale.navigation.portal.intranet</value>
+			        <value>locale.navigation.portal.dw</value>
 				</values-param>
 			</init-params>
 		</component-plugin>
