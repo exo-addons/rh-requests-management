@@ -6,36 +6,36 @@
         <node>
             <uri>rh-administration</uri>
             <name>rh-administration</name>
-            <label>#{rhAddon.intranet.rhAdministration}</label>
-            <page-reference>portal::intranet::rh-employees-admin</page-reference>
+            <label>#{rhAddon.dw.rhAdministration}</label>
+            <page-reference>portal::dw::rh-employees-admin</page-reference>
 
 
             <node>
                 <uri>rh-employees-admin</uri>
                 <name>rh-employees-admin</name>
-                <label>#{rhAddon.intranet.rhEmployeesAdmin}</label>
-                <page-reference>portal::intranet::rh-employees-admin</page-reference>
+                <label>#{rhAddon.dw.rhEmployeesAdmin}</label>
+                <page-reference>portal::dw::rh-employees-admin</page-reference>
             </node>
 
             <node>
                 <uri>rh-requests-admin</uri>
                 <name>rh-requests-admin</name>
-                <label>#{rhAddon.intranet.rhRequestsAdmin}</label>
-                <page-reference>portal::intranet::rh-requests-admin</page-reference>
+                <label>#{rhAddon.dw.rhRequestsAdmin}</label>
+                <page-reference>portal::dw::rh-requests-admin</page-reference>
             </node>
 
             <node>
                 <uri>rh-history</uri>
                 <name>rh-history</name>
-                <label>#{rhAddon.intranet.rhHistory}</label>
-                <page-reference>portal::intranet::rh-history</page-reference>
+                <label>#{rhAddon.dw.rhHistory}</label>
+                <page-reference>portal::dw::rh-history</page-reference>
             </node>
 
             <node>
                 <uri>rh-settings</uri>
                 <name>rh-settings</name>
-                <label>#{rhAddon.intranet.rhSettings}</label>
-                <page-reference>portal::intranet::rh-settings</page-reference>
+                <label>#{rhAddon.dw.rhSettings}</label>
+                <page-reference>portal::dw::rh-settings</page-reference>
             </node>
 
         </node>
