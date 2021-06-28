@@ -3,7 +3,7 @@
   <parent>
     <artifactId>addons-parent-pom</artifactId>
     <groupId>org.exoplatform.addons</groupId>
-    <version>14-M13</version>
+    <version>14-M15</version>
   </parent>
   <groupId>org.exoplatform.addons.rh-management</groupId>
   <artifactId>rh-management</artifactId>
