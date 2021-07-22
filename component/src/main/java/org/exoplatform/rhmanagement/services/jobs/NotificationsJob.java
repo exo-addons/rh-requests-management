@@ -138,7 +138,8 @@ public class NotificationsJob implements Job {
                                 "The office will be closed "+dates+" for \""+oVacation.getDescription()+"\""
                         );
                         activity.setUserId(posterIdentity.getId());
-                        return  activityManager.saveActivity(spaceIdentity, activity);
+                        activityManager.saveActivityNoReturn(spaceIdentity, activity);
+                        return activity;
                     }else{
                         LOG.warn("Not able to create the activity, the Poster or Space Identity is missing");
                     }
