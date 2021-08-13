@@ -16,7 +16,6 @@
  */
 package org.exoplatform.rhmanagement.integration.notification;
 
-
 import org.exoplatform.commons.api.notification.NotificationContext;
 import org.exoplatform.commons.api.notification.model.ArgumentLiteral;
 import org.exoplatform.commons.api.notification.model.NotificationInfo;
@@ -27,30 +26,26 @@ import org.exoplatform.rhmanagement.services.Utils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.User;
-import org.exoplatform.social.core.manager.IdentityManager;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-
-public class HRContractAnniversaryNotificationPlugin extends BaseNotificationPlugin {
+/**
+ * Created by The eXo Platform SAS
+ */
+public class VacationBalanceNotificationPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<UserRHDataDTO> EMPLOYEE = new ArgumentLiteral<UserRHDataDTO>(UserRHDataDTO.class, "employee");
-  public final static ArgumentLiteral<String> NOTIF_TYPE = new ArgumentLiteral<String>(String.class, "notifType");
+  public final static ArgumentLiteral<Float> DAYS_TO_CONSUME = new ArgumentLiteral<Float>(Float.class, "daysToConsume");
 
-  private static final Log LOG = ExoLogger.getLogger(HRContractAnniversaryNotificationPlugin.class);
+  private static final Log LOG = ExoLogger.getLogger(VacationBalanceNotificationPlugin.class);
 
-  public final static String ID = "HRContractAnniversaryNotificationPlugin";
+  public final static String ID = "VacationBalanceNotificationPlugin";
 
-  IdentityManager identityManager;
 
-  public HRContractAnniversaryNotificationPlugin(InitParams initParams, IdentityManager identityManager) {
+  public VacationBalanceNotificationPlugin(InitParams initParams) {
 
     super(initParams);
-    this.identityManager = identityManager;
 
   }
 
@@ -79,34 +74,28 @@ public class HRContractAnniversaryNotificationPlugin extends BaseNotificationPlu
   @Override
 
   protected NotificationInfo makeNotification(NotificationContext ctx) {
-    NotificationInfo notif = NotificationInfo.instance();
-    try {
-      UserRHDataDTO obj = ctx.value(EMPLOYEE);
-      String notifType = ctx.value(NOTIF_TYPE);
-      DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
 
-      Set<String> receivers = new HashSet<String>();
+    UserRHDataDTO obj = ctx.value(EMPLOYEE);
+    Float nDays = ctx.value(DAYS_TO_CONSUME);
+    String userId=obj.getUserId();
+    Set<String> receivers = new HashSet<String>();
+
+    receivers.add(userId);
+
       for (User rh : Utils.getRhManagers()){
         receivers.add(rh.getUserName());
       }
-      String userId=obj.getUserId();
-      StringBuilder activityId = new StringBuilder(userId);
-      activityId.append("-").append(obj.getUserId());
-      notif.setFrom(userId)
-              .to(new LinkedList<String>(receivers))
-              .with(NotificationUtils.CREATOR, userId)
-              .with(NotificationUtils.CONTRACT_ANNIV_DATE, String.valueOf(obj.getContractStartDate().getTime()))
-              .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
-              .key(getKey()).end();
 
-    } catch (Exception ex) {
+    StringBuilder activityId = new StringBuilder(userId);
+    activityId.append("-").append(obj.getUserId());
+    return NotificationInfo.instance()
 
-      LOG.error("Error when add receivers NotificationInfo user",ex.getMessage(), ex);
-
-    }
-
-
-    return notif;
+            .setFrom(userId)
+            .to(new LinkedList<String>(receivers))
+            .with(NotificationUtils.CREATOR, userId)
+            .with(NotificationUtils.DAYS_TO_CONSUME, nDays.toString())
+            .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
+            .key(getKey()).end();
 
   }
 }

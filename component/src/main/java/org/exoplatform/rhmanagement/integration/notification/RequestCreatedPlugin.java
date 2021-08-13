@@ -23,12 +23,11 @@ import org.exoplatform.commons.api.notification.model.NotificationInfo;
 import org.exoplatform.commons.api.notification.plugin.BaseNotificationPlugin;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.container.xml.InitParams;
-import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
-import org.exoplatform.rhmanagement.dto.ValidatorDTO;
+import org.exoplatform.rhmanagement.dto.VacationRequestWithManagersDTO;
 import org.exoplatform.rhmanagement.services.Utils;
-import org.exoplatform.rhmanagement.services.VacationRequestService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationConfig;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.social.core.manager.IdentityManager;
 
@@ -38,19 +37,20 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+/**
+ * Created by The eXo Platform SAS
+ */
+public class RequestCreatedPlugin extends BaseNotificationPlugin {
 
-public class RequestRepliedPlugin extends BaseNotificationPlugin {
+  public final static ArgumentLiteral<VacationRequestWithManagersDTO> REQUEST = new ArgumentLiteral<VacationRequestWithManagersDTO>(VacationRequestWithManagersDTO.class, "request");
 
-  public final static ArgumentLiteral<ValidatorDTO> VALIDATOR = new ArgumentLiteral<ValidatorDTO>(ValidatorDTO.class, "validator");
-  public static final ArgumentLiteral<Set> RECEIVERS = new ArgumentLiteral<Set>(Set.class, "receivers");
-  public final static ArgumentLiteral<VacationRequestDTO> VACATION_REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "vacationRequest");
-  private static final Log LOG = ExoLogger.getLogger(RequestRepliedPlugin.class);
+  private static final Log LOG = ExoLogger.getLogger(RequestCreatedPlugin.class);
 
-  public final static String ID = "RequestRepliedPlugin";
+  public final static String ID = "RequestCreatedPlugin";
 
   IdentityManager identityManager;
 
-  public RequestRepliedPlugin(InitParams initParams,IdentityManager identityManager) {
+  public RequestCreatedPlugin(InitParams initParams,IdentityManager identityManager) {
 
     super(initParams);
     this.identityManager = identityManager;
@@ -84,31 +84,40 @@ public class RequestRepliedPlugin extends BaseNotificationPlugin {
   protected NotificationInfo makeNotification(NotificationContext ctx) {
 
     DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-    ValidatorDTO obj = ctx.value(VALIDATOR);
-    VacationRequestDTO vacationRequest  = ctx.value(VACATION_REQUEST);
+    VacationRequestWithManagersDTO obj = ctx.value(REQUEST);
+    Set<String> receivers = new HashSet<String>();
 
-    Set<String> receivers = ctx.value(RECEIVERS);
+    try {
+
+      for (String manager : obj.getManagers()){
+        receivers.add(manager);
+      }
+
+      for (User rhManager : Utils.getRhManagers()){
+        if(!receivers.contains(rhManager.getUserName()))
+        receivers.add(rhManager.getUserName());
+      }
+
+    } catch (Exception ex) {
+
+      LOG.error(ex.getMessage(), ex);
+
+    }
 
 
-    String userId=obj.getValidatorUserId();
+    String userId=obj.getVacationRequestDTO().getUserId();
     receivers.remove(userId);
     StringBuilder activityId = new StringBuilder(userId);
-    activityId.append("-").append(obj.getRequestId());
-    String vacationUrl = CommonsUtils.getCurrentDomain()+"/portal/dw/rh-management?rid="+obj.getRequestId();
-
-
-
-
-
+    activityId.append("-").append(obj.getVacationRequestDTO().getId());
+    String vacationUrl =CommonsUtils.getCurrentDomain()+"/portal/dw/rh-management?rid="+obj.getVacationRequestDTO().getId();
     return NotificationInfo.instance()
 
             .setFrom(userId)
             .to(new LinkedList<String>(receivers))
             .with(NotificationUtils.CREATOR, userId)
-            .with(NotificationUtils.FROM_DATE, String.valueOf(vacationRequest.getFromDate().getTime()))
-            .with(NotificationUtils.TO_DATE, String.valueOf(vacationRequest.getToDate().getTime()))
-            .with(NotificationUtils.USER_NAME, vacationRequest.getUserId().toString())
-            .with(NotificationUtils.VACATION_URL, vacationUrl)
+            .with(NotificationUtils.FROM_DATE, String.valueOf(obj.getVacationRequestDTO().getFromDate().getTime()))
+            .with(NotificationUtils.TO_DATE, String.valueOf(obj.getVacationRequestDTO().getToDate().getTime()))
+            .with(NotificationUtils.VACATION_URL,vacationUrl )
             .with(NotificationUtils.ACTIVITY_ID, activityId.toString())
             .key(getKey()).end();
 

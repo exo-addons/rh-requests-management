@@ -60,6 +60,9 @@ import java.util.Locale;
            @TemplateConfig( pluginId=VacationBalanceNotificationPlugin.ID, template="war:/notification/templates/web/VacationBalanceNotificationPlugin.gtmpl")
    }
 )
+/**
+ * Created by The eXo Platform SAS
+ */
 public class WebTemplateProvider extends TemplateProvider {
 
   protected DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");

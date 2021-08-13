@@ -59,6 +59,10 @@ import org.exoplatform.social.notification.LinkProviderUtils;
         @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/templates/mail/RequestCommentedPlugin.gtmpl"),
         @TemplateConfig(pluginId = VacationBalanceNotificationPlugin.ID, template = "war:/notification/templates/mail/VacationBalanceNotificationPlugin.gtmpl")
 })
+
+/**
+ * Created by The eXo Platform SAS
+ */
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017
   // --- Create formatter

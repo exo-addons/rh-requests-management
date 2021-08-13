@@ -23,7 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
+/**
+ * Created by The eXo Platform SAS
+ */
 class TemplateUtil extends TemplateUtils {
   public static String format(Date date, TimeZone timezone) { 
     if (date == null) {

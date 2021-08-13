@@ -35,7 +35,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-
+/**
+ * Created by The eXo Platform SAS
+ */
 public class HRBirthdayNotificationPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<UserRHDataDTO> EMPLOYEE = new ArgumentLiteral<UserRHDataDTO>(UserRHDataDTO.class, "employee");

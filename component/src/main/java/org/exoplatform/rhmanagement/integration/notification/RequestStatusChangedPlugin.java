@@ -34,7 +34,9 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Set;
 
-
+/**
+ * Created by The eXo Platform SAS
+ */
 public class RequestStatusChangedPlugin extends BaseNotificationPlugin {
 
   public final static ArgumentLiteral<VacationRequestDTO> REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "request");

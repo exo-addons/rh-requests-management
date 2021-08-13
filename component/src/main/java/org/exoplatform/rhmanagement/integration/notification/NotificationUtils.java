@@ -23,6 +23,9 @@ import org.exoplatform.rhmanagement.dto.VacationRequestDTO;
 
 import java.util.Set;
 
+/**
+ * Created by The eXo Platform SAS
+ */
 public class NotificationUtils {
   public final static ArgumentLiteral<VacationRequestDTO> VACATION_REQUEST = new ArgumentLiteral<VacationRequestDTO>(VacationRequestDTO.class, "vacationRequest");
   public final static ArgumentLiteral<CommentDTO> COMMENT = new ArgumentLiteral<CommentDTO>(CommentDTO.class, "comment");

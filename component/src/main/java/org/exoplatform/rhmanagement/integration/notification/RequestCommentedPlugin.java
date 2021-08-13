@@ -37,7 +37,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-
+/**
+ * Created by The eXo Platform SAS
+ */
 public class RequestCommentedPlugin extends BaseNotificationPlugin {
 
 
