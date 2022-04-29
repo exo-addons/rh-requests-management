@@ -165,7 +165,7 @@ public class Utils {
                                                                  identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME,
                                                                                                      username);
         AgendaUserSettings agendaUserSettings = agendaUserSettingsService.getAgendaUserSettings(Long.parseLong(user.getId()));
-        return TimeZone.getTimeZone(agendaUserSettings.getTimeZoneId());
+        return agendaUserSettings.getTimeZoneId() != null ? TimeZone.getTimeZone(agendaUserSettings.getTimeZoneId()): TimeZone.getDefault();
       } catch (Exception e) {
         log.error("Can't retrieve timezone", e);
       }
