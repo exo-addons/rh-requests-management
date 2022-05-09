@@ -170,7 +170,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 $scope.insuranceId=data.data.insuranceId;
                 $scope.socialSecNumber=data.data.socialSecNumber;
                 $scope.officialDays=data.data.officialDays;
-                var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
+                var rsetUrl="/portal/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 console.log(invite.build('substitutes', rsetUrl,'choose user'));
                 console.log(deferred.resolve(data));
@@ -716,7 +716,7 @@ define("rhAddonControllers", [ "SHARED/jquery", "SHARED/juzu-ajax","SHARED/userI
                 if(data.data.conventionalVacations!=null) {$scope.cVacations = data.data.conventionalVacations;}
                 if(data.data.officialVacations!=null) {$scope.oVacations = data.data.officialVacations;}
                 $scope.officialDays=data.data.officialDays;
-                var rsetUrl="/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
+                var rsetUrl="/portal/rest/rhrequest/users/find?currentUser="+$scope.currentUser+"&spaceURL="+$scope.employeesSpace;
                 invite.build('managers', rsetUrl,'choose user');
                 invite.build('substitutes', rsetUrl,'choose user');
                 calendar.build('myCalendar');

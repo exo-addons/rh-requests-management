@@ -51,13 +51,13 @@ import java.util.Locale;
 
 @TemplateConfigs(
    templates = {
-       @TemplateConfig( pluginId=RequestRepliedPlugin.ID, template="war:/notification/templates/web/RequestReplyPlugin.gtmpl"),
-       @TemplateConfig( pluginId=RequestStatusChangedPlugin.ID, template="war:/notification/templates/web/UpdateRequestPlugin.gtmpl"),
-       @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/templates/web/CreateRequestPlugin.gtmpl"),
-           @TemplateConfig( pluginId=HRBirthdayNotificationPlugin.ID, template="war:/notification/templates/web/HRBirthdayNotificationPlugin.gtmpl"),
-           @TemplateConfig( pluginId=HRContractAnniversaryNotificationPlugin.ID, template="war:/notification/templates/web/HRContractAnniversaryNotificationPlugin.gtmpl"),
-           @TemplateConfig( pluginId=RequestCommentedPlugin.ID, template="war:/notification/templates/web/RequestCommentedPlugin.gtmpl"),
-           @TemplateConfig( pluginId=VacationBalanceNotificationPlugin.ID, template="war:/notification/templates/web/VacationBalanceNotificationPlugin.gtmpl")
+       @TemplateConfig( pluginId=RequestRepliedPlugin.ID, template="war:/notification/rh-requests/templates/web/RequestReplyPlugin.gtmpl"),
+       @TemplateConfig( pluginId=RequestStatusChangedPlugin.ID, template="war:/notification/rh-requests/templates/web/UpdateRequestPlugin.gtmpl"),
+       @TemplateConfig( pluginId=RequestCreatedPlugin.ID, template="war:/notification/rh-requests/templates/web/CreateRequestPlugin.gtmpl"),
+           @TemplateConfig( pluginId=HRBirthdayNotificationPlugin.ID, template="war:/notification/rh-requests/templates/web/HRBirthdayNotificationPlugin.gtmpl"),
+           @TemplateConfig( pluginId=HRContractAnniversaryNotificationPlugin.ID, template="war:/notification/rh-requests/templates/web/HRContractAnniversaryNotificationPlugin.gtmpl"),
+           @TemplateConfig( pluginId=RequestCommentedPlugin.ID, template="war:/notification/rh-requests/templates/web/RequestCommentedPlugin.gtmpl"),
+           @TemplateConfig( pluginId=VacationBalanceNotificationPlugin.ID, template="war:/notification/rh-requests/templates/web/VacationBalanceNotificationPlugin.gtmpl")
    }
 )
 /**

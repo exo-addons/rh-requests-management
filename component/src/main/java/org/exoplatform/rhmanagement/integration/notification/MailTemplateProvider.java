@@ -51,13 +51,13 @@ import org.exoplatform.social.notification.LinkProviderUtils;
 
 @TemplateConfigs(templates = {
 
-    @TemplateConfig(pluginId = RequestRepliedPlugin.ID, template = "war:/notification/templates/mail/RequestReplyPlugin.gtmpl"),
-    @TemplateConfig(pluginId = RequestStatusChangedPlugin.ID, template = "war:/notification/templates/mail/UpdateRequestPlugin.gtmpl"),
-    @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/templates/mail/CreateRequestPlugin.gtmpl"),
-     @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/templates/mail/HRBirthdayNotificationPlugin.gtmpl"),
-        @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl"),
-        @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/templates/mail/RequestCommentedPlugin.gtmpl"),
-        @TemplateConfig(pluginId = VacationBalanceNotificationPlugin.ID, template = "war:/notification/templates/mail/VacationBalanceNotificationPlugin.gtmpl")
+    @TemplateConfig(pluginId = RequestRepliedPlugin.ID, template = "war:/notification/rh-requests/templates/mail/RequestReplyPlugin.gtmpl"),
+    @TemplateConfig(pluginId = RequestStatusChangedPlugin.ID, template = "war:/notification/rh-requests/templates/mail/UpdateRequestPlugin.gtmpl"),
+    @TemplateConfig(pluginId = RequestCreatedPlugin.ID, template = "war:/notification/rh-requests/templates/mail/CreateRequestPlugin.gtmpl"),
+     @TemplateConfig(pluginId = HRBirthdayNotificationPlugin.ID, template = "war:/notification/rh-requests/templates/mail/HRBirthdayNotificationPlugin.gtmpl"),
+        @TemplateConfig(pluginId = HRContractAnniversaryNotificationPlugin.ID, template = "war:/notification/rh-requests/templates/mail/HRContractAnniversaryNotificationPlugin.gtmpl"),
+        @TemplateConfig(pluginId = RequestCommentedPlugin.ID, template = "war:/notification/rh-requests/templates/mail/RequestCommentedPlugin.gtmpl"),
+        @TemplateConfig(pluginId = VacationBalanceNotificationPlugin.ID, template = "war:/notification/rh-requests/templates/mail/VacationBalanceNotificationPlugin.gtmpl")
 })
 
 /**
