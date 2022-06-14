@@ -4,12 +4,20 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
         var deferred = $q.defer();
 
         $scope.settings = {};
-       
-
+        $scope.newOfficialVacation = {
+                    label: '',
+                    beginDate: '',
+                    daysNumber: 0,
+                    description: '',
+                };
+        $scope.newConventionalVacation = {
+                    label: '',
+                    description: '',
+                    daysNumber: 0,
+                    workingDays: true,
+                };
         $scope.toDateShow;
         $scope.fromDateShow;
-
-   
 
         $scope.initController = function () {
         
@@ -19,6 +27,7 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
             $scope.newConventionalVacation.label = '';
             $scope.newConventionalVacation.daysNumber ='';
             $scope.newConventionalVacation.description = '';
+            $scope.newConventionalVacation.workingDays = true;
         }
 
         $scope.initFerriesModels= function(){
@@ -78,6 +87,9 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
                 else $("#conventionalDaysNumber").removeClass("ng-invalid");
 
                 if((($scope.newConventionalVacation.label != "")  && ($scope.newConventionalVacation.label != undefined)) && (($scope.newConventionalVacation.daysNumber != "")  && ($scope.newConventionalVacation.daysNumber != undefined))){
+                    if(($scope.newConventionalVacation.workingDays == null)  || ($scope.newConventionalVacation.workingDays == undefined)){
+                        $scope.newConventionalVacation.workingDays = false;
+                    }
                     $http({
                         data: $scope.newConventionalVacation,
                         method: 'POST',
@@ -138,7 +150,6 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
                 if(($scope.newOfficialVacation.daysNumber == "") || ($scope.newOfficialVacation.daysNumber == undefined))
                      $("#officialDaysNumber").addClass("ng-invalid");
                 else $("#officialDaysNumber").removeClass("ng-invalid");
-
 
                 if ($("#beginDate") !== "") {
                     var date = ($("#beginDate").val()).split("-");
@@ -216,9 +227,8 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
             }).then(function successCallback(data) {
                 $scope.settings.rhManager=data.data.rhManager;
 				$scope.loadConventionalVacations();
-				$scope.loadOfficialVacations();
+                $scope.loadOfficialVacations();
                 deferred.resolve(data);
-//                $scope.setResultMessage(data, "success");
             }, function errorCallback(data) {
                 $scope.setResultMessage($scope.i18n.defaultError, "error");
             });
@@ -244,8 +254,6 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
 
         $scope.scrollTo = function() {
 
-            // This scrolling function
-            // is from http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript
             var startY = $scope.currentYPosition();
             var stopY = 0;
             var distance = stopY > startY ? stopY - startY : startY - stopY;
@@ -278,8 +286,6 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
         $scope.updateDateFormat = function(date, time) {
             var dateSplit = date;
             dateSplit = dateSplit.split("-");
-//            return Date.parse(dateSplit[1]+'-'+dateSplit[0]+'-'+dateSplit[2]);
-
             dateSplit = moment(dateSplit[2] + '-' + dateSplit[1] + '-' + dateSplit[0] + ' '+ time);
             return Date.parse(dateSplit);
         };
@@ -298,17 +304,9 @@ define("rhSettingsController", ["SHARED/jquery", "SHARED/juzu-ajax"], function (
                         $scope.setResultMessage($scope.i18n.defaultError, "error");
                     });
                 }
-
-
         $scope.loadBundles();
         $('#rhSettings').css('visibility', 'visible');
         $("#rhLoadingBar").remove();
     };
     return rhSettingsCtrl;
-
-    /*
-     $timeout(function() {
-     $scope.showAlert = false;
-     }, 2000);
-     */
 });

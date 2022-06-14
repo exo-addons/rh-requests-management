@@ -45,7 +45,7 @@
                                 <div class="control-group {{usernameClass}} span6">
                                     <label class="control-label" for="question">{{i18n.workingDays}}:</label>
                                     <div class="controls">
-                                        <input type="checkbox" ng-model="newConventionalVacation.workingDays" [name="workingDays"] >
+                                        <input type="checkbox" id="conventionalWorkingDays" ng-model="newConventionalVacation.workingDays" [name="workingDays"] >
                                     </div>
 
                                 </div>
@@ -69,6 +69,7 @@
                                 <th>{{i18n.label}}</th>
                                 <th>{{i18n.daysNumber}}</th>
                                 <th>{{i18n.description}}</th>
+                                <th>{{i18n.workingDays}}</th>
                                 <th>{{i18n.actions}}</th>
 
                             </tr>
@@ -91,6 +92,11 @@
                                 </td>
                                 <td>
                                     <span>{{cVacation.description}}</span>
+                                </td>
+                                <td>
+                                    <div class="center">
+                                         <input type="checkbox" ng-model="cVacation.workingDays" disabled readonly>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="center">

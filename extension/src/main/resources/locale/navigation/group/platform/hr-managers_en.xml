@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle>
+  <rhManagement>
+    <rhAdmin>Human ressources management</rhAdmin>
+    <rhEmployeesAdmin>Employees management</rhEmployeesAdmin>
+    <rhRequestsAdmin>Requests managements</rhRequestsAdmin>
+    <rhHistory>Balance history</rhHistory>
+    <rhSettings>Settings</rhSettings>
+  </rhManagement>
+</bundle>
