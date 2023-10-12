@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>addons-parent-pom</artifactId>
+    <artifactId>addons-exo-parent-pom</artifactId>
     <groupId>org.exoplatform.addons</groupId>
-    <version>14-M15</version>
+    <version>17-M04</version>
   </parent>
   <groupId>org.exoplatform.addons.rh-management</groupId>
   <artifactId>rh-management</artifactId>
@@ -25,25 +25,18 @@
   </scm>
   <properties>
     <juzu.jackson.version>1.2.0</juzu.jackson.version>
-    <org.exoplatform.commons.version>6.3.x-SNAPSHOT</org.exoplatform.commons.version>
-    <org.exoplatform.social.version>6.3.x-SNAPSHOT</org.exoplatform.social.version>
-    <addon.exo.jcr.version>6.3.x-SNAPSHOT</addon.exo.jcr.version>
-    <addon.exo.agenda.version>1.2.x-SNAPSHOT</addon.exo.agenda.version>
+    <org.exoplatform.commons-exo.version>6.5.x-SNAPSHOT</org.exoplatform.commons-exo.version>
+    <org.exoplatform.social.version>6.5.x-exo-SNAPSHOT</org.exoplatform.social.version>
+    <addon.exo.jcr.version>6.5.x-SNAPSHOT</addon.exo.jcr.version>
+    <addon.exo.agenda.version>1.4.x-SNAPSHOT</addon.exo.agenda.version>
   </properties>
   <dependencyManagement>
     <dependencies>
       <!-- Import versions from platform project -->
       <dependency>
-        <groupId>org.exoplatform.commons</groupId>
-        <artifactId>commons-api</artifactId>
-        <version>${org.exoplatform.commons.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.commons</groupId>
-        <artifactId>commons-component-common</artifactId>
-        <version>${org.exoplatform.commons.version}</version>
+        <groupId>org.exoplatform.commons-exo</groupId>
+        <artifactId>commons-juzu</artifactId>
+        <version>${org.exoplatform.commons-exo.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
