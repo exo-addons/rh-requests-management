@@ -20,7 +20,7 @@
 			<artifactId>rh-management-component</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.exoplatform.commons</groupId>
+			<groupId>org.exoplatform.commons-exo</groupId>
 			<artifactId>commons-juzu</artifactId>
 			<scope>provided</scope>
 		</dependency>
