@@ -25,10 +25,10 @@
   </scm>
   <properties>
     <juzu.jackson.version>1.2.0</juzu.jackson.version>
-    <org.exoplatform.commons-exo.version>6.5.x-SNAPSHOT</org.exoplatform.commons-exo.version>
-    <org.exoplatform.social.version>6.5.x-exo-SNAPSHOT</org.exoplatform.social.version>
-    <addon.exo.jcr.version>6.5.x-SNAPSHOT</addon.exo.jcr.version>
-    <addon.exo.agenda.version>1.4.x-SNAPSHOT</addon.exo.agenda.version>
+    <org.exoplatform.commons-exo.version>6.5.0-M28</org.exoplatform.commons-exo.version>
+    <org.exoplatform.social.version>6.5.0-exo-M28</org.exoplatform.social.version>
+    <addon.exo.jcr.version>6.5.0-M28</addon.exo.jcr.version>
+    <addon.exo.agenda.version>1.4.0-M28</addon.exo.agenda.version>
   </properties>
   <dependencyManagement>
     <dependencies>
